@@ -25,17 +25,29 @@ var pageLoader = function()
 
 	function loadHtml(htmlFiles)
 	{
-
+		//document.getElementById("content").innerHTML='<object type="text/html" data="home.html" ></object>';
+		
 	}
 
 	function loadJs(jsFiles)
 	{
-
+		for(var i = 0; i < jsFiles.length; i++)
+		{
+			var fileref=document.createElement('script')
+		    fileref.setAttribute("type","text/javascript")
+		    fileref.setAttribute("src", jsFiles[i])
+		}
 	}
 
 	function loadCss(cssFiles)
 	{
-
+		for(var i = 0; i < cssFiles.length; i++)
+		{
+			var fileref=document.createElement("link");
+		    fileref.setAttribute("rel", "stylesheet");
+		    fileref.setAttribute("type", "text/css");
+		    fileref.setAttribute("href", cssFiles[i]);
+		}
 	}
 
 	var assetReferences = 
