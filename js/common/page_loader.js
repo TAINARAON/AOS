@@ -3,7 +3,6 @@ var pageLoader = function()
 	console.log("Page loader linked");
 
 	function load(role) {
-	debugger;
 		for(var i = 0; i < assetReferences.length; i++) {
 
 			if(assetReferences[i].role == role) {
@@ -12,8 +11,6 @@ var pageLoader = function()
 				return;
 			}
 		}
-
-		alert("ERROR pageLoader");
 	}
 
 	function loadAssets(asset) {
@@ -25,19 +22,22 @@ var pageLoader = function()
 
 	function loadHtml(htmlFiles)
 	{
-		if(assetReferences.navbar != "")
+		if(htmlFiles.navbar != "")
 		{
 			document.getElementById("navbar_container").innerHTML='<object type="text/html" data="'+ htmlFiles.navbar +'" ></object>';
 		}
 		else
 		{
 			// Load the icon into the nav
-			var img = document.createElement('div');
-			img.style.cssText = 'width:100%, height:100%, background:"img/agrihost.png"';
-			document.getElementById("navbar_container").innerHTML=img;
+			var img = document.createElement('DIV');
+			img.style.cssText = 'position:relative; width:100%; height:60px; left: 50%; transform: translateX(-50%);';
+			img.style.backgroundImage = "url('img/agrihost.png')";
+			img.style.backgroundRepeat = "no-repeat";
+			document.getElementById("navbar_container").appendChild(img);
 		}
 
-		document.getElementById("container").innerHTML='<object type="text/html" data="'+htmlFiles.landing_page+'" ></object>';
+		//document.getElementById("container").innerHTML='<object type="text/html" data="'+htmlFiles.landing_page+'" ></object>';
+		$("#container").load(htmlFiles.landing_page);
 	}
 
 	function loadJs(jsFiles)
@@ -46,7 +46,9 @@ var pageLoader = function()
 		{
 			var fileref=document.createElement('script')
 		    fileref.setAttribute("type","text/javascript")
-		    fileref.setAttribute("src", jsFiles[i])
+		    fileref.setAttribute("src", jsFiles[i]);
+		    var html = document.getElementsByTagName('html')[0];
+		    html.appendChild(fileref);
 		}
 	}
 
@@ -84,11 +86,17 @@ var pageLoader = function()
 		{
 			"role":"",
 			"cssFiles":["css/common/login.css"],
-			"jsFiles":["login.js"],
+			"jsFiles":["js/common/login.js"],
 			"htmlFiles":{
 				"navbar":"",
 				"landing_page":"html/common/login.html"
 			}
 		}
 	];
+
+	return {
+		load: function (role){
+			load(role);
+		}
+	};
 };
