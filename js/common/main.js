@@ -1,4 +1,6 @@
 (function(){        
     console.log("Main linked");
-    var pageLoader = pageLoader();
+    var loader = pageLoader();
+
+    var myCom = httpCommunicator();
 })();
