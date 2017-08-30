@@ -1,5 +1,13 @@
-var communication = function()
+var httpCommunicator = function()
 {
+	console.log("Communicator linked");
+
+	
+};
+/*var communicator = function()
+{
+	/*console.log("communicator linked");
+
 	function request(requestType, url, requestData, callback)
 	{
 		var async = true; // Otherwise program will hang
@@ -19,4 +27,4 @@ var communication = function()
 		//request.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
 		request.send(postData);
 	}
-}
+};*/
