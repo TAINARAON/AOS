@@ -3,4 +3,5 @@
     var loader = pageLoader();
 
     var myCom = httpCommunicator();
+    var nInvoker = userInvoker(myCom);
 })();

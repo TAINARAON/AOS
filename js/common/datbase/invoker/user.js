@@ -1,10 +1,14 @@
-var userInvoker = function()
+var userInvoker = function(communicator)
 {
 	console.log("User invoker linked");
 
-	function getUserPart()
+	function getAllUsers()
 	{
-		//communication.request("POST", user.URL, user.COLUMNS.join(), getUserPartCallback());
+		//communicator.post(user.URL, "", getAllUsersCallback);
 	}
-	function getUserPartCallback() {}
+
+	function getAllUsersCallback(status, data) 
+	{
+
+	}
 };

@@ -2,7 +2,7 @@ var httpCommunicator = function()
 {
 	console.log("Communicator linked");
 
-	function request(requestType, url, requestData, callback)
+	function post(url, requestData, callback)
 	{
 		var async = true; // Otherwise program will hang
 
@@ -15,7 +15,7 @@ var httpCommunicator = function()
 			callback(status, data);
 		}
 
-		request.open(method, url, async);
+		request.open("POST", url, async);
 
 		request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		//request.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
