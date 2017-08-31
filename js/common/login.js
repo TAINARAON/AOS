@@ -1,9 +1,18 @@
-var something = function()
-{
+(function(){
+ 	console.log("Login Linked");
 
-	console.log("Login page js linked");
+ 	document.getElementById("loginBtn").onclick = function() {login()};
 
-	function login() {
-		console.log("Login");
-	}
-};
+
+ 	function login() {
+ 		alert("Login");
+ 	}
+
+ 	function sluitAan() {
+ 		alert("Sluit aan");
+ 	}
+
+ 	function herstelWagwoord() {
+ 		alert("Herstel wagwoord");
+ 	}
+})();

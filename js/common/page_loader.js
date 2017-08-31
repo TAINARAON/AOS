@@ -16,8 +16,8 @@ var pageLoader = function()
 	function loadAssets(asset) {
 
 		loadHtml(asset.htmlFiles);
-		loadCss(asset.jsFiles);
-		loadJs(asset.cssFiles);
+		loadCss(asset.cssFiles);
+		loadJs(asset.jsFiles);
 	}
 
 	function loadHtml(htmlFiles)
@@ -49,6 +49,16 @@ var pageLoader = function()
 		    fileref.setAttribute("src", jsFiles[i]);
 		    var html = document.getElementsByTagName('html')[0];
 		    html.appendChild(fileref);
+
+		    /*var po = document.createElement('script'); 
+		    po.type = 'text/javascript'; 
+		    po.async = true;
+		    po.src = jsFiles[i];
+		    var s = document.getElementsByTagName('script')[0];
+		    s.parentNode.insertBefore(po, s);*/
+
+		    //$('<script>alert("hi");</' + 'script>').appendTo(document.body);
+		    //$('<script type="text/javascript" src="'+jsFiles[i]+'"></' + 'script>').appendTo(document.body);
 		}
 	}
 
