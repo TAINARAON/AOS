@@ -70,6 +70,9 @@ var pageLoader = function()
 		    fileref.setAttribute("rel", "stylesheet");
 		    fileref.setAttribute("type", "text/css");
 		    fileref.setAttribute("href", cssFiles[i]);
+
+		    var head = document.getElementsByTagName('head')[0];
+		    head.appendChild(fileref);
 		}
 	}
 
