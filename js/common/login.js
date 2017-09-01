@@ -15,7 +15,8 @@
 
 	function loadRegisterPage() {
 
-		$("#container").load("html/common/register.html");
+		//$("#container").load("html/common/register.html");
+		pageLoader.loadPage("html/common/register.html");
 	}
 
 	function attemptLogin() {
