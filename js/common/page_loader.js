@@ -106,7 +106,7 @@ var pageLoader = function()
 		{
 			"role":"broker",
 			"cssFiles":["css/broker/main.css"],
-			"jsFiles":["js/broker/damage_report.js","js/broker/policy.js","js/broker/quote.js"],
+			"jsFiles":["js/broker/nav.js","js/broker/damage_report.js","js/broker/policy.js","js/broker/quote.js"],
 			"htmlFiles":{
 				"navbar":"html/common/nav.html",
 				"landing_page":"html/common/home.html"
