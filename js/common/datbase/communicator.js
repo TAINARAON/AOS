@@ -2,7 +2,7 @@ var httpCommunicator = function()
 {
 	console.log("Communicator linked");
 
-	function post(url, requestData, callback)
+	function post(url, requestData, successCallback, failureCallback)
 	{
 		var async = true; // Otherwise program will hang
 
@@ -12,7 +12,14 @@ var httpCommunicator = function()
 			var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
 			var data = request.responseText; // Returned data, e.g., an HTML document.
 
-			callback(status, data);
+			if(status == 200)
+			{
+				successCallback(data);
+			}
+			else
+			{
+				failureCallback(data);
+			}
 		}
 
 		request.open("POST", url, async);

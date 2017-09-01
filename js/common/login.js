@@ -34,7 +34,7 @@
 		}
 	}
 
-	function failedLoginAttempt() {
+	function failedLoginAttempt(data) {
 		failedLoginAttemptsCount++;
 		notifyUserOfInvalidCredentials();
 	}
@@ -76,7 +76,7 @@
  		alert("logging in");
  	}
 
- 	function loadLandingPageOfRole(role) {
+ 	function loadLandingPageOfRole(data) {
  		// TODO
  	}
 
