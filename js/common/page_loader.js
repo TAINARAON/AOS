@@ -22,6 +22,11 @@ var pageLoader = function()
 		addNavigationToBackStack(pageUrl,state);
 	}
 
+
+	function loadPartOfPage(pageUrl,targetContainer) {
+		$(targetContainer).load(pageUrl);
+	}
+
 	function addNavigationToBackStack(pageUrl,state) {
 
 		var navObject = {
