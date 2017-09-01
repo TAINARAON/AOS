@@ -2,6 +2,8 @@ var pageLoader = function()
 {
 	console.log("Page loader linked");
 
+	var navigationBackStack = [];
+
 	function load(role) {
 		for(var i = 0; i < assetReferences.length; i++) {
 
@@ -11,6 +13,25 @@ var pageLoader = function()
 				return;
 			}
 		}
+	}
+
+	function loadPage(pageUrl, state = null) {
+
+		$("#container").load(pageUrl);
+
+		addNavigationToBackStack(pageUrl,state);
+	}
+
+	function addNavigationToBackStack(pageUrl,state) {
+
+		var navObject = {
+			'pageUrl':pageUrl,
+			'state':state
+		}
+
+		navigationBackStack.push(navObject);
+
+		console.log(navigationBackStack);
 	}
 
 	function loadAssets(asset) {
@@ -36,8 +57,7 @@ var pageLoader = function()
 			document.getElementById("navbar_container").appendChild(img);
 		}
 
-		//document.getElementById("container").innerHTML='<object type="text/html" data="'+htmlFiles.landing_page+'" ></object>';
-		$("#container").load(htmlFiles.landing_page);
+		loadPage(htmlFiles.landing_page);
 	}
 
 	function loadJs(jsFiles)
