@@ -4,29 +4,26 @@ var registerClientHtmlIsLoaded = false;
 var registerBrokerHtmlIsLoaded = false;
 
 // Register Client button
-$( document ).on( 'click', '#register_client_button', function ( e ) {
-    
+document.getElementById("register_client_button").onclick = function() {
+
     $("#registerBrokerContent").hide();
     $("#registerClientContent").show();
 
     if(!registerClientHtmlIsLoaded) {
-    	//$("#registerClientContent").load("html/client/register.html");
-        loader.loadPage("html/client/register.html");
-    	registerClientHtmlIsLoaded = true;
+        loader.loadPartOfPage("html/client/register.html","registerClientContent");
+        registerClientHtmlIsLoaded = true;
     }
-}); 
+};
 
-// Register Broker button
-$( document ).on( 'click', '#register_broker_button', function ( e ) {
-    
+// Register Client button
+document.getElementById("register_broker_button").onclick = function() {
+
     $("#registerClientContent").hide();
     $("#registerBrokerContent").show();
 
     if(!registerBrokerHtmlIsLoaded) {
-        loader.loadPage("html/broker/register.html");
-        //$("#registerBrokerContent").load("html/broker/register.html");
+        loader.loadPartOfPage("html/broker/register.html","registerBrokerContent");
         registerBrokerHtmlIsLoaded = true;
     }
-}); 
-
+};
 

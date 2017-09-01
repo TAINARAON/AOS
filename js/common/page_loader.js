@@ -24,7 +24,7 @@ var pageLoader = function()
 
 
 	function loadPartOfPage(pageUrl,targetContainer) {
-		$(targetContainer).load(pageUrl);
+		$(("#"+targetContainer)).load(pageUrl);
 	}
 
 	function addNavigationToBackStack(pageUrl,state) {
@@ -138,6 +138,9 @@ var pageLoader = function()
 		},
 		loadPage: function (url, state = null) {
 			loadPage(url, state);
+		},
+		loadPartOfPage: function(url, targetContainer) {
+			loadPartOfPage(url,targetContainer);
 		}
 	};
 };
