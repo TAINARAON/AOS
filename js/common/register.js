@@ -11,7 +11,7 @@ $( document ).on( 'click', '#register_client_button', function ( e ) {
 
     if(!registerClientHtmlIsLoaded) {
     	//$("#registerClientContent").load("html/client/register.html");
-        loader.loadPage("html/client/register.html",'',"#registerClientContent");
+        loader.loadPage("html/client/register.html");
     	registerClientHtmlIsLoaded = true;
     }
 }); 
@@ -23,7 +23,7 @@ $( document ).on( 'click', '#register_broker_button', function ( e ) {
     $("#registerBrokerContent").show();
 
     if(!registerBrokerHtmlIsLoaded) {
-        loader.loadPage("html/broker/register.html",'',"#registerBrokerContent");
+        loader.loadPage("html/broker/register.html");
         //$("#registerBrokerContent").load("html/broker/register.html");
         registerBrokerHtmlIsLoaded = true;
     }

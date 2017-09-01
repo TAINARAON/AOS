@@ -1,7 +1,5 @@
 console.log('client/register.js working');
 
-
-
 // ANY INPUT CHANGE
 $( document ).on( 'change', '#register_client_form .required', function( e ) {
 
