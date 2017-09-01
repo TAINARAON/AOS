@@ -6,22 +6,7 @@
  	})();
 
  	function setupNavStructure() {
- 		var navContainer = document.getElementById("navbar_container");
-
- 		var navBar = document.createElement('NAV');
- 		navBar.className = "navbar navbar-inverse";
-
- 		var innerNavContainer = document.createElement('DIV');
- 		innerNavContainer.className = "container";
-
- 		var navHeader = document.createElement('DIV');
- 		navHeader.className = "navbar-header";
-
- 		var headerLink = document.createElement('a');
- 		headerLink.className = "navbar-brand";
- 		headerLink.innerHTML = "Agrihost";
-
- 		var navbarButtonContainer = document.createElement('DIV');
+ 		var navbarButtonContainer = document.getElementById("navbar_button_container");
 
  		var leftButtonContainer = document.createElement('UL');
  		leftButtonContainer.className = "nav navbar-nav";
@@ -33,20 +18,7 @@
  		// Add button elements here
  		setupRightButtons(rightButtonContainer);
 
- 		// Appending to one another
-
- 		navContainer.appendChild(navBar);
-
- 		navbar.appendChild(innerNavContainer);
-
- 		innerNavContainer.appendChild(navHeader);
-
- 		navHeader.appendChild(headerLink);
-
- 		innerNavContainer.appendChild(navbarButtonContainer);
-
  		navbarButtonContainer.appendChild(leftButtonContainer);
-
  		navbarButtonContainer.appendChild(rightButtonContainer);
  	}
 
@@ -58,23 +30,31 @@
 
  		for (var i = buttons.length - 1; i >= 0; i--) {
  			var button = document.createElement('LI');
- 			button.innerHTML = buttons[i].charAt(0).toUpperCase();
- 			button.onclick = function(){listeners[i]};
- 			button.id = prefix + buttons[i] + suffix;
-
+ 			button.style.cssText = "cursor: pointer";
+ 			var link = document.createElement('A');
+ 			link.innerHTML = buttons[i].charAt(0).toUpperCase() + buttons[i].slice(1);
+ 			//link.onclick = function(){listeners[i]};
+ 			link.id = prefix + buttons[i] + suffix;
+ 			
+ 			button.appendChild(link);
  			container.appendChild(button);
+
+ 			$(prefix + buttons[i] + suffix).on('click', function(e) {e.preventDefault(); listeners[i](e);});
  		}
  	}
 
- 	function damageReport() {
+ 	function damageReport(event) {
+ 		event.preventDefault();
  		alert("Damage report");
  	}
 
- 	function policy() {
+ 	function policy(event) {
+ 		event.preventDefault();
  		alert("Policy");	
  	}
 
- 	function quote() {
+ 	function quote(event) {
+ 		event.preventDefault();
  		alert("Quote");
  	}
 
@@ -86,15 +66,21 @@
 
  		for (var i = buttons.length - 1; i >= 0; i--) {
  			var button = document.createElement('LI');
- 			button.innerHTML = buttons[i].charAt(0).toUpperCase();
- 			button.onclick = function(){listeners[i]};
- 			button.id = prefix + buttons[i] + suffix;
-
+ 			button.style.cssText = "cursor: pointer";
+ 			var link = document.createElement('A');
+ 			link.innerHTML = buttons[i].charAt(0).toUpperCase() + buttons[i].slice(1);
+ 			//link.onclick = function(){listeners[i]};
+ 			link.id = prefix + buttons[i] + suffix;
+ 			
+ 			button.appendChild(link);
  			container.appendChild(button);
+
+ 			$(prefix + buttons[i] + suffix).on('click', function(e) {e.preventDefault(); listeners[i](e);});
  		}	
  	}
 
- 	function logout() {
+ 	function logout(event) {
+ 		event.preventDefault();
  		alert("Logout");
  	}
 

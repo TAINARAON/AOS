@@ -50,7 +50,8 @@ var pageLoader = function()
 	{
 		if(htmlFiles.navbar != "")
 		{
-			document.getElementById("navbar_container").innerHTML='<object type="text/html" data="'+ htmlFiles.navbar +'" ></object>';
+			//document.getElementById("navbar_container").innerHTML='<object type="text/html" data="'+ htmlFiles.navbar +'" ></object>';
+			loadPartOfPage(htmlFiles.navbar, "navbar_container");
 		}
 		else
 		{
