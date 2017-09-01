@@ -1,6 +1,8 @@
+var loader;
+
 (function(){        
     console.log("Main linked");
-    var loader = pageLoader();
+    loader = pageLoader();
     loader.load("");
 
     var myCom = httpCommunicator();

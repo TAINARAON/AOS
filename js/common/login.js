@@ -20,6 +20,7 @@
 		//pageLoader.loadPage("html/common/register.html");
 
 		//load("html/common/register.html");
+		loader.loadPage("html/common/register.html");
 	}
 
 	function attemptLogin() {

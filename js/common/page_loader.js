@@ -130,6 +130,9 @@ var pageLoader = function()
 	return {
 		load: function (role){
 			load(role);
+		},
+		loadPage: function (url, state = null) {
+			loadPage(url, state);
 		}
 	};
 };
