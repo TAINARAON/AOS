@@ -83,8 +83,8 @@ var pageLoader = function()
 			"cssFiles":["b1.css","b2.css","b3.css"],
 			"jsFiles":["b1.js","b2.js"],
 			"htmlFiles":{
-				"navbar":"",
-				"landing_page":""
+				"navbar":"html/common/nav.html",
+				"landing_page":"html/common/home.html"
 			}
 		},
 		{
@@ -92,8 +92,8 @@ var pageLoader = function()
 			"cssFiles":["c1.css","c2.css","c3.css"],
 			"jsFiles":["c1.js","c2.js"],
 			"htmlFiles":{
-				"navbar":"",
-				"landing_page":""
+				"navbar":"html/common/nav.html",
+				"landing_page":"html/common/home.html"
 			}
 		},
 		{
