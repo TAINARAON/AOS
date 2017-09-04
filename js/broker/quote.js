@@ -57,8 +57,8 @@
 			reQuote.onclick = function(e){reQuoteClick(i);};
 			deleteQuote.onclick = function(e){deleteQuoteClick(i);};
 			acceptQuote.onclick = function(e){acceptQuoteClick(i);};
-			printQuote.onclick = function(e){printQuote(i);};
-			emailQuote.onclick = function(e){emailQuote(i);};
+			printQuote.onclick = function(e){printQuoteClick(i);};
+			emailQuote.onclick = function(e){emailQuoteClick(i);};
 
 			button.onclick = function(e){accordionItemClick(e);};
 		}
@@ -77,12 +77,14 @@
   		alert("Accept quote: " + id);
   	}
 
-  	function printQuote(id) {
-  		alert("Print quote: " + id);
+  	function printQuoteClick(id)
+  	{
+  		alert("Print Quote: " + id);
   	}
 
-  	function emailQuote(id) {
-  		alert("Email quote: " + id);
+  	function emailQuoteClick(id)
+  	{
+  		alert("Email Quote: " + id);
   	}
 
   	function accordionItemClick(e) {
