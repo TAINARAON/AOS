@@ -1,32 +1,37 @@
-console.log('client/register.js working');
-
-// Any input change /*$( document ).on( 'change', '#client_register_form .required', function( e ) {var allInputElements = $('#client_register_form .required');for(var i = 0; i < allInputElements.length; i++) {if(allInputElements.eq(i).val() == "") {$('#client_register_submit_div').hide();return;}}$('#client_register_submit_div').show();});*/
+const USERNAME = 0;
+const PASSWORD = 1;
+const PASSWORD2 = 2;
+const EMAIL = 3;
+const ID_NUMBER = 4;
+const CONTACT_NUMBER = 5;
+const NAME = 6;
+const SURNAME = 7;
 
 var inputArray = [false,false,false,false,false,false,false,false];
 
 function validateUsername(input) {
-	inputArray[0] = 1;
+	inputArray[USERNAME] = 1;
 }
 function validatePassword(input) {
-	inputArray[1] = 1;
+	inputArray[PASSWORD] = 1;
 }
 function validateConfirmPassword(input) {
-	inputArray[2] = 1;
+	inputArray[PASSWORD2] = 1;
 }
 function validateEmail(input) {
-	inputArray[3] = 1;
+	inputArray[EMAIL] = 1;
 }
 function validateIdNumber(input) {
-	inputArray[4] = 1;
+	inputArray[ID_NUMBER] = 1;
 }
 function validateContactNumber(input) {
-	inputArray[5] = 1;
+	inputArray[CONTACT_NUMBER] = 1;
 }
 function validateName(input) {
-	inputArray[6] = 1;
+	inputArray[NAME] = 1;
 }
 function validateSurname(input) {
-	inputArray[7] = 1;
+	inputArray[SURNAME] = 1;
 }
 
 // Username Input Change
