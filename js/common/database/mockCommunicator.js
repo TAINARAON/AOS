@@ -10,17 +10,19 @@ var mockCommunicator = new function()
 	this.createUser = function(data) {
 
 		data.id = userTable.length;
-		userTable.push(data);
+		this.userTable.push(data);
 
 		return userData.id;
 	}
+
 	this.getUser = function(id) {
-		for(var i=0;i<userTable.length;i++) {
-			if(userTable[i].id==id) {
-				return userTable[i];
+		for(var i=0;i<this.userTable.length;i++) {
+			if(this.userTable[i].id==id) {
+				return this.userTable[i];
 			}
 		}
 	}
+
 	this.deleteUser = function(id) {
 		for(var i=0;i<userTable.length;i++) {
 			if(userTable[i].id==id) {
@@ -28,6 +30,7 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+
 	this.updateUser = function(id, data) {
 		data.id = id;
 		userTable[id] = data;

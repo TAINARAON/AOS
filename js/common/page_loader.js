@@ -1,6 +1,44 @@
 var pageLoader = function()
 {
-	console.log("Page loader linked");
+	var assetReferences = 
+	[
+		{
+			"role":"broker",
+			"cssFiles":["css/broker/main.css"],
+			"jsFiles":["js/broker/nav.js","js/broker/damage_report.js","js/broker/policy.js","js/broker/quote.js"],
+			"htmlFiles":{
+				"navbar":"html/common/nav.html",
+				"landing_page":"html/common/home.html"
+			}
+		},
+		{
+			"role":"broker_admin",
+			"cssFiles":[],
+			"jsFiles":[],
+			"htmlFiles":{
+				"navbar":"html/common/nav.html",
+				"landing_page":"html/broker_admin/create_broker.html"
+			}
+		},
+		{
+			"role":"client",
+			"cssFiles":["c1.css","c2.css","c3.css"],
+			"jsFiles":["c1.js","c2.js"],
+			"htmlFiles":{
+				"navbar":"html/common/nav.html",
+				"landing_page":"html/common/home.html"
+			}
+		},
+		{
+			"role":"",
+			"cssFiles":["css/common/login.css"],
+			"jsFiles":["js/common/login.js"],
+			"htmlFiles":{
+				"navbar":"",
+				"landing_page":"html/common/login.html"
+			}
+		}
+	];
 
 	var navigationBackStack = [];
 
@@ -102,37 +140,7 @@ var pageLoader = function()
 		}
 	}
 
-	var assetReferences = 
-	[
-		{
-			"role":"broker",
-			"cssFiles":["css/broker/main.css"],
-			"jsFiles":["js/broker/nav.js","js/broker/damage_report.js","js/broker/policy.js","js/broker/quote.js"],
-			"htmlFiles":{
-				"navbar":"html/common/nav.html",
-				"landing_page":"html/common/home.html"
-			}
-		},
-		{
-			"role":"client",
-			"cssFiles":["c1.css","c2.css","c3.css"],
-			"jsFiles":["c1.js","c2.js"],
-			"htmlFiles":{
-				"navbar":"html/common/nav.html",
-				"landing_page":"html/common/home.html"
-			}
-		},
-		{
-			"role":"",
-			"cssFiles":["css/common/login.css"],
-			"jsFiles":["js/common/login.js"],
-			"htmlFiles":{
-				"navbar":"",
-				"landing_page":"html/common/login.html"
-			}
-		}
-	];
-
+	
 	return {
 		load: function (role){
 			load(role);
