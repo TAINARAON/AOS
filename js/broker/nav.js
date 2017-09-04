@@ -58,7 +58,6 @@
 
  	function damageReport(event) {
  		//event.preventDefault();
- 		alert("Damage report");
  		loader.loadPage("html/broker/damage_report.html");
  	}
 
@@ -75,7 +74,6 @@
 
  	function policy(event) {
  		//event.preventDefault();
- 		alert("Policy");
  		loader.loadPage("html/broker/policy.html");
  	}
 
@@ -92,8 +90,7 @@
 
  	function quote(event) {
  		//event.preventDefault();
- 		alert("Quote");
- 		loader.loadPage("html/broker/quote.html");
+ 		loader.loadPage("html/broker/quote/quote.html");
  	}
 
  	function setupRightButtons(container) {
