@@ -20,18 +20,18 @@ function onCreateBrokerClick() {
 		"isAdmin":false
 	}
 
-	createBroker(userData,brokerData);
+	invoker.broker.create(userData, brokerData, onCreateBrokerSuccess, onCreateBrokerFailure);
 }
 
-function createBroker(userData, brokerData) {
 
-	var data = {
-		"userData":userData,
-		"brokerData":brokerData
-	}
+function onCreateBrokerSuccess() {
 
-	brokerInvoker.create(data, onBrokerCreateSuccess, onBrokerCreateFailure);
 }
+
+function onCreateBrokerFailure() {
+	
+}
+
 
 function getRoleIdOfBroker() {
 	// query db

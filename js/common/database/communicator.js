@@ -12,14 +12,21 @@ var httpCommunicator = function()
 			var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
 			var data = request.responseText; // Returned data, e.g., an HTML document.
 
-			if(status == 200)
+			/*if(status == 200)
 			{
 				successCallback(data);
 			}
 			else
 			{
 				failureCallback(data);
+			}*/
+
+			var response = {
+				"status":status,
+				"data":data
 			}
+
+			return response;
 		}
 
 		request.open("POST", url, async);
