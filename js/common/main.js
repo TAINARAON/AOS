@@ -9,7 +9,7 @@ var loader;
     // REAL DATABASE
     //var myCom = httpCommunicator();
     // MOCK DATABAS	E
-    var myCom = mockCommunicator();
+    //var myCom = mockCommunicator();
 
-    var invoker = invoker(myCom);
+    //var invoker = globalInvoker(myCom);
 })();

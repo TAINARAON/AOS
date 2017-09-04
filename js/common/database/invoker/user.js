@@ -1,41 +1,18 @@
-var userInvoker = function(communicator)
-{
-	const URL = "some_url_that_targets_user_table";
+var userInvoker = new function() {
+    this.url =  "some_url_that_targets_user_table";
 
-	function create(data,successCallback,failureCallback) {
-
-		var requestData = {
-			"type":"create",
-			"data":data
+    this.create = function (data,successCallback,failureCallback) 
+    {
+        var newUserId = mockCommunicator.createUser(data);
+		fush();
+		if(newUserId == null) {
+			failureCallback();
+		} else {
+			successCallback();
 		}
-		
-		communicator.post(URL,);
-	}
+    };
+}
 
-	function get(id) {
-
-	}
-
-	function update(data, id) {
-
-	}
-
-	function deleteEntry(id) {
-
-	}
-
-	function getAll()
-	{
-		//communicator.post(user.URL, "", getAllUsersCallback);
-	}
-
-	return 
-	{
-		'url':URL,
-		'create':create,
-		'get':get,
-		'update':update,
-		'delete':deleteEntry
-		'getAll':getAllBrokers
-	}
-};
+function fush() {
+	alert("in fush");
+}
