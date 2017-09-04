@@ -10,14 +10,21 @@
 			{"title":"bah3", "data":"data3"}
 		];
 
+		createModal("modal_container");
+
 		createQuoteAccordion(container, data);
 	})();
 
+	function createModal(id)
+	{
+		loader.loadPartOfPage("html/broker/quote/create.html", id);
+	}
+
 	function createQuoteAccordion(container, quoteData) {
+		console.log(container);
 		for (let i = 0; i < quoteData.length; i++) {
 			var button = document.createElement('BUTTON');
 			button.className = "accordion";
-			button.id = i;
 
 			var detailContainer = document.createElement('DIV');
 			detailContainer.className = "panel";
