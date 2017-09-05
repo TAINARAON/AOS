@@ -46,14 +46,18 @@ function setBrokerageContactNumberText() {
 }
 
 function getNameOfBrokerage() {
+	if(DEBUG_WARNINGS) {console.warn("TODO");}
 	return "Lukraak Makelaars";
 }
 function getEmailOfBrokerage() {
+	if(DEBUG_WARNINGS) console.warn("TODO");
 	return "lmakelaars@gmail.com";
 }
 function getFspNumberOfBrokerage() {
+	if(DEBUG_WARNINGS) console.warn("TODO");
 	return "1ukr44km4k3144r5";
 }
 function getContactNumberOfBrokerage() {
+	if(DEBUG_WARNINGS) console.warn("TODO");
 	return "062-LUKRAAK";
 }
