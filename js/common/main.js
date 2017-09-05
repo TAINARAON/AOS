@@ -1,10 +1,13 @@
 var loader;
 
+const BROKER_ADMIN = "broker_admin";
+const BROKER = "broker";
+
 (function(){        
     console.log("Main linked");
     loader = pageLoader();
 
-    loader.load("broker");
+    loader.load(BROKER);
 
     // REAL DATABASE
     //var myCom = httpCommunicator();

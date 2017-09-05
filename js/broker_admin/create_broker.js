@@ -1,15 +1,16 @@
-// creates broker, by supplying Username and email, and isAdmin
+document.getElementById('create_broker_submit_div').onclick = function(e){onCreateBrokerClick();};
 
+// creates broker, by supplying Username and email
 function onCreateBrokerClick() {
 
 	// User data
-	var username = "";
-	var email = "";
+	var username = document.getElementById('create_broker_username_input').value;
+	var email = document.getElementById('create_broker_email_input').value;
 
 	var userData = 
 	{
 		"username":username,
-		"password":generateRandomPassword();,
+		"password":generateRandomPassword(),
 		"roleId":getRoleIdOfBroker(),
 		"email":email
 	}
@@ -17,32 +18,31 @@ function onCreateBrokerClick() {
 	var brokerData = 
 	{
 		"brokerageId":getIdOfBrokerage(),
-		"isAdmin":false
+		"isAdmin":"0"
 	}
 
-	invoker.broker.create(userData, brokerData, onCreateBrokerSuccess, onCreateBrokerFailure);
+	brokerInvoker.create(userData, brokerData, onCreateBrokerSuccess, onCreateBrokerFailure);
 }
 
-
 function onCreateBrokerSuccess() {
-
+	loader.loadPage('html/broker_admin/brokerage.html');
 }
 
 function onCreateBrokerFailure() {
-	
+	alert("createdBrokerFailure");
 }
-
 
 function getRoleIdOfBroker() {
-	// query db
-	return 3;
-}
-
-function generateRandomPassword() {
-	return "abcdefg";
+	// TODO
+	return 0;
 }
 
 function getIdOfBrokerage() {
-	// query db
-	return 3;
+	// TODO
+	return 0;
+}
+
+function generateRandomPassword() {
+	// TODO
+	return Math.random().toString(36).substr(2, 5);
 }

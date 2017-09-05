@@ -1,6 +1,6 @@
 var mockCommunicator = new function()
 {
-	console.error("Mock Communicator being used.");
+	console.warn("Mock Communicator being used.");
 
 	this.userTable = [
 
@@ -9,10 +9,12 @@ var mockCommunicator = new function()
 
 	this.createUser = function(data) {
 
-		data.id = userTable.length;
+		data.id = this.userTable.length;
 		this.userTable.push(data);
 
-		return userData.id;
+		console.log(this.userTable[data.id]);
+
+		return data.id;
 	}
 
 	this.getUser = function(id) {
@@ -24,16 +26,16 @@ var mockCommunicator = new function()
 	}
 
 	this.deleteUser = function(id) {
-		for(var i=0;i<userTable.length;i++) {
-			if(userTable[i].id==id) {
-				userTable.splice(i,1);
+		for(var i=0;i<this.userTable.length;i++) {
+			if(this.userTable[i].id==id) {
+				this.userTable.splice(i,1);
 			}
 		}
 	}
 
 	this.updateUser = function(id, data) {
 		data.id = id;
-		userTable[id] = data;
+		this.userTable[id] = data;
 	}
 
 	this.brokerTable = [
@@ -41,29 +43,32 @@ var mockCommunicator = new function()
 		{'id':'0','username':'LJenkins','password':'password','role_id':'1','email':'ljenkins@gmail.com','active':'1'},
 	];
 	
-	this.createBroker = function(userData) {
+	this.createBroker = function(data) {
 
-		userData.id = brokerTable.length;
-		brokerTable.push(userData);
+		data.id = this.brokerTable.length;
+		this.brokerTable.push(data);
 
-		return userData.id;
+		console.log(this.brokerTable[data.id]);
+
+		return data.id;
 	}
+
 	this.getBroker = function(id) {
-		for(var i=0;i<brokerTable.length;i++) {
-			if(brokerTable[i].id==id) {
-				return brokerTable[i];
+		for(var i=0;i<this.brokerTable.length;i++) {
+			if(this.brokerTable[i].id==id) {
+				return this.brokerTable[i];
 			}
 		}
 	}
 	this.deleteBroker = function(id) {
-		for(var i=0;i<brokerTable.length;i++) {
-			if(brokerTable[i].id==id) {
-				brokerTable.splice(i,1);
+		for(var i=0;i<this.brokerTable.length;i++) {
+			if(this.brokerTable[i].id==id) {
+				this.brokerTable.splice(i,1);
 			}
 		}
 	}
 	this.updateBroker = function(id, data) {
 		data.id = id;
-		brokerTable[id] = data;
+		this.brokerTable[id] = data;
 	}
 };

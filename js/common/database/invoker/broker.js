@@ -3,9 +3,10 @@ var brokerInvoker = new function() {
 
     this.create = function (userData,brokerData,successCallback,failureCallback) 
     {
-        var newUserId = mockCommunicator.createUser(); //communicator.post(invoker.user.URL)
+        var newUserId = mockCommunicator.createUser(userData); //communicator.post(invoker.user.URL)
 		
-		mockCommunicator.createBroker(newUserId);
+		brokerData.user_id = newUserId;
+		mockCommunicator.createBroker(brokerData);
 
 		if(newUserId == null) {
 			failureCallback();

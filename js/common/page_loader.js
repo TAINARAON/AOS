@@ -17,7 +17,7 @@ var pageLoader = function()
 			"jsFiles":[],
 			"htmlFiles":{
 				"navbar":"html/common/nav.html",
-				"landing_page":"html/broker_admin/create_broker.html"
+				"landing_page":"html/broker_admin/brokerage.html"
 			}
 		},
 		{
