@@ -8,6 +8,7 @@ function init() {
 	initializeText();
 	initializeOnClicks();
 	initializeModals();
+	populateBrokerTable();
 }
 
 function initializeModals() {
@@ -27,6 +28,47 @@ function initializeText() {
 	setBrokerageEmailText();
 	setBrokerageFspNumberText();
 	setBrokerageContactNumberText();
+}
+
+function populateBrokerTable() {
+
+	var brokers = getBrokers();
+
+	for(var i = 0;i<brokers.length;i++) {
+
+		let brokerId = brokers[i].id;
+
+		$('#broker_admin_broker_table tbody')
+			.append($('<tr></tr>').on('click',function() {
+				onBrokerTableEntryClick(brokerId);
+			})
+				.append($('<td></td>').text(brokers[i].name))
+				.append($('<td></td>').text(brokers[i].surname))
+		)
+	}
+}
+
+function onBrokerTableEntryClick(id) {
+	alert('clicked on ' + id);
+}
+
+function getBrokers() {
+	if(DEBUG_WARNINGS) console.warn("TODO");
+
+	var brokers = [
+		{
+			'id':1,
+			'name':'Tiaan',
+			'surname':'Gerber'
+		},
+		{
+			'id':2,
+			'name':'Samantha',
+			'surname':'Wiggill'
+		}
+	];
+
+	return brokers;
 }
 
 function setBrokerageNameText() {

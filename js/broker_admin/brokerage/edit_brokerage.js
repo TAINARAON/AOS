@@ -19,8 +19,6 @@ function initText() {
 function initOnClickListeners() {
 	onSubmitButton();
 	onCancelButton();
-
-	
 }
 
 function onSubmitButton() {
