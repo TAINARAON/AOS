@@ -4,8 +4,26 @@ var mockCommunicator = new function()
 
 // USER
 	this.userTable = [
-
-		{'id':'0','username':'LJenkins','password':'password','role_id':'1','email':'ljenkins@gmail.com','active':'1'},
+		{
+			'id':'0',
+			'username':'LJenkins',
+			'password':'password',
+			'role_id':'1',
+			'name':'Leeroy',
+			'surname':'Nnnjenkinsss',
+			'email':'ljenkins@gmail.com',
+			'active':'1'
+		},
+		{
+			'id':'1',
+			'username':'ACarstens',
+			'password':'password',
+			'role_id':'1',
+			'name':'Andre',
+			'surname':'Carstens',
+			'email':'acarstens@gmail.com',
+			'active':'1'
+		},
 	];
 	this.createUser = function(data) {
 
@@ -37,8 +55,18 @@ var mockCommunicator = new function()
 
 // BROKER
 	this.brokerTable = [
-
-		{'id':'0','username':'LJenkins','password':'password','role_id':'1','email':'ljenkins@gmail.com','active':'1'},
+		{
+			'id':'0',
+			'userId':'0',
+			'brokerage_id':'0',
+			'isAdmin':'0'
+		},
+		{
+			'id':'1',
+			'userId':'1',
+			'brokerage_id':'0',
+			'isAdmin':'0'
+		},
 	];
 	this.createBroker = function(data) {
 
