@@ -10,12 +10,9 @@
 			{"title":"title3", "data":"data3"}
 		];
 
-		//createModal("modal_container");
+		createModal("modal_container");
 
 		createQuoteAccordion(container, data);
-
-		// link the quote modal buttons to on click listeners
-		setupQuoteModalButtonListeners();
 	})();
 
 	function createModal(id)
@@ -105,32 +102,6 @@
         } else {
             panel.style.display = "block";
         }
-	}
-
-	function setupQuoteModalButtonListeners()
-	{
-
-		console.log("Adding click listeners");
-		var includeBtn = document.getElementById("includeRow");
-		console.log(includeBtn);
-		includeBtn.onclick = function(e) {addFarmToQuote();};
-		document.getElementById("cancelQuote").onclick = function(e) {cancelCreatingQuote();};
-		document.getElementById("acceptQuote").onclick = function(e) {createQuoteAndAddToView()};
-	}
-
-	function addFarmToQuote()
-	{
-		alert("Add farm to quote");
-	}
-
-	function cancelCreatingQuote()
-	{
-		alert("Cancel creating quote");
-	}
-
-	function createQuoteAndAddToView()
-	{
-		alert("Create quote");
 	}
 
 })();
