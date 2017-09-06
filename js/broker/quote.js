@@ -5,14 +5,17 @@
 	(function init(){
 		var container = document.getElementById("quote_container");
 		var data = [
-			{"title":"bah1", "data":"data1"},
-			{"title":"bah2", "data":"data2"},
-			{"title":"bah3", "data":"data3"}
+			{"title":"title1", "data":"data1"},
+			{"title":"title2", "data":"data2"},
+			{"title":"title3", "data":"data3"}
 		];
 
-		createModal("modal_container");
+		//createModal("modal_container");
 
 		createQuoteAccordion(container, data);
+
+		// link the quote modal buttons to on click listeners
+		setupQuoteModalButtonListeners();
 	})();
 
 	function createModal(id)
@@ -21,10 +24,12 @@
 	}
 
 	function createQuoteAccordion(container, quoteData) {
-		console.log(container);
 		for (let i = 0; i < quoteData.length; i++) {
+			console.log("Creating elements: " + i);
 			var button = document.createElement('BUTTON');
 			button.className = "accordion";
+			console.log("Title: " + quoteData[i].title);
+			button.innerHTML = quoteData[i].title;
 
 			var detailContainer = document.createElement('DIV');
 			detailContainer.className = "panel";
@@ -100,6 +105,32 @@
         } else {
             panel.style.display = "block";
         }
+	}
+
+	function setupQuoteModalButtonListeners()
+	{
+
+		console.log("Adding click listeners");
+		var includeBtn = document.getElementById("includeRow");
+		console.log(includeBtn);
+		includeBtn.onclick = function(e) {addFarmToQuote();};
+		document.getElementById("cancelQuote").onclick = function(e) {cancelCreatingQuote();};
+		document.getElementById("acceptQuote").onclick = function(e) {createQuoteAndAddToView()};
+	}
+
+	function addFarmToQuote()
+	{
+		alert("Add farm to quote");
+	}
+
+	function cancelCreatingQuote()
+	{
+		alert("Cancel creating quote");
+	}
+
+	function createQuoteAndAddToView()
+	{
+		alert("Create quote");
 	}
 
 })();
