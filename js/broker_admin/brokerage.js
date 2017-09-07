@@ -5,22 +5,16 @@ $(function() {
   });
 
 function init() {
-	initializeText();
-	initializeOnClicks();
+	
 	initializeModals();
+	initializeText();
 	populateBrokerTable();
+	
 }
 
 function initializeModals() {
+	
 	loader.loadPartOfPage("html/broker_admin/edit_brokerage.html", 'edit_brokerage_modal_container');
-}
-
-function initializeOnClicks() {
-
-}
-
-function displayEditBrokerageModal() {
-
 }
 
 function initializeText() {
@@ -32,43 +26,101 @@ function initializeText() {
 
 function populateBrokerTable() {
 
-	var brokers = getBrokers();
+	var container = $('#broker_admin_broker_container');
+	var brokers = getBrokersDetails();
 
 	for(var i = 0;i<brokers.length;i++) {
-
-		let brokerId = brokers[i].id;
-
-		$('#broker_admin_broker_table tbody')
-			.append($('<tr></tr>').on('click',function() {
-				onBrokerTableEntryClick(brokerId);
-			})
-				.append($('<td></td>').text(brokers[i].name))
-				.append($('<td></td>').text(brokers[i].surname))
-		)
+		createBrokerEntry(brokers[i],container);
 	}
 }
 
-function onBrokerTableEntryClick(id) {
-	alert('clicked on ' + id);
+function createBrokerEntry(broker,container) {
+
+	var header = $('<button></button>')
+		.addClass('accordion')
+		.text(broker.name + " " + broker.surname)
+		.on('click',function(e){
+			toggleDataContainer(e);
+		}
+	);
+
+	var detailContainer = $('<div></div>')
+		.addClass('panel');
+
+	var editButton = $('<button></button>')
+		.text('Edit')
+		.attr('data-toggle','modal')
+		.attr('data-target','#editBrokerModal')
+		.on('click',function() {
+			onEditBroker(broker.id);
+		}
+	);
+
+	var revokeButton = $('<button></button>')
+		.text('Revoke')
+		.on('click',function() {
+			onRevokeBroker(broker.id);
+		}
+	);
+
+	var details = createDetailsOfBrokerHtml(broker);
+	//$('<p></p>').text("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.");
+	
+	detailContainer.append(editButton);
+	detailContainer.append(revokeButton);
+	detailContainer.append(details);
+
+	container.append(header);
+	container.append(detailContainer);
 }
 
-function getBrokers() {
-	if(DEBUG_WARNINGS) console.warn("TODO");
+function createDetailsOfBrokerHtml(brokerDetails) {
+	var container = $('<div></div>')
+		.append($('<p>Name: '+ brokerDetails.name + '</p>'))
+		.append($('<p>Surname: '+ brokerDetails.surname + '</p>'))
 
-	var brokers = [
-		{
-			'id':1,
-			'name':'Tiaan',
-			'surname':'Gerber'
-		},
-		{
-			'id':2,
-			'name':'Samantha',
-			'surname':'Wiggill'
-		}
-	];
+	return container;
+}
 
-	return brokers;
+function toggleDataContainer(e) {
+	var target = e.target || e.srcElement;
+
+    target.classList.toggle("active");
+
+    var panel = target.nextElementSibling;
+    if (panel.style.display === "block") {
+        panel.style.display = "none";
+    } else {
+        panel.style.display = "block";
+    }
+}
+
+function onEditBroker(id) {
+
+	populateEditBrokerModalText(brokerInvoker.getBrokerWithDetails(id));
+	setOnClickForEditBrokerSaveButton(id);
+}
+
+function populateEditBrokerModalText(broker) {
+	$('#edit_broker_name_input').val(broker.name);
+	$('#edit_broker_surname_input').val(broker.surname);
+}
+function setOnClickForEditBrokerSaveButton(brokerId) {
+
+	$('#edit_broker_save_button').off().on('click', function() {
+		alert(brokerId + ' changed to ' + $('#edit_broker_name_input').val());
+	});
+}
+
+function onRevokeBroker(id) {
+	if(DEBUG_WARNINGS) console.warn('TODO');
+	// Create dialog for user asking if he wants to revoke user <name><surname>.
+	// Sends email to broker_admin with new credentials of account. 
+	alert("revoke: "+id);
+}
+
+function getBrokersDetails() {
+	return brokerInvoker.getBrokersWithDetails();
 }
 
 function setBrokerageNameText() {

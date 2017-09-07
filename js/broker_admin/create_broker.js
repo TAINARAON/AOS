@@ -6,12 +6,16 @@ function onCreateBrokerClick() {
 	// User data
 	var username = document.getElementById('create_broker_username_input').value;
 	var email = document.getElementById('create_broker_email_input').value;
-
+	var name = document.getElementById('create_broker_name_input').value;
+	var surname = document.getElementById('create_broker_surname_input').value;
+	
 	var userData = 
 	{
 		"username":username,
 		"password":generateRandomPassword(),
 		"roleId":getRoleIdOfBroker(),
+		"name":name,
+		"surname":surname,
 		"email":email
 	}
 
@@ -21,10 +25,15 @@ function onCreateBrokerClick() {
 		"isAdmin":"0"
 	}
 
-	brokerInvoker.create(userData, brokerData, onCreateBrokerSuccess, onCreateBrokerFailure);
+	var newId = brokerInvoker.create(userData, brokerData);
+
+	if(newId != null) {
+		onCreateBrokerSuccess(name, surname, email);
+	}
 }
 
-function onCreateBrokerSuccess() {
+function onCreateBrokerSuccess(name, surname, email) {
+	alert(name + ' ' + surname + ' has been created. An email has been sent to ' + email + '.');
 	loader.loadPage('html/broker_admin/brokerage.html');
 }
 

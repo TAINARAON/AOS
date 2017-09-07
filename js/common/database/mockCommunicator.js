@@ -84,6 +84,9 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+	this.getBrokers = function() {
+		return this.brokerTable;
+	}
 	this.deleteBroker = function(id) {
 		for(var i=0;i<this.brokerTable.length;i++) {
 			if(this.brokerTable[i].id==id) {
