@@ -14,6 +14,8 @@ var addQuote;
 			{"boerdery":"title3", "plase":[{"plaas":"plaas3"}]}
 		];
 
+		console.log(mainQuote);
+
 		createModal("modal_container");
 
 		createQuoteAccordion(container, data);
@@ -161,7 +163,33 @@ var addQuote;
 		// if the business unit already exists, then make sure to only update the children
 		// else add the entire business unit to the accordion	
 
+		/*var ancestor = document.getElementById("quote_container");
+    	parentDescendents = ancestor.getElementsByTagName('BUTTON');
+    	for(var i = 0; i < parentDescendents.length; i++)
+    	{
+    		for(var j = 0; j < mainQuote.length; j++)
+    		{
+    			if(parentDescendents[i].innerHTML == mainQuote[j].boerdery)
+				{
+					console.log("Business unit already exists in view");
+					for(var k = 0; k < mainQuote[j].plase.length; k++)
+					{
+						var detailContainerSibling = parentDescendents[i].nextSibling;
+						console.log("Should be button's detail container");
+						console.log(detailContainerSibling);
+						//if(mainQuote[j].plase[k] == )
+						//{
 
+						//}
+					}
+				}
+				else
+				{
+					console.log("Business unit does not exists in view");
+					createAccordionParentElement(ancestor, mainQuote, i);
+				}
+    		}
+    	}*/
 	}
 
 })();

@@ -7,7 +7,7 @@ const BROKER = "broker";
     console.log("Main linked");
     loader = pageLoader();
 
-    loader.load(BROKER_ADMIN);
+    loader.load(BROKER);
 
     // REAL DATABASE
     //var myCom = httpCommunicator();
