@@ -29,6 +29,30 @@
 		includeBtn.onclick = function(e) {addFarmToQuote();};
 		document.getElementById("cancelQuote").onclick = function(e) {cancelCreatingQuote();};
 		document.getElementById("acceptQuote").onclick = function(e) {createQuoteAndAddToView()};
+
+		document.getElementById("searchBtn").onclick = function(e) {checkBusinessUnitValidity();};
+	}
+
+	function checkBusinessUnitValidity()
+	{
+		console.log("checking validity");
+		var boerdery = input_boerdery.value;
+		// TODO: check if this business unit exists in the db, if so - get the id and display the other input boxes
+		var plaas = input_plaas.value;
+		// TODO: check if this farm exists in the db, if so - get the id and display the other input boxes
+
+		setBusinessUnitId(Math.floor((Math.random() * 100) + 1));
+		setFarmId(Math.floor((Math.random() * 100) + 1));
+	}
+
+	function setBusinessUnitId(id)
+	{
+		
+	}
+
+	function setFarmId(id)
+	{
+		
 	}
 
 	function addFarmToQuote()
