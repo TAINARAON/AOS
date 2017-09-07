@@ -21,12 +21,7 @@ var quoteInvoker = new function() {
 
     
     this.getQuotes = function(id) {
-    	var broker = mockCommunicator.getBroker(id);
-    	var user = mockCommunicator.getUser(broker.userId);
-		broker.name = user.name;
-		broker.surname = user.surname;
-
-		return broker;
+    	return mockCommunicator.getQuotes();
     };
 
     this.getLandEntriesOfQuote = function(id) {
