@@ -138,6 +138,9 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+	this.getQuotes = function() {
+		return this.quoteTable;
+	}
 	this.deleteQuote = function(id) {
 		for(var i=0;i<this.quoteTable.length;i++) {
 			if(this.quoteTable[i].id==id) {
@@ -193,6 +196,10 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+	this.getQuoteLandEntries = function() {
+		return this.quoteLandEntryTable;
+	}
+	
 	this.deleteQuoteLandEntry = function(id) {
 		for(var i=0;i<this.quoteLandEntryTable.length;i++) {
 			if(this.quoteLandEntryTable[i].id==id) {
