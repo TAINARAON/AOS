@@ -1,13 +1,17 @@
+var addQuote;
+
 (function(){  
 
 	console.log("Quote js linked");
 
+	var mainQuote = [];
+
 	(function init(){
 		var container = document.getElementById("quote_container");
 		var data = [
-			{"title":"title1", "data":"data1"},
-			{"title":"title2", "data":"data2"},
-			{"title":"title3", "data":"data3"}
+			{"boerdery":"title1", "plase":[{"plaas":"plaas1"}]},
+			{"boerdery":"title2", "plase":[{"plaas":"plaas2"}]},
+			{"boerdery":"title3", "plase":[{"plaas":"plaas3"}]}
 		];
 
 		createModal("modal_container");
@@ -31,8 +35,8 @@
   	{
   		var button = document.createElement('BUTTON');
 		button.className = "accordion";
-		console.log("Title: " + quoteData[index].title);
-		button.innerHTML = quoteData[index].title;
+		console.log("Title: " + quoteData[index].boerdery);
+		button.innerHTML = quoteData[index].boerdery;
 
 		container.appendChild(button);
 
@@ -124,4 +128,47 @@
         }
 	}
 
+	addQuote = function(quotes)
+	{
+		console.log("Hitting inner fuction via global variable");
+		console.log("Size: " + mainQuote.length);
+
+		for(var i = 0; i < quotes.length; i++)
+		{
+			if(mainQuote.some(item => item.boerdery === quotes[i].boerdery))
+			{
+				console.log("Entry exists, add farm");
+				for(var j = 0; j < quotes[i].plase.length; j++)
+				{
+					console.log("Adding farm");
+					mainQuote[i].plase.push(quotes[i].plase[j]);
+				}
+			}
+			else
+			{
+				console.log("Entry does not exist, add whole");
+				mainQuote.push(quotes[i]);
+			}
+		}
+
+		console.log(mainQuote);
+		// updated table here?
+		updateAccordion();
+	}
+
+	function updateAccordion()
+	{
+		// if the business unit already exists, then make sure to only update the children
+		// else add the entire business unit to the accordion	
+
+
+	}
+
 })();
+
+function updateQuotes(quotes)
+{
+	console.log("Hitting global function");
+	console.log(quotes);
+	addQuote(quotes);
+}
