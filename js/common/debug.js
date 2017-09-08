@@ -7,7 +7,7 @@ var FILTER_TYPE_ALL = 0;
 var FILTER_TYPE_LOG = 1;
 var FILTER_TYPE_WARNING = 2;
 
-var debugTool = new function(filterDepth=0, filterType="") {
+var debugTool = new function(filterDepth=FILTER_LEVEL_ALL, filterType=FILTER_TYPE_ALL) {
 	this.print = function(message, level, type)
 	{
 		if(checkDepthPermission(filterDepth, level) && checkTypePermission(filterType, type))
