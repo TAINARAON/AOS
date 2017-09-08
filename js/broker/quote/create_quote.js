@@ -17,9 +17,38 @@
 
 	var closeModalBtn = document.getElementById("close_modal");
 
+	var boerderyID;
+	var plaasID;
+	var allValuesEntered = false;
+
 	(function init(){
+		addInputValueListeners();
 		setupModalButtonClickListeners();
 	})();
+
+	function addInputValueListeners()
+	{
+		console.log("Adding input listeners");
+		$('#quote_input_container > div > div > input').keyup(function(){quoteInputKeyUpListener();});
+	}
+
+	function quoteInputKeyUpListener()
+	{
+		var empty = false;
+        $('#quote_input_container > div > div > input').each(function() {
+            if ($(this).val() == '') {
+                empty = true;
+            }
+        });
+
+        if (empty) {
+        	allValuesEntered = false;
+            //$('#register').attr('disabled', 'disabled'); // updated according to http://stackoverflow.com/questions/7637790/how-to-remove-disabled-attribute-with-jquery-ie
+        } else {
+        	allValuesEntered = true;
+            //$('#register').removeAttr('disabled'); // updated according to http://stackoverflow.com/questions/7637790/how-to-remove-disabled-attribute-with-jquery-ie
+        }
+	}
 
 	function setupModalButtonClickListeners()
 	{
@@ -30,10 +59,10 @@
 		document.getElementById("cancelQuote").onclick = function(e) {cancelCreatingQuote();};
 		document.getElementById("acceptQuote").onclick = function(e) {createQuoteAndAddToView()};
 
-		document.getElementById("searchBtn").onclick = function(e) {checkBusinessUnitValidity();};
+		//document.getElementById("searchBtn").onclick = function(e) {checkBusinessUnitValidity();};
 	}
 
-	function checkBusinessUnitValidity()
+	/*function checkBusinessUnitValidity()
 	{
 		console.log("checking validity");
 		var boerdery = input_boerdery.value;
@@ -43,56 +72,106 @@
 
 		setBusinessUnitId(Math.floor((Math.random() * 100) + 1));
 		setFarmId(Math.floor((Math.random() * 100) + 1));
+	}*/
+
+	function addFarmToQuote()
+	{
+		if(validateInputs())
+		{
+			var rowContainer = document.getElementById("create_quote_table_body");
+
+			var boerdery = input_boerdery.value;
+			var plaas = input_plaas.value;
+			var produk = input_produk.value;
+			var gewas = input_gewas.value;
+			var opsie_tipe = input_opsie_tipe.value;
+			var persentasie = input_persentasie.value;
+			var land_nommer = input_land_nommer.value;
+			var kultivar = input_kultivar.value;
+			var oppervlakte = input_oppervlakte.value;
+			var gewas_opbrengs = input_gewas_opbrengs.value;
+			var rand_per_eenheid = input_rand_per_eenheid.value;
+			var versekerings_waarde = input_versekerings_waarde.value;
+
+			var data = {
+				"boerdery":boerdery,
+				plase:[
+					{
+						"plaas":plaas,
+						"produk":produk,
+						"gewas":gewas,
+						"opsie_tiepe":opsie_tipe,
+						"persentasie":persentasie,
+						"land_nommer":land_nommer,
+						"kultivar":kultivar,
+						"oppervlakte":oppervlakte,
+						"gewas_opbrengs":gewas_opbrengs,
+						"rand_per_eenheid":rand_per_eenheid,
+						"versekerings_waarde":versekerings_waarde
+					}
+				]
+			};
+
+			addToQuoteObject(data);
+			addToTable(data, rowContainer);
+		}
+		else
+		{
+			alert("Please fill in all values");
+		}
+	}
+
+	function validateInputs()
+	{
+		console.log("checking validity");
+		// TODO: add extra validation here
+		var boerderySuccess = validateBusinessUnite(input_boerdery.value);
+		if(!boerderySuccess)
+		{
+			// Somehow highlight this field
+		}
+		
+		var plaasSuccess = validateFarm(input_plaas.value);
+		if(!plaasSuccess)
+		{
+			// Somehow highlight this field
+		}
+
+		return boerderySuccess && plaasSuccess && allValuesEntered;
+	}
+
+	function validateBusinessUnite(businessUnitName)
+	{
+		// TODO: actual database call
+		setBusinessUnitId(Math.floor((Math.random() * 100) + 1));
+		return true;
 	}
 
 	function setBusinessUnitId(id)
 	{
-		
+		boerderyID = id;
+	}
+
+	function resetBusinessUnitId()
+	{
+		boerderyID = undefined;
+	}
+
+	function validateFarm(farmName)
+	{
+		// TODO: actual database call
+		setFarmId(Math.floor((Math.random() * 100) + 1));
+		return true;
 	}
 
 	function setFarmId(id)
 	{
-		
+		plaasID = id;
 	}
 
-	function addFarmToQuote()
+	function resetFarmId()
 	{
-		var rowContainer = document.getElementById("create_quote_table_body");
-
-		var boerdery = input_boerdery.value;
-		var plaas = input_plaas.value;
-		var produk = input_produk.value;
-		var gewas = input_gewas.value;
-		var opsie_tipe = input_opsie_tipe.value;
-		var persentasie = input_persentasie.value;
-		var land_nommer = input_land_nommer.value;
-		var kultivar = input_kultivar.value;
-		var oppervlakte = input_oppervlakte.value;
-		var gewas_opbrengs = input_gewas_opbrengs.value;
-		var rand_per_eenheid = input_rand_per_eenheid.value;
-		var versekerings_waarde = input_versekerings_waarde.value;
-
-		var data = {
-			"boerdery":boerdery,
-			plase:[
-				{
-					"plaas":plaas,
-					"produk":produk,
-					"gewas":gewas,
-					"opsie_tiepe":opsie_tipe,
-					"persentasie":persentasie,
-					"land_nommer":land_nommer,
-					"kultivar":kultivar,
-					"oppervlakte":oppervlakte,
-					"gewas_opbrengs":gewas_opbrengs,
-					"rand_per_eenheid":rand_per_eenheid,
-					"versekerings_waarde":versekerings_waarde
-				}
-			]
-		};
-
-		addToQuoteObject(data);
-		addToTable(data, rowContainer);
+		plaasID = undefined;
 	}
 
 	function addToQuoteObject(data)
