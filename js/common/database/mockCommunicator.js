@@ -395,5 +395,242 @@ var mockCommunicator = new function()
 		data.id = id;
 		this.farmTable[id] = data;
 	}
-	
+
+// PRICE UOM
+	this.priceUomTable = [
+		{
+			'id':'0',
+			'name':'R/Ton',
+		},
+		{
+			'id':'1',
+			'name':'R/Unit',
+		},
+	];
+	this.createPriceUom = function(data) {
+
+		data.id = this.priceUomTable.length;
+		this.priceUomTable.push(data);
+
+		return data.id;
+	}
+	this.getPriceUom = function(id) {
+		for(var i=0;i<this.priceUomTable.length;i++) {
+			if(this.priceUomTable[i].id==id) {
+				return this.priceUomTable[i];
+			}
+		}
+	}
+	this.deletePriceUom = function(id) {
+		for(var i=0;i<this.priceUomTable.length;i++) {
+			if(this.priceUomTable[i].id==id) {
+				this.priceUomTable.splice(i,1);
+			}
+		}
+	}
+	this.updatePriceUom = function(id, data) {
+		data.id = id;
+		this.priceUomTable[id] = data;
+	}
+
+// AREA UOM
+	this.areaUomTable = [
+		{
+			'id':'0',
+			'name':'R/Ton',
+		},
+		{
+			'id':'1',
+			'name':'R/Unit',
+		},
+	];
+	this.createAreaUom = function(data) {
+
+		data.id = this.areaUomTable.length;
+		this.areaUomTable.push(data);
+
+		return data.id;
+	}
+	this.getAreaUom = function(id) {
+		for(var i=0;i<this.areaUomTable.length;i++) {
+			if(this.areaUomTable[i].id==id) {
+				return this.areaUomTable[i];
+			}
+		}
+	}
+	this.deleteAreaUom = function(id) {
+		for(var i=0;i<this.areaUomTable.length;i++) {
+			if(this.areaUomTable[i].id==id) {
+				this.areaUomTable.splice(i,1);
+			}
+		}
+	}
+	this.updateAreaUom = function(id, data) {
+		data.id = id;
+		this.areaUomTable[id] = data;
+	}
+
+// DISTRICT
+	this.districtTable = [
+		{
+			'id':'0',
+			'name':'Bellville',
+			'active':'1'
+		},
+		{
+			'id':'1',
+			'name':'Kraaifontein',
+			'active':'1'
+		},
+	];
+	this.createAreaUom = function(data) {
+
+		data.id = this.districtTable.length;
+		this.districtTable.push(data);
+
+		return data.id;
+	}
+	this.getAreaUom = function(id) {
+		for(var i=0;i<this.districtTable.length;i++) {
+			if(this.districtTable[i].id==id) {
+				return this.districtTable[i];
+			}
+		}
+	}
+	this.deleteAreaUom = function(id) {
+		for(var i=0;i<this.districtTable.length;i++) {
+			if(this.districtTable[i].id==id) {
+				this.districtTable.splice(i,1);
+			}
+		}
+	}
+	this.updateAreaUom = function(id, data) {
+		data.id = id;
+		this.districtTable[id] = data;
+	}
+
+// TARIFF OPTION TYPE
+	this.tariffOptionTypeTable = [
+		{
+			'id':'0',
+			'name':'Franchise',
+		},
+		{
+			'id':'1',
+			'name':'Excess',
+		},
+	];
+	this.createTariffOptionType = function(data) {
+
+		data.id = this.tariffOptionTypeTable.length;
+		this.tariffOptionTypeTable.push(data);
+
+		return data.id;
+	}
+	this.getTariffOptionType = function(id) {
+		for(var i=0;i<this.tariffOptionTypeTable.length;i++) {
+			if(this.tariffOptionTypeTable[i].id==id) {
+				return this.tariffOptionTypeTable[i];
+			}
+		}
+	}
+	this.deleteTariffOptionType = function(id) {
+		for(var i=0;i<this.tariffOptionTypeTable.length;i++) {
+			if(this.tariffOptionTypeTable[i].id==id) {
+				this.tariffOptionTypeTable.splice(i,1);
+			}
+		}
+	}
+	this.updateTariffOptionType = function(id, data) {
+		data.id = id;
+		this.tariffOptionTypeTable[id] = data;
+	}
+
+// TARIFF OPTION
+	this.tariffOptionTable = [
+		{
+			'id':'0',
+			'tariff_option_type_id':'0',
+			'crop_id':'1',
+			'district_id':'0',
+			'percentage':'5',
+			'tariff':'8.66',
+			'coverage_start':'0',
+			'coverage_end':'0',
+			'damage_type_id':'0'
+		},
+		{
+			'id':'1',
+			'tariff_option_type_id':'1',
+			'crop_id':'1',
+			'district_id':'1',
+			'percentage':'7.5',
+			'tariff':'6.48',
+			'coverage_start':'2017-06-01 00:00:00',
+			'coverage_end':'2018-06-01 00:00:00',
+			'damage_type_id':'0'
+		},
+	];
+	this.createTariffOption = function(data) {
+
+		data.id = this.tariffOptionTable.length;
+		this.tariffOptionTable.push(data);
+
+		return data.id;
+	}
+	this.getTariffOption = function(id) {
+		for(var i=0;i<this.tariffOptionTable.length;i++) {
+			if(this.tariffOptionTable[i].id==id) {
+				return this.tariffOptionTable[i];
+			}
+		}
+	}
+	this.deleteTariffOption = function(id) {
+		for(var i=0;i<this.tariffOptionTable.length;i++) {
+			if(this.tariffOptionTable[i].id==id) {
+				this.tariffOptionTable.splice(i,1);
+			}
+		}
+	}
+	this.updateTariffOption = function(id, data) {
+		data.id = id;
+		this.tariffOptionTable[id] = data;
+	}
+
+// DAMAGE TYPE
+	this.damageTypeTable = [
+		{
+			'id':'0',
+			'name':'Fire',
+		},
+		{
+			'id':'1',
+			'name':'Flood',
+		},
+	];
+	this.createDamageType = function(data) {
+
+		data.id = this.damageTypeTable.length;
+		this.damageTypeTable.push(data);
+
+		return data.id;
+	}
+	this.getDamageType = function(id) {
+		for(var i=0;i<this.damageTypeTable.length;i++) {
+			if(this.damageTypeTable[i].id==id) {
+				return this.damageTypeTable[i];
+			}
+		}
+	}
+	this.deleteDamageType = function(id) {
+		for(var i=0;i<this.damageTypeTable.length;i++) {
+			if(this.damageTypeTable[i].id==id) {
+				this.damageTypeTable.splice(i,1);
+			}
+		}
+	}
+	this.updateDamageType = function(id, data) {
+		data.id = id;
+		this.damageTypeTable[id] = data;
+	}
 };
