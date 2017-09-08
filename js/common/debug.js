@@ -14,7 +14,7 @@ var debugTool = new function(filterDepth=0, filterType="") {
 			printMessage(message, type);
 	}
 
-	this.printMessage = function(message, type)
+	function printMessage(message, type)
 	{
 		switch(type)
 		{
@@ -28,17 +28,17 @@ var debugTool = new function(filterDepth=0, filterType="") {
 		}
 	}
 
-	this.printWarning = function(message)
+	function printWarning(message)
 	{
 		console.warn(message);
 	}
 
-	this.printNormal = function (message)
+	function printNormal(message)
 	{
 		console.log(message);
 	}
 
-	this.checkDepthPermission = function(allowedLevel, msgLevel)
+	function checkDepthPermission(allowedLevel, msgLevel)
 	{
 		if(allowedLevel == FILTER_LEVEL_ALL)
 		{
@@ -52,7 +52,7 @@ var debugTool = new function(filterDepth=0, filterType="") {
 		return false;
 	}
 
-	this.checkTypePermission = function(allowedType, msgType)
+	function checkTypePermission(allowedType, msgType)
 	{
 		if(allowedType == FILTER_TYPE_ALL)
 		{
