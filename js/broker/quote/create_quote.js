@@ -74,6 +74,18 @@
 		setFarmId(Math.floor((Math.random() * 100) + 1));
 	}*/
 
+	function getBrokerId()
+	{
+		// TODO: get the proper id from the session
+		return Math.floor((Math.random() * 10000) + 1);
+	}
+
+	function getInsurerId()
+	{
+		// TODO: get the proper id from the session
+		return Math.floor((Math.random() * 10000) + 1);
+	}
+
 	function addFarmToQuote()
 	{
 		if(validateInputs())
@@ -94,6 +106,14 @@
 			var versekerings_waarde = input_versekerings_waarde.value;
 
 			var data = {
+				"broker_id":getBrokerId(),
+				"insurer_id":getInsurerId(),
+				"business_unit_id":getBusinessUnitId(),
+				'active':'1',
+				'acceptable':'1',
+				'quote_number': "00001",
+				'linked_to_quote_id':null,
+				'date_created':'1990-05-18 19:01:05',
 				"boerdery":boerdery,
 				plase:[
 					{
@@ -130,7 +150,7 @@
 		{
 			// Somehow highlight this field
 		}
-		
+
 		var plaasSuccess = validateFarm(input_plaas.value);
 		if(!plaasSuccess)
 		{
@@ -143,13 +163,18 @@
 	function validateBusinessUnite(businessUnitName)
 	{
 		// TODO: actual database call
-		setBusinessUnitId(Math.floor((Math.random() * 100) + 1));
+		setBusinessUnitId(Math.floor((Math.random() * 1000) + 1));
 		return true;
 	}
 
 	function setBusinessUnitId(id)
 	{
 		boerderyID = id;
+	}
+
+	function getBusinessUnitId()
+	{
+		return boerderyID;
 	}
 
 	function resetBusinessUnitId()
@@ -160,7 +185,7 @@
 	function validateFarm(farmName)
 	{
 		// TODO: actual database call
-		setFarmId(Math.floor((Math.random() * 100) + 1));
+		setFarmId(Math.floor((Math.random() * 1000) + 1));
 		return true;
 	}
 
@@ -233,6 +258,9 @@
 	function reset()
 	{
 		console.log("Resetting modal values");
+		resetBusinessUnitId();
+		resetFarmId();
+
 		resetInputValues();
 		resetQuoteData();
 		resetTableRows();
