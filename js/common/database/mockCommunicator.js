@@ -8,7 +8,7 @@ var mockCommunicator = new function()
 			'id':'0',
 			'username':'LJenkins',
 			'password':'password',
-			'role_id':'1',
+			'roleId':'1',
 			'name':'Leeroy',
 			'surname':'Nnnjenkinsss',
 			'email':'ljenkins@gmail.com',
@@ -18,10 +18,30 @@ var mockCommunicator = new function()
 			'id':'1',
 			'username':'ACarstens',
 			'password':'password',
-			'role_id':'1',
+			'roleId':'1',
 			'name':'Andre',
 			'surname':'Carstens',
 			'email':'acarstens@gmail.com',
+			'active':'1'
+		},
+		{
+			'id':'2',
+			'username':'Cameo',
+			'password':'password',
+			'roleId':'1',
+			'name':'Cam',
+			'surname':'Eonona',
+			'email':'cameo@gmail.com',
+			'active':'1'
+		},
+		{
+			'id':'3',
+			'username':'DrAcula',
+			'password':'password',
+			'roleId':'1',
+			'name':'Doctor',
+			'surname':'Acula',
+			'email':'dracula@gmail.com',
 			'active':'1'
 		},
 	];
@@ -57,14 +77,14 @@ var mockCommunicator = new function()
 	this.brokerTable = [
 		{
 			'id':'0',
-			'userId':'0',
-			'brokerage_id':'0',
+			'userId':'2',
+			'brokerageId':'0',
 			'isAdmin':'0'
 		},
 		{
 			'id':'1',
-			'userId':'1',
-			'brokerage_id':'0',
+			'userId':'3',
+			'brokerageId':'0',
 			'isAdmin':'0'
 		},
 	];
@@ -103,24 +123,24 @@ var mockCommunicator = new function()
 	this.quoteTable = [
 		{
 			'id':'0',
-			'quote_number':'00001',
-			'business_unit_id':'0',
-			'broker_id':'0',
-			'insurer_id':'0',
+			'quoteNumber':'00001',
+			'businessUnitId':'0',
+			'brokerId':'0',
+			'insurerId':'0',
 			'active':'1',
-			'date_created':'1990-05-18 19:01:05',
-			'linked_to_quote_id':null,
-			'acceptable':'1'
+			'dateCreated':'2017-05-18 19:01:05',
+			'linkedToQuoteId':null,
+			'acceptable':'1'	
 		},
 		{
 			'id':'1',
-			'quote_number':'00002',
-			'business_unit_id':'0',
-			'broker_id':'0',
-			'insurer_id':'0',
+			'quoteNumber':'00002',
+			'businessUnitId':'0',
+			'brokerId':'0',
+			'insurerId':'0',
 			'active':'1',
-			'date_created':'1990-05-18 19:02:05',
-			'linked_to_quote_id':'0',
+			'dateCreated':'2017-05-18 19:02:05',
+			'linkedToQuoteId':'0',
 			'acceptable':'1'
 		},
 	];
@@ -157,29 +177,25 @@ var mockCommunicator = new function()
 	this.quoteLandEntryTable = [
 		{
 			'id':'0',
-			'quote_id':'0',
-			'farm_id':'0',
-			'land_number':'000111',
-			'crop_id':'1',
+			'quoteId':'0',
+			'farmId':'0',
+			'landNumber':'000111',
+			'cropId':'1',
 			'cultivar':'Red Dwarf',
 			'area':'7.4',
 			'yield':'14.22',
-			'tariff_option_id':'0',
-			'value':'1444.01',
-			'premium_contribution':'146.35'
+			'tariffOptionId':'0',
 		},
 		{
 			'id':'1',
-			'quote_id':'0',
-			'farm_id':'1',
-			'land_number':'100111',
-			'crop_id':'0',
+			'quoteId':'0',
+			'farmId':'1',
+			'landNumber':'100111',
+			'cropId':'0',
 			'cultivar':'Octopussy',
 			'area':'6.8',
 			'yield':'11.22',
-			'tariff_option_id':'0',
-			'value':'1444.01',
-			'premium_contribution':'122.01'
+			'tariffOptionId':'0',
 		},
 	];
 	this.createQuoteLandEntry = function(data) {
@@ -217,22 +233,22 @@ var mockCommunicator = new function()
 		{
 			'id':'0',
 			'name':'Anro Boerdery Co (ABC)',
-			'contact_number':'063-887-9635',
-			'contact_person':'Anro Swart',
+			'contactNumber':'063-887-9635',
+			'contactPerson':'Anro Swart',
 			'email':'anro.swart@bing.com',
-			'vat_number':'00625-4811',
-			'income_tax_number':'5651484166',
+			'vatNumber':'00625-4811',
+			'incomeTaxNumber':'5651484166',
 			'active':'1',
 			'verified':'1'
 		},
 		{
 			'id':'1',
 			'name':'Tiaan and Anro Boerdery Amalgamated Co (TABACO)',
-			'contact_number':'062-352-1342',
-			'contact_person':'Tiaan Swart',
+			'contactNumber':'062-352-1342',
+			'contactPerson':'Tiaan Swart',
 			'email':'tiaan.swart@yahoo.com',
-			'vat_number':'52159-6487',
-			'income_tax_number':'6768142685',
+			'vatNumber':'52159-6487',
+			'incomeTaxNumber':'6768142685',
 			'active':'1',
 			'verified':'1'
 		},
@@ -309,18 +325,18 @@ var mockCommunicator = new function()
 		{
 			'id':'0',
 			'name':'Apple',
-			'product_id':'0',
+			'productId':'0',
 			'active':'1',
-			'price_uom_id':'0',
-			'area_uom_id':'0'
+			'priceUomId':'0',
+			'areaUomId':'0'
 		},
 		{
 			'id':'1',
 			'name':'Banana',
-			'product_id':'0',
+			'productId':'0',
 			'active':'1',
-			'price_uom_id':'0',
-			'area_uom_id':'0'
+			'priceUomId':'0',
+			'areaUomId':'0'
 		},
 	];
 	this.createCrop = function(data) {
@@ -354,20 +370,20 @@ var mockCommunicator = new function()
 		{
 			'id':'0',
 			'name':'Plaas Anro Een',
-			'business_unit_id':'0',
+			'businessUnitId':'0',
 			'latitude':'1.22644',
 			'longitude':'-0.35428',
 			'active':'1',
-			'district_id':'0'
+			'districtId':'0'
 		},
 		{
 			'id':'1',
 			'name':'Plaas Anro Twee',
-			'business_unit_id':'0',
+			'businessUnitId':'0',
 			'latitude':'1.325642',
 			'longitude':'-0.35243',
 			'active':'1',
-			'district_id':'0'
+			'districtId':'0'
 		},
 	];
 	this.createFarm = function(data) {
@@ -550,25 +566,23 @@ var mockCommunicator = new function()
 	this.tariffOptionTable = [
 		{
 			'id':'0',
-			'tariff_option_type_id':'0',
-			'crop_id':'1',
-			'district_id':'0',
-			'percentage':'5',
-			'tariff':'8.66',
-			'coverage_start':'0',
-			'coverage_end':'0',
-			'damage_type_id':'0'
+			'tariffOptionTypeId':'0',
+			'cropId':'1',
+			'districtId':'0',
+			'coverage':'5',
+			'coverageStart':'0',
+			'coverageEnd':'0',
+			'damageTypeId':'0'
 		},
 		{
 			'id':'1',
-			'tariff_option_type_id':'1',
-			'crop_id':'1',
-			'district_id':'1',
-			'percentage':'7.5',
-			'tariff':'6.48',
-			'coverage_start':'2017-06-01 00:00:00',
-			'coverage_end':'2018-06-01 00:00:00',
-			'damage_type_id':'0'
+			'tariffOptionTypeId':'1',
+			'cropId':'1',
+			'districtId':'1',
+			'coverage':'7.5',
+			'coverageStart':'2017-06-01 00:00:00',
+			'coverageEnd':'2018-06-01 00:00:00',
+			'damageTypeId':'0'
 		},
 	];
 	this.createTariffOption = function(data) {
@@ -633,4 +647,88 @@ var mockCommunicator = new function()
 		data.id = id;
 		this.damageTypeTable[id] = data;
 	}
+
+// QUOTE LAND ENTRY DAMAGE TYPE
+	this.quoteLandEntryDamageTypeTable = [
+		{
+			'id':'0',
+			'quoteLandEntryId':'0',
+			'damageTypeId':'0',
+		},
+		{
+			'id':'1',
+			'quoteLandEntryId':'0',
+			'damageTypeId':'1',
+		},
+	];
+	this.createQuoteLandEntryDamageType = function(data) {
+
+		data.id = this.quoteLandEntryDamageTypeTable.length;
+		this.quoteLandEntryDamageTypeTable.push(data);
+
+		return data.id;
+	}
+	this.getQuoteLandEntryDamageType = function(id) {
+		for(var i=0;i<this.quoteLandEntryDamageTypeTable.length;i++) {
+			if(this.quoteLandEntryDamageTypeTable[i].id==id) {
+				return this.quoteLandEntryDamageTypeTable[i];
+			}
+		}
+	}
+	this.deleteQuoteLandEntryDamageType = function(id) {
+		for(var i=0;i<this.quoteLandEntryDamageTypeTable.length;i++) {
+			if(this.quoteLandEntryDamageTypeTable[i].id==id) {
+				this.quoteLandEntryDamageTypeTable.splice(i,1);
+			}
+		}
+	}
+	this.updateQuoteLandEntryDamageType= function(id, data) {
+		data.id = id;
+		this.quoteLandEntryDamageTypeTable[id] = data;
+	}
+
+// TARIFF OPTION DAMAGE TYPE
+	this.tariffOptionDamageTypeTable = [
+		{
+			'id':'0',
+			'quoteLandEntryId':'0',
+			'damageTypeId':'0',
+			'premiumContribution':'1.75'
+		},
+		{
+			'id':'1',
+			'quoteLandEntryId':'0',
+			'damageTypeId':'1',
+			'premiumContribution':'2.35'
+		},
+	];
+	this.createTariffOptionDamageType = function(data) {
+
+		data.id = this.tariffOptionDamageTypeTable.length;
+		this.tariffOptionDamageTypeTable.push(data);
+
+		return data.id;
+	}
+	this.getTariffOptionDamageType = function(id) {
+		for(var i=0;i<this.tariffOptionDamageTypeTable.length;i++) {
+			if(this.tariffOptionDamageTypeTable[i].id==id) {
+				return this.tariffOptionDamageTypeTable[i];
+			}
+		}
+	}
+	this.getTariffOptionDamageTypes = function() {
+		return this.tariffOptionDamageTypeTable;
+	}
+	this.deleteTariffOptionDamageType = function(id) {
+		for(var i=0;i<this.tariffOptionDamageTypeTable.length;i++) {
+			if(this.tariffOptionDamageTypeTable[i].id==id) {
+				this.tariffOptionDamageTypeTable.splice(i,1);
+			}
+		}
+	}
+	this.updateTariffOptionDamageType = function(id, data) {
+		data.id = id;
+		this.tariffOptionDamageTypeTable[id] = data;
+	}
+
 };

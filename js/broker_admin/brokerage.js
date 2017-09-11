@@ -1,15 +1,24 @@
-console.log("broker_admin/brokerage.js loaded");
-
 $(function() {
     init();
   });
 
+function test() {
+	console.log('a');
+	console.log(quoteInvoker.getDetailsOfQuote(0));
+	console.log('b');
+	//console.log(quoteInvoker.getLandEntriesOfQuote(0));
+	//console.log(quoteInvoker.getTariffOptionDamageTypesSelectedOfLandEntry(0));
+
+}
+
 function init() {
 	
+	test();
+
+
 	initializeModals();
 	initializeText();
 	populateBrokerTable();
-	
 }
 
 function initializeModals() {
@@ -113,7 +122,7 @@ function setOnClickForEditBrokerSaveButton(brokerId) {
 }
 
 function onRevokeBroker(id) {
-	if(DEBUG_WARNINGS) console.warn('TODO');
+	debugTool.print('TODO',1,2);
 	// Create dialog for user asking if he wants to revoke user <name><surname>.
 	// Sends email to broker_admin with new credentials of account. 
 	alert("revoke: "+id);
@@ -140,18 +149,14 @@ function setBrokerageContactNumberText() {
 }
 
 function getNameOfBrokerage() {
-	if(DEBUG_WARNINGS) {console.warn("TODO");}
 	return "Lukraak Makelaars";
 }
 function getEmailOfBrokerage() {
-	if(DEBUG_WARNINGS) console.warn("TODO");
 	return "lmakelaars@gmail.com";
 }
 function getFspNumberOfBrokerage() {
-	if(DEBUG_WARNINGS) console.warn("TODO");
 	return "1ukr44km4k3144r5";
 }
 function getContactNumberOfBrokerage() {
-	if(DEBUG_WARNINGS) console.warn("TODO");
 	return "062-LUKRAAK";
 }

@@ -1,5 +1,3 @@
-console.log("broker_admin/brokerage/edit_brokerage.js loaded");
-
 $(function() {
     init();
   });
@@ -54,33 +52,26 @@ function onChangeBrokerageDetails() {
 }
 
 function submitRequestToChangeBrokerageDetails() {
-	if(DEBUG_WARNINGS)console.warn("TODO");
 	alert("Request to change details submitted");
 }
 
 function notifyUserThatNoChangesWereMade() {
-	if(DEBUG_WARNINGS)console.warn("TODO");
 }
 
 function detailsChanged(details) {
-	if(DEBUG_WARNINGS)console.warn("TODO");
 	// check whether details are different from current data. if not, does not need to change
 	return 1;
 }
 
 function getNameOfBrokerage() {
-	if(DEBUG_WARNINGS)console.warn("TODO");
 	return "Lukraak Makelaars";
 }
 function getEmailOfBrokerage() {
-	if(DEBUG_WARNINGS)console.warn("TODO");
 	return "lmakelaars@gmail.com";
 }
 function getContactNumberOfBrokerage() {
-	if(DEBUG_WARNINGS)console.warn("TODO");
 	return "062-LUKRAAK";
 }
 function getFspNumberOfBrokerage() {
-	if(DEBUG_WARNINGS)console.warn("TODO");
 	return "1ukr44km4k3144r5";
 }

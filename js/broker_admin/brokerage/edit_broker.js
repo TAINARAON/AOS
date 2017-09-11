@@ -1,5 +1,3 @@
-console.log("broker_admin/edit_broker.js loaded");
-
 /*$(function() {
     setOnClickOfSaveBroker();
   });

@@ -1,6 +1,6 @@
 var brokerInvoker = new function() {
 
-    this.url =  "some_url_to_get_to_broker_table";
+    this.url =  "someUrlToGetToBrokerTable";
 
     this.create = function (userData,brokerData) 
     {
@@ -16,8 +16,8 @@ var brokerInvoker = new function() {
 
 		for(let i = 0; i< brokers.length; i++) {
 			let user = mockCommunicator.getUser(brokers[i].userId);
-			brokers[i].name = user.name;
-			brokers[i].surname = user.surname;
+			brokers[i]['name'] = user['name'];
+			brokers[i]['surname'] = user['surname'];
 		}
 
 		return brokers;
@@ -26,8 +26,8 @@ var brokerInvoker = new function() {
     this.getBrokerWithDetails = function(id) {
     	var broker = mockCommunicator.getBroker(id);
     	var user = mockCommunicator.getUser(broker.userId);
-		broker.name = user.name;
-		broker.surname = user.surname;
+		broker['name'] = user['name'];
+		broker['surname'] = user['surname'];
 
 		return broker;
     }
