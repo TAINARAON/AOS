@@ -184,6 +184,7 @@ var mockCommunicator = new function()
 			'cultivar':'Red Dwarf',
 			'area':'7.4',
 			'yield':'14.22',
+			'price':'5.48',
 			'tariffOptionId':'0',
 		},
 		{
@@ -195,6 +196,7 @@ var mockCommunicator = new function()
 			'cultivar':'Octopussy',
 			'area':'6.8',
 			'yield':'11.22',
+			'price':'4.78',
 			'tariffOptionId':'0',
 		},
 	];

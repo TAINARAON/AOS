@@ -121,6 +121,7 @@ var quoteInvoker = new function() {
             'cultivar':quoteLandEntry['cultivar'],
             'area':quoteLandEntry['area'],
             'yield':quoteLandEntry['yield'],
+            'price':quoteLandEntry['price'],
             'tariffOption':tariffOption,
             'selectedDamageTypes':tariffOptionDamageTypes
         }
