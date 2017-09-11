@@ -10,13 +10,15 @@ var quoteInvoker = new function() {
         	var quoteLandEntry = quoteLandEntry[i];
 
         	quoteLandEntry['quoteId'] = quoteId;
-        	var landEntryId = mockCommunicator.createQuoteLandEntry();
+        	var landEntryId = mockCommunicator.createQuoteLandEntry(quoteLandEntry);
 
         	if(landEntryId == null) {
         		console.error("A land entry failed to be created. Roll back whole quote entry");
         		return;
         	}
         }
+
+        return quoteId;
     };
 
     this.getQuote = function(id) {
@@ -32,30 +34,32 @@ var quoteInvoker = new function() {
     this.getDetailsOfQuote = function(quoteId) {
 
         var quote = this.getQuote(quoteId);
-        var quoteLinkedTo = quote['linkedToQuoteId'] == null ? null : this.getDetailsOfQuote(quote['linkedToQuoteId']);
-        var businessUnit = mockCommunicator.getBusinessUnit(quote['businessUnitId']);
-        var broker = quote['brokerId'] == null ? null : brokerInvoker.getBrokerWithDetails(quote['brokerId']);
-        var insurer = quote['insurerId'] == null ? null : insurerInvoker.getInsurerWithDetails(quote['insurerId']);
-
-        var landEntries = this.getLandEntriesOfQuote(quoteId);
-        var damageTypesSelected = this.getTariffOptionDamageTypesSelectedOfLandEntry();
-        var quoteLandEntries = this.getDetailsOfQuoteLandEntriesOfQuote(quoteId);
         
+        var quoteNumber = quote['quoteNumber'];
+        var dateCreated = quote['dateCreated'];
+        var acceptable = quote['acceptable'];
 
+        var businessUnit = clientInvoker.getCleanBusinessUnit(quote['businessUnitId']);
+        var broker = quote['brokerId'] == null ? null : brokerInvoker.getCleanBroker(quote['brokerId']);
+        var insurer = quote['insurerId'] == null ? null : insurerInvoker.getCleanInsurer(quote['insurerId']);        
+        var quoteLinkedTo = quote['linkedToQuoteId'] == null ? null : this.getDetailsOfQuote(quote['linkedToQuoteId']);
+        var quoteLandEntries = this.getDetailsOfQuoteLandEntriesOfQuote(quoteId);
+        var premium = this.getPremiumOfQuote(quote);
+        
         var detailedQuoteObject = 
         {
             'id':quote['id'],
-            'quoteNumber':quote['quoteNumber'],
+            'quoteNumber':quoteNumber,
             'businessUnit':businessUnit,
             'broker':broker,
             'insurer':insurer,
-            'active':quote['active'],
-            'dateCreated':quote['dateCreated'],
+            'dateCreated':dateCreated,
             'linkedToQuote':quoteLinkedTo,
-            'acceptable':quote['acceptable'],
-            'quoteLandEntries':quoteLandEntries
+            'acceptable':acceptable,
+            'quoteLandEntries':quoteLandEntries,
+            'premium':premium
         }
-
+        
         return detailedQuoteObject;
     };
 
@@ -76,7 +80,7 @@ var quoteInvoker = new function() {
 
     this.getTariffOptionDamageTypesSelectedOfLandEntry = function(id) {
 
-        var allDamageTypesSelected = mockCommunicator.getTariffOptionDamageTypes();
+        var allDamageTypesSelected = mockCommunicator.getQuoteLandEntryDamageTypes();
         var damageTypesSelected = [];
 
         for(var i=0;i<allDamageTypesSelected.length;i++) {
@@ -110,7 +114,7 @@ var quoteInvoker = new function() {
         var farm = mockCommunicator.getFarm(quoteLandEntry['farmId']);
         var crop = mockCommunicator.getCrop(quoteLandEntry['cropId']);
         var tariffOption = mockCommunicator.getTariffOption(quoteLandEntry['tariffOptionId']);
-        var tariffOptionDamageTypes = this.getTariffOptionDamageTypesOfQuoteLandEntry(quoteLandEntryId);
+        var selectedDamageTypes = this.getTariffOptionDamageTypesOfQuoteLandEntry(quoteLandEntryId);
 
         var detailedQuoteLandEntryObject = 
         {
@@ -123,7 +127,7 @@ var quoteInvoker = new function() {
             'yield':quoteLandEntry['yield'],
             'price':quoteLandEntry['price'],
             'tariffOption':tariffOption,
-            'selectedDamageTypes':tariffOptionDamageTypes
+            'selectedDamageTypes':selectedDamageTypes
         }
 
         return detailedQuoteLandEntryObject;
@@ -131,15 +135,92 @@ var quoteInvoker = new function() {
 
     this.getTariffOptionDamageTypesOfQuoteLandEntry = function(quoteLandEntryId) {
 
-        var tariffOptionDamageTypes = mockCommunicator.getTariffOptionDamageTypes();
+        var quoteLandEntryDamageTypes = mockCommunicator.getQuoteLandEntryDamageTypes();
         var selectedDamageTypes = [];
 
-        for(var i = 0; i < tariffOptionDamageTypes.length; i++) {
-            if(tariffOptionDamageTypes[i]['quoteLandEntryId'] == quoteLandEntryId) {
-                selectedDamageTypes.push(tariffOptionDamageTypes[i]);
+        for(var i = 0; i < quoteLandEntryDamageTypes.length; i++) {
+
+            var quoteLandEntryDamageType = quoteLandEntryDamageTypes[i];
+
+            if(quoteLandEntryDamageType['quoteLandEntryId'] == quoteLandEntryId) {
+
+                var quoteLandEntryDamageTypeId = quoteLandEntryDamageType['id'];
+                var tariffOptionDamageType = mockCommunicator.getTariffOptionDamageType(quoteLandEntryDamageType['tariffOptionDamageTypeId']);
+                var damageType = mockCommunicator.getDamageType(tariffOptionDamageType['damageTypeId']);
+
+                var selectedDamageType = 
+                {
+                    //'id':quoteLandEntryDamageTypeId,
+                    'damageTypeName':damageType['name'],
+                    'tariff':tariffOptionDamageType['tariff']
+                };
+
+                selectedDamageTypes.push(selectedDamageType);
             }
         }
 
         return selectedDamageTypes;
     };
+
+    this.getTotalTariffOfQuoteLandEntryById = function(quoteLandEntryId) {
+
+        return this.getTotalTariffOfQuoteLandEntry(mockCommunicator.getQuoteLandEntry(quoteLandEntryId));
+    }
+    this.getTotalTariffOfQuoteLandEntry = function(quoteLandEntry) {
+
+        var selectedDamageTypes = this.getTariffOptionDamageTypesSelectedOfLandEntry(quoteLandEntry['id']);;
+
+        var totalTariff = 0;
+
+        for(var i=0;i<selectedDamageTypes.length;i++) {
+
+            var tariffOptionDamageType = mockCommunicator.getTariffOptionDamageType(selectedDamageTypes[i]['tariffOptionDamageTypeId']);
+            totalTariff += (tariffOptionDamageType['tariff']*1);
+        }
+
+        return totalTariff;
+    }
+
+    this.getPremiumContributionOfQuoteLandEntryById = function(quoteLandEntryId) {
+
+        return this.getPremiumContributionOfQuoteLandEntry(mockCommunicator.getQuoteLandEntry(quoteLandEntryId));
+    }
+    this.getPremiumContributionOfQuoteLandEntry = function(quoteLandEntry) {
+
+        var value = this.getValueOfQuoteLandEntry(quoteLandEntry);
+        var tariff = this.getTotalTariffOfQuoteLandEntry(quoteLandEntry);
+
+        return value * tariff;
+    }
+
+    this.getValueOfQuoteLandEntryById = function(quoteLandEntryId) {
+
+        return this.getValueOfQuoteLandEntry(mockCommunicator.getQuoteLandEntry(quoteLandEntryId));
+    }
+    this.getValueOfQuoteLandEntry = function(quoteLandEntry) {
+
+        var price = quoteLandEntry['price'];
+        var cropYield = quoteLandEntry['yield'];
+        var area = quoteLandEntry['area'];
+
+        return (price * cropYield * area);
+    }
+
+    this.getPremiumOfQuoteById = function(quoteId) {
+
+        return this.getPremiumOfQuote(mockCommunicator.getQuote(quoteId));
+    }
+    this.getPremiumOfQuote = function(quote) {
+
+        var quoteLandEntries = this.getLandEntriesOfQuote(quote['id']);
+        var premium = 0;
+
+        for(var i = 0; i < quoteLandEntries.length; i++) {
+
+            premium  += this.getPremiumContributionOfQuoteLandEntry(quoteLandEntries[i]);
+        }
+
+        return premium;
+    }
+
 }

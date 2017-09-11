@@ -3,12 +3,8 @@ $(function() {
   });
 
 function test() {
-	console.log('a');
-	console.log(quoteInvoker.getDetailsOfQuote(0));
-	console.log('b');
-	//console.log(quoteInvoker.getLandEntriesOfQuote(0));
-	//console.log(quoteInvoker.getTariffOptionDamageTypesSelectedOfLandEntry(0));
-
+	console.log(quoteInvoker.getDetailsOfQuote(1));
+	//quoteInvoker.getDetailsOfQuote(0);
 }
 
 function init() {

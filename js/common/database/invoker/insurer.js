@@ -10,6 +10,20 @@ var insurerInvoker = new function() {
 		return mockCommunicator.createInsurer(insurerData);
     };
 
+    this.getCleanInsurer = function(id) {
+
+    	var insurer = mockCommunicator.getInsurer(id);
+    	var user = mockCommunicator.getUser(insurer['userId']);
+
+    	var cleanInsurer = 
+    	{
+    		'name':user['name'],
+    		'surname':user['surname'],
+    	};
+
+    	return cleanInsurer;
+    }
+
     this.getInsurersWithDetails = function() {
 
     	var insurers = mockCommunicator.getInsurers();

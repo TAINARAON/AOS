@@ -23,12 +23,28 @@ var brokerInvoker = new function() {
 		return brokers;
     };
 
-    this.getBrokerWithDetails = function(id) {
+    this.getCleanBroker = function(id) {
     	var broker = mockCommunicator.getBroker(id);
     	var user = mockCommunicator.getUser(broker.userId);
-		broker['name'] = user['name'];
-		broker['surname'] = user['surname'];
+    
+    	var brokerClean = 
+    	{
+    		'name':user['name'],
+    		'surname':user['surname'],
+    		'brokerage':this.getCleanBrokerage(broker['brokerageId'])
+    	};
 
-		return broker;
+		return brokerClean;
+    }
+    
+    this.getCleanBrokerage = function(id) {
+    	var brokerage = mockCommunicator.getBrokerage(id);
+
+    	var brokerageClean = 
+    	{
+    		'name':brokerage['name']
+    	};
+
+    	return brokerageClean;
     }
 }

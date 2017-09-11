@@ -12,7 +12,3 @@ var userInvoker = new function() {
 		}
     };
 }
-
-function fush() {
-	alert("in fush");
-}

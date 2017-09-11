@@ -2,6 +2,55 @@ var mockCommunicator = new function()
 {
 	console.warn("Mock Communicator being used.");
 
+// ROLE
+	this.roleTable = [
+		{
+			'id':'0',
+			'name':'System Administrator',
+		},
+		{
+			'id':'1',
+			'name':'Insurer',
+		},
+		{
+			'id':'2',
+			'name':'Broker',
+		},
+		{
+			'id':'3',
+			'name':'Client',
+		},
+	];
+	this.createRole = function(data) {
+
+		data.id = this.roleTable.length;
+		this.roleTable.push(data);
+
+		return data.id;
+	}
+	this.getRole = function(id) {
+		for(var i=0;i<this.roleTable.length;i++) {
+			if(this.roleTable[i].id==id) {
+				return this.roleTable[i];
+			}
+		}
+	}
+	this.getRoles = function() {
+
+		return roleTable;
+	}
+	this.deleteRole = function(id) {
+		for(var i=0;i<this.roleTable.length;i++) {
+			if(this.roleTable[i].id==id) {
+				this.roleTable.splice(i,1);
+			}
+		}
+	}
+	this.updateRole = function(id, data) {
+		data.id = id;
+		this.roleTable[id] = data;
+	}
+
 // USER
 	this.userTable = [
 		{
@@ -28,7 +77,7 @@ var mockCommunicator = new function()
 			'id':'2',
 			'username':'Cameo',
 			'password':'password',
-			'roleId':'1',
+			'roleId':'2',
 			'name':'Cam',
 			'surname':'Eonona',
 			'email':'cameo@gmail.com',
@@ -38,10 +87,30 @@ var mockCommunicator = new function()
 			'id':'3',
 			'username':'DrAcula',
 			'password':'password',
-			'roleId':'1',
+			'roleId':'2',
 			'name':'Doctor',
 			'surname':'Acula',
 			'email':'dracula@gmail.com',
+			'active':'1'
+		},
+		{
+			'id':'4',
+			'username':'DanWazoski',
+			'password':'password',
+			'roleId':'3',
+			'name':'Dan',
+			'surname':'Wazoski',
+			'email':'danwaz@gmail.com',
+			'active':'1'
+		},
+		{
+			'id':'5',
+			'username':'Simonsays',
+			'password':'password',
+			'roleId':'3',
+			'name':'Simon',
+			'surname':'Says',
+			'email':'simonsays@gmail.com',
 			'active':'1'
 		},
 	];
@@ -71,6 +140,54 @@ var mockCommunicator = new function()
 	this.updateUser = function(id, data) {
 		data.id = id;
 		this.userTable[id] = data;
+	}
+
+// CLIENT
+	this.clientTable = [
+		{
+			'id':'0',
+			'userId':'4',
+			'idNumber':'90051685430',
+			'contactNumber':'041115487',
+			'active':'1',
+			'verified':'1'
+		},
+		{
+			'id':'1',
+			'userId':'5',
+			'idNumber':'611992280',
+			'contactNumber':'0825584684',
+			'active':'1',
+			'verified':'1'
+		},
+	];
+	this.createClient = function(data) {
+
+		data.id = this.clientTable.length;
+		this.clientTable.push(data);
+
+		return data.id;
+	}
+	this.getClient = function(id) {
+		for(var i=0;i<this.clientTable.length;i++) {
+			if(this.clientTable[i].id==id) {
+				return this.clientTable[i];
+			}
+		}
+	}
+	this.getClients = function() {
+		return this.clientTable;
+	}
+	this.deleteClient = function(id) {
+		for(var i=0;i<this.clientTable.length;i++) {
+			if(this.clientTable[i].id==id) {
+				this.clientTable.splice(i,1);
+			}
+		}
+	}
+	this.updateClient = function(id, data) {
+		data.id = id;
+		this.clientTable[id] = data;
 	}
 
 // BROKER
@@ -117,6 +234,60 @@ var mockCommunicator = new function()
 	this.updateBroker = function(id, data) {
 		data.id = id;
 		this.brokerTable[id] = data;
+	}
+
+// BROKERAGE
+	this.brokerageTable = [
+		{
+			'id':'0',
+			'name':'Breeker Brokerage',
+			'active':'1',
+			'dateCreated':'1990-08-25',
+			'email':'breeker.brokerage@gmail.com',
+			'contactNumber':'0623521574',
+			'fspNumber':'FSP000',
+			'verified':'1'
+		},
+		{
+			'id':'1',
+			'name':'Maakelaar Brokerage',
+			'active':'1',
+			'dateCreated':'1990-09-21',
+			'email':'makelaar.brokerage@gmail.com',
+			'contactNumber':'0623521348',
+			'fspNumber':'FSP001',
+			'verified':'1'
+		},
+	];
+	this.createBrokerage = function(data) {
+
+		data.id = this.brokerageTable.length;
+		this.brokerageTable.push(data);
+
+		console.log(this.brokerageTable[data.id]);
+
+		return data.id;
+	}
+	this.getBrokerage = function(id) {
+		for(var i=0;i<this.brokerageTable.length;i++) {
+			if(this.brokerageTable[i].id==id) {
+				return this.brokerageTable[i];
+			}
+		}
+	}
+	this.getBrokersage = function() {
+		return this.brokerageTable;
+	}
+	this.deleteBrokerage = function(id) {
+		for(var i=0;i<this.brokerageTable.length;i++) {
+			if(this.brokerageTable[i].id==id) {
+				this.brokerageTable.splice(i,1);
+			}
+		}
+	}
+	this.updateBrokerage = function(id, data) {
+		data.id = id;
+		this.brokerageTable[id] = data;
 	}
 
 // QUOTE
@@ -199,6 +370,30 @@ var mockCommunicator = new function()
 			'price':'4.78',
 			'tariffOptionId':'0',
 		},
+		{
+			'id':'2',
+			'quoteId':'1',
+			'farmId':'0',
+			'landNumber':'000111',
+			'cropId':'1',
+			'cultivar':'Red Dwarf',
+			'area':'7.4',
+			'yield':'15.22',
+			'price':'4.48',
+			'tariffOptionId':'0',
+		},
+		{
+			'id':'3',
+			'quoteId':'1',
+			'farmId':'1',
+			'landNumber':'100111',
+			'cropId':'0',
+			'cultivar':'Octopussy',
+			'area':'6.7',
+			'yield':'12.22',
+			'price':'4.98',
+			'tariffOptionId':'0',
+		}
 	];
 	this.createQuoteLandEntry = function(data) {
 
@@ -574,7 +769,6 @@ var mockCommunicator = new function()
 			'coverage':'5',
 			'coverageStart':'0',
 			'coverageEnd':'0',
-			'damageTypeId':'0'
 		},
 		{
 			'id':'1',
@@ -584,7 +778,6 @@ var mockCommunicator = new function()
 			'coverage':'7.5',
 			'coverageStart':'2017-06-01 00:00:00',
 			'coverageEnd':'2018-06-01 00:00:00',
-			'damageTypeId':'0'
 		},
 	];
 	this.createTariffOption = function(data) {
@@ -650,17 +843,37 @@ var mockCommunicator = new function()
 		this.damageTypeTable[id] = data;
 	}
 
-// QUOTE LAND ENTRY DAMAGE TYPE
+// QUOTE LAND ENTRY DAMAGE TYPE - To Be Used In Quote Generation
 	this.quoteLandEntryDamageTypeTable = [
 		{
 			'id':'0',
 			'quoteLandEntryId':'0',
-			'damageTypeId':'0',
+			'tariffOptionDamageTypeId':'0',
 		},
 		{
 			'id':'1',
 			'quoteLandEntryId':'0',
-			'damageTypeId':'1',
+			'tariffOptionDamageTypeId':'1',
+		},
+		{
+			'id':'2',
+			'quoteLandEntryId':'1',
+			'tariffOptionDamageTypeId':'0',
+		},
+		{
+			'id':'3',
+			'quoteLandEntryId':'1',
+			'tariffOptionDamageTypeId':'1',
+		},
+		{
+			'id':'4',
+			'quoteLandEntryId':'2',
+			'tariffOptionDamageTypeId':'0',
+		},
+		{
+			'id':'5',
+			'quoteLandEntryId':'2',
+			'tariffOptionDamageTypeId':'1',
 		},
 	];
 	this.createQuoteLandEntryDamageType = function(data) {
@@ -677,6 +890,10 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+	this.getQuoteLandEntryDamageTypes = function() {
+
+		return this.quoteLandEntryDamageTypeTable;
+	}
 	this.deleteQuoteLandEntryDamageType = function(id) {
 		for(var i=0;i<this.quoteLandEntryDamageTypeTable.length;i++) {
 			if(this.quoteLandEntryDamageTypeTable[i].id==id) {
@@ -689,19 +906,19 @@ var mockCommunicator = new function()
 		this.quoteLandEntryDamageTypeTable[id] = data;
 	}
 
-// TARIFF OPTION DAMAGE TYPE
+// TARIFF OPTION DAMAGE TYPE - To Be Used For System Keys
 	this.tariffOptionDamageTypeTable = [
 		{
 			'id':'0',
-			'quoteLandEntryId':'0',
+			'tariffOptionId':'0',
 			'damageTypeId':'0',
-			'premiumContribution':'1.75'
+			'tariff':'0.175'
 		},
 		{
 			'id':'1',
-			'quoteLandEntryId':'0',
+			'tariffOptionId':'0',
 			'damageTypeId':'1',
-			'premiumContribution':'2.35'
+			'tariff':'0.235'
 		},
 	];
 	this.createTariffOptionDamageType = function(data) {
@@ -719,6 +936,7 @@ var mockCommunicator = new function()
 		}
 	}
 	this.getTariffOptionDamageTypes = function() {
+
 		return this.tariffOptionDamageTypeTable;
 	}
 	this.deleteTariffOptionDamageType = function(id) {
