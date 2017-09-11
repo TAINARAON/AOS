@@ -147,15 +147,16 @@ var addQuote;
 				}
 
 				// Persist data to database
-				saveQuoteLandEntries(quotes[i].quoteLandEntries);
+				//saveQuoteLandEntries(quotes[i].quoteLandEntries);
 			}
 			else
 			{
 				console.log("Entry does not exist, add whole");
 				mainQuote.push(quotes[i]);
 				// Persist data to database
-				saveBusinessUnit(quotes[i]);
-				saveQuoteLandEntries(quotes[i].quoteLandEntries);
+				
+				//saveBusinessUnit(quotes[i]);
+				//saveQuoteLandEntries(quotes[i].quoteLandEntries);
 			}
 		}
 
@@ -164,7 +165,7 @@ var addQuote;
 		updateAccordion();
 	}
 
-	function saveQuoteLandEntries(landEntries)
+	/*function saveQuoteLandEntries(landEntries)
 	{
 		debugTool.print("Save land entry", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
 	}
@@ -172,7 +173,7 @@ var addQuote;
 	function saveBusinessUnit(businessUnit)
 	{
 		debugTool.print("Save business unit", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
-	}
+	}*/
 
 	function updateAccordion()
 	{

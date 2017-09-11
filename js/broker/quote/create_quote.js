@@ -1,7 +1,8 @@
 (function(){ 
 
 	var quote = [];
-
+	
+	// Input fields
 	var input_boerdery = document.getElementById("business_unit");
 	var input_plaas = document.getElementById("farm");
 	var input_produk = document.getElementById("produk");
@@ -14,6 +15,22 @@
 	var input_gewas_opbrengs = document.getElementById("gewas_opbrengs");
 	var input_rand_per_eenheid = document.getElementById("rand_per_eenheid");
 	//var input_versekerings_waarde = document.getElementById("versekerings_waarde");
+	// ^ Input fields ^
+
+	// Farm container
+	var farmContiner = document.getElementById("farmContainer");
+	// ^ Farm container ^
+
+	// Row containers
+	var row1 = document.getElementById("row1Container");
+	var row2 = document.getElementById("row2Container");
+	var row3 = document.getElementById("row3Container");
+	var row4 = document.getElementById("row4Container");
+	// ^ Row containers ^
+
+	// Land entry table row container
+	var rowContainer = document.getElementById("create_quote_table_body");
+	// ^ Land entry table row container ^
 
 	var closeModalBtn = document.getElementById("close_modal");
 
@@ -22,9 +39,100 @@
 	var allValuesEntered = false;
 
 	(function init(){
+		setInitialInputVisibility();
+		addOnChangeListeners();
 		addInputValueListeners();
 		setupModalButtonClickListeners();
 	})();
+
+	function setInitialInputVisibility()
+	{
+		hideFarm();
+
+		hideFields();
+	}
+
+	function addOnChangeListeners()
+	{
+		input_boerdery.onblur = function(){toggleFarmInputVisibility(validateBusinessUnit());};
+		input_plaas.onblur = function(){toggleFieldsVisible(validateFarm());};
+	}
+
+	function validateBusinessUnit()
+	{
+		var val = input_boerdery.value;
+		if(val != undefined && val != "")
+		{
+			// TODO: server check
+			setBusinessUnitId(Math.floor((Math.random() * 1000) + 1));
+			if(true)
+			{
+				input_boerdery.disabled = "disabled";
+				return true;
+			}
+
+			input_boerdery.removeAttribute("disabled");
+			// TODO: display error - business unit not available
+		}
+
+		return false;
+	}
+
+	function toggleFarmInputVisibility(state)
+	{
+		if(state)
+			showFarm();
+		else
+			hideFarm();
+	}
+
+	function showFarm()
+	{
+		farmContiner.style.visibility = "visible";
+	}
+
+	function hideFarm()
+	{
+		// change to display none to hide size in modal
+		farmContiner.style.visibility = "hidden";
+	}
+
+	function validateFarm()
+	{
+		var val = input_plaas.value;
+		if(val != undefined && val != "")
+		{
+			// TODO: server check
+			setFarmId(Math.floor((Math.random() * 1000) + 1));
+			return true;
+		}
+
+		return false;
+	}
+
+	function toggleFieldsVisible(state)
+	{
+		if(state)
+			showFields();
+		else
+			hideFields();
+	}
+
+	function showFields()
+	{
+		row1.style.visibility = "visible";
+		row2.style.visibility = "visible";
+		row3.style.visibility = "visible";
+		row4.style.visibility = "visible";
+	}
+
+	function hideFields()
+	{
+		row1.style.visibility = "hidden";
+		row2.style.visibility = "hidden";
+		row3.style.visibility = "hidden";
+		row4.style.visibility = "hidden";
+	}
 
 	function addInputValueListeners()
 	{
@@ -61,21 +169,19 @@
 	function getBrokerId()
 	{
 		// TODO: get the proper id from the session
-		return Math.floor((Math.random() * 10000) + 1);
+		return 0;
 	}
 
 	function getInsurerId()
 	{
 		// TODO: get the proper id from the session
-		return Math.floor((Math.random() * 10000) + 1);
+		return 0;
 	}
 
 	function addFarmToQuote()
 	{
 		if(validateInputs())
 		{
-			var rowContainer = document.getElementById("create_quote_table_body");
-
 			var boerdery = input_boerdery.value;
 			var plaas = input_plaas.value;
 			var produk = input_produk.value;
@@ -87,22 +193,29 @@
 			var oppervlakte = input_oppervlakte.value;
 			var gewas_opbrengs = input_gewas_opbrengs.value;
 			var rand_per_eenheid = input_rand_per_eenheid.value;
-				// This is a calculated value
-				//var versekerings_waarde = input_versekerings_waarde.value;
 
 			// TODO: proper calculation with testing for user messing with frontend elements in inspector
 			// oppervlakte * gewasOpbrengs * R.Unit
 			var versekerings_waarde = Math.floor((Math.random() * 10000) + 1);
 
+			// TODO: proper calculation
+			// sumOfAllSelectedDamageTypesPremiumContribution = 0;
+			//	foreach(quoteLandEntry.selectedDamageTypes as selectedDamageType) {
+			//	   sumOfAllSelectedDamageTypesPremiumContribution  += selectedDamageType.premiumContribution;
+			//	}
+			// ValueOfCrop = quoteLandEntry.price x quoteLandEntry.yield x quoteLandEntry.area
+			// PremiumContributionValue = ValueOfCrop * sumOfAllSelectedDamageTypesPremiumContribution
+			//var premiumContributionValue =  Math.floor((Math.random() * 10000) + 1);
+
 			var data = {
-				"broker_id":getBrokerId(),
-				"insurer_id":getInsurerId(),
-				"business_unit_id":getBusinessUnitId(),
+				"brokerId":getBrokerId(),
+				"insurerId":getInsurerId(),
+				"businessUnitId":getBusinessUnitId(),
 				'active':'1',
 				'acceptable':'1',
-				'quote_number': "00001",
-				'linked_to_quote_id':null,
-				'date_created':'1990-05-18 19:01:05',
+				'quoteNumber': "00001",
+				'linkedToQuoteId':null,
+				'dateCreated':'1990-05-18 19:01:05',
 				"boerdery":boerdery,
 				quoteLandEntries:[
 					{
@@ -111,11 +224,11 @@
 						"gewas":gewas,
 						"opsie_tiepe":opsie_tipe,
 						"persentasie":persentasie,
-						"land_nommer":land_nommer,
-						"kultivar":kultivar,
-						"oppervlakte":oppervlakte,
-						"gewas_opbrengs":gewas_opbrengs,
-						"rand_per_eenheid":rand_per_eenheid,
+						"landNumber":land_nommer,
+						"cultivar":kultivar,
+						"area":oppervlakte,
+						"yield":gewas_opbrengs,
+						"price":rand_per_eenheid,
 						"versekerings_waarde":versekerings_waarde
 					}
 				]
@@ -134,6 +247,8 @@
 	function validateInputs()
 	{
 		debugTool.print("checking validity", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
+		
+		/*
 		// TODO: add extra validation here
 		var boerderySuccess = validateBusinessUnite(input_boerdery.value);
 		if(!boerderySuccess)
@@ -148,14 +263,17 @@
 		}
 
 		return boerderySuccess && plaasSuccess && allValuesEntered;
+		*/
+
+		return allValuesEntered;
 	}
 
-	function validateBusinessUnite(businessUnitName)
+	/*function validateBusinessUnite(businessUnitName)
 	{
 		// TODO: actual database call
 		setBusinessUnitId(Math.floor((Math.random() * 1000) + 1));
 		return true;
-	}
+	}*/
 
 	function setBusinessUnitId(id)
 	{
@@ -172,16 +290,21 @@
 		boerderyID = undefined;
 	}
 
-	function validateFarm(farmName)
+	/*function validateFarm(farmName)
 	{
 		// TODO: actual database call
 		setFarmId(Math.floor((Math.random() * 1000) + 1));
 		return true;
-	}
+	}*/
 
 	function setFarmId(id)
 	{
 		plaasID = id;
+	}
+
+	function getFarmId()
+	{
+		return plaasID;
 	}
 
 	function resetFarmId()
@@ -212,7 +335,7 @@
 	function addToTable(data, container)
 	{
 		var row = document.createElement('TR');
-		for(var i = 0; i < data.quoteLandEntries.length; i++)
+		for(let i = 0; i < data.quoteLandEntries.length; i++)
 		{
 			var spesifiekePlaas = data.quoteLandEntries[i];
 
@@ -228,16 +351,21 @@
 			createColumn(spesifiekePlaas.rand_per_eenheid, row);
 			createColumn(spesifiekePlaas.versekerings_waarde, row);*/
 
-			createColumn(spesifiekePlaas.plaas, row);
-			createColumn(spesifiekePlaas.gewas, row);
-			createColumn(spesifiekePlaas.kultivar, row);
-			createColumn(spesifiekePlaas.oppervlakte, row);
-			createColumn(spesifiekePlaas.gewas_opbrengs, row);
-			createColumn(spesifiekePlaas.rand_per_eenheid, row);
-			createColumn(spesifiekePlaas.versekerings_waarde, row);
-			createColumn(spesifiekePlaas.opsie_tiepe, row);
-			createColumn(spesifiekePlaas.persentasie, row);
-			createButtonColumn(row);
+			// After an item is deleted from the JSON landEntry it leaves an undefined item
+			if(spesifiekePlaas != undefined)
+			{
+				createColumn(spesifiekePlaas.plaas, row);
+				createColumn(spesifiekePlaas.gewas, row);
+				createColumn(spesifiekePlaas.cultivar, row);
+				createColumn(spesifiekePlaas.area, row);
+				createColumn(spesifiekePlaas.yield, row);
+				createColumn(spesifiekePlaas.price, row);
+				createColumn(spesifiekePlaas.versekerings_waarde, row);
+				createColumn(spesifiekePlaas.opsie_tiepe, row);
+				createColumn(spesifiekePlaas.persentasie, row);
+				
+				createButtonColumn(row, data.boerdery, i);
+			}
 		}
 
 		container.appendChild(row);
@@ -251,20 +379,97 @@
 		container.appendChild(column);
 	}
 
-	function createButtonColumn(container)
+	function createColumnWithObject(object, container)
 	{
-		createEditButton(container);
-		createDeleteButton(container);
+		var column = document.createElement('TH');
+		container.appendChild(column);
+
+		column.appendChild(object);
 	}
 
-	function createEditButton(container)
+	function createButtonColumn(container, boerdery, index)
 	{
-
+		createColumnWithObject(createEditButton(boerdery, index), container);
+		createColumnWithObject(createDeleteButton(boerdery, index), container);
 	}
 
-	function createDeleteButton(container)
+	function createEditButton(boerdery, index)
 	{
+		var button = document.createElement("DIV");
+		button.innerHTML = "Edit";
+		button.className = "btn btn-success";
+		button.onclick = function(){editLandEntry(boerdery, index)};
+		//container.appendChild(button);
+		return button;
+	}
 
+	function editLandEntry(boerdery, index)
+	{
+		for(var i = 0; i < quote.length; i++)
+		{
+			if(quote[i].boerdery = boerdery)
+			{
+				debugTool.print("Edit item: " + quote[i], FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
+				for(var j = 0; j < quote[i].quoteLandEntries.length; j++)
+				{
+					if(j == index)
+					{
+						debugTool.print("Edit item: " + boerdery + " number " + index, FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
+						
+						// Load values into input boxes again
+						// TODO: Update object entry?
+						// Add another one??
+					}
+				}
+			}
+		}
+
+		reloadTable(quote);
+	}
+
+	function createDeleteButton(boerdery, index)
+	{
+		var button = document.createElement("DIV");
+		button.innerHTML = "Delete";
+		button.className = "btn btn-danger";
+		button.onclick = function(){deleteLandEntry(boerdery, index)};
+		//container.appendChild(button);
+		return button;
+	}
+
+	function deleteLandEntry(boerdery, index)
+	{
+		for(var i = 0; i < quote.length; i++)
+		{
+			if(quote[i].boerdery = boerdery)
+			{
+				debugTool.print("Delete item: " + quote[i], FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
+				for(var j = 0; j < quote[i].quoteLandEntries.length; j++)
+				{
+					if(j == index)
+					{
+						debugTool.print("Delete item: " + boerdery + " number " + index, FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
+						delete quote[i].quoteLandEntries[j];
+					}
+				}
+			}
+		}
+
+		reloadTable(quote);
+	}
+
+	function reloadTable(quote)
+	{
+		resetTableRows();
+
+		for(var i = 0; i < quote.length; i++)
+		{
+			debugTool.print(quote[i], FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);			
+			if(quote[i].quoteLandEntries.length != 0)
+			{
+				addToTable(quote[i], rowContainer);
+			}
+		}
 	}
 
 	function clearQuoteEntrySpecificValuesAfterAdd()
@@ -336,16 +541,32 @@
 
 	function resetTableRows()
 	{
-		var rowContainer = document.getElementById("create_quote_table_body");
+		//var rowContainer = document.getElementById("create_quote_table_body");
 		rowContainer.innerHTML = "";
 	}
 
 	function createQuoteAndAddToView()
 	{
 		debugTool.print("Create quote", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
-		updateQuotes(quote);
-		closeModal();
-		reset();
+
+		if(persistDataToDatabase(quote))
+		{
+			updateQuotes(quote);
+			closeModal();
+			reset();
+		}
+		else
+		{
+			alert("Could not persist data, please ensure data is valid");
+		}
+	}
+
+	function persistDataToDatabase(quote)
+	{
+		// TODO: persist data to db
+		// One will then receive the id, which the object will be updated with
+
+		return true;
 	}
 
 	function closeModal()
