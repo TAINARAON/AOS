@@ -178,6 +178,13 @@
 		return 0;
 	}
 
+	function berekenVersekeringsWaarde()
+	{
+		// TODO: proper calculation with testing for user messing with frontend elements in inspector
+		// oppervlakte * gewasOpbrengs * R.Unit
+		return Math.floor((Math.random() * 10000) + 1);
+	}
+
 	function addFarmToQuote()
 	{
 		if(validateInputs())
@@ -193,10 +200,6 @@
 			var oppervlakte = input_oppervlakte.value;
 			var gewas_opbrengs = input_gewas_opbrengs.value;
 			var rand_per_eenheid = input_rand_per_eenheid.value;
-
-			// TODO: proper calculation with testing for user messing with frontend elements in inspector
-			// oppervlakte * gewasOpbrengs * R.Unit
-			var versekerings_waarde = Math.floor((Math.random() * 10000) + 1);
 
 			// TODO: proper calculation
 			// sumOfAllSelectedDamageTypesPremiumContribution = 0;
@@ -229,7 +232,7 @@
 						"area":oppervlakte,
 						"yield":gewas_opbrengs,
 						"price":rand_per_eenheid,
-						"versekerings_waarde":versekerings_waarde
+						"versekerings_waarde":berekenVersekeringsWaarde()
 					}
 				]
 			};
@@ -406,26 +409,119 @@
 
 	function editLandEntry(boerdery, index)
 	{
-		for(var i = 0; i < quote.length; i++)
+		for(let i = 0; i < quote.length; i++)
 		{
 			if(quote[i].boerdery = boerdery)
 			{
 				debugTool.print("Edit item: " + quote[i], FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
-				for(var j = 0; j < quote[i].quoteLandEntries.length; j++)
+				for(let j = 0; j < quote[i].quoteLandEntries.length; j++)
 				{
 					if(j == index)
 					{
 						debugTool.print("Edit item: " + boerdery + " number " + index, FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
+
+						debugTool.print("Value: " +  quote[i].quoteLandEntries[j].produk, FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);						
 						
 						// Load values into input boxes again
 						// TODO: Update object entry?
 						// Add another one??
+						input_produk.value = quote[i].quoteLandEntries[j].produk;
+						input_gewas.value = quote[i].quoteLandEntries[j].gewas;
+						input_opsie_tipe.value = quote[i].quoteLandEntries[j].opsie_tiepe;
+						input_persentasie.value = quote[i].quoteLandEntries[j].persentasie;
+						input_land_nommer.value = quote[i].quoteLandEntries[j].landNumber;
+						input_kultivar.value = quote[i].quoteLandEntries[j].cultivar;
+						input_oppervlakte.value = quote[i].quoteLandEntries[j].area;
+						input_gewas_opbrengs.value = quote[i].quoteLandEntries[j].yield;
+						input_rand_per_eenheid.value = quote[i].quoteLandEntries[j].price;
+
+						createTemporaryRecordChangeButtons(i, j);
 					}
 				}
 			}
 		}
+	}
 
-		reloadTable(quote);
+	function createTemporaryRecordChangeButtons(quoteIndex, landEntryIndex)
+	{
+		// Hide the 'sluit in' button
+		document.getElementById("includeRow").visibility = "hidden";
+
+		// These buttons will remove themselves once the record has been saved or canceled
+		var saveBtn = createSaveButton();
+		var cancelBtn = createCancelButton();
+
+		saveBtn.onclick = function() {save(quoteIndex, landEntryIndex);};
+		cancelBtn.onclick = function() {cancel(quoteIndex, landEntryIndex);};
+	}
+
+	function createSaveButton()
+	{
+		var button = document.createElement("div");
+		button.id = "saveBtn";
+		button.innerHTML = "Save";
+		button.className = "btn btn-success";
+
+		row4.appendChild(button);
+
+		return button;
+	}
+
+	function save(quoteIndex, landEntryIndex)
+	{
+		saveEditedValues(quoteIndex, landEntryIndex);
+	}
+
+	function restoreOriginalButton()
+	{
+		row4.removeChild(document.getElementById("saveBtn"));
+		row4.removeChild(document.getElementById("cancelBtn"));
+
+		document.getElementById("includeRow").visibility = "visibile";
+	}
+
+	function saveEditedValues(quoteIndex, landEntryIndex)
+	{
+		if(validateInputs())
+		{
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].produk = input_produk.value;
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].gewas = input_gewas.value;
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].opsie_tiepe = input_opsie_tipe.value;
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].persentasie = input_persentasie.value;
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].landNumber = input_land_nommer.value;
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].cultivar = input_kultivar.value;
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].area = input_oppervlakte.value;
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].yield = input_gewas_opbrengs.value;
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].price = input_rand_per_eenheid.value;
+
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].versekerings_waarde = berekenVersekeringsWaarde();
+
+			restoreOriginalButton();
+			clearQuoteEntrySpecificValuesAfterAdd();
+			reloadTable(quote);
+		}
+		else
+		{
+			alert("Please make sure all values are entered");
+		}
+	}
+
+	function createCancelButton()
+	{
+		var button = document.createElement("div");
+		button.id = "cancelBtn";
+		button.innerHTML = "Cancel";
+		button.className = "btn btn-danger";
+
+		row4.appendChild(button);
+
+		return button;
+	}
+
+	function cancel(quoteIndex, landEntryIndex)
+	{
+		restoreOriginalButton();
+		clearQuoteEntrySpecificValuesAfterAdd();
 	}
 
 	function createDeleteButton(boerdery, index)
@@ -511,6 +607,11 @@
 	function reset()
 	{
 		debugTool.print("Resetting modal values", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
+
+		input_boerdery.removeAttribute("disabled");
+
+		setInitialInputVisibility();
+
 		resetBusinessUnitId();
 		resetFarmId();
 
