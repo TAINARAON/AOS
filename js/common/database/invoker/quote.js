@@ -24,8 +24,7 @@ var quoteInvoker = new function() {
         return mockCommunicator.getQuote(id);
     };
 
-    // ANRO -> is this function being used? If not, delete please. If so, why is ID passed in? Might be me.
-    this.getQuotes = function(id) {
+    this.getQuotes = function() {
 
     	return mockCommunicator.getQuotes();
     };

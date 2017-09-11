@@ -13,7 +13,7 @@
 	var input_oppervlakte = document.getElementById("oppervlakte");
 	var input_gewas_opbrengs = document.getElementById("gewas_opbrengs");
 	var input_rand_per_eenheid = document.getElementById("rand_per_eenheid");
-	var input_versekerings_waarde = document.getElementById("versekerings_waarde");
+	//var input_versekerings_waarde = document.getElementById("versekerings_waarde");
 
 	var closeModalBtn = document.getElementById("close_modal");
 
@@ -28,7 +28,7 @@
 
 	function addInputValueListeners()
 	{
-		console.log("Adding input listeners");
+		debugTool.print("Adding input listeners", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
 		$('#quote_input_container > div > div > input').keyup(function(){quoteInputKeyUpListener();});
 	}
 
@@ -52,27 +52,11 @@
 
 	function setupModalButtonClickListeners()
 	{
-		console.log("Adding click listeners");
-		var includeBtn = document.getElementById("includeRow");
-		console.log(includeBtn);
-		includeBtn.onclick = function(e) {addFarmToQuote();};
+		debugTool.print("Adding click listeners", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
+		document.getElementById("includeRow").onclick = function(e) {addFarmToQuote();};
 		document.getElementById("cancelQuote").onclick = function(e) {cancelCreatingQuote();};
 		document.getElementById("acceptQuote").onclick = function(e) {createQuoteAndAddToView()};
-
-		//document.getElementById("searchBtn").onclick = function(e) {checkBusinessUnitValidity();};
 	}
-
-	/*function checkBusinessUnitValidity()
-	{
-		console.log("checking validity");
-		var boerdery = input_boerdery.value;
-		// TODO: check if this business unit exists in the db, if so - get the id and display the other input boxes
-		var plaas = input_plaas.value;
-		// TODO: check if this farm exists in the db, if so - get the id and display the other input boxes
-
-		setBusinessUnitId(Math.floor((Math.random() * 100) + 1));
-		setFarmId(Math.floor((Math.random() * 100) + 1));
-	}*/
 
 	function getBrokerId()
 	{
@@ -103,7 +87,12 @@
 			var oppervlakte = input_oppervlakte.value;
 			var gewas_opbrengs = input_gewas_opbrengs.value;
 			var rand_per_eenheid = input_rand_per_eenheid.value;
-			var versekerings_waarde = input_versekerings_waarde.value;
+				// This is a calculated value
+				//var versekerings_waarde = input_versekerings_waarde.value;
+
+			// TODO: proper calculation with testing for user messing with frontend elements in inspector
+			// oppervlakte * gewasOpbrengs * R.Unit
+			var versekerings_waarde = Math.floor((Math.random() * 10000) + 1);
 
 			var data = {
 				"broker_id":getBrokerId(),
@@ -115,7 +104,7 @@
 				'linked_to_quote_id':null,
 				'date_created':'1990-05-18 19:01:05',
 				"boerdery":boerdery,
-				plase:[
+				quoteLandEntries:[
 					{
 						"plaas":plaas,
 						"produk":produk,
@@ -134,6 +123,7 @@
 
 			addToQuoteObject(data);
 			addToTable(data, rowContainer);
+			clearQuoteEntrySpecificValuesAfterAdd();
 		}
 		else
 		{
@@ -143,7 +133,7 @@
 
 	function validateInputs()
 	{
-		console.log("checking validity");
+		debugTool.print("checking validity", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
 		// TODO: add extra validation here
 		var boerderySuccess = validateBusinessUnite(input_boerdery.value);
 		if(!boerderySuccess)
@@ -207,7 +197,7 @@
 			if(quote[i].boerdery == data.boerdery)
 			{
 				// Only one farm will be added per click so it's safe to select 0 in the array
-				quote[i].plase.push(data.plase[0]);
+				quote[i].quoteLandEntries.push(data.quoteLandEntries[0]);
 				exists = true;
 			}
 		}
@@ -222,11 +212,11 @@
 	function addToTable(data, container)
 	{
 		var row = document.createElement('TR');
-		for(var i = 0; i < data.plase.length; i++)
+		for(var i = 0; i < data.quoteLandEntries.length; i++)
 		{
-			var spesifiekePlaas = data.plase[i];
+			var spesifiekePlaas = data.quoteLandEntries[i];
 
-			createColumn(spesifiekePlaas.plaas, row);
+			/*createColumn(spesifiekePlaas.plaas, row);
 			createColumn(spesifiekePlaas.produk, row);
 			createColumn(spesifiekePlaas.gewas, row);
 			createColumn(spesifiekePlaas.opsie_tiepe, row);
@@ -236,7 +226,18 @@
 			createColumn(spesifiekePlaas.oppervlakte, row);
 			createColumn(spesifiekePlaas.gewas_opbrengs, row);
 			createColumn(spesifiekePlaas.rand_per_eenheid, row);
+			createColumn(spesifiekePlaas.versekerings_waarde, row);*/
+
+			createColumn(spesifiekePlaas.plaas, row);
+			createColumn(spesifiekePlaas.gewas, row);
+			createColumn(spesifiekePlaas.kultivar, row);
+			createColumn(spesifiekePlaas.oppervlakte, row);
+			createColumn(spesifiekePlaas.gewas_opbrengs, row);
+			createColumn(spesifiekePlaas.rand_per_eenheid, row);
 			createColumn(spesifiekePlaas.versekerings_waarde, row);
+			createColumn(spesifiekePlaas.opsie_tiepe, row);
+			createColumn(spesifiekePlaas.persentasie, row);
+			createButtonColumn(row);
 		}
 
 		container.appendChild(row);
@@ -250,6 +251,52 @@
 		container.appendChild(column);
 	}
 
+	function createButtonColumn(container)
+	{
+		createEditButton(container);
+		createDeleteButton(container);
+	}
+
+	function createEditButton(container)
+	{
+
+	}
+
+	function createDeleteButton(container)
+	{
+
+	}
+
+	function clearQuoteEntrySpecificValuesAfterAdd()
+	{
+		console.log("Clear values after add");
+
+		// Land nommer
+		input_land_nommer.value = "";
+
+		// Kultivar
+		input_kultivar.value = "";
+
+		// Oppervlak
+		input_oppervlakte.value = "";
+
+		// Versekering waarde
+		//input_versekerings_waarde.value = "";
+
+		// Check checkbox values
+		if(!document.getElementById("onthou_gewas_opbrengs").checked)
+		{
+			// Gewas opbrengs
+			input_gewas_opbrengs.value = "";
+		}
+
+		if(!document.getElementById("onthou_rand_waarde").checked)
+		{
+			// Rand per eenheid
+			input_rand_per_eenheid.value = "";
+		}
+	}
+
 	function cancelCreatingQuote()
 	{
 		reset();
@@ -257,7 +304,7 @@
 
 	function reset()
 	{
-		console.log("Resetting modal values");
+		debugTool.print("Resetting modal values", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
 		resetBusinessUnitId();
 		resetFarmId();
 
@@ -279,7 +326,7 @@
 		input_oppervlakte.value = "";
 		input_gewas_opbrengs.value = "";
 		input_rand_per_eenheid.value = "";
-		input_versekerings_waarde.value = "";
+		//input_versekerings_waarde.value = "";
 	}
 
 	function resetQuoteData()
@@ -295,7 +342,7 @@
 
 	function createQuoteAndAddToView()
 	{
-		console.log("Create quote");
+		debugTool.print("Create quote", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
 		updateQuotes(quote);
 		closeModal();
 		reset();
@@ -303,7 +350,7 @@
 
 	function closeModal()
 	{
-		console.log("closing modal");
+		debugTool.print("closing modal", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
 		closeModalBtn.click();
 	}
 })();

@@ -9,9 +9,9 @@ var addQuote;
 	(function init(){
 		var container = document.getElementById("quote_container");
 		var data = [
-			{"boerdery":"title1", "plase":[{"plaas":"plaas1"}]},
-			{"boerdery":"title2", "plase":[{"plaas":"plaas2"}]},
-			{"boerdery":"title3", "plase":[{"plaas":"plaas3"}]}
+			{"boerdery":"title1", "quoteLandEntries":[{"plaas":"plaas1"}]},
+			{"boerdery":"title2", "quoteLandEntries":[{"plaas":"plaas2"}]},
+			{"boerdery":"title3", "quoteLandEntries":[{"plaas":"plaas3"}]}
 		];
 
 		console.log(mainQuote);
@@ -140,22 +140,38 @@ var addQuote;
 			if(mainQuote.some(item => item.boerdery === quotes[i].boerdery))
 			{
 				console.log("Entry exists, add farm");
-				for(var j = 0; j < quotes[i].plase.length; j++)
+				for(var j = 0; j < quotes[i].quoteLandEntries.length; j++)
 				{
 					console.log("Adding farm");
-					mainQuote[i].plase.push(quotes[i].plase[j]);
+					mainQuote[i].quoteLandEntries.push(quotes[i].quoteLandEntries[j]);
 				}
+
+				// Persist data to database
+				saveQuoteLandEntries(quotes[i].quoteLandEntries);
 			}
 			else
 			{
 				console.log("Entry does not exist, add whole");
 				mainQuote.push(quotes[i]);
+				// Persist data to database
+				saveBusinessUnit(quotes[i]);
+				saveQuoteLandEntries(quotes[i].quoteLandEntries);
 			}
 		}
 
 		console.log(mainQuote);
-		// updated table here?
+
 		updateAccordion();
+	}
+
+	function saveQuoteLandEntries(landEntries)
+	{
+		debugTool.print("Save land entry", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
+	}
+
+	function saveBusinessUnit(businessUnit)
+	{
+		debugTool.print("Save business unit", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
 	}
 
 	function updateAccordion()
