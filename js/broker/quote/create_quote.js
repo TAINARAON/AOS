@@ -334,7 +334,6 @@
 
 	function addToTable(data, container)
 	{
-		var row = document.createElement('TR');
 		for(let i = 0; i < data.quoteLandEntries.length; i++)
 		{
 			var spesifiekePlaas = data.quoteLandEntries[i];
@@ -354,6 +353,8 @@
 			// After an item is deleted from the JSON landEntry it leaves an undefined item
 			if(spesifiekePlaas != undefined)
 			{
+				var row = document.createElement('TR');
+
 				createColumn(spesifiekePlaas.plaas, row);
 				createColumn(spesifiekePlaas.gewas, row);
 				createColumn(spesifiekePlaas.cultivar, row);
@@ -365,10 +366,10 @@
 				createColumn(spesifiekePlaas.persentasie, row);
 				
 				createButtonColumn(row, data.boerdery, i);
+
+				container.appendChild(row);
 			}
 		}
-
-		container.appendChild(row);
 	}
 
 	function createColumn(value, container)
@@ -454,7 +455,7 @@
 				}
 			}
 		}
-
+		
 		reloadTable(quote);
 	}
 
