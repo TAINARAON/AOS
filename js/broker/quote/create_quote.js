@@ -14,7 +14,6 @@
 	var input_oppervlakte = document.getElementById("oppervlakte");
 	var input_gewas_opbrengs = document.getElementById("gewas_opbrengs");
 	var input_rand_per_eenheid = document.getElementById("rand_per_eenheid");
-	//var input_versekerings_waarde = document.getElementById("versekerings_waarde");
 	// ^ Input fields ^
 
 	// Farm container
@@ -151,10 +150,8 @@
 
         if (empty) {
         	allValuesEntered = false;
-            //$('#register').attr('disabled', 'disabled'); // updated according to http://stackoverflow.com/questions/7637790/how-to-remove-disabled-attribute-with-jquery-ie
         } else {
         	allValuesEntered = true;
-            //$('#register').removeAttr('disabled'); // updated according to http://stackoverflow.com/questions/7637790/how-to-remove-disabled-attribute-with-jquery-ie
         }
 	}
 
@@ -166,6 +163,7 @@
 		document.getElementById("acceptQuote").onclick = function(e) {createQuoteAndAddToView()};
 	}
 
+	// Getters & Setters
 	function getBrokerId()
 	{
 		// TODO: get the proper id from the session
@@ -185,22 +183,121 @@
 		return Math.floor((Math.random() * 10000) + 1);
 	}
 
+	function getInputBusinessUnitValue()
+	{
+		return input_boerdery.value;
+	}
+
+	function setInputBusinessUnitValue(value)
+	{
+		input_boerdery.value = value;
+	}
+
+	function getInputFarmValue()
+	{
+		return input_plaas.value;
+	}
+
+	function setInputFarmValue(value)
+	{
+		input_plaas.value = value;
+	}
+
+	function getInputProductValue()
+	{
+		return input_produk.value;
+	}
+
+	function setInputProductValue(value)
+	{
+		input_produk.value = value;
+	}
+
+	function getInputCropValue()
+	{
+		return input_gewas.value;
+	}
+
+	function setInputCropValue(value)
+	{
+		input_gewas.value = value;
+	}
+
+	function getInputOptionTypeValue()
+	{
+		return input_opsie_tipe.value;
+	}
+
+	function setInputOptionTypeValue(value)
+	{
+		input_opsie_tipe.value = value;
+	}
+
+	function getInputPersentageValue()
+	{
+		return input_persentasie.value;
+	}
+
+	function setInputPersentageValue(value)
+	{
+		input_persentasie.value = value;
+	}
+
+	function getInputLandNumberValue()
+	{
+		return input_land_nommer.value;
+	}
+
+	function setInputLandNumberValue(value)
+	{
+		input_land_nommer.value = value;
+	}
+
+	function getInputCultivarValue()
+	{
+		return input_kultivar.value;
+	}
+
+	function setInputCultivarValue(value)
+	{
+		input_kultivar.value = value;
+	}
+
+	function getInputAreaValue()
+	{
+		return input_oppervlakte.value;
+	}
+
+	function setInputAreaValue(value)
+	{
+		input_oppervlakte.value = value;
+	}
+
+	function getInputYieldValue()
+	{
+		return input_gewas_opbrengs.value;
+	}
+
+	function setInputYieldValue(value)
+	{
+		input_gewas_opbrengs.value = value;
+	}
+
+	function getInputPriceValue()
+	{
+		return input_rand_per_eenheid.value;
+	}
+
+	function setInputPriceValue(value)
+	{
+		input_rand_per_eenheid.value = value;
+	}
+	// ^ Getters & Setters ^
+
 	function addFarmToQuote()
 	{
 		if(validateInputs())
 		{
-			var boerdery = input_boerdery.value;
-			var plaas = input_plaas.value;
-			var produk = input_produk.value;
-			var gewas = input_gewas.value;
-			var opsie_tipe = input_opsie_tipe.value;
-			var persentasie = input_persentasie.value;
-			var land_nommer = input_land_nommer.value;
-			var kultivar = input_kultivar.value;
-			var oppervlakte = input_oppervlakte.value;
-			var gewas_opbrengs = input_gewas_opbrengs.value;
-			var rand_per_eenheid = input_rand_per_eenheid.value;
-
 			// TODO: proper calculation
 			// sumOfAllSelectedDamageTypesPremiumContribution = 0;
 			//	foreach(quoteLandEntry.selectedDamageTypes as selectedDamageType) {
@@ -219,19 +316,19 @@
 				'quoteNumber': "00001",
 				'linkedToQuoteId':null,
 				'dateCreated':'1990-05-18 19:01:05',
-				"boerdery":boerdery,
+				"boerdery":getInputBusinessUnitValue(),
 				quoteLandEntries:[
 					{
-						"plaas":plaas,
-						"produk":produk,
-						"gewas":gewas,
-						"opsie_tiepe":opsie_tipe,
-						"persentasie":persentasie,
-						"landNumber":land_nommer,
-						"cultivar":kultivar,
-						"area":oppervlakte,
-						"yield":gewas_opbrengs,
-						"price":rand_per_eenheid,
+						"plaas":getInputFarmValue(),
+						"produk":getInputProductValue(),
+						"gewas":getInputCropValue(),
+						"opsie_tiepe":getInputOptionTypeValue(),
+						"persentasie":getInputPersentageValue(),
+						"landNumber":getInputLandNumberValue(),
+						"cultivar":getInputCultivarValue(),
+						"area":getInputAreaValue(),
+						"yield":getInputYieldValue(),
+						"price":getInputPriceValue(),
 						"versekerings_waarde":berekenVersekeringsWaarde()
 					}
 				]
@@ -271,13 +368,6 @@
 		return allValuesEntered;
 	}
 
-	/*function validateBusinessUnite(businessUnitName)
-	{
-		// TODO: actual database call
-		setBusinessUnitId(Math.floor((Math.random() * 1000) + 1));
-		return true;
-	}*/
-
 	function setBusinessUnitId(id)
 	{
 		boerderyID = id;
@@ -292,13 +382,6 @@
 	{
 		boerderyID = undefined;
 	}
-
-	/*function validateFarm(farmName)
-	{
-		// TODO: actual database call
-		setFarmId(Math.floor((Math.random() * 1000) + 1));
-		return true;
-	}*/
 
 	function setFarmId(id)
 	{
@@ -409,33 +492,32 @@
 
 	function editLandEntry(boerdery, index)
 	{
-		for(let i = 0; i < quote.length; i++)
+		debugger;
+		for(let j = 0; j < quote.length; j++)
 		{
-			if(quote[i].boerdery = boerdery)
+			if(quote[j].boerdery = boerdery)
 			{
-				debugTool.print("Edit item: " + quote[i], FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
-				for(let j = 0; j < quote[i].quoteLandEntries.length; j++)
+				debugTool.print("Edit item: " + quote[j], FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
+				for(let k = 0; k < quote[j].quoteLandEntries.length; k++)
 				{
-					if(j == index)
+					if(k == index)
 					{
 						debugTool.print("Edit item: " + boerdery + " number " + index, FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
 
-						debugTool.print("Value: " +  quote[i].quoteLandEntries[j].produk, FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);						
+						debugTool.print("Value: " +  quote[j].quoteLandEntries[k].produk, FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);						
 						
 						// Load values into input boxes again
-						// TODO: Update object entry?
-						// Add another one??
-						input_produk.value = quote[i].quoteLandEntries[j].produk;
-						input_gewas.value = quote[i].quoteLandEntries[j].gewas;
-						input_opsie_tipe.value = quote[i].quoteLandEntries[j].opsie_tiepe;
-						input_persentasie.value = quote[i].quoteLandEntries[j].persentasie;
-						input_land_nommer.value = quote[i].quoteLandEntries[j].landNumber;
-						input_kultivar.value = quote[i].quoteLandEntries[j].cultivar;
-						input_oppervlakte.value = quote[i].quoteLandEntries[j].area;
-						input_gewas_opbrengs.value = quote[i].quoteLandEntries[j].yield;
-						input_rand_per_eenheid.value = quote[i].quoteLandEntries[j].price;
+						setInputProductValue(quote[j].quoteLandEntries[k].produk);
+						setInputCropValue(quote[j].quoteLandEntries[k].gewas);
+						setInputOptionTypeValue(quote[j].quoteLandEntries[k].opsie_tiepe);
+						setInputPersentageValue(quote[j].quoteLandEntries[k].persentasie);
+						setInputLandNumberValue(quote[j].quoteLandEntries[k].landNumber);
+						setInputCultivarValue(quote[j].quoteLandEntries[k].cultivar);
+						setInputAreaValue(quote[j].quoteLandEntries[k].area);
+						setInputYieldValue(quote[j].quoteLandEntries[k].yield);
+						setInputPriceValue(quote[j].quoteLandEntries[k].price);
 
-						createTemporaryRecordChangeButtons(i, j);
+						createTemporaryRecordChangeButtons(j, k);
 					}
 				}
 			}
@@ -444,14 +526,21 @@
 
 	function createTemporaryRecordChangeButtons(quoteIndex, landEntryIndex)
 	{
+		// Try to remove buttons, should they exist
+		// Should the user click on multiple edit buttons in a row
+		if(checkIfTemporaryButtonsExistInDOM())
+		{
+			removeTemporaryButtons();
+		}
+
 		// Hide the 'sluit in' button
-		document.getElementById("includeRow").visibility = "hidden";
+		document.getElementById("includeRow").style.visibility = "hidden";
 
 		// These buttons will remove themselves once the record has been saved or canceled
 		var saveBtn = createSaveButton();
-		var cancelBtn = createCancelButton();
-
 		saveBtn.onclick = function() {save(quoteIndex, landEntryIndex);};
+
+		var cancelBtn = createCancelButton();
 		cancelBtn.onclick = function() {cancel(quoteIndex, landEntryIndex);};
 	}
 
@@ -474,25 +563,35 @@
 
 	function restoreOriginalButton()
 	{
+		removeTemporaryButtons();
+
+		document.getElementById("includeRow").style.visibility = "visibile";
+	}
+
+	function checkIfTemporaryButtonsExistInDOM()
+	{
+		return row4.contains(document.getElementById("saveBtn"));
+	}
+
+	function removeTemporaryButtons()
+	{
 		row4.removeChild(document.getElementById("saveBtn"));
 		row4.removeChild(document.getElementById("cancelBtn"));
-
-		document.getElementById("includeRow").visibility = "visibile";
 	}
 
 	function saveEditedValues(quoteIndex, landEntryIndex)
 	{
 		if(validateInputs())
 		{
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].produk = input_produk.value;
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].gewas = input_gewas.value;
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].opsie_tiepe = input_opsie_tipe.value;
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].persentasie = input_persentasie.value;
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].landNumber = input_land_nommer.value;
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].cultivar = input_kultivar.value;
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].area = input_oppervlakte.value;
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].yield = input_gewas_opbrengs.value;
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].price = input_rand_per_eenheid.value;
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].produk = getInputProductValue();
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].gewas = getInputCropValue();
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].opsie_tiepe = getInputOptionTypeValue();
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].persentasie = getInputPersentageValue();
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].landNumber = getInputLandNumberValue();
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].cultivar = getInputCultivarValue();
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].area = getInputAreaValue();
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].yield = getInputYieldValue();
+			quote[quoteIndex].quoteLandEntries[landEntryIndex].price = getInputPriceValue();
 
 			quote[quoteIndex].quoteLandEntries[landEntryIndex].versekerings_waarde = berekenVersekeringsWaarde();
 
@@ -643,7 +742,6 @@
 
 	function resetTableRows()
 	{
-		//var rowContainer = document.getElementById("create_quote_table_body");
 		rowContainer.innerHTML = "";
 	}
 
