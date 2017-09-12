@@ -424,18 +424,6 @@
 		{
 			var spesifiekePlaas = data.quoteLandEntries[i];
 
-			/*createColumn(spesifiekePlaas.plaas, row);
-			createColumn(spesifiekePlaas.produk, row);
-			createColumn(spesifiekePlaas.gewas, row);
-			createColumn(spesifiekePlaas.opsie_tiepe, row);
-			createColumn(spesifiekePlaas.persentasie, row);
-			createColumn(spesifiekePlaas.land_nommer, row);
-			createColumn(spesifiekePlaas.kultivar, row);
-			createColumn(spesifiekePlaas.oppervlakte, row);
-			createColumn(spesifiekePlaas.gewas_opbrengs, row);
-			createColumn(spesifiekePlaas.rand_per_eenheid, row);
-			createColumn(spesifiekePlaas.versekerings_waarde, row);*/
-
 			// After an item is deleted from the JSON landEntry it leaves an undefined item
 			if(spesifiekePlaas != undefined)
 			{
