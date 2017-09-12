@@ -326,6 +326,11 @@
 	{
 		label_farm.innerHTML = "Plaas:";
 	}
+
+	function resetQuoteObject()
+	{
+		quote = {};
+	}
 	// ^ Cleanup functions ^
 
 	// Attribute toggles
@@ -516,6 +521,7 @@
 				"boerdery":getInputBusinessUnitValue(),
 				quoteLandEntries:[
 					{
+						"id":getFarmId(),
 						"plaas":getInputFarmValue(),
 						"produk":getInputProductValue(),
 						"gewas":getInputCropValue(),
@@ -767,7 +773,8 @@
 		{
 			if(landEntry == quote.quoteLandEntries[i])
 			{
-				delete quote.quoteLandEntries[i];
+				//delete quote.quoteLandEntries[i];
+				quote.quoteLandEntries.splice(i, 1);
 				break;
 			}
 		}
@@ -779,10 +786,11 @@
 
 	function reset()
 	{
+		// Reset object
+		resetQuoteObject();
 		// Remove notification status of validity
 		resetFarmLabel();
 		resetBusinessUnitLabel();
-
 		// Remove disble state from business unit
 		removeDisableStatusFromBusinessUnit();
 		// Clear all values
@@ -802,13 +810,14 @@
 	{
 		if(persistQuoteData(quote))
 		{
-			reset();
-
 			// send the data to the qoute.js
 			updateQuotes(quote);
 			// close the modal
 			closeModal();
 			// Display some sort of confirmation ?
+
+			// Reset all
+			reset();
 		}
 		else
 		{

@@ -6,8 +6,16 @@ var addQuote;
 
 	var mainQuote = [];
 
+	var quoteAccordioncontainer = document.getElementById("quote_accordion_container");
+
+	// Rest functions
+	function resetAccordionContainer()
+	{
+		quoteAccordioncontainer.innerHTML = "";
+	}
+	// ^ Reset functions ^
+
 	(function init(){
-		var container = document.getElementById("quote_container");
 		var data = [
 			{"boerdery":"title1", "quoteLandEntries":[{"plaas":"plaas1"}]},
 			{"boerdery":"title2", "quoteLandEntries":[{"plaas":"plaas2"}]},
@@ -18,7 +26,7 @@ var addQuote;
 
 		createModal("modal_container");
 
-		createQuoteAccordion(container, data);
+		createQuoteAccordion(quoteAccordioncontainer, data);
 	})();
 
 	function createModal(id)
@@ -135,7 +143,7 @@ var addQuote;
 		console.log("Hitting inner fuction via global variable");
 		console.log("Size: " + mainQuote.length);
 
-		for(var i = 0; i < quotes.length; i++)
+		/*for(var i = 0; i < quotes.length; i++)
 		{
 			if(mainQuote.some(item => item.boerdery === quotes[i].boerdery))
 			{
@@ -145,18 +153,49 @@ var addQuote;
 					console.log("Adding farm");
 					mainQuote[i].quoteLandEntries.push(quotes[i].quoteLandEntries[j]);
 				}
-
-				// Persist data to database
-				//saveQuoteLandEntries(quotes[i].quoteLandEntries);
 			}
 			else
 			{
 				console.log("Entry does not exist, add whole");
 				mainQuote.push(quotes[i]);
-				// Persist data to database
-				
-				//saveBusinessUnit(quotes[i]);
-				//saveQuoteLandEntries(quotes[i].quoteLandEntries);
+			}
+		}*/
+
+		console.log(quotes);
+
+		if(isEmpty(mainQuote))
+		{
+			console.log("Main empty, add");
+			mainQuote.push(quotes);
+		}
+		else
+		{
+			console.log("Quote object coming in");
+			console.log(quotes);
+			if(mainQuote.some(item => item.boerdery === quotes.boerdery))
+			{
+				console.log("Add land entry - business unit exists");
+				for(var i = 0; i < mainQuote.length; i++)
+				{
+					var businessUnit = mainQuote[i];
+					if(businessUnit.boerdery == quotes.boerdery)
+					{
+						console.log("Found matching business unit");
+
+						for(var j = 0; j < quotes.quoteLandEntries.length; j++)
+						{
+							var entry = quotes.quoteLandEntries[j];
+							console.log("Adding");
+							console.log(entry);
+							mainQuote[i].quoteLandEntries.push(entry);
+						}
+					}
+				}
+			}
+			else
+			{
+				console.log("Add additional");
+				mainQuote.push(quotes);
 			}
 		}
 
@@ -165,48 +204,20 @@ var addQuote;
 		updateAccordion();
 	}
 
-	/*function saveQuoteLandEntries(landEntries)
-	{
-		debugTool.print("Save land entry", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
-	}
+	function isEmpty(obj) {
+		for(var prop in obj) {
+		    if(obj.hasOwnProperty(prop))
+		        return false;
+		}
 
-	function saveBusinessUnit(businessUnit)
-	{
-		debugTool.print("Save business unit", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
-	}*/
+		return true;
+	}
 
 	function updateAccordion()
 	{
-		// if the business unit already exists, then make sure to only update the children
-		// else add the entire business unit to the accordion	
+		resetAccordionContainer();
 
-		/*var ancestor = document.getElementById("quote_container");
-    	parentDescendents = ancestor.getElementsByTagName('BUTTON');
-    	for(var i = 0; i < parentDescendents.length; i++)
-    	{
-    		for(var j = 0; j < mainQuote.length; j++)
-    		{
-    			if(parentDescendents[i].innerHTML == mainQuote[j].boerdery)
-				{
-					console.log("Business unit already exists in view");
-					for(var k = 0; k < mainQuote[j].plase.length; k++)
-					{
-						var detailContainerSibling = parentDescendents[i].nextSibling;
-						console.log("Should be button's detail container");
-						console.log(detailContainerSibling);
-						//if(mainQuote[j].plase[k] == )
-						//{
-
-						//}
-					}
-				}
-				else
-				{
-					console.log("Business unit does not exists in view");
-					createAccordionParentElement(ancestor, mainQuote, i);
-				}
-    		}
-    	}*/
+		createQuoteAccordion(quoteAccordioncontainer, mainQuote);
 	}
 
 })();
