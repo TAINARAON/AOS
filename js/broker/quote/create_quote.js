@@ -1,169 +1,100 @@
-(function(){ 
+(function() {
+	var businessUnitId;
+	var farmId;
+	var allValuesEntered = false;
 
-	var quote = [];
-	
+	// This modal will only contain a quote for one business unit at a time
+	var quote = {};
+
 	// Input fields
-	var input_boerdery = document.getElementById("business_unit");
-	var input_plaas = document.getElementById("farm");
-	var input_produk = document.getElementById("produk");
-	var input_gewas = document.getElementById("gewas");
-	var input_opsie_tipe = document.getElementById("opsie_tiepe");
-	var input_persentasie = document.getElementById("persentasie");
-	var input_land_nommer = document.getElementById("land_nommer");
-	var input_kultivar = document.getElementById("kultivar");
-	var input_oppervlakte = document.getElementById("oppervlakte");
-	var input_gewas_opbrengs = document.getElementById("gewas_opbrengs");
-	var input_rand_per_eenheid = document.getElementById("rand_per_eenheid");
+	var input_business_unit = document.getElementById("business_unit");
+	var input_farm = document.getElementById("farm");
+	var input_product = document.getElementById("produk");
+	var input_crop = document.getElementById("gewas");
+	var input_option_type = document.getElementById("opsie_tiepe");
+	var input_persentage = document.getElementById("persentasie");
+	var input_land_number = document.getElementById("land_nommer");
+	var input_cultivar = document.getElementById("kultivar");
+	var input_area = document.getElementById("oppervlakte");
+	var input_yield = document.getElementById("gewas_opbrengs");
+	var input_price = document.getElementById("rand_per_eenheid");
 	// ^ Input fields ^
 
-	// Farm container
-	var farmContiner = document.getElementById("farmContainer");
-	// ^ Farm container ^
+	// Check box fields
+	var checkbox_remember_yield = document.getElementById("onthou_gewas_opbrengs");
+	var checkbox_remember_price = document.getElementById("onthou_rand_waarde");
+	// ^ Check box fields ^
 
+	// Containers for hiding and displaying purposes
+	// Farm container
+	var farm_container = document.getElementById("farmContainer");
+	// ^ Farm container ^
 	// Row containers
 	var row1 = document.getElementById("row1Container");
 	var row2 = document.getElementById("row2Container");
 	var row3 = document.getElementById("row3Container");
 	var row4 = document.getElementById("row4Container");
 	// ^ Row containers ^
+	// ^ Containers for hiding and displaying purposes ^
 
-	// Land entry table row container
-	var rowContainer = document.getElementById("create_quote_table_body");
-	// ^ Land entry table row container ^
+	// Land entry container
+	var land_entry_container = document.getElementById("create_quote_table_body");
+	// ^ Land entry  container ^
 
-	var closeModalBtn = document.getElementById("close_modal");
-
-	var boerderyID;
-	var plaasID;
-	var allValuesEntered = false;
-
-	(function init(){
-		setInitialInputVisibility();
-		addOnChangeListeners();
-		addInputValueListeners();
-		setupModalButtonClickListeners();
-	})();
-
-	function setInitialInputVisibility()
-	{
-		hideFarm();
-
-		hideFields();
-	}
-
-	function addOnChangeListeners()
-	{
-		input_boerdery.onblur = function(){toggleFarmInputVisibility(validateBusinessUnit());};
-		input_plaas.onblur = function(){toggleFieldsVisible(validateFarm());};
-	}
-
-	function validateBusinessUnit()
-	{
-		var val = input_boerdery.value;
-		if(val != undefined && val != "")
-		{
-			// TODO: server check
-			setBusinessUnitId(Math.floor((Math.random() * 1000) + 1));
-			if(true)
-			{
-				input_boerdery.disabled = "disabled";
-				return true;
-			}
-
-			input_boerdery.removeAttribute("disabled");
-			// TODO: display error - business unit not available
-		}
-
-		return false;
-	}
-
-	function toggleFarmInputVisibility(state)
-	{
-		if(state)
-			showFarm();
-		else
-			hideFarm();
-	}
-
-	function showFarm()
-	{
-		farmContiner.style.visibility = "visible";
-	}
-
-	function hideFarm()
-	{
-		// change to display none to hide size in modal
-		farmContiner.style.visibility = "hidden";
-	}
-
-	function validateFarm()
-	{
-		var val = input_plaas.value;
-		if(val != undefined && val != "")
-		{
-			// TODO: server check
-			setFarmId(Math.floor((Math.random() * 1000) + 1));
-			return true;
-		}
-
-		return false;
-	}
-
-	function toggleFieldsVisible(state)
-	{
-		if(state)
-			showFields();
-		else
-			hideFields();
-	}
-
-	function showFields()
-	{
-		row1.style.visibility = "visible";
-		row2.style.visibility = "visible";
-		row3.style.visibility = "visible";
-		row4.style.visibility = "visible";
-	}
-
-	function hideFields()
-	{
-		row1.style.visibility = "hidden";
-		row2.style.visibility = "hidden";
-		row3.style.visibility = "hidden";
-		row4.style.visibility = "hidden";
-	}
-
-	function addInputValueListeners()
-	{
-		debugTool.print("Adding input listeners", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
-		$('#quote_input_container > div > div > input').keyup(function(){quoteInputKeyUpListener();});
-	}
-
-	function quoteInputKeyUpListener()
-	{
-		var empty = false;
-        $('#quote_input_container > div > div > input').each(function() {
-            if ($(this).val() == '') {
-                empty = true;
-            }
-        });
-
-        if (empty) {
-        	allValuesEntered = false;
-        } else {
-        	allValuesEntered = true;
-        }
-	}
-
-	function setupModalButtonClickListeners()
-	{
-		debugTool.print("Adding click listeners", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
-		document.getElementById("includeRow").onclick = function(e) {addFarmToQuote();};
-		document.getElementById("cancelQuote").onclick = function(e) {cancelCreatingQuote();};
-		document.getElementById("acceptQuote").onclick = function(e) {createQuoteAndAddToView()};
-	}
+	var include_row_button = document.getElementById("includeRow");
+	var close_modal_button = document.getElementById("close_modal");
 
 	// Getters & Setters
+	function setBusinessUnitId(id)
+	{
+		businessUnitId = id;
+	}
+
+	function getBusinessUnitId()
+	{
+		return businessUnitId;
+	}
+
+	function resetBusinessUnitId()
+	{
+		businessUnitId = undefined;
+	}
+
+	function setFarmId(id)
+	{
+		farmId = id;
+	}
+
+	function getFarmId()
+	{
+		return farmId;
+	}
+
+	function resetFarmId()
+	{
+		farmId = undefined;
+	}
+
+	function getAllInputValuesEnteredState()
+	{
+		return allValuesEntered;
+	}
+
+	function setAllInputValuesEnteredState(state)
+	{
+		allValuesEntered = state;
+	}
+
+	function getQuoteObject()
+	{
+		return	quote;
+	}
+
+	function setQuoteObject(obj)
+	{
+		quote = obj;
+	}
+
 	function getBrokerId()
 	{
 		// TODO: get the proper id from the session
@@ -185,129 +116,353 @@
 
 	function getInputBusinessUnitValue()
 	{
-		return input_boerdery.value;
+		return input_business_unit.value;
 	}
 
 	function setInputBusinessUnitValue(value)
 	{
-		input_boerdery.value = value;
+		input_business_unit.value = value;
 	}
 
 	function getInputFarmValue()
 	{
-		return input_plaas.value;
+		return input_farm.value;
 	}
 
 	function setInputFarmValue(value)
 	{
-		input_plaas.value = value;
+		input_farm.value = value;
 	}
 
 	function getInputProductValue()
 	{
-		return input_produk.value;
+		return input_product.value;
 	}
 
 	function setInputProductValue(value)
 	{
-		input_produk.value = value;
+		input_product.value = value;
 	}
 
 	function getInputCropValue()
 	{
-		return input_gewas.value;
+		return input_crop.value;
 	}
 
 	function setInputCropValue(value)
 	{
-		input_gewas.value = value;
+		input_crop.value = value;
 	}
 
 	function getInputOptionTypeValue()
 	{
-		return input_opsie_tipe.value;
+		return input_option_type.value;
 	}
 
 	function setInputOptionTypeValue(value)
 	{
-		input_opsie_tipe.value = value;
+		input_option_type.value = value;
 	}
 
 	function getInputPersentageValue()
 	{
-		return input_persentasie.value;
+		return input_persentage.value;
 	}
 
 	function setInputPersentageValue(value)
 	{
-		input_persentasie.value = value;
+		input_persentage.value = value;
 	}
 
 	function getInputLandNumberValue()
 	{
-		return input_land_nommer.value;
+		return input_land_number.value;
 	}
 
 	function setInputLandNumberValue(value)
 	{
-		input_land_nommer.value = value;
+		input_land_number.value = value;
 	}
 
 	function getInputCultivarValue()
 	{
-		return input_kultivar.value;
+		return input_cultivar.value;
 	}
 
 	function setInputCultivarValue(value)
 	{
-		input_kultivar.value = value;
+		input_cultivar.value = value;
 	}
 
 	function getInputAreaValue()
 	{
-		return input_oppervlakte.value;
+		return input_area.value;
 	}
 
 	function setInputAreaValue(value)
 	{
-		input_oppervlakte.value = value;
+		input_area.value = value;
 	}
 
 	function getInputYieldValue()
 	{
-		return input_gewas_opbrengs.value;
+		return input_yield.value;
 	}
 
 	function setInputYieldValue(value)
 	{
-		input_gewas_opbrengs.value = value;
+		input_yield.value = value;
 	}
 
 	function getInputPriceValue()
 	{
-		return input_rand_per_eenheid.value;
+		return input_price.value;
 	}
 
 	function setInputPriceValue(value)
 	{
-		input_rand_per_eenheid.value = value;
+		input_price.value = value;
+	}
+
+	function shouldRememberYield()
+	{
+		return checkbox_remember_yield.checked;
+	}
+
+	function setRemeberYieldState(state)
+	{
+		checkbox_remember_yield.checked = state;
+	}
+
+	function shouldRememberPrice()
+	{
+		return checkbox_remember_price.checked;
+	}
+
+	function setRememberPriceState(state)
+	{
+		checkbox_remember_price.checked = state;
 	}
 	// ^ Getters & Setters ^
 
-	function addFarmToQuote()
+	//	Showing and hiding of elements 
+	function showFarm()
+	{
+		farm_container.style.display = "block";
+	}
+
+	function hideFarm()
+	{
+		farm_container.style.display = "none";
+	}
+
+	function showFields()
+	{
+		row1.style.display = "block";
+		row2.style.display = "block";
+		row3.style.display = "block";
+		row4.style.display = "block";
+	}
+
+	function hideFields()
+	{
+		row1.style.display = "none";
+		row2.style.display = "none";
+		row3.style.display = "none";
+		row4.style.display = "none";
+	}
+	// ^ Showing and hiding of elements ^
+
+	// Cleanup functions
+	function clearAllInputValues()
+	{
+		setInputBusinessUnitValue("");
+		setInputFarmValue("");
+		setInputProductValue("");
+		setInputCropValue("");
+		setInputOptionTypeValue("");
+		setInputPersentageValue("");
+		setInputLandNumberValue("");
+		setInputCultivarValue("");
+		setInputAreaValue("");
+		setInputYieldValue("");
+		setInputPriceValue("");
+
+	}
+
+	function clearInputsForNextEntry()
+	{
+		setInputLandNumberValue("");
+		setInputCultivarValue("");
+		setInputAreaValue("");
+
+		if(!shouldRememberYield())
+		{
+			setInputYieldValue("");
+		}
+
+		if(!shouldRememberPrice())
+		{
+			setInputPriceValue("");
+		}
+	}
+
+	function resetLandEntryTable()
+	{
+		land_entry_container.innerHTML = "";
+	}
+	// ^ Cleanup functions ^
+
+	// Attribute toggles
+	function disableBusinessUnit()
+	{
+		input_business_unit.disabled = "disabled";
+	}
+
+	function removeDisableStatusFromBusinessUnit()
+	{
+		input_business_unit.removeAttribute("disabled");
+	}
+
+	function hideIncludeRowButton()
+	{
+		include_row_button.style.visibility = "hidden";
+	}
+
+	function showIncludeRowButton()
+	{
+		include_row_button.style.visibility = "visible";
+	}
+	// ^ Attribute toggles ^
+
+	(function init(){
+		setInitialInputVisibility();
+		addOnChangeListeners();
+		addInputValueListeners();
+		setupModalButtonClickListeners();
+	})();
+
+	// Initial setup function
+	function setInitialInputVisibility()
+	{
+		hideFarm();
+
+		hideFields();
+	}
+
+	function addOnChangeListeners()
+	{
+		input_business_unit.onblur = function(){toggleFarmInputVisibility(validateBusinessUnit());};
+		input_farm.onblur = function(){toggleFieldsVisible(validateFarm());};
+	}
+
+	function toggleFarmInputVisibility(state)
+	{
+		if(state)
+			showFarm();
+		else
+			hideFarm();
+	}
+
+	function validateBusinessUnit()
+	{
+		var val = getInputBusinessUnitValue();
+		if(val != undefined && val != "")
+		{
+			// TODO: server check
+			setBusinessUnitId(Math.floor((Math.random() * 1000) + 1));
+			if(true)
+			{
+				disableBusinessUnit();
+				return true;
+			}
+
+			removeDisableStatusFromBusinessUnit();
+			// TODO: display error - business unit not available
+		}
+
+		return false;
+	}
+
+	function toggleFieldsVisible(state)
+	{
+		if(state)
+			showFields();
+		else
+			hideFields();
+	}
+
+	function validateFarm()
+	{
+		var val = getInputFarmValue();
+		if(val != undefined && val != "")
+		{
+			// TODO: server check
+			setFarmId(Math.floor((Math.random() * 1000) + 1));
+			return true;
+		}
+
+		return false;
+	}
+
+	function addInputValueListeners()
+	{
+		debugTool.print("Adding input listeners", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
+		$('#quote_input_container > div > div > input').keyup(function(){quoteInputKeyUpListener();});
+	}
+
+	function quoteInputKeyUpListener()
+	{
+		var empty = false;
+        $('#quote_input_container > div > div > input').each(function() {
+            if ($(this).val() == '') {
+                empty = true;
+            }
+        });
+
+        setAllInputValuesEnteredState(!empty);
+	}
+
+	function setupModalButtonClickListeners()
+	{
+		debugTool.print("Adding click listeners", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
+		document.getElementById("includeRow").onclick = function(e) {addToQuote();};
+		document.getElementById("cancelQuote").onclick = function(e) {cancelCreatingQuote();};
+		document.getElementById("acceptQuote").onclick = function(e) {createQuoteAndAddToView()};
+	}
+	// ^ Initial setup function ^
+
+	function addToQuote()
 	{
 		if(validateInputs())
 		{
-			// TODO: proper calculation
-			// sumOfAllSelectedDamageTypesPremiumContribution = 0;
-			//	foreach(quoteLandEntry.selectedDamageTypes as selectedDamageType) {
-			//	   sumOfAllSelectedDamageTypesPremiumContribution  += selectedDamageType.premiumContribution;
-			//	}
-			// ValueOfCrop = quoteLandEntry.price x quoteLandEntry.yield x quoteLandEntry.area
-			// PremiumContributionValue = ValueOfCrop * sumOfAllSelectedDamageTypesPremiumContribution
-			//var premiumContributionValue =  Math.floor((Math.random() * 10000) + 1);
+			var quoteData = parseInputDataIntoJSONQuote();
 
-			var data = {
+			// Save this quoteData to the main quote
+			saveToMainQuoteObject(quoteData);
+			// Reload data in table
+			reloadLandEntryTable();
+			// Clear inputs for next entry
+			clearInputsForNextEntry();
+		}
+		else
+		{
+			alert("Please ensure all the required data have been provided");
+		}
+	}
+
+	function validateInputs()
+	{
+		debugTool.print("checking validity", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
+		
+		// More validation of other fields can be done here
+
+		return allValuesEntered;
+	}
+
+	function parseInputDataIntoJSONQuote()
+	{
+		var quoteData = {
 				"brokerId":getBrokerId(),
 				"insurerId":getInsurerId(),
 				"businessUnitId":getBusinessUnitId(),
@@ -334,117 +489,79 @@
 				]
 			};
 
-			addToQuoteObject(data);
-			addToTable(data, rowContainer);
-			clearQuoteEntrySpecificValuesAfterAdd();
+		return quoteData;
+	}
+
+	function saveToMainQuoteObject(quoteData)
+	{
+		if(isEmpty(quote))
+		{
+			quote = quoteData;
 		}
 		else
 		{
-			alert("Please fill in all values");
-		}
-	}
-
-	function validateInputs()
-	{
-		debugTool.print("checking validity", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
-		
-		/*
-		// TODO: add extra validation here
-		var boerderySuccess = validateBusinessUnite(input_boerdery.value);
-		if(!boerderySuccess)
-		{
-			// Somehow highlight this field
+			// QuoteData will only posses one entry at a time
+			quote.quoteLandEntries.push(quoteData.quoteLandEntries[0]);
 		}
 
-		var plaasSuccess = validateFarm(input_plaas.value);
-		if(!plaasSuccess)
-		{
-			// Somehow highlight this field
+		debugTool.print("Add to quote", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
+		debugTool.print(quote, FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
+	}
+
+	function isEmpty(obj) {
+		for(var prop in obj) {
+		    if(obj.hasOwnProperty(prop))
+		        return false;
 		}
 
-		return boerderySuccess && plaasSuccess && allValuesEntered;
-		*/
-
-		return allValuesEntered;
+		return true;
 	}
 
-	function setBusinessUnitId(id)
+	function reloadLandEntryTable()
 	{
-		boerderyID = id;
+		resetLandEntryTable();
+		loadMainQuoteIntoTable();
 	}
 
-	function getBusinessUnitId()
+	function loadMainQuoteIntoTable()
 	{
-		return boerderyID;
-	}
-
-	function resetBusinessUnitId()
-	{
-		boerderyID = undefined;
-	}
-
-	function setFarmId(id)
-	{
-		plaasID = id;
-	}
-
-	function getFarmId()
-	{
-		return plaasID;
-	}
-
-	function resetFarmId()
-	{
-		plaasID = undefined;
-	}
-
-	function addToQuoteObject(data)
-	{
-		var exists = false;
-		for(var i = 0; i < quote.length; i++)
+		for(var i = 0; i < quote.quoteLandEntries.length; i++)
 		{
-			if(quote[i].boerdery == data.boerdery)
+			var landEntry = quote.quoteLandEntries[i];
+
+			if(landEntry != undefined)
 			{
-				// Only one farm will be added per click so it's safe to select 0 in the array
-				quote[i].quoteLandEntries.push(data.quoteLandEntries[0]);
-				exists = true;
-			}
-		}
-
-		if(!exists)
-		{
-			data.id = quote.length;
-			quote.push(data);
-		}
-	}
-
-	function addToTable(data, container)
-	{
-		for(let i = 0; i < data.quoteLandEntries.length; i++)
-		{
-			var spesifiekePlaas = data.quoteLandEntries[i];
-
-			// After an item is deleted from the JSON landEntry it leaves an undefined item
-			if(spesifiekePlaas != undefined)
-			{
-				debugTool.print("Count: " + i, FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
 				var row = document.createElement('TR');
 
-				createColumn(spesifiekePlaas.plaas, row);
-				createColumn(spesifiekePlaas.gewas, row);
-				createColumn(spesifiekePlaas.cultivar, row);
-				createColumn(spesifiekePlaas.area, row);
-				createColumn(spesifiekePlaas.yield, row);
-				createColumn(spesifiekePlaas.price, row);
-				createColumn(spesifiekePlaas.versekerings_waarde, row);
-				createColumn(spesifiekePlaas.opsie_tiepe, row);
-				createColumn(spesifiekePlaas.persentasie, row);
-				
-				createButtonColumn(row, data.boerdery, i);
+				createLandEntryColumns(landEntry, row);
 
-				container.appendChild(row);
+				addRowToLandEntryContainer(row);
 			}
 		}
+	}
+
+	function addRowToLandEntryContainer(row)
+	{
+		land_entry_container.appendChild(row);
+	}
+
+	function createLandEntryColumns(landEntry, row)
+	{
+		// Default columns
+		createColumn(landEntry.plaas, row);
+		createColumn(landEntry.gewas, row);
+		createColumn(landEntry.cultivar, row);
+		createColumn(landEntry.area, row);
+		createColumn(landEntry.yield, row);
+		createColumn(landEntry.price, row);
+		createColumn(landEntry.versekerings_waarde, row);
+		createColumn(landEntry.opsie_tiepe, row);
+		createColumn(landEntry.persentasie, row);
+		// ^ Default column ^
+
+		// Button columns
+		createButtonColumns(landEntry, row);
+		// ^ Button column ^
 	}
 
 	function createColumn(value, container)
@@ -455,6 +572,12 @@
 		container.appendChild(column);
 	}
 
+	function createButtonColumns(landEntry, container)
+	{
+		createColumnWithObject(createEditButton(landEntry), container);
+		createColumnWithObject(createDeleteButton(landEntry), container);
+	}
+
 	function createColumnWithObject(object, container)
 	{
 		var column = document.createElement('TH');
@@ -463,228 +586,165 @@
 		column.appendChild(object);
 	}
 
-	function createButtonColumn(container, boerdery, index)
-	{
-		createColumnWithObject(createEditButton(boerdery, index), container);
-		createColumnWithObject(createDeleteButton(boerdery, index), container);
-	}
-
-	function createEditButton(boerdery, index)
+	// Edit button functionality
+	function createEditButton(landEntry)
 	{
 		var button = document.createElement("DIV");
 		button.innerHTML = "Edit";
 		button.className = "btn btn-success";
-		button.onclick = function(){editLandEntry(boerdery, index)};
-		//container.appendChild(button);
-		return button;
-	}
-
-	function editLandEntry(boerdery, index)
-	{
-		debugger;
-		for(let j = 0; j < quote.length; j++)
-		{
-			if(quote[j].boerdery = boerdery)
-			{
-				debugTool.print("Edit item: " + quote[j], FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
-				for(let k = 0; k < quote[j].quoteLandEntries.length; k++)
-				{
-					if(k == index)
-					{
-						debugTool.print("Edit item: " + boerdery + " number " + index, FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
-
-						debugTool.print("Value: " +  quote[j].quoteLandEntries[k].produk, FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);						
-						
-						// Load values into input boxes again
-						setInputProductValue(quote[j].quoteLandEntries[k].produk);
-						setInputCropValue(quote[j].quoteLandEntries[k].gewas);
-						setInputOptionTypeValue(quote[j].quoteLandEntries[k].opsie_tiepe);
-						setInputPersentageValue(quote[j].quoteLandEntries[k].persentasie);
-						setInputLandNumberValue(quote[j].quoteLandEntries[k].landNumber);
-						setInputCultivarValue(quote[j].quoteLandEntries[k].cultivar);
-						setInputAreaValue(quote[j].quoteLandEntries[k].area);
-						setInputYieldValue(quote[j].quoteLandEntries[k].yield);
-						setInputPriceValue(quote[j].quoteLandEntries[k].price);
-
-						createTemporaryRecordChangeButtons(j, k);
-					}
-				}
-			}
-		}
-	}
-
-	function createTemporaryRecordChangeButtons(quoteIndex, landEntryIndex)
-	{
-		// Try to remove buttons, should they exist
-		// Should the user click on multiple edit buttons in a row
-		if(checkIfTemporaryButtonsExistInDOM())
-		{
-			removeTemporaryButtons();
-		}
-
-		// Hide the 'sluit in' button
-		document.getElementById("includeRow").style.visibility = "hidden";
-
-		// These buttons will remove themselves once the record has been saved or canceled
-		var saveBtn = createSaveButton();
-		saveBtn.onclick = function() {save(quoteIndex, landEntryIndex);};
-
-		var cancelBtn = createCancelButton();
-		cancelBtn.onclick = function() {cancel(quoteIndex, landEntryIndex);};
-	}
-
-	function createSaveButton()
-	{
-		var button = document.createElement("div");
-		button.id = "saveBtn";
-		button.innerHTML = "Save";
-		button.className = "btn btn-success";
-
-		row4.appendChild(button);
+		button.onclick = function(){editLandEntry(landEntry)};
 
 		return button;
 	}
 
-	function save(quoteIndex, landEntryIndex)
+	function editLandEntry(landEntry)
 	{
-		saveEditedValues(quoteIndex, landEntryIndex);
+		hideIncludeRowButton();
+		setInputFieldsToExistingQuoteForEditing(landEntry);
+		createTemporaryButtonsForHandelingQuoteEdit(landEntry);
 	}
 
-	function restoreOriginalButton()
+	function setInputFieldsToExistingQuoteForEditing(landEntry)
 	{
-		removeTemporaryButtons();
+		debugTool.print("Ready inputs for editing", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
+		debugTool.print(landEntry, FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
 
-		document.getElementById("includeRow").style.visibility = "visibile";
+		setInputProductValue(landEntry.produk);
+		setInputCropValue(landEntry.gewas);
+		setInputOptionTypeValue(landEntry.opsie_tiepe);
+		setInputPersentageValue(landEntry.persentasie);
+		setInputLandNumberValue(landEntry.landNumber);
+		setInputCultivarValue(landEntry.cultivar);
+		setInputAreaValue(landEntry.area);
+		setInputYieldValue(landEntry.yield);
+		setInputPriceValue(landEntry.price);
 	}
 
-	function checkIfTemporaryButtonsExistInDOM()
+	function createTemporaryButtonsForHandelingQuoteEdit(landEntry)
 	{
-		return row4.contains(document.getElementById("saveBtn"));
+		removeTemporaryButtons();	
+
+		createTemporaryButtons(row4, landEntry);
+	}
+
+	function tempButtonsAlreadyExists(container, saveId, cancelId)
+	{
+		return container.contains(document.getElementById(saveId)) || container.contains(document.getElementById(cancelId));
 	}
 
 	function removeTemporaryButtons()
 	{
-		row4.removeChild(document.getElementById("saveBtn"));
-		row4.removeChild(document.getElementById("cancelBtn"));
-	}
+		var saveId = "saveBtn";
+		var cancelId = "cancelBtn";
 
-	function saveEditedValues(quoteIndex, landEntryIndex)
-	{
-		if(validateInputs())
+		if(tempButtonsAlreadyExists(row4, saveId, cancelId))
 		{
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].produk = getInputProductValue();
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].gewas = getInputCropValue();
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].opsie_tiepe = getInputOptionTypeValue();
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].persentasie = getInputPersentageValue();
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].landNumber = getInputLandNumberValue();
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].cultivar = getInputCultivarValue();
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].area = getInputAreaValue();
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].yield = getInputYieldValue();
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].price = getInputPriceValue();
-
-			quote[quoteIndex].quoteLandEntries[landEntryIndex].versekerings_waarde = berekenVersekeringsWaarde();
-
-			restoreOriginalButton();
-			clearQuoteEntrySpecificValuesAfterAdd();
-			reloadTable(quote);
-		}
-		else
-		{
-			alert("Please make sure all values are entered");
+			row4.removeChild(document.getElementById(saveId));
+			row4.removeChild(document.getElementById(cancelId));
 		}
 	}
 
-	function createCancelButton()
+	function createTemporaryButtons(container, landEntry)
 	{
-		var button = document.createElement("div");
+		createSaveBtn(container, landEntry);
+		createCancelButton(container);
+	}
+
+	function createSaveBtn(container, landEntry)
+	{
+		var button = document.createElement("DIV");
+		button.id = "saveBtn";
+		button.innerHTML = "Save";
+		button.className = "btn btn-success";
+		button.onclick = function() {save(landEntry)};
+
+		container.appendChild(button);
+	}
+
+	function save(landEntry)
+	{
+		var editedQuote = parseInputDataIntoJSONQuote();
+
+		updateQuoteLandEntry(editedQuote.quoteLandEntries[0], landEntry);
+			
+		removeTemporaryButtons();
+		showIncludeRowButton();
+
+		reloadLandEntryTable();
+
+		clearInputsForNextEntry();
+	}
+
+	function updateQuoteLandEntry(editedLandEntry, originalLandEntry)
+	{
+		debugTool.print("Update record", FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
+		for(var i = 0; i < quote.quoteLandEntries.length; i++)
+		{
+			if(quote.quoteLandEntries[i] == originalLandEntry)
+			{
+				quote.quoteLandEntries[i] = editedLandEntry;
+			}
+		}
+	}
+
+	function createCancelButton(container)
+	{
+		var button = document.createElement("DIV");
 		button.id = "cancelBtn";
 		button.innerHTML = "Cancel";
 		button.className = "btn btn-danger";
+		button.onclick = function() {cancel()};
 
-		row4.appendChild(button);
-
-		return button;
+		container.appendChild(button);
 	}
 
-	function cancel(quoteIndex, landEntryIndex)
+	function cancel()
 	{
-		restoreOriginalButton();
-		clearQuoteEntrySpecificValuesAfterAdd();
+		clearInputsForNextEntry();
+		removeTemporaryButtons();
+		showIncludeRowButton();
 	}
+	// ^ Edit button functionality ^
 
-	function createDeleteButton(boerdery, index)
+	// Delete button functionality
+	function createDeleteButton(landEntry)
 	{
 		var button = document.createElement("DIV");
 		button.innerHTML = "Delete";
 		button.className = "btn btn-danger";
-		button.onclick = function(){deleteLandEntry(boerdery, index)};
-		//container.appendChild(button);
+		button.onclick = function(){deleteLandEntry(landEntry)};
+
 		return button;
 	}
 
-	function deleteLandEntry(boerdery, index)
+	function deleteLandEntry(landEntry)
 	{
-		for(var i = 0; i < quote.length; i++)
+		debugTool.print("Delete item", FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
+		debugTool.print(landEntry, FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
+		for(var i = 0; i < quote.quoteLandEntries.length; i++)
 		{
-			if(quote[i].boerdery = boerdery)
+			if(landEntry == quote.quoteLandEntries[i])
 			{
-				debugTool.print("Delete item: " + quote[i], FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
-				for(var j = 0; j < quote[i].quoteLandEntries.length; j++)
-				{
-					if(j == index)
-					{
-						debugTool.print("Delete item: " + boerdery + " number " + index, FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
-						delete quote[i].quoteLandEntries[j];
-					}
-				}
+				delete quote.quoteLandEntries[i];
+				break;
 			}
 		}
-		
-		reloadTable(quote);
+		debugTool.print(quote, FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
+
+		reloadLandEntryTable();	
 	}
+	// ^ Delete button functionality ^
 
-	function reloadTable(quote)
+	function reset()
 	{
-		resetTableRows();
-
-		for(var i = 0; i < quote.length; i++)
-		{
-			debugTool.print(quote[i], FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);			
-			if(quote[i].quoteLandEntries.length != 0)
-			{
-				addToTable(quote[i], rowContainer);
-			}
-		}
-	}
-
-	function clearQuoteEntrySpecificValuesAfterAdd()
-	{
-		console.log("Clear values after add");
-
-		// Land nommer
-		input_land_nommer.value = "";
-
-		// Kultivar
-		input_kultivar.value = "";
-
-		// Oppervlak
-		input_oppervlakte.value = "";
-
-		// Versekering waarde
-		//input_versekerings_waarde.value = "";
-
-		// Check checkbox values
-		if(!document.getElementById("onthou_gewas_opbrengs").checked)
-		{
-			// Gewas opbrengs
-			input_gewas_opbrengs.value = "";
-		}
-
-		if(!document.getElementById("onthou_rand_waarde").checked)
-		{
-			// Rand per eenheid
-			input_rand_per_eenheid.value = "";
-		}
+		// Remove disble state from business unit
+		removeDisableStatusFromBusinessUnit();
+		// Clear all values
+		clearAllInputValues();
+		// Clear table entries
+		resetLandEntryTable();
+		// Start right at the beginning
+		setInitialInputVisibility();
 	}
 
 	function cancelCreatingQuote()
@@ -692,75 +752,34 @@
 		reset();
 	}
 
-	function reset()
-	{
-		debugTool.print("Resetting modal values", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
-
-		input_boerdery.removeAttribute("disabled");
-
-		setInitialInputVisibility();
-
-		resetBusinessUnitId();
-		resetFarmId();
-
-		resetInputValues();
-		resetQuoteData();
-		resetTableRows();
-	}
-
-	function resetInputValues()
-	{
-		input_boerdery.value = "";
-		input_plaas.value = "";
-		input_produk.value = "";
-		input_gewas.value = "";
-		input_opsie_tipe.value = "";
-		input_persentasie.value = "";
-		input_land_nommer.value = "";
-		input_kultivar.value = "";
-		input_oppervlakte.value = "";
-		input_gewas_opbrengs.value = "";
-		input_rand_per_eenheid.value = "";
-		//input_versekerings_waarde.value = "";
-	}
-
-	function resetQuoteData()
-	{
-		quote = [];
-	}
-
-	function resetTableRows()
-	{
-		rowContainer.innerHTML = "";
-	}
-
 	function createQuoteAndAddToView()
 	{
-		debugTool.print("Create quote", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
-
-		if(persistDataToDatabase(quote))
+		if(persistQuoteData(quote))
 		{
-			updateQuotes(quote);
-			closeModal();
 			reset();
+
+			// send the data to the qoute.js
+			updateQuotes(quote);
+			// close the modal
+			closeModal();
+			// Display some sort of confirmation ?
 		}
 		else
 		{
-			alert("Could not persist data, please ensure data is valid");
+			alert("Data could not be saved by the server");
 		}
 	}
 
-	function persistDataToDatabase(quote)
+	function persistQuoteData(quote)
 	{
-		// TODO: persist data to db
-		// One will then receive the id, which the object will be updated with
-
+		// TODO: 
 		return true;
 	}
 
 	function closeModal()
 	{
 		debugTool.print("closing modal", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
-		closeModalBtn.click();
+		close_modal_button.click();
 	}
+
 })();
