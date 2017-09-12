@@ -464,6 +464,13 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+	this.getBusinessUnitByName = function(name) {
+		for(var i=0;i<this.businessUnitTable.length;i++) {
+			if(this.businessUnitTable[i].name==name) {
+				return this.businessUnitTable[i];
+			}
+		}
+	}
 	this.deleteBusinessUnit = function(id) {
 		for(var i=0;i<this.businessUnitTable.length;i++) {
 			if(this.businessUnitTable[i].id==id) {
@@ -593,6 +600,13 @@ var mockCommunicator = new function()
 	this.getFarm = function(id) {
 		for(var i=0;i<this.farmTable.length;i++) {
 			if(this.farmTable[i].id==id) {
+				return this.farmTable[i];
+			}
+		}
+	}
+	this.getFarmByName = function(name) {
+		for(var i=0;i<this.farmTable.length;i++) {
+			if(this.farmTable[i].name==name) {
 				return this.farmTable[i];
 			}
 		}

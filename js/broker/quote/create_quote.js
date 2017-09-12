@@ -6,6 +6,11 @@
 	// This modal will only contain a quote for one business unit at a time
 	var quote = {};
 
+	// Labels
+	var label_business_unit = document.getElementById("boerderyLabel");
+	var label_farm = document.getElementById("plaasLabel");
+	// ^ Labels ^
+
 	// Input fields
 	var input_business_unit = document.getElementById("business_unit");
 	var input_farm = document.getElementById("farm");
@@ -311,6 +316,16 @@
 	{
 		land_entry_container.innerHTML = "";
 	}
+
+	function resetBusinessUnitLabel()
+	{
+		label_business_unit.innerHTML = "Boerdery:";
+	}
+
+	function resetFarmLabel()
+	{
+		label_farm.innerHTML = "Plaas:";
+	}
 	// ^ Cleanup functions ^
 
 	// Attribute toggles
@@ -369,19 +384,32 @@
 		var val = getInputBusinessUnitValue();
 		if(val != undefined && val != "")
 		{
-			// TODO: server check
-			setBusinessUnitId(Math.floor((Math.random() * 1000) + 1));
-			if(true)
+			var response = clientInvoker.getBusinessUnitByName(val);
+			//setBusinessUnitId(Math.floor((Math.random() * 1000) + 1));
+			setBusinessUnitId(response != null ?  response.id: -1);
+			if(response != null)
 			{
+				notifyUserOfCorrectBusinessUnit();
 				disableBusinessUnit();
 				return true;
 			}
 
 			removeDisableStatusFromBusinessUnit();
-			// TODO: display error - business unit not available
+			// Display error - business unit not available
+			notifyUserOfIncorrectBusinessUnit();
 		}
 
 		return false;
+	}
+
+	function notifyUserOfIncorrectBusinessUnit()
+	{
+		label_business_unit.innerHTML = "Boerdery: &#x2717;";
+	}
+
+	function notifyUserOfCorrectBusinessUnit()
+	{
+		label_business_unit.innerHTML = "Boerdery: &#x2713;";
 	}
 
 	function toggleFieldsVisible(state)
@@ -397,12 +425,26 @@
 		var val = getInputFarmValue();
 		if(val != undefined && val != "")
 		{
-			// TODO: server check
-			setFarmId(Math.floor((Math.random() * 1000) + 1));
-			return true;
+			var response = clientInvoker.getFarmByName(val);
+			setFarmId(response != null ?  response.id: -1);
+			if(response != null)
+			{
+				notifyUserOfCorrectFarm();
+				return true;
+			}
 		}
-
+		notifyUserOfIncorrectFarm();
 		return false;
+	}
+
+	function notifyUserOfIncorrectFarm()
+	{
+		label_farm.innerHTML = "Plaas: &#x2717";
+	}
+
+	function notifyUserOfCorrectFarm()
+	{
+		label_farm.innerHTML = "Plaas: &#x2713;";
 	}
 
 	function addInputValueListeners()
@@ -737,6 +779,10 @@
 
 	function reset()
 	{
+		// Remove notification status of validity
+		resetFarmLabel();
+		resetBusinessUnitLabel();
+
 		// Remove disble state from business unit
 		removeDisableStatusFromBusinessUnit();
 		// Clear all values
