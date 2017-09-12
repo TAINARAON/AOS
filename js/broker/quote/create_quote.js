@@ -427,6 +427,7 @@
 			// After an item is deleted from the JSON landEntry it leaves an undefined item
 			if(spesifiekePlaas != undefined)
 			{
+				debugTool.print("Count: " + i, FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
 				var row = document.createElement('TR');
 
 				createColumn(spesifiekePlaas.plaas, row);
