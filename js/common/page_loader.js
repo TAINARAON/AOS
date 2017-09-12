@@ -14,10 +14,10 @@ var pageLoader = function()
 		{
 			"role":"broker_admin",
 			"cssFiles":[],
-			"jsFiles":[],
+			"jsFiles":["js/broker_admin/nav.js"],
 			"htmlFiles":{
 				"navbar":"html/common/nav.html",
-				"landing_page":"html/broker_admin/brokerage.html"
+				"landing_page":"html/common/home.html"
 			}
 		},
 		{
