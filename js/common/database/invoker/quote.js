@@ -1,5 +1,40 @@
 var quoteInvoker = new function() {
 
+
+    // NEEDED FOR QUOTE CREATION DROP DOWNS
+    this.getProducts = function() {
+
+        return mockCommunicator.getProducts();
+    }
+
+    this.getCropsOfProduct = function(productId) {
+
+        return mockCommunicator.getCropsOfProduct(productId);
+    }
+
+    this.getOptionTypes = function() {
+        return mockCommunicator.getOptionTypes();
+    }
+
+    this.getOptionsByDistrictCropType = function(districtId,cropId,typeId) {
+        
+        return mockCommunicator.getOptionsByDistrictCropType(districtId,cropId,typeId);
+    }
+
+    this.getDamageTypesAvailableForOption = function(tariffOptionId) {
+        var tariffOptionDamageTypes =  mockCommunicator.getTariffOptionDamageTypesByTariffOption(tariffOptionId);
+        var damageTypes = [];
+
+        for(var i = 0; i < tariffOptionDamageTypes.length; i++) {
+            damageTypes.push(mockCommunicator.getDamageType(tariffOptionDamageTypes[i]['damageTypeId']));
+        }
+
+        return damageTypes;
+    }
+
+    // END
+
+
     this.url =  "someUrlToGetToQuoteTable";
 
     this.create = function (quoteData,quoteLandEntries)  {

@@ -2,6 +2,47 @@ var mockCommunicator = new function()
 {
 	console.warn("Mock Communicator being used.");
 
+// OPTION TYPES
+	this.optionTypeTable = [
+		{
+			'id':'0',
+			'name':'Franchise',
+		},
+		{
+			'id':'1',
+			'name':'Excess',
+		},
+	];
+	this.createOptionType = function(data) {
+
+		data.id = this.optionTypeTable.length;
+		this.optionTypeTable.push(data);
+
+		return data.id;
+	}
+	this.getOptionType = function(id) {
+		for(var i=0;i<this.optionTypeTable.length;i++) {
+			if(this.optionTypeTable[i].id==id) {
+				return this.optionTypeTable[i];
+			}
+		}
+	}
+	this.getOptionTypes = function() {
+
+		return this.optionTypeTable;
+	}
+	this.deleteOptionType = function(id) {
+		for(var i=0;i<this.optionTypeTable.length;i++) {
+			if(this.optionTypeTable[i].id==id) {
+				this.optionTypeTable.splice(i,1);
+			}
+		}
+	}
+	this.updateOptionType = function(id, data) {
+		data.id = id;
+		this.optionTypeTable[id] = data;
+	}
+
 // ROLE
 	this.roleTable = [
 		{
@@ -524,6 +565,46 @@ var mockCommunicator = new function()
 		this.insurerTable[id] = data;
 	}
 
+// PRODUCT
+	this.productTable = [
+		{
+			'id':'0',
+			'name':'Winter',
+		},
+		{
+			'id':'1',
+			'name':'Summer',
+		},
+	];
+	this.createProduct = function(data) {
+
+		data.id = this.productTable.length;
+		this.productTable.push(data);
+
+		return data.id;
+	}
+	this.getProduct = function(id) {
+		for(var i=0;i<this.productTable.length;i++) {
+			if(this.productTable[i].id==id) {
+				return this.productTable[i];
+			}
+		}
+	}
+	this.getProducts = function() {
+		return this.productTable;
+	}
+	this.deleteProduct = function(id) {
+		for(var i=0;i<this.productTable.length;i++) {
+			if(this.productTable[i].id==id) {
+				this.productTable.splice(i,1);
+			}
+		}
+	}
+	this.updateProduct = function(id, data) {
+		data.id = id;
+		this.productTable[id] = data;
+	}
+
 // CROP
 	this.cropTable = [
 		{
@@ -556,6 +637,18 @@ var mockCommunicator = new function()
 				return this.cropTable[i];
 			}
 		}
+	}
+	this.getCropsOfProduct = function(productId) {
+
+		var crops = [];
+
+		for(var i=0;i<this.cropTable.length;i++) {
+			if(this.cropTable[i]['productId']==productId) {
+				crops.push(this.cropTable[i]);
+			}
+		}
+
+		return crops;
 	}
 	this.deleteCrop = function(id) {
 		for(var i=0;i<this.cropTable.length;i++) {
@@ -778,7 +871,7 @@ var mockCommunicator = new function()
 		{
 			'id':'0',
 			'tariffOptionTypeId':'0',
-			'cropId':'1',
+			'cropId':'0',
 			'districtId':'0',
 			'coverage':'5',
 			'coverageStart':'0',
@@ -807,6 +900,26 @@ var mockCommunicator = new function()
 				return this.tariffOptionTable[i];
 			}
 		}
+	}
+	this.getOptionsByDistrictCropType = function(districtId,cropId,typeId) {
+
+		var options = [];
+
+		for(var i=0;i<this.tariffOptionTable.length;i++) {
+
+			var tariffOption = this.tariffOptionTable[i];
+
+			var districtMatch = tariffOption.districtId==districtId;
+			var cropMatch = tariffOption.cropId==cropId;
+			var typeMatch = tariffOption.tariffOptionTypeId==typeId;
+
+			alert(districtMatch + ' ' + cropMatch + ' ' + typeMatch);
+			if(districtMatch && cropMatch && typeMatch) {
+				options.push(this.tariffOptionTable[i]);
+			}
+		}
+
+		return options;
 	}
 	this.deleteTariffOption = function(id) {
 		for(var i=0;i<this.tariffOptionTable.length;i++) {
@@ -948,6 +1061,18 @@ var mockCommunicator = new function()
 				return this.tariffOptionDamageTypeTable[i];
 			}
 		}
+	}
+	this.getTariffOptionDamageTypesByTariffOption = function(tariffOptionId) {
+
+		var damageTypes = [];
+		
+		for(var i=0;i<this.tariffOptionDamageTypeTable.length;i++) {
+			if(this.tariffOptionDamageTypeTable[i].tariffOptionId==tariffOptionId) {
+				damageTypes.push(this.tariffOptionDamageTypeTable[i]);
+			}
+		}
+
+		return damageTypes;
 	}
 	this.getTariffOptionDamageTypes = function() {
 
