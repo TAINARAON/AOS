@@ -521,7 +521,7 @@
 				"boerdery":getInputBusinessUnitValue(),
 				quoteLandEntries:[
 					{
-						"id":getFarmId(),
+						"farmId":getFarmId(),
 						"plaas":getInputFarmValue(),
 						"produk":getInputProductValue(),
 						"gewas":getInputCropValue(),
@@ -827,8 +827,36 @@
 
 	function persistQuoteData(quote)
 	{
-		// TODO: 
-		return true;
+		// TODO: fix object values to suite mock
+		var landEntries = quote.quoteLandEntries;
+
+		debugTool.print(landEntries, FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
+
+		var resultId = quoteInvoker.create(getCleanBusinessUnitObject(quote), landEntries);
+
+		debugTool.print("Commit result: " + result, FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
+
+		if(resultId != null)
+			return true;
+		else
+			return false;
+	}
+
+	function getCleanBusinessUnitObject(quote)
+	{
+		var data = {
+			"brokerId":quote.brokerId,
+			"insurerId":quote.insurerId,
+			"businessUnitId":quote.businessUnitId,
+			'active':quote.active,
+			'acceptable':quote.acceptable,
+			'quoteNumber': quote.quoteNumber,
+			'linkedToQuoteId':quote.linkedToQuoteId,
+			'dateCreated':quote.dateCreated,
+			"boerdery":quote.boerdery
+		}
+
+		return data;
 	}
 
 	function closeModal()

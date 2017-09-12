@@ -42,7 +42,7 @@ var quoteInvoker = new function() {
         var quoteId = mockCommunicator.createQuote(quoteData);
 
         for(let i = 0; i < quoteLandEntries.length; i++) {
-        	var quoteLandEntry = quoteLandEntry[i];
+        	var quoteLandEntry = quoteLandEntries[i];
 
         	quoteLandEntry['quoteId'] = quoteId;
         	var landEntryId = mockCommunicator.createQuoteLandEntry(quoteLandEntry);
