@@ -2,6 +2,11 @@ var quoteViewer = new function()
 {
 	console.log("Quote js linked");
 
+	var business_unit_name;
+	var farm_name;
+	var quote_number;
+	var expiry_date;
+
 	// Containers
 	var quoteAccordioncontainer = document.getElementById("quote_accordion_container");
 	// ^ Containers ^
@@ -15,10 +20,67 @@ var quoteViewer = new function()
 
 	(function init(){
 		createModal("modal_container");
+		createFilterFields("search_container");
 		setupQuoteAccordion(quoteAccordioncontainer, loadData("","","",""));
 	})();
 
 	// TODO: create filter fields !!!!!!!!!!!!!!
+	function createFilterFields(id)
+	{
+		console.log("Here");
+		var row = document.createElement("DIV");
+		row.className = "row";
+
+		business_unit_name = createSearchInputBox("Business Unit:", row);
+		farm_name = createSearchInputBox("Farm:", row);
+		quote_number = createSearchInputBox("Quote Number:", row);
+		expiry_date = createSearchInputBox("Expiry Date:", row);
+
+		createSearchButton(row);
+
+		document.getElementById(id).appendChild(row);
+	}
+
+	function createSearchInputBox(title, container)
+	{
+        var innerContainer = document.createElement("DIV");
+        innerContainer.className = "col-md-2";
+
+        var label = document.createElement("LABEL");
+        label.className = "text-left";
+        label.innerHTML = title;
+
+		var input = document.createElement("INPUT");
+		input.className = "form-control";
+
+		innerContainer.appendChild(label);
+		innerContainer.appendChild(input);
+
+		container.appendChild(innerContainer);
+
+		return input;
+	}
+
+	function createSearchButton(container)
+	{
+		var innerContainer = document.createElement("DIV");
+        innerContainer.className = "col-md-2";
+
+        var label = document.createElement("LABEL");
+        label.className = "text-left";
+        label.innerHTML = "Search";
+        label.style.cssText = "color: transparent;";
+
+		var button = document.createElement("DIV");
+		button.className = "btn btn-info col-md-1 form-control";
+		button.innerHTML = "Search";
+		button.onclick = function() {alert("Hi");};
+
+		innerContainer.appendChild(label);
+		innerContainer.appendChild(button);
+
+		container.appendChild(innerContainer);
+	}
 
 	function createModal(id)
 	{
