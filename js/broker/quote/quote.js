@@ -18,6 +18,28 @@ var quoteViewer = new function()
 	}
 	// ^ Reset functions ^
 
+	// Getters & Setters
+	function getBusinessUnitValue()
+	{
+		return business_unit_name.value;
+	}
+
+	function getFarmValue()
+	{
+		return farm_name.value;
+	}
+
+	function getQuoteNumber()
+	{
+		return quote_number.value;
+	}
+
+	function getExpiryDate()
+	{
+		return expiry_date.value;
+	}
+	// ^ Getters & Setters ^
+
 	(function init(){
 		createModal("modal_container");
 		createFilterFields("search_container");
@@ -74,12 +96,18 @@ var quoteViewer = new function()
 		var button = document.createElement("DIV");
 		button.className = "btn btn-info col-md-1 form-control";
 		button.innerHTML = "Search";
-		button.onclick = function() {alert("Hi");};
+		button.onclick = function() {search();};
 
 		innerContainer.appendChild(label);
 		innerContainer.appendChild(button);
 
 		container.appendChild(innerContainer);
+	}
+
+	function search()
+	{
+		resetAccordionContainer();
+		setupQuoteAccordion(quoteAccordioncontainer, loadData(getBusinessUnitValue(), getFarmValue(), getQuoteNumber(), getExpiryDate()));
 	}
 
 	function createModal(id)
