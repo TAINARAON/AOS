@@ -19,14 +19,15 @@ var BROKERAGE_FSP_NUMBER = 'brokerageFspNumber';
 var CLIENT_ID_NUMBER = 'clientIdNumber';
 var CLIENT_CONTACT_NUMBER = 'clientContactNumber';
 
+var testBrokerId = 2;
+var testInsurerId = 1;
+var testClientId = 4;
 
 function checkLoginCredentials(username,password) {
 
 	var encodedPassword = encodePassword(password);
 
-	var userId = 2;	//mockCommunicator.attemptLogin(username,encodedPassword);
-
-	return userId;
+	return testClientId;	//mockCommunicator.getUserByUsernamePassword(username,encodedPassword);
 }
 
 var session = new function() {
@@ -68,7 +69,10 @@ var session = new function() {
 		}
 	};
 
-	console.log(sessionStorage);
+	this.logout = function() {
+		sessionStorage.clear();
+		console.log(sessionStorage);
+	}
 }
 function onLoginFailed() {
 	alert('login credentials failed');

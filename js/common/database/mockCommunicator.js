@@ -171,6 +171,13 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+	this.getUserByUsernamePassword = function(username,password) {
+		for(var i=0;i<this.userTable.length;i++) {
+			if(this.userTable[i]['username']==username && this.userTable[i]['password']==password) {
+				return this.userTable[i];
+			}
+		}
+	}
 	this.deleteUser = function(id) {
 		for(var i=0;i<this.userTable.length;i++) {
 			if(this.userTable[i].id==id) {
