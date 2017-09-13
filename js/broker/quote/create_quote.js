@@ -890,8 +890,6 @@ var quoteCreator = new function()
 		disableBusinessUnit();
 		// Load values into input boxes
 		loadReQuoteValues(landEntry);
-		// Save as new entry
-
 		// Reload accordion
 		quoteViewer.reloadAccordion();
 	}

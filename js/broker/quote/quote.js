@@ -2,8 +2,6 @@ var quoteViewer = new function()
 {
 	console.log("Quote js linked");
 
-	var mainQuote = [];
-
 	// Containers
 	var quoteAccordioncontainer = document.getElementById("quote_accordion_container");
 	// ^ Containers ^
@@ -170,12 +168,13 @@ var quoteViewer = new function()
 
 	function createDeleteBtn(container, landEntry)
 	{
-		createDangerButton("Delete Quote", container).onclick = function() {deleteQuote(landEntry);};
+		createDangerButton("Delete Quote", container).onclick = function(e) {deleteQuote(e, landEntry);};
 	}
 
-	function deleteQuote(landEntry)
+	function deleteQuote(event, landEntry)
 	{
-		alert("deleteQuote");
+		event.preventDefault();
+		// use quoteInvoker to delete record
 	}
 
 	function createAcceptButton(container, landEntry)
