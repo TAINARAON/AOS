@@ -95,9 +95,18 @@ var quoteViewer = new function()
 
 	function loadData(quoteNumber)
 	{
+		var quotes;
 		// TODO: do filtering
+		if(quoteNumber.trim() == "" || quoteNumber.trim() == "*")
+		{
+			quotes = quoteInvoker.getQuotes();
+		}
+		else
+		{
+			quotes = [];
+			quotes.push(quoteInvoker.getQuoteByQuoteNumber(quoteNumber));
+		}
 
-		var quotes = quoteInvoker.getQuotes();
 		for(var i = 0; i < quotes.length; i++)
 		{
 			quotes[i]['boerdery'] = clientInvoker.getCleanBusinessUnit(quotes[i].businessUnitId)['name'];

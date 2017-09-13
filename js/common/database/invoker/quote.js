@@ -66,6 +66,11 @@ var quoteInvoker = new function() {
     	return mockCommunicator.getQuotes();
     };
 
+    this.getQuoteByQuoteNumber = function(number)
+    {
+        return mockCommunicator.getQuoteByQuoteNumber(number);
+    }
+
     this.deleteQuote = function(id)
     {
         // Delete the quote land entries

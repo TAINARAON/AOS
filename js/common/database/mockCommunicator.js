@@ -432,6 +432,14 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+	this.getQuoteByQuoteNumber = function(number)
+	{
+		for(var i=0;i<this.quoteTable.length;i++) {
+			if(this.quoteTable[i].quoteNumber==number) {
+				return this.quoteTable[i];
+			}
+		}
+	}
 	this.getQuotes = function() {
 		return this.quoteTable;
 	}
