@@ -95,7 +95,7 @@ var quoteViewer = new function()
 
 	function loadData(quoteNumber)
 	{
-		var quotes;
+		var quotes = [];
 		// TODO: do filtering
 		if(quoteNumber.trim() == "" || quoteNumber.trim() == "*")
 		{
@@ -103,7 +103,6 @@ var quoteViewer = new function()
 		}
 		else
 		{
-			quotes = [];
 			quotes.push(quoteInvoker.getQuoteByQuoteNumber(quoteNumber));
 		}
 
@@ -112,9 +111,6 @@ var quoteViewer = new function()
 			quotes[i]['boerdery'] = clientInvoker.getCleanBusinessUnit(quotes[i].businessUnitId)['name'];
 			quotes[i]['quoteLandEntries'] = quoteInvoker.getLandEntriesOfQuote(quotes[i].id);
 		}
-
-		console.log("The initial quote load");
-		console.log(quotes);
 
 		return quotes;
 	}
