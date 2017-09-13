@@ -20,8 +20,6 @@ var quoteViewer = new function()
 		setupQuoteAccordion(quoteAccordioncontainer, loadData("","","",""));
 	})();
 
-	// TODO: create filter fields !!!!!!!!!!!!!!
-
 	function createModal(id)
 	{
 		loader.loadPartOfPage("html/broker/quote/create.html", id);

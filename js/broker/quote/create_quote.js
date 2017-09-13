@@ -834,12 +834,18 @@
 
 		var resultId = quoteInvoker.create(getCleanBusinessUnitObject(quote), landEntries);
 
-		debugTool.print("Commit result: " + result, FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
+		debugTool.print("Commit result: " + resultId, FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
 
 		if(resultId != null)
+		{
+			// Save the id to the quoteObj
+			quote['id'] = resultId;
 			return true;
+		}
 		else
+		{
 			return false;
+		}
 	}
 
 	function getCleanBusinessUnitObject(quote)
