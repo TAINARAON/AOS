@@ -36,6 +36,16 @@ var brokerInvoker = new function() {
 
 		return brokerClean;
     }
+    this.getBrokerage = function(id) {
+        return mockCommunicator.getBrokerage(id);
+    }
+    
+    this.getBroker = function(id) {
+        return mockCommunicator.getBroker(id);
+    }
+    this.getBrokerByUserId = function(userId) {
+        return mockCommunicator.getBrokerByUserId(userId);
+    }
     
     this.getCleanBrokerage = function(id) {
     	var brokerage = mockCommunicator.getBrokerage(id);

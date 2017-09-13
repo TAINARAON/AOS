@@ -13,6 +13,9 @@ var clientInvoker = new function() {
         console.warn("getQuote - TODO");
     	return null;
     };
+    this.getClientByUserId = function(userId) {
+        return mockCommunicator.getClientByUserId(userId);
+    }
 
     this.getCleanClient = function(id) {
 

@@ -1,10 +1,6 @@
-console.log('- Products -');
-console.log(quoteInvoker.getProducts());
-console.log('- Crops -');
-console.log(quoteInvoker.getCropsOfProduct(0));
-console.log('- Opion Types -');
-console.log(quoteInvoker.getOptionTypes(0));
-console.log('- Coverages -');
-console.log(quoteInvoker.getOptionsByDistrictCropType(0,0,0));
-console.log('- Damage Types -');
-console.log(quoteInvoker.getDamageTypesAvailableForOption(0));
+
+(function init() {
+
+	session.login(mockCommunicator.getUser(0));
+})();
+

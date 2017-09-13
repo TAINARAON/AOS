@@ -219,6 +219,13 @@ var mockCommunicator = new function()
 	this.getClients = function() {
 		return this.clientTable;
 	}
+	this.getClientByUserId = function(userId) {
+		for(var i=0;i<this.clientTable.length;i++) {
+			if(this.clientTable[i]['userId']==userId) {
+				return this.clientTable[i];
+			}
+		}
+	}
 	this.deleteClient = function(id) {
 		for(var i=0;i<this.clientTable.length;i++) {
 			if(this.clientTable[i].id==id) {
@@ -229,6 +236,47 @@ var mockCommunicator = new function()
 	this.updateClient = function(id, data) {
 		data.id = id;
 		this.clientTable[id] = data;
+	}
+
+// INSURER
+	this.insurerTable = [
+		{
+			'id':'0',
+			'userId':'0',
+			'active':'1',
+			'isAdmin':'0',
+		},
+		{
+			'id':'1',
+			'userId':'1',
+			'active':'1',
+			'isAdmin':'0',
+		},
+	];
+	this.createInsurer = function(data) {
+
+		data.id = this.insurerTable.length;
+		this.insurerTable.push(data);
+
+		return data.id;
+	}
+	this.getInsurer = function(id) {
+		for(var i=0;i<this.insurerTable.length;i++) {
+			if(this.insurerTable[i].id==id) {
+				return this.insurerTable[i];
+			}
+		}
+	}
+	this.deleteInsurer = function(id) {
+		for(var i=0;i<this.insurerTable.length;i++) {
+			if(this.insurerTable[i].id==id) {
+				this.insurerTable.splice(i,1);
+			}
+		}
+	}
+	this.updateInsurer = function(id, data) {
+		data.id = id;
+		this.insurerTable[id] = data;
 	}
 
 // BROKER
@@ -269,6 +317,13 @@ var mockCommunicator = new function()
 		for(var i=0;i<this.brokerTable.length;i++) {
 			if(this.brokerTable[i].id==id) {
 				this.brokerTable.splice(i,1);
+			}
+		}
+	}
+	this.getBrokerByUserId = function(userId) {
+		for(var i=0;i<this.brokerTable.length;i++) {
+			if(this.brokerTable[i]['userId']==userId) {
+				return this.brokerTable[i];
 			}
 		}
 	}
@@ -522,47 +577,6 @@ var mockCommunicator = new function()
 	this.updateBusinessUnit = function(id, data) {
 		data.id = id;
 		this.businessUnitTable[id] = data;
-	}
-
-// INSURER
-	this.insurerTable = [
-		{
-			'id':'0',
-			'userId':'0',
-			'active':'1',
-			'isAdmin':'0',
-		},
-		{
-			'id':'1',
-			'userId':'1',
-			'active':'1',
-			'isAdmin':'0',
-		},
-	];
-	this.createInsurer = function(data) {
-
-		data.id = this.insurerTable.length;
-		this.insurerTable.push(data);
-
-		return data.id;
-	}
-	this.getInsurer = function(id) {
-		for(var i=0;i<this.insurerTable.length;i++) {
-			if(this.insurerTable[i].id==id) {
-				return this.insurerTable[i];
-			}
-		}
-	}
-	this.deleteInsurer = function(id) {
-		for(var i=0;i<this.insurerTable.length;i++) {
-			if(this.insurerTable[i].id==id) {
-				this.insurerTable.splice(i,1);
-			}
-		}
-	}
-	this.updateInsurer = function(id, data) {
-		data.id = id;
-		this.insurerTable[id] = data;
 	}
 
 // PRODUCT
