@@ -115,7 +115,8 @@ var quoteViewer = new function()
 		for(let i = 0; i < quotes.length; i++)
 		{
 			createAccordionEntryHeader(container, quotes[i]);
-			createAccordionEntryChild(container, quotes[i].quoteLandEntries);
+			//createAccordionEntryChild(container, quotes[i].quoteLandEntries);
+			createAccordionEntryChild(container, quotes[i].id, quotes[i].quoteLandEntries);
 		}
 	}
 
@@ -149,7 +150,7 @@ var quoteViewer = new function()
 		row.appendChild(column);
 	}
 
-	function createAccordionEntryChild(container, landEntries)
+	function createAccordionEntryChild(container, id, landEntries)
 	{
 		console.log("Here");
 		var childContainer = createAccordionEntryChildContainer(container);
@@ -161,7 +162,7 @@ var quoteViewer = new function()
 			createAccordionEntryChildDetailContainer(innerContainer, landEntries[j]);
 		}*/
 
-		createAccordionEntryChildHeaderButtons(childContainer, landEntries);
+		createAccordionEntryChildHeaderButtons(childContainer, id);
 
 		var tableBodyContainer = createAccordionEntryChildInnerContainer(childContainer);
 
@@ -203,14 +204,14 @@ var quoteViewer = new function()
 		return tableBody;
 	}
 
-	function createAccordionEntryChildHeaderButtons(container, landEntries)
+	function createAccordionEntryChildHeaderButtons(container, id)
 	{
 		var buttonContainer = createAccordionEntryChildHeaderButtonContainer(container);
-		createReQuoteBtn(buttonContainer, landEntries);
-		createDeleteBtn(buttonContainer, landEntries);
-		createAcceptButton(buttonContainer, landEntries);
-		createPrintQuoteBtn(buttonContainer, landEntries);
-		createEmailQuoteBtn(buttonContainer, landEntries);
+		createReQuoteBtn(buttonContainer, id);
+		createDeleteBtn(buttonContainer, id);
+		createAcceptButton(buttonContainer, id);
+		createPrintQuoteBtn(buttonContainer, id);
+		createEmailQuoteBtn(buttonContainer, id);
 	}
 
 	function createAccordionEntryChildHeaderButtonContainer(container)
@@ -245,57 +246,57 @@ var quoteViewer = new function()
 		return button;
 	}
 
-	function createReQuoteBtn(container, landEntries)
+	function createReQuoteBtn(container, id)
 	{
-		createSuccessButton("Re-Quote", container).onclick = function(e) {reQuote(e, landEntries);};
+		createSuccessButton("Re-Quote", container).onclick = function(e) {reQuote(e, id);};
 	}
 
-	function reQuote(event, landEntries)
+	function reQuote(event, id)
 	{
 		event.preventDefault();
-		quoteCreator.openModalAndReQuote(landEntries[0].quoteId);
+		quoteCreator.openModalAndReQuote(id);
 	}
 
-	function createDeleteBtn(container, landEntries)
+	function createDeleteBtn(container, id)
 	{
-		createDangerButton("Delete Quote", container).onclick = function(e) {deleteQuote(e, landEntries);};
+		createDangerButton("Delete Quote", container).onclick = function(e) {deleteQuote(e, id);};
 	}
 
-	function deleteQuote(event, landEntries)
+	function deleteQuote(event, id)
 	{
 		event.preventDefault();
-		quoteInvoker.deleteQuote(landEntries[0].quoteId);
+		quoteInvoker.deleteQuote(id);
 		resetAccordionContainer();
 		setupQuoteAccordion(quoteAccordioncontainer, loadData(getQuoteNumberValue()));
 	}
 
-	function createAcceptButton(container, landEntries)
+	function createAcceptButton(container, id)
 	{
-		createSuccessButton("Accept Quote", container).onclick = function(e) {acceptQuote(e, landEntries);};
+		createSuccessButton("Accept Quote", container).onclick = function(e) {acceptQuote(e, id);};
 	}
 
-	function acceptQuote(event, landEntries)
+	function acceptQuote(event, id)
 	{
 		event.preventDefault();
 	}
 
-	function createPrintQuoteBtn(container, landEntries)
+	function createPrintQuoteBtn(container, id)
 	{
-		createSuccessButton("Print Quote", container).onclick = function(e) {printQuote(e, landEntries);};
+		createSuccessButton("Print Quote", container).onclick = function(e) {printQuote(e, id);};
 	}
 
-	function printQuote(event, landEntries)
+	function printQuote(event, id)
 	{
 		event.preventDefault();
 		alert("To be added at a later stage");
 	}
 
-	function createEmailQuoteBtn(container, landEntries)
+	function createEmailQuoteBtn(container, id)
 	{
-		createSuccessButton("Email Quote", container).onclick = function(e) {emailQuote(e, landEntries);};
+		createSuccessButton("Email Quote", container).onclick = function(e) {emailQuote(e, id);};
 	}
 
-	function emailQuote(event, landEntries)
+	function emailQuote(event, id)
 	{
 		event.preventDefault();
 		alert("To be added at a later stage");

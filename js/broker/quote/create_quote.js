@@ -899,7 +899,7 @@ var quoteCreator = new function()
 		// Make sure the quoteObject has no residual entries
 		resetQuoteObject();
 		// Load values into quote object
-		saveToMainQuoteObject(getQuote());
+		saveToMainQuoteObject(getQuote(quoteId));
 		// Make sure the table is reloaded - references main quote object
 		reloadLandEntryTable();
 		// Make sure no residual values are left - perhaps from incomplete opperation
@@ -907,7 +907,7 @@ var quoteCreator = new function()
 		// Load land entries into table
 	}
 
-	function getQuote()
+	function getQuote(quoteId)
 	{
 		var quoteData = quoteInvoker.getDetailsOfQuote(quoteId)
 
