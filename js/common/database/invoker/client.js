@@ -56,5 +56,11 @@ var clientInvoker = new function() {
     {
         return mockCommunicator.getFarmByName(name);
     }
+    this.getFarm = function(id) {
+        return mockCommunicator.getFarm(id);
+    }
+    this.getBusinessUnit = function(id) {
+        return mockCommunicator.getBusinessUnit(id);
+    }
     
 }

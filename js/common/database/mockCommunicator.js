@@ -913,7 +913,6 @@ var mockCommunicator = new function()
 			var cropMatch = tariffOption.cropId==cropId;
 			var typeMatch = tariffOption.tariffOptionTypeId==typeId;
 
-			alert(districtMatch + ' ' + cropMatch + ' ' + typeMatch);
 			if(districtMatch && cropMatch && typeMatch) {
 				options.push(this.tariffOptionTable[i]);
 			}
