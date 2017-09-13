@@ -66,6 +66,16 @@ var quoteInvoker = new function() {
     	return mockCommunicator.getQuotes();
     };
 
+    this.deleteQuote = function(id)
+    {
+        // Delete the quote land entries
+        mockCommunicator.deleteQuoteLandEntryByQuoteId(id);
+        // Delete the quote entry
+        mockCommunicator.deleteQuote(id);
+
+        // TODO: delete quoteLandEntryDamageTypeTable entry??
+    }
+
     this.getDetailsOfQuote = function(quoteId) {
 
         var quote = this.getQuote(quoteId);

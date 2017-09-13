@@ -879,7 +879,7 @@ var quoteCreator = new function()
 		close_modal_button.click();
 	}
 
-	this.openModalAndReQuote = function(landEntry)
+	this.openModalAndReQuote = function(quoteId)
 	{
 		// Open modal 
 		openModal();
@@ -888,29 +888,31 @@ var quoteCreator = new function()
 		showFields();
 		// Disable business unit
 		disableBusinessUnit();
-		// Load values into input boxes
-		loadReQuoteValues(landEntry);
+		// Load land entries into table
+		loadLandEntriesValues(quoteId);
 		// Reload accordion
 		quoteViewer.reloadAccordion();
 	}
 
-	function loadReQuoteValues(landEntry)
+	function loadLandEntriesValues(quoteId)
 	{
-		var fullPreviousQuote = quoteInvoker.getDetailsOfQuote(landEntry.quoteId);
+		// Make sure the quoteObject has no residual entries
+		resetQuoteObject();
+		// Load values into quote object
+		saveToMainQuoteObject(getQuote());
+		// Make sure the table is reloaded - references main quote object
+		reloadLandEntryTable();
+		// Make sure no residual values are left - perhaps from incomplete opperation
+		clearAllInputValues();
+		// Load land entries into table
+	}
 
-		var businessUnit = clientInvoker.getCleanBusinessUnit(fullPreviousQuote.id);
-		var farm = clientInvoker.getFarm(landEntry.farmId);
+	function getQuote()
+	{
+		var quoteData = quoteInvoker.getDetailsOfQuote(quoteId)
 
-		setInputBusinessUnitValue(businessUnit.name);
-		setInputFarmValue(farm.name);
-		setInputProductValue("Product to be added");
-		setInputCropValue("Crop to be added");
-		setInputOptionTypeValue("Option type to be added");
-		setInputPersentageValue("Persentage to be added");
-		setInputLandNumberValue(landEntry.landNumber);
-		setInputCultivarValue(landEntry.cultivar);
-		setInputAreaValue(landEntry.area);
-		setInputYieldValue(landEntry.yield);
-		setInputPriceValue(landEntry.price);
+		// TODO: load addition values like names for option type etc etc
+
+		return quoteData;
 	}
 }

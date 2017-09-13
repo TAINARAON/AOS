@@ -523,6 +523,14 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+	this.deleteQuoteLandEntryByQuoteId = function(quoteId)
+	{
+		for(var i=0;i<this.quoteLandEntryTable.length;i++) {
+			if(this.quoteLandEntryTable[i].quoteId==quoteId) {
+				this.quoteLandEntryTable.splice(i,1);
+			}
+		}
+	}
 	this.updateQuoteLandEntry = function(id, data) {
 		data.id = id;
 		this.quoteLandEntryTable[id] = data;

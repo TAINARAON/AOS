@@ -66,4 +66,8 @@ var clientInvoker = new function() {
         return mockCommunicator.getBusinessUnit(id);
     }
     
+    this.getCrop = function(id)
+    {
+        return mockCommunicator.getCrop(id);
+    }
 }

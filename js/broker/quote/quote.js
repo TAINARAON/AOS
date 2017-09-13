@@ -2,10 +2,7 @@ var quoteViewer = new function()
 {
 	console.log("Quote js linked");
 
-	var business_unit_name;
-	var farm_name;
 	var quote_number;
-	var expiry_date;
 
 	// Containers
 	var quoteAccordioncontainer = document.getElementById("quote_accordion_container");
@@ -19,44 +16,25 @@ var quoteViewer = new function()
 	// ^ Reset functions ^
 
 	// Getters & Setters
-	function getBusinessUnitValue()
-	{
-		return business_unit_name.value;
-	}
-
-	function getFarmValue()
-	{
-		return farm_name.value;
-	}
-
-	function getQuoteNumber()
+	function getQuoteNumberValue()
 	{
 		return quote_number.value;
-	}
-
-	function getExpiryDate()
-	{
-		return expiry_date.value;
 	}
 	// ^ Getters & Setters ^
 
 	(function init(){
 		createModal("modal_container");
 		createFilterFields("search_container");
-		setupQuoteAccordion(quoteAccordioncontainer, loadData("","","",""));
+		setupQuoteAccordion(quoteAccordioncontainer, loadData(""));
 	})();
 
-	// TODO: create filter fields !!!!!!!!!!!!!!
 	function createFilterFields(id)
 	{
 		console.log("Here");
 		var row = document.createElement("DIV");
 		row.className = "row";
 
-		business_unit_name = createSearchInputBox("Business Unit:", row);
-		farm_name = createSearchInputBox("Farm:", row);
 		quote_number = createSearchInputBox("Quote Number:", row);
-		expiry_date = createSearchInputBox("Expiry Date:", row);
 
 		createSearchButton(row);
 
@@ -107,7 +85,7 @@ var quoteViewer = new function()
 	function search()
 	{
 		resetAccordionContainer();
-		setupQuoteAccordion(quoteAccordioncontainer, loadData(getBusinessUnitValue(), getFarmValue(), getQuoteNumber(), getExpiryDate()));
+		setupQuoteAccordion(quoteAccordioncontainer, loadData(getQuoteNumberValue()));
 	}
 
 	function createModal(id)
@@ -115,7 +93,7 @@ var quoteViewer = new function()
 		loader.loadPartOfPage("html/broker/quote/create.html", id);
 	}
 
-	function loadData(businessUnitName, farmName, quoteNumber, expiryDate)
+	function loadData(quoteNumber)
 	{
 		// TODO: do filtering
 
@@ -176,11 +154,20 @@ var quoteViewer = new function()
 		console.log("Here");
 		var childContainer = createAccordionEntryChildContainer(container);
 
-		for(let j = 0; j < landEntries.length; j++)
+		/*for(let j = 0; j < landEntries.length; j++)
 		{
 			var innerContainer = createAccordionEntryChildInnerContainer(childContainer);
 			createAccordionEntryChildHeaderButtons(innerContainer, landEntries[j]);
 			createAccordionEntryChildDetailContainer(innerContainer, landEntries[j]);
+		}*/
+
+		createAccordionEntryChildHeaderButtons(childContainer, landEntries);
+
+		var tableBodyContainer = createAccordionEntryChildInnerContainer(childContainer);
+
+		for(let j = 0; j < landEntries.length; j++)
+		{
+			createAccordionEntryChildDetailContainer(tableBodyContainer, landEntries[j]);
 		}
 	}
 
@@ -194,23 +181,36 @@ var quoteViewer = new function()
 		return childContainer;
 	}
 
-	function createAccordionEntryChildInnerContainer(childContainer)
+	/*function createAccordionEntryChildInnerContainer(childContainer)
 	{
 		var innerContainer = document.createElement("DIV");
 
 		childContainer.appendChild(innerContainer);
 
 		return innerContainer;
+	}*/
+
+	function createAccordionEntryChildInnerContainer(childContainer)
+	{
+		var table = document.createElement("TABLE");
+		table.className = "table table-striped table-bordered table-hover table-condensed";
+
+		var tableBody = document.createElement("TBODY");
+
+		table.appendChild(tableBody);
+		childContainer.appendChild(table);
+
+		return tableBody;
 	}
 
-	function createAccordionEntryChildHeaderButtons(container, landEntry)
+	function createAccordionEntryChildHeaderButtons(container, landEntries)
 	{
 		var buttonContainer = createAccordionEntryChildHeaderButtonContainer(container);
-		createReQuoteBtn(buttonContainer, landEntry);
-		createDeleteBtn(buttonContainer, landEntry);
-		createAcceptButton(buttonContainer, landEntry);
-		createPrintQuoteBtn(buttonContainer, landEntry);
-		createEmailQuoteBtn(buttonContainer, landEntry);
+		createReQuoteBtn(buttonContainer, landEntries);
+		createDeleteBtn(buttonContainer, landEntries);
+		createAcceptButton(buttonContainer, landEntries);
+		createPrintQuoteBtn(buttonContainer, landEntries);
+		createEmailQuoteBtn(buttonContainer, landEntries);
 	}
 
 	function createAccordionEntryChildHeaderButtonContainer(container)
@@ -245,56 +245,60 @@ var quoteViewer = new function()
 		return button;
 	}
 
-	function createReQuoteBtn(container, landEntry)
+	function createReQuoteBtn(container, landEntries)
 	{
-		createSuccessButton("Re-Quote", container).onclick = function(e) {reQuote(e, landEntry);};
+		createSuccessButton("Re-Quote", container).onclick = function(e) {reQuote(e, landEntries);};
 	}
 
-	function reQuote(event, landEntry)
+	function reQuote(event, landEntries)
 	{
 		event.preventDefault();
-		quoteCreator.openModalAndReQuote(landEntry);
+		quoteCreator.openModalAndReQuote(landEntries[0].quoteId);
 	}
 
-	function createDeleteBtn(container, landEntry)
+	function createDeleteBtn(container, landEntries)
 	{
-		createDangerButton("Delete Quote", container).onclick = function(e) {deleteQuote(e, landEntry);};
+		createDangerButton("Delete Quote", container).onclick = function(e) {deleteQuote(e, landEntries);};
 	}
 
-	function deleteQuote(event, landEntry)
+	function deleteQuote(event, landEntries)
 	{
 		event.preventDefault();
-		// use quoteInvoker to delete record
+		quoteInvoker.deleteQuote(landEntries[0].quoteId);
+		resetAccordionContainer();
+		setupQuoteAccordion(quoteAccordioncontainer, loadData(getQuoteNumberValue()));
 	}
 
-	function createAcceptButton(container, landEntry)
+	function createAcceptButton(container, landEntries)
 	{
-		createSuccessButton("Accept Quote", container).onclick = function() {acceptQuote(landEntry);};
+		createSuccessButton("Accept Quote", container).onclick = function(e) {acceptQuote(e, landEntries);};
 	}
 
-	function acceptQuote(landEntry)
+	function acceptQuote(event, landEntries)
 	{
-		alert("acceptQuote");
+		event.preventDefault();
 	}
 
-	function createPrintQuoteBtn(container, landEntry)
+	function createPrintQuoteBtn(container, landEntries)
 	{
-		createSuccessButton("Print Quote", container).onclick = function() {printQuote(landEntry);};
+		createSuccessButton("Print Quote", container).onclick = function(e) {printQuote(e, landEntries);};
 	}
 
-	function printQuote(landEntry)
+	function printQuote(event, landEntries)
 	{
-		alert("printQuote");
+		event.preventDefault();
+		alert("To be added at a later stage");
 	}
 
-	function createEmailQuoteBtn(container, landEntry)
+	function createEmailQuoteBtn(container, landEntries)
 	{
-		createSuccessButton("Email Quote", container).onclick = function() {emailQuote(landEntry);};
+		createSuccessButton("Email Quote", container).onclick = function(e) {emailQuote(e, landEntries);};
 	}
 
-	function emailQuote(landEntry)
+	function emailQuote(event, landEntries)
 	{
-		alert("emailQuote");
+		event.preventDefault();
+		alert("To be added at a later stage");
 	}
 
 	function createAccordionEntryChildDetailContainer(container, landEntry)
@@ -341,6 +345,6 @@ var quoteViewer = new function()
 	this.reloadAccordion = function()
 	{
 		resetAccordionContainer();
-		setupQuoteAccordion(quoteAccordioncontainer, loadData("","","",""));
+		setupQuoteAccordion(quoteAccordioncontainer, loadData(getQuoteNumberValue()));
 	};
 }
