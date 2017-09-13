@@ -159,12 +159,13 @@ var quoteViewer = new function()
 
 	function createReQuoteBtn(container, landEntry)
 	{
-		createSuccessButton("Re-Quote", container).onclick = function() {reQuote(landEntry);};
+		createSuccessButton("Re-Quote", container).onclick = function(e) {reQuote(e, landEntry);};
 	}
 
-	function reQuote(landEntry)
+	function reQuote(event, landEntry)
 	{
-		alert("reQuote");
+		event.preventDefault();
+		quoteCreator.openModalAndReQuote(landEntry);
 	}
 
 	function createDeleteBtn(container, landEntry)

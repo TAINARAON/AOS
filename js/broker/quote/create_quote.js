@@ -1,4 +1,5 @@
-(function() {
+var quoteCreator = new function()
+{
 	var businessUnitId;
 	var farmId;
 	var allValuesEntered = false;
@@ -46,6 +47,7 @@
 	var land_entry_container = document.getElementById("create_quote_table_body");
 	// ^ Land entry  container ^
 
+	var open_modal_button = document.getElementById("openModalBtn");
 	var include_row_button = document.getElementById("includeRow");
 	var close_modal_button = document.getElementById("close_modal");
 
@@ -811,7 +813,7 @@
 		if(persistQuoteData(quote))
 		{
 			// send the data to the qoute.js
-			updateQuotes(quote);
+			quoteViewer.reloadAccordion();
 			// close the modal
 			closeModal();
 			// Display some sort of confirmation ?
@@ -865,10 +867,52 @@
 		return data;
 	}
 
+	function openModal()
+	{
+		debugTool.print("open modal", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
+		open_modal_button.click();
+	}
+
 	function closeModal()
 	{
 		debugTool.print("closing modal", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
 		close_modal_button.click();
 	}
 
-})();
+	this.openModalAndReQuote = function(landEntry)
+	{
+		// Open modal 
+		openModal();
+		// Display all fields
+		showFarm();
+		showFields();
+		// Disable business unit
+		disableBusinessUnit();
+		// Load values into input boxes
+		loadReQuoteValues(landEntry);
+		// Save as new entry
+
+		// Reload accordion
+		quoteViewer.reloadAccordion();
+	}
+
+	function loadReQuoteValues(landEntry)
+	{
+		var fullPreviousQuote = quoteInvoker.getDetailsOfQuote(landEntry.quoteId);
+
+		var businessUnit = clientInvoker.getCleanBusinessUnit(fullPreviousQuote.id);
+		var farm = clientInvoker.getFarm(landEntry.farmId);
+
+		setInputBusinessUnitValue(businessUnit.name);
+		setInputFarmValue(farm.name);
+		setInputProductValue("Product to be added");
+		setInputCropValue("Crop to be added");
+		setInputOptionTypeValue("Option type to be added");
+		setInputPersentageValue("Persentage to be added");
+		setInputLandNumberValue(landEntry.landNumber);
+		setInputCultivarValue(landEntry.cultivar);
+		setInputAreaValue(landEntry.area);
+		setInputYieldValue(landEntry.yield);
+		setInputPriceValue(landEntry.price);
+	}
+}
