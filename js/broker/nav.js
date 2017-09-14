@@ -1,116 +1,80 @@
 (function(){
- 	console.log("Broker nav linked");
+
+	var leftButtons = 
+ 	[
+ 		{
+ 			'text':'Damage Report',
+ 			'pageUrl':'html/broker/damage_report.html'
+ 		},
+ 		{
+ 			'text':'Policy',
+ 			'pageUrl':'html/broker/policy.html'
+ 		},
+ 		{
+ 			'text':'Quote',
+ 			'pageUrl':'html/broker/quote/quote.html'
+ 		},
+ 	];
+
+ 	var rightButtons = 
+ 	[
+ 		{
+ 			'text':'Logout',
+ 			'pageUrl':'html/common/logout.html'
+ 		}
+ 	];
 
  	(function init(){
  		setupNavStructure();
  	})();
 
+ 	
  	function setupNavStructure() {
- 		var navbarButtonContainer = document.getElementById("navbar_button_container");
+ 		var navbarButtonContainer = $('#navbar_button_container');
 
- 		var leftButtonContainer = document.createElement('UL');
- 		leftButtonContainer.className = "nav navbar-nav";
- 		// Add button elements here
- 		setupLeftButtons(leftButtonContainer);
-
- 		var rightButtonContainer = document.createElement('UL');
- 		rightButtonContainer.className = "nav navbar-nav navbar-right";
- 		// Add button elements here
- 		setupRightButtons(rightButtonContainer);
-
- 		navbarButtonContainer.appendChild(leftButtonContainer);
- 		navbarButtonContainer.appendChild(rightButtonContainer);
+ 		createLeftsideNav(navbarButtonContainer);
+ 		createRightsideNav(navbarButtonContainer);
  	}
 
- 	function setupLeftButtons(container) {
- 		/*var prefix = "broker_nav_";
- 		var buttons = ["damage_report", "policy", "quote"];
- 		var listeners = [damageReport, policy, quote];
- 		var suffix = "_btn";
+ 	function createLeftsideNav(navbarContainer) {
 
- 		for (var i = buttons.length - 1; i >= 0; i--) {
- 			var button = document.createElement('LI');
- 			button.style.cssText = "cursor: pointer";
- 			var link = document.createElement('A');
- 			link.innerHTML = buttons[i].charAt(0).toUpperCase() + buttons[i].slice(1);
- 			link.onclick = function(e){e.preventDefault(); alert("Awe"); listeners[i];};
- 			link.id = prefix + buttons[i] + suffix;
- 			
- 			button.appendChild(link);
- 			container.appendChild(button);
- 		}*/
+ 		var container = $('<ul></ul>').attr("class","nav navbar-nav");
 
- 		setupDamageReportButton(container);
- 		setupPolicyButton(container);
- 		setupQuoteButton(container);
+ 		for(var i = 0; i < leftButtons.length;i++) {
+
+ 			var navButtonContents = leftButtons[i];
+ 			addNavButtonToContainer(container,navButtonContents);
+ 		}
+ 		
+ 		navbarContainer.append(container);
  	}
 
- 	function setupDamageReportButton(container) {
- 		var button = document.createElement('LI');
-		button.style.cssText = "cursor: pointer";
-		var link = document.createElement('A');
-		link.innerHTML = "Damage Report";
-		link.onclick = function(e){e.preventDefault(); damageReport(e);};
-		
-		button.appendChild(link);
-		container.appendChild(button);
+ 	function createRightsideNav(navbarContainer) {
+
+ 		var container = $('<ul></ul>').attr("class","nav navbar-nav navbar-right");
+
+ 		for(var i = 0; i < rightButtons.length;i++) {
+
+ 			var navButtonContents = rightButtons[i];
+ 			addNavButtonToContainer(container,navButtonContents);
+ 		}
+ 		
+ 		navbarContainer.append(container);
  	}
 
- 	function damageReport(event) {
- 		//event.preventDefault();
- 		loader.loadPage("html/broker/damage_report.html");
- 	}
+ 	function addNavButtonToContainer(container, navDetails) {
 
- 	function setupPolicyButton(container) {
- 		var button = document.createElement('LI');
-		button.style.cssText = "cursor: pointer";
-		var link = document.createElement('A');
-		link.innerHTML = "Policy";
-		link.onclick = function(e){e.preventDefault(); policy(e);};
-		
-		button.appendChild(link);
-		container.appendChild(button);
- 	}
+ 		var button = $('<li></li>').css( "cursor", "pointer" );
+		var link = $('<a></a>')
+			.append(navDetails['text'])
+			.on('click',function(e)	{
+				e.preventDefault(); 
+				loader.loadPage(navDetails['pageUrl'])
+			}
+		);
 
- 	function policy(event) {
- 		//event.preventDefault();
- 		loader.loadPage("html/broker/policy.html");
- 	}
+		button.append(link);
 
- 	function setupQuoteButton(container) {
- 		var button = document.createElement('LI');
-		button.style.cssText = "cursor: pointer";
-		var link = document.createElement('A');
-		link.innerHTML = "Quote";
-		link.onclick = function(e){e.preventDefault(); quote(e);};
-		
-		button.appendChild(link);
-		container.appendChild(button);
+		container.append(button);
  	}
-
- 	function quote(event) {
- 		//event.preventDefault();
- 		loader.loadPage("html/broker/quote/quote.html");
- 	}
-
- 	function setupRightButtons(container) {
- 		setupLogoutButton(container);
- 	}
-
- 	function setupLogoutButton(container) {
- 		var button = document.createElement('LI');
- 			button.style.cssText = "cursor: pointer";
- 			var link = document.createElement('A');
- 			link.innerHTML = "Logout";
- 			button.onclick = function(e){e.preventDefault(); logout(e)};
- 			
- 			button.appendChild(link);
- 			container.appendChild(button);
- 	}
-
- 	function logout() {
- 		//event.preventDefault();
- 		alert("Logout");
- 	}
-
 })();
