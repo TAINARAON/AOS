@@ -34,7 +34,7 @@ var pageLoader = function()
 			"cssFiles":["css/common/login.css"],
 			"jsFiles":["js/common/login.js"],
 			"htmlFiles":{
-				"navbar":"",
+				"navbar":"html/common/nav.html",
 				"landing_page":"html/common/login.html"
 			}
 		}
@@ -67,7 +67,7 @@ var pageLoader = function()
 
 	function loadPartOfPage(pageUrl,targetContainer) {
 		
-		$(("#"+targetContainer)).load(pageUrl);
+		$("#"+targetContainer).load(pageUrl);
 	}
 
 	function addNavigationToBackStack(pageUrl,state) {
