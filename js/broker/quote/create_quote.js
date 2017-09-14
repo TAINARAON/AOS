@@ -444,6 +444,8 @@ var quoteCreator = new function()
 
 		// Select fields
 		dropdown_product.onchange = function(){loadCoverage(); loadProductSpecificCrops(dropdown_product.value)};
+		dropdown_crop.onchange = function(){loadCoverage();};
+		dropdown_option_type.onchange = function(){loadCoverage();};
 	}
 
 	function toggleFarmInputVisibility(state)
@@ -462,6 +464,7 @@ var quoteCreator = new function()
 			var response = clientInvoker.getBusinessUnitByName(val);
 			//setBusinessUnitId(Math.floor((Math.random() * 1000) + 1));
 			setBusinessUnitId(response != null ?  response.id: -1);
+			
 			if(response != null)
 			{
 				notifyUserOfCorrectBusinessUnit();
@@ -551,12 +554,13 @@ var quoteCreator = new function()
 	function loadCoverage()
 	{
 		var farmId = getFarmId();
-		var cropId = getCropObjectIdByName(asdasddsa);
-		var optionTypeId = getOptionTypeObjectIdByName(asdasddsa);
+		var cropId = getCropObjectIdByName(dropdown_crop.value);
+		var optionTypeId = getOptionTypeObjectIdByName(dropdown_option_type.value);
 
-		if(hasValue(farmId) && hasValue(cropId) && hasValue(optionTypeId)
+		if(hasValue(farmId) && hasValue(cropId) && hasValue(optionTypeId))
 		{
 			// Call invoker here
+			alert("All values present");
 		}
 	}
 
