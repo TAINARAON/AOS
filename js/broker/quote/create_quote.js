@@ -6,6 +6,9 @@ var quoteCreator = new function()
 
 	// This modal will only contain a quote for one business unit at a time
 	var quote = {};
+	var products = {};
+	var crops = {};
+	var optionTypes = {};
 
 	// Labels
 	var label_business_unit = document.getElementById("boerderyLabel");
@@ -25,6 +28,12 @@ var quoteCreator = new function()
 	var input_yield = document.getElementById("gewas_opbrengs");
 	var input_price = document.getElementById("rand_per_eenheid");
 	// ^ Input fields ^
+
+	// Selector fields
+	var dropdown_product = document.getElementById("produk_dropdown");
+	var dropdown_crop = document.getElementById("gewas_dropdown");
+	var dropdown_option_type = document.getElementById("opsie_tiepe_dropdown");
+	// ^ Selector fields ^
 
 	// Check box fields
 	var checkbox_remember_yield = document.getElementById("onthou_gewas_opbrengs");
@@ -100,6 +109,60 @@ var quoteCreator = new function()
 	function setQuoteObject(obj)
 	{
 		quote = obj;
+	}
+
+	function getProductObjectIdByName(name)
+	{
+		for(var i = 0; i < products.length; i++)
+		{
+			if(products[i].name == name)
+			{
+				return products[i].id;
+			}
+		}
+
+		return -1;
+	}
+
+	function setProductObject(value)
+	{
+		products = value;
+	}
+
+	function getCropObjectIdByName(name)
+	{
+		for(var i = 0; i < crops.length; i++)
+		{
+			if(crops[i].name == name)
+			{
+				return crops[i].id;
+			}
+		}
+
+		return -1;
+	}
+
+	function setCropObject(value)
+	{
+		crops = value;
+	}
+
+	function getOptionTypeObjectIdByName(name)
+	{
+		for(var i = 0; i < optionTypes.length; i++)
+		{
+			if(optionTypes[i] == name)
+			{
+				return optionTypes[i].id;
+			}
+		}
+
+		return -1;
+	}
+
+	function setOptionTypeObject(value)
+	{
+		optionTypes = value;
 	}
 
 	function getBrokerId()
@@ -294,7 +357,6 @@ var quoteCreator = new function()
 		setInputAreaValue("");
 		setInputYieldValue("");
 		setInputPriceValue("");
-
 	}
 
 	function clearInputsForNextEntry()
@@ -362,6 +424,7 @@ var quoteCreator = new function()
 		addOnChangeListeners();
 		addInputValueListeners();
 		setupModalButtonClickListeners();
+		setupDropDownValues();
 	})();
 
 	// Initial setup function
@@ -372,10 +435,14 @@ var quoteCreator = new function()
 		hideFields();
 	}
 
+	// Change listener content
 	function addOnChangeListeners()
 	{
 		input_business_unit.onblur = function(){toggleFarmInputVisibility(validateBusinessUnit());};
 		input_farm.onblur = function(){toggleFieldsVisible(validateFarm());};
+
+		// Select fields
+		dropdown_product.onchange = function(){loadProductSpecificCrops(dropdown_product.value)};
 	}
 
 	function toggleFarmInputVisibility(state)
@@ -454,6 +521,33 @@ var quoteCreator = new function()
 		label_farm.innerHTML = "Plaas: &#x2713;";
 	}
 
+	function loadProductSpecificCrops(name)
+	{
+		dropdown_crop.innerHTML = "";
+		dropdown_crop.value = "";
+
+		var productId = getProductObjectIdByName(name);
+
+		var availableCrop = quoteInvoker.getCropsOfProduct(productId);
+		
+		setCropObject(availableCrop);
+
+		for(var i = 0; i < availableCrop.length; i++)
+		{
+			if(i == 0)
+			{
+				var option = document.createElement("OPTION");
+				$(option).attr("disabled selected value");
+				dropdown_crop.appendChild(option);
+			}
+
+			var option = document.createElement("OPTION");
+			option.innerHTML = availableCrop[i].name;
+			dropdown_crop.appendChild(option);
+		}
+	}
+	// ^ Change listener content ^
+
 	function addInputValueListeners()
 	{
 		debugTool.print("Adding input listeners", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
@@ -478,6 +572,38 @@ var quoteCreator = new function()
 		document.getElementById("includeRow").onclick = function(e) {addToQuote();};
 		document.getElementById("cancelQuote").onclick = function(e) {cancelCreatingQuote();};
 		document.getElementById("acceptQuote").onclick = function(e) {createQuoteAndAddToView()};
+	}
+
+	function setupDropDownValues()
+	{
+		setupProductDropdownValues();
+		setupOptionTypeDropdownValues();
+	}
+
+	function setupProductDropdownValues()
+	{
+		var availableProducts = quoteInvoker.getProducts();
+		setProductObject(availableProducts);
+
+		for(var i = 0; i < availableProducts.length; i++)
+		{
+			var option = document.createElement("OPTION");
+			option.innerHTML = availableProducts[i].name;
+			dropdown_product.appendChild(option);
+		}
+	}
+
+	function setupOptionTypeDropdownValues()
+	{
+		var availableOptionTypes = quoteInvoker.getOptionTypes();
+		setOptionTypeObject(optionTypes);
+
+		for(var i = 0; i < availableOptionTypes.length; i++)
+		{
+			var option = document.createElement("OPTION");
+			option.innerHTML = availableOptionTypes[i].name;
+			dropdown_option_type.appendChild(option);
+		}
 	}
 	// ^ Initial setup function ^
 

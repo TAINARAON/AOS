@@ -126,7 +126,6 @@ var quoteViewer = new function()
 		for(let i = 0; i < quotes.length; i++)
 		{
 			createAccordionEntryHeader(container, quotes[i]);
-			//createAccordionEntryChild(container, quotes[i].quoteLandEntries);
 			createAccordionEntryChild(container, quotes[i].id, quotes[i].quoteLandEntries);
 		}
 	}
@@ -166,13 +165,6 @@ var quoteViewer = new function()
 		console.log("Here");
 		var childContainer = createAccordionEntryChildContainer(container);
 
-		/*for(let j = 0; j < landEntries.length; j++)
-		{
-			var innerContainer = createAccordionEntryChildInnerContainer(childContainer);
-			createAccordionEntryChildHeaderButtons(innerContainer, landEntries[j]);
-			createAccordionEntryChildDetailContainer(innerContainer, landEntries[j]);
-		}*/
-
 		createAccordionEntryChildHeaderButtons(childContainer, id);
 
 		var tableBodyContainer = createAccordionEntryChildInnerContainer(childContainer);
@@ -192,15 +184,6 @@ var quoteViewer = new function()
 
 		return childContainer;
 	}
-
-	/*function createAccordionEntryChildInnerContainer(childContainer)
-	{
-		var innerContainer = document.createElement("DIV");
-
-		childContainer.appendChild(innerContainer);
-
-		return innerContainer;
-	}*/
 
 	function createAccordionEntryChildInnerContainer(childContainer)
 	{
