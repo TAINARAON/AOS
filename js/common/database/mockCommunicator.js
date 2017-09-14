@@ -331,7 +331,7 @@ var mockCommunicator = new function()
 		}
 	];
 	
-	this.createBusinessUnit = function(data) {
+	this.createBusinessUnitMember = function(data) {
 
 		data.id = this.businessUnitMemberTable.length;
 		this.businessUnitMemberTable.push(data);
@@ -339,7 +339,7 @@ var mockCommunicator = new function()
 		return data.id;
 	}
 	
-	this.getBusinessUnit = function(id) {
+	this.getBusinessUnitMember = function(id) {
 		for(var i=0;i<this.businessUnitMemberTable.length;i++) {
 			if(this.businessUnitMemberTable[i].id==id) {
 				return this.businessUnitMemberTable[i];
@@ -347,7 +347,7 @@ var mockCommunicator = new function()
 		}
 	}
 	
-	this.getBusinessUnitByName = function(name) {
+	this.getBusinessUnitByNameMember = function(name) {
 		for(var i=0;i<this.businessUnitMemberTable.length;i++) {
 			if(this.businessUnitMemberTable[i].name==name) {
 				return this.businessUnitMemberTable[i];
@@ -355,7 +355,7 @@ var mockCommunicator = new function()
 		}
 	}
 	
-	this.deleteBusinessUnit = function(id) {
+	this.deleteBusinessUnitMember = function(id) {
 		for(var i=0;i<this.businessUnitMemberTable.length;i++) {
 			if(this.businessUnitMemberTable[i].id==id) {
 				this.businessUnitMemberTable.splice(i,1);
@@ -363,9 +363,9 @@ var mockCommunicator = new function()
 		}
 	}
 	
-	this.updateBusinessUnit = function(id, data) {
+	this.updateBusinessUnitMember = function(id, data) {
 		data.id = id;
-		this.businessUnitTable[id] = data;
+		this.businessUnitMemberTable[id] = data;
 	}
 
 // FARM
@@ -689,6 +689,9 @@ var mockCommunicator = new function()
 		data.id = id;
 		this.quoteTable[id] = data;
 	}
+	this.deactivateQuote = function(id) {
+		this.quoteTable[id]['active'] = false;
+	}
 
 // QUOTE LAND ENTRY
 	this.quoteLandEntryTable = [
@@ -778,6 +781,9 @@ var mockCommunicator = new function()
 	this.updateQuoteLandEntry = function(id, data) {
 		data.id = id;
 		this.quoteLandEntryTable[id] = data;
+	}
+	this.deactivateQuoteLandEntry = function(id) {
+		this.quoteLandEntryTable[id]['active'] = false;
 	}	
 
 // QUOTE LAND ENTRY DAMAGE TYPE - To Be Used In Quote Generation
@@ -841,6 +847,9 @@ var mockCommunicator = new function()
 	this.updateQuoteLandEntryDamageType= function(id, data) {
 		data.id = id;
 		this.quoteLandEntryDamageTypeTable[id] = data;
+	}
+	this.deactivateQuoteLandEntryDamageType = function(id) {
+		this.quoteLandEntryDamageTypeTable[id]['active'] = false;
 	}
 
 // POLICY

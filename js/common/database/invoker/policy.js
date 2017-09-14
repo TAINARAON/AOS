@@ -9,6 +9,7 @@ var policyInvoker = new function() {
 
         // Get quote, create policy object from quote object. 
         var quote = quoteInvoker.getQuote(quoteId);
+        mockCommunicator.deactivateQuote(quoteId);
         var policy = {
 
             'policyNumber':generatePolicyNumber(quote),
@@ -49,9 +50,6 @@ var policyInvoker = new function() {
 
                 var quoteLandEntryDamageType = quoteLandEntryDamageTypes[j];
 
-                /*console.log('QuoteLandEntryDamageType: ' + j);
-                console.log(quoteLandEntryDamageType);*/
-
                 var policyLandEntryDamageType = quoteLandEntryDamageType;
                 delete policyLandEntryDamageType['quoteLandEntryId'];
                 policyLandEntryDamageType['policyLandEntryId'] = newPolicyLandEntryId;
@@ -65,13 +63,21 @@ var policyInvoker = new function() {
             }
         }
 
+
+        
+
+        // Deactivate all the quote components
+
         return newPolicyId;
     };
 
+
+    // TODO
     this.createLinkedPolicy = function(policyObject,timeSigned=null) {
 
         
     };
+
 
     function isValidTime(time) {
         // TODO

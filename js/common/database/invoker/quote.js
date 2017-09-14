@@ -16,8 +16,10 @@ var quoteInvoker = new function() {
         return mockCommunicator.getOptionTypes();
     }
 
-    this.getOptionsByDistrictCropType = function(districtId,cropId,typeId) {
+    this.getOptionsByFarmCropType = function(farmId,cropId,typeId) {
         
+        var districtId = mockCommuncator.getFarm(farmId)['districtId'];
+
         return mockCommunicator.getOptionsByDistrictCropType(districtId,cropId,typeId);
     }
 
