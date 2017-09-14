@@ -1,8 +1,9 @@
 var policyInvoker = new function() {
 
-    this.create = function (quoteId,timeSigned=null,linkedToPolicyId=null)  {
+    this.createFromQuote = function (quoteId,timeSigned=null)  {
 
         if(!isValidTime(timeSigned)) {
+
             timeSigned = getCurrentTime();
         }
 
@@ -15,7 +16,7 @@ var policyInvoker = new function() {
             'brokerId':quote['brokerId'],
             'insurerId':quote['insurerId'],
             'signedOn':timeSigned,
-            'linkedToPolicyId':linkedToPolicyId,
+            'linkedToPolicyId':null,
             'active':'1'
         };
 
@@ -66,10 +67,16 @@ var policyInvoker = new function() {
 
         return newPolicyId;
     };
+
+    this.createLinkedPolicy = function(policyObject,timeSigned=null) {
+
+        
+    };
+
     function isValidTime(time) {
         // TODO
         return time != null;
-    }
+    };
 
     function savePolicyLandEntryDamageTypeObject(o) {
 
