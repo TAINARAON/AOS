@@ -54,7 +54,7 @@ var pageLoader = function()
 	}
 
 	function loadRole(role="") {
-		load();
+		load(role);
 	}
 
 	function loadPage(pageUrl, state = null) {
