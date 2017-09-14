@@ -200,7 +200,7 @@ var quoteInvoker = new function() {
 
                 var selectedDamageType = 
                 {
-                    //'id':quoteLandEntryDamageTypeId,
+                    'id':quoteLandEntryDamageTypeId,
                     'damageTypeName':damageType['name'],
                     'tariff':tariffOptionDamageType['tariff']
                 };

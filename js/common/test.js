@@ -1,6 +1,9 @@
 
 (function init() {
 
-	session.login(mockCommunicator.getUser(0));
+	policyInvoker.create(0)
+	/*console.log();
+	console.log(mockCommunicator.getPolicies());*/
+
 })();
 

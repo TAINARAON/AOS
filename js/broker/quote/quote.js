@@ -283,6 +283,15 @@ var quoteViewer = new function()
 	function acceptQuote(event, id)
 	{
 		event.preventDefault();
+
+		var quote = quoteInvoker.getQuote(id);
+		
+		policyInvoker.create(quote);
+
+		// deleteLinkedQuotes
+		// deleteQuote
+
+
 	}
 
 	function createPrintQuoteBtn(container, id)

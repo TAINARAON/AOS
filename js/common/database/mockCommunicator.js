@@ -43,6 +43,7 @@ var mockCommunicator = new function()
 		this.optionTypeTable[id] = data;
 	}
 
+// ############################# USERS #################################
 // ROLE
 	this.roleTable = [
 		{
@@ -245,6 +246,118 @@ var mockCommunicator = new function()
 		this.clientTable[id] = data;
 	}
 
+// BUSINESS UNIT
+	this.businessUnitTable = [
+		{
+			'id':'0',
+			'name':'Anro Boerdery Co (ABC)',
+			'contactNumber':'063-887-9635',
+			'contactPerson':'Anro Swart',
+			'email':'anro.swart@bing.com',
+			'vatNumber':'00625-4811',
+			'incomeTaxNumber':'5651484166',
+			'active':'1',
+			'verified':'1'
+		},
+		{
+			'id':'1',
+			'name':'Tiaan and Anro Boerdery Amalgamated Co (TABACO)',
+			'contactNumber':'062-352-1342',
+			'contactPerson':'Tiaan Swart',
+			'email':'tiaan.swart@yahoo.com',
+			'vatNumber':'52159-6487',
+			'incomeTaxNumber':'6768142685',
+			'active':'1',
+			'verified':'1'
+		},
+	];
+	this.createBusinessUnit = function(data) {
+
+		data.id = this.businessUnitTable.length;
+		this.businessUnitTable.push(data);
+
+		return data.id;
+	}
+	this.getBusinessUnit = function(id) {
+		for(var i=0;i<this.businessUnitTable.length;i++) {
+			if(this.businessUnitTable[i].id==id) {
+				return this.businessUnitTable[i];
+			}
+		}
+	}
+	this.getBusinessUnitByName = function(name) {
+		for(var i=0;i<this.businessUnitTable.length;i++) {
+			if(this.businessUnitTable[i].name==name) {
+				return this.businessUnitTable[i];
+			}
+		}
+	}
+	this.deleteBusinessUnit = function(id) {
+		for(var i=0;i<this.businessUnitTable.length;i++) {
+			if(this.businessUnitTable[i].id==id) {
+				this.businessUnitTable.splice(i,1);
+			}
+		}
+	}
+	this.updateBusinessUnit = function(id, data) {
+		data.id = id;
+		this.businessUnitTable[id] = data;
+	}
+
+// FARM
+	this.farmTable = [
+		{
+			'id':'0',
+			'name':'Plaas Anro Een',
+			'businessUnitId':'0',
+			'latitude':'1.22644',
+			'longitude':'-0.35428',
+			'active':'1',
+			'districtId':'0'
+		},
+		{
+			'id':'1',
+			'name':'Plaas Anro Twee',
+			'businessUnitId':'0',
+			'latitude':'1.325642',
+			'longitude':'-0.35243',
+			'active':'1',
+			'districtId':'0'
+		},
+	];
+	this.createFarm = function(data) {
+
+		data.id = this.farmTable.length;
+		this.farmTable.push(data);
+
+		return data.id;
+	}
+	this.getFarm = function(id) {
+		for(var i=0;i<this.farmTable.length;i++) {
+			if(this.farmTable[i].id==id) {
+				return this.farmTable[i];
+			}
+		}
+	}
+	this.getFarmByName = function(name) {
+		for(var i=0;i<this.farmTable.length;i++) {
+			if(this.farmTable[i].name==name) {
+				return this.farmTable[i];
+			}
+		}
+	}
+	this.deleteFarm = function(id) {
+		for(var i=0;i<this.farmTable.length;i++) {
+			if(this.farmTable[i].id==id) {
+				this.farmTable.splice(i,1);
+			}
+		}
+	}
+	this.updateFarm = function(id, data) {
+		data.id = id;
+		this.farmTable[id] = data;
+	}
+
 // INSURER
 	this.insurerTable = [
 		{
@@ -393,6 +506,7 @@ var mockCommunicator = new function()
 		this.brokerageTable[id] = data;
 	}
 
+// ############################# QUOTES ################################
 // QUOTE
 	this.quoteTable = [
 		{
@@ -539,69 +653,292 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+
 	this.updateQuoteLandEntry = function(id, data) {
 		data.id = id;
 		this.quoteLandEntryTable[id] = data;
 	}	
 
-// BUSINESS UNIT
-	this.businessUnitTable = [
+// QUOTE LAND ENTRY DAMAGE TYPE - To Be Used In Quote Generation
+	this.quoteLandEntryDamageTypeTable = [
 		{
 			'id':'0',
-			'name':'Anro Boerdery Co (ABC)',
-			'contactNumber':'063-887-9635',
-			'contactPerson':'Anro Swart',
-			'email':'anro.swart@bing.com',
-			'vatNumber':'00625-4811',
-			'incomeTaxNumber':'5651484166',
-			'active':'1',
-			'verified':'1'
+			'quoteLandEntryId':'0',
+			'tariffOptionDamageTypeId':'0',
 		},
 		{
 			'id':'1',
-			'name':'Tiaan and Anro Boerdery Amalgamated Co (TABACO)',
-			'contactNumber':'062-352-1342',
-			'contactPerson':'Tiaan Swart',
-			'email':'tiaan.swart@yahoo.com',
-			'vatNumber':'52159-6487',
-			'incomeTaxNumber':'6768142685',
-			'active':'1',
-			'verified':'1'
+			'quoteLandEntryId':'0',
+			'tariffOptionDamageTypeId':'1',
+		},
+		{
+			'id':'2',
+			'quoteLandEntryId':'1',
+			'tariffOptionDamageTypeId':'0',
+		},
+		{
+			'id':'3',
+			'quoteLandEntryId':'1',
+			'tariffOptionDamageTypeId':'1',
+		},
+		{
+			'id':'4',
+			'quoteLandEntryId':'2',
+			'tariffOptionDamageTypeId':'0',
+		},
+		{
+			'id':'5',
+			'quoteLandEntryId':'2',
+			'tariffOptionDamageTypeId':'1',
 		},
 	];
-	this.createBusinessUnit = function(data) {
+	this.createQuoteLandEntryDamageType = function(data) {
 
-		data.id = this.businessUnitTable.length;
-		this.businessUnitTable.push(data);
+		data.id = this.quoteLandEntryDamageTypeTable.length;
+		this.quoteLandEntryDamageTypeTable.push(data);
 
 		return data.id;
 	}
-	this.getBusinessUnit = function(id) {
-		for(var i=0;i<this.businessUnitTable.length;i++) {
-			if(this.businessUnitTable[i].id==id) {
-				return this.businessUnitTable[i];
+	this.getQuoteLandEntryDamageType = function(id) {
+		for(var i=0;i<this.quoteLandEntryDamageTypeTable.length;i++) {
+			if(this.quoteLandEntryDamageTypeTable[i].id==id) {
+				return this.quoteLandEntryDamageTypeTable[i];
 			}
 		}
 	}
-	this.getBusinessUnitByName = function(name) {
-		for(var i=0;i<this.businessUnitTable.length;i++) {
-			if(this.businessUnitTable[i].name==name) {
-				return this.businessUnitTable[i];
+	this.getQuoteLandEntryDamageTypes = function() {
+
+		return this.quoteLandEntryDamageTypeTable;
+	}
+	this.deleteQuoteLandEntryDamageType = function(id) {
+		for(var i=0;i<this.quoteLandEntryDamageTypeTable.length;i++) {
+			if(this.quoteLandEntryDamageTypeTable[i].id==id) {
+				this.quoteLandEntryDamageTypeTable.splice(i,1);
 			}
 		}
 	}
-	this.deleteBusinessUnit = function(id) {
-		for(var i=0;i<this.businessUnitTable.length;i++) {
-			if(this.businessUnitTable[i].id==id) {
-				this.businessUnitTable.splice(i,1);
-			}
-		}
-	}
-	this.updateBusinessUnit = function(id, data) {
+	this.updateQuoteLandEntryDamageType= function(id, data) {
 		data.id = id;
-		this.businessUnitTable[id] = data;
+		this.quoteLandEntryDamageTypeTable[id] = data;
 	}
 
+// POLICY
+	this.policyTable = [
+		/*{
+			'id':'0',
+			'policyNumber':'00000',
+			'businessUnitId':'0',
+			'brokerId':'0',
+			'insurerId':null,
+			'signedOn':'2017-08-30 19:01:05',
+			'active':'1',
+			'linkedToPolicyId':null,	
+		},
+		{
+			'id':'1',
+			'policyNumber':'00001',
+			'businessUnitId':'1',
+			'brokerId':'0',
+			'insurerId':null,
+			'signedOn':'2017-08-30 19:03:05',
+			'active':'1',
+			'linkedToPolicyId':null,	
+		},*/
+	];
+	this.createPolicy = function(data) {
+
+		data.id = this.policyTable.length;
+		this.policyTable.push(data);
+		console.log('Created Policy:');
+		console.log(this.policyTable[data.id ]);
+		return data.id;
+	}
+	this.getPolicy = function(id) {
+		for(var i=0;i<this.policyTable.length;i++) {
+			if(this.policyTable[i].id==id) {
+				return this.policyTable[i];
+			}
+		}
+	}
+	this.getPolicyByPolicyNumber = function(number)
+	{
+		for(var i=0;i<this.policyTable.length;i++) {
+			if(this.policyTable[i].policyNumber==number) {
+				return this.policyTable[i];
+			}
+		}
+	}
+	this.getPolicies = function() {
+		return this.policyTable;
+	}
+	this.deletePolicy = function(id) {
+		for(var i=0;i<this.policyTable.length;i++) {
+			if(this.policyTable[i].id==id) {
+				this.policyTable.splice(i,1);
+			}
+		}
+	}
+	this.updatePolicy = function(id, data) {
+		data.id = id;
+		this.policyTable[id] = data;
+	}
+
+// POLICY LAND ENTRY
+	this.policyLandEntryTable = [
+		/*{
+			'id':'0',
+			'policyId':'0',
+			'farmId':'0',
+			'landNumber':'000111',
+			'cropId':'1',
+			'cultivar':'Red Dwarf',
+			'area':'7.4',
+			'yield':'14.22',
+			'price':'5.48',
+			'tariffOptionId':'0',
+		},
+		{
+			'id':'1',
+			'policyId':'0',
+			'farmId':'1',
+			'landNumber':'100111',
+			'cropId':'0',
+			'cultivar':'Octopussy',
+			'area':'6.8',
+			'yield':'11.22',
+			'price':'4.78',
+			'tariffOptionId':'0',
+		},
+		{
+			'id':'2',
+			'policyId':'1',
+			'farmId':'0',
+			'landNumber':'000111',
+			'cropId':'1',
+			'cultivar':'Red Dwarf',
+			'area':'7.4',
+			'yield':'15.22',
+			'price':'4.48',
+			'tariffOptionId':'0',
+		},
+		{
+			'id':'3',
+			'policyId':'1',
+			'farmId':'1',
+			'landNumber':'100111',
+			'cropId':'0',
+			'cultivar':'Octopussy',
+			'area':'6.7',
+			'yield':'12.22',
+			'price':'4.98',
+			'tariffOptionId':'0',
+		}*/
+	];
+	this.createPolicyLandEntry = function(data) {
+
+		data.id = this.policyLandEntryTable.length;
+		this.policyLandEntryTable.push(data);
+		console.log('Created PolicyLandEntry:');
+		console.log(this.policyLandEntryTable[data.id ]);
+		return data.id;
+	}
+	this.getPolicyLandEntry = function(id) {
+		for(var i=0;i<this.policyLandEntryTable.length;i++) {
+			if(this.policyLandEntryTable[i].id==id) {
+				return this.policyLandEntryTable[i];
+			}
+		}
+	}
+	this.getPolicyLandEntries = function() {
+		return this.policyLandEntryTable;
+	}
+	
+	this.deletePolicyLandEntry = function(id) {
+		for(var i=0;i<this.policyLandEntryTable.length;i++) {
+			if(this.policyLandEntryTable[i].id==id) {
+				this.policyLandEntryTable.splice(i,1);
+			}
+		}
+	}
+	this.deletePolicyLandEntryByPolicyId = function(policyId)
+	{
+		for(var i=0;i<this.policyLandEntryTable.length;i++) {
+			if(this.policyLandEntryTable[i].policyId==policyId) {
+				this.policyLandEntryTable.splice(i,1);
+			}
+		}
+	}
+	this.updatePolicyLandEntry = function(id, data) {
+		data.id = id;
+		this.policyLandEntryTable[id] = data;
+	}	
+
+// POLICY LAND ENTRY DAMAGE TYPE - To Be Used In Policy Generation
+	this.policyLandEntryDamageTypeTable = [
+		/*{
+			'id':'0',
+			'policyLandEntryId':'0',
+			'tariffOptionDamageTypeId':'0',
+		},
+		{
+			'id':'1',
+			'policyLandEntryId':'0',
+			'tariffOptionDamageTypeId':'1',
+		},
+		{
+			'id':'2',
+			'policyLandEntryId':'1',
+			'tariffOptionDamageTypeId':'0',
+		},
+		{
+			'id':'3',
+			'policyLandEntryId':'1',
+			'tariffOptionDamageTypeId':'1',
+		},
+		{
+			'id':'4',
+			'policyLandEntryId':'2',
+			'tariffOptionDamageTypeId':'0',
+		},
+		{
+			'id':'5',
+			'policyLandEntryId':'2',
+			'tariffOptionDamageTypeId':'1',
+		},*/
+	];
+	this.createPolicyLandEntryDamageType = function(data) {
+
+		data.id = this.policyLandEntryDamageTypeTable.length;
+		this.policyLandEntryDamageTypeTable.push(data);
+		console.log('Created PolicyLandEntryDamageType:');
+		console.log(this.policyLandEntryDamageTypeTable[data.id ]);
+		return data.id;
+	}
+	this.getPolicyLandEntryDamageType = function(id) {
+		for(var i=0;i<this.policyLandEntryDamageTypeTable.length;i++) {
+			if(this.policyLandEntryDamageTypeTable[i].id==id) {
+				return this.policyLandEntryDamageTypeTable[i];
+			}
+		}
+	}
+	this.getPolicyLandEntryDamageTypes = function() {
+
+		return this.policyLandEntryDamageTypeTable;
+	}
+	this.deletePolicyLandEntryDamageType = function(id) {
+		for(var i=0;i<this.policyLandEntryDamageTypeTable.length;i++) {
+			if(this.policyLandEntryDamageTypeTable[i].id==id) {
+				this.policyLandEntryDamageTypeTable.splice(i,1);
+			}
+		}
+	}
+	this.updatePolicyLandEntryDamageType= function(id, data) {
+		data.id = id;
+		this.policyLandEntryDamageTypeTable[id] = data;
+	}
+
+
+// ########################### SYSTEM KEYS ###############################
 // PRODUCT
 	this.productTable = [
 		{
@@ -697,60 +1034,6 @@ var mockCommunicator = new function()
 	this.updateCrop = function(id, data) {
 		data.id = id;
 		this.cropTable[id] = data;
-	}
-
-// FARM
-	this.farmTable = [
-		{
-			'id':'0',
-			'name':'Plaas Anro Een',
-			'businessUnitId':'0',
-			'latitude':'1.22644',
-			'longitude':'-0.35428',
-			'active':'1',
-			'districtId':'0'
-		},
-		{
-			'id':'1',
-			'name':'Plaas Anro Twee',
-			'businessUnitId':'0',
-			'latitude':'1.325642',
-			'longitude':'-0.35243',
-			'active':'1',
-			'districtId':'0'
-		},
-	];
-	this.createFarm = function(data) {
-
-		data.id = this.farmTable.length;
-		this.farmTable.push(data);
-
-		return data.id;
-	}
-	this.getFarm = function(id) {
-		for(var i=0;i<this.farmTable.length;i++) {
-			if(this.farmTable[i].id==id) {
-				return this.farmTable[i];
-			}
-		}
-	}
-	this.getFarmByName = function(name) {
-		for(var i=0;i<this.farmTable.length;i++) {
-			if(this.farmTable[i].name==name) {
-				return this.farmTable[i];
-			}
-		}
-	}
-	this.deleteFarm = function(id) {
-		for(var i=0;i<this.farmTable.length;i++) {
-			if(this.farmTable[i].id==id) {
-				this.farmTable.splice(i,1);
-			}
-		}
-	}
-	this.updateFarm = function(id, data) {
-		data.id = id;
-		this.farmTable[id] = data;
 	}
 
 // PRICE UOM
@@ -1004,69 +1287,6 @@ var mockCommunicator = new function()
 	this.updateDamageType = function(id, data) {
 		data.id = id;
 		this.damageTypeTable[id] = data;
-	}
-
-// QUOTE LAND ENTRY DAMAGE TYPE - To Be Used In Quote Generation
-	this.quoteLandEntryDamageTypeTable = [
-		{
-			'id':'0',
-			'quoteLandEntryId':'0',
-			'tariffOptionDamageTypeId':'0',
-		},
-		{
-			'id':'1',
-			'quoteLandEntryId':'0',
-			'tariffOptionDamageTypeId':'1',
-		},
-		{
-			'id':'2',
-			'quoteLandEntryId':'1',
-			'tariffOptionDamageTypeId':'0',
-		},
-		{
-			'id':'3',
-			'quoteLandEntryId':'1',
-			'tariffOptionDamageTypeId':'1',
-		},
-		{
-			'id':'4',
-			'quoteLandEntryId':'2',
-			'tariffOptionDamageTypeId':'0',
-		},
-		{
-			'id':'5',
-			'quoteLandEntryId':'2',
-			'tariffOptionDamageTypeId':'1',
-		},
-	];
-	this.createQuoteLandEntryDamageType = function(data) {
-
-		data.id = this.quoteLandEntryDamageTypeTable.length;
-		this.quoteLandEntryDamageTypeTable.push(data);
-
-		return data.id;
-	}
-	this.getQuoteLandEntryDamageType = function(id) {
-		for(var i=0;i<this.quoteLandEntryDamageTypeTable.length;i++) {
-			if(this.quoteLandEntryDamageTypeTable[i].id==id) {
-				return this.quoteLandEntryDamageTypeTable[i];
-			}
-		}
-	}
-	this.getQuoteLandEntryDamageTypes = function() {
-
-		return this.quoteLandEntryDamageTypeTable;
-	}
-	this.deleteQuoteLandEntryDamageType = function(id) {
-		for(var i=0;i<this.quoteLandEntryDamageTypeTable.length;i++) {
-			if(this.quoteLandEntryDamageTypeTable[i].id==id) {
-				this.quoteLandEntryDamageTypeTable.splice(i,1);
-			}
-		}
-	}
-	this.updateQuoteLandEntryDamageType= function(id, data) {
-		data.id = id;
-		this.quoteLandEntryDamageTypeTable[id] = data;
 	}
 
 // TARIFF OPTION DAMAGE TYPE - To Be Used For System Keys
