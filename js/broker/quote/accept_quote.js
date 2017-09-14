@@ -61,6 +61,7 @@ var quoteAcceptModal = new function()
 		console.log("The business unit id: " + getQuoteId());
 		policyInvoker.createFromQuote(getQuoteId(), getAcceptTimeValue());
 		reset();
+		hide();
 	}
 
 	function addCancelClickListener()
