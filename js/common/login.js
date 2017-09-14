@@ -1,6 +1,15 @@
 (function(){
  	console.log("Login Linked");
 
+
+ 	// set enter as default for login button
+	$(document).ready(function(){
+	    $('#login_container').keypress(function(e){
+	      if(e.keyCode==13)
+	      	attemptLogin();
+	    });
+	});
+
  	// Login button
  	document.getElementById("login_button").onclick = function() {attemptLogin()};
 
@@ -28,5 +37,7 @@
 
  		// Redirect to new page here
  	}
+
+
 
 })();

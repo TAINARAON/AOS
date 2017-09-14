@@ -44,8 +44,6 @@ var session = new function() {
 
 		var userId =  user['id'];
 
-		console.log(user);
-
 		sessionStorage.setItem(USER_ID,userId);
 		
 		var nameOfUser = user['name'];
@@ -74,17 +72,20 @@ var session = new function() {
 
 	this.logout = function() {
 		sessionStorage.clear();
+		loader.load();
 		console.log(sessionStorage);
 	}
 }
 function onLoginFailed() {
 
-	alert('login credentials failed');
+	alert('login credentials failed.');
+	alert('Valid usernames: IA, I, BA, B, CA, C.  Password = password');
 }
 
 function encodePassword(password) {
 	// TODO
 	return password;
+
 }
 
 function onBrokerLogin(userId) {
@@ -106,10 +107,14 @@ function onBrokerLogin(userId) {
 
 		sessionStorage.setItem(ROLE_NAME, BROKER_ADMIN_NAME);
 		alert('Logged in as Broker Admin');
+		loader.loadRole('brokerAdmin');
+
 
 	} else {
 
 		alert('Logged in as Broker');
+		loader.loadRole('broker');
+
 	}
 }
 	
@@ -120,7 +125,7 @@ function onClientLogin(userId) {
 	sessionStorage.setItem(CLIENT_ID_NUMBER, client['idNumber']);
 	sessionStorage.setItem(CLIENT_CONTACT_NUMBER, client['contactNumber']);
 
-	alert('Logged in as Client');
+	loader.loadRole('client');
 }
 
 function onInsurerLogin(userId) {
@@ -129,8 +134,8 @@ function onInsurerLogin(userId) {
 
 	if(insurer['isAdmin'] == true) {
 
-		alert('Logged in as Insurer Admin');
-
+		alert('Logged in as Insurer Admin - no landing page defined yet');
+		
 	} else {
 
 		alert('Logged in as Insurer');

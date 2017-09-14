@@ -137,7 +137,7 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'4',
-			'username':'C',
+			'username':'CA',
 			'password':'password',
 			'roleId':'3',
 			'name':'Dan',
@@ -147,7 +147,7 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'5',
-			'username':'CA',
+			'username':'C',
 			'password':'password',
 			'roleId':'3',
 			'name':'Simon',

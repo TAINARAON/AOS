@@ -12,7 +12,7 @@ var pageLoader = function()
 			}
 		},
 		{
-			"role":"broker_admin",
+			"role":"brokerAdmin",
 			"cssFiles":[],
 			"jsFiles":["js/broker_admin/nav.js"],
 			"htmlFiles":{
@@ -51,6 +51,10 @@ var pageLoader = function()
 				return;
 			}
 		}
+	}
+
+	function loadRole(role="") {
+		load();
 	}
 
 	function loadPage(pageUrl, state = null) {
@@ -145,6 +149,9 @@ var pageLoader = function()
 	return {
 		load: function (role){
 			load(role);
+		},
+		loadRole: function(role="") {
+			loadRole(role);
 		},
 		loadPage: function (url, state = null) {
 			loadPage(url, state);
