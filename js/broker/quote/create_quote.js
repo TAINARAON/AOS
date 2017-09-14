@@ -910,7 +910,8 @@ var quoteCreator = new function()
 	function getQuote(quoteId)
 	{
 		debugger;
-		var quoteData = quoteInvoker.getDetailsOfQuote(quoteId)
+		//var quoteData = quoteInvoker.getDetailsOfQuote(quoteId)
+		var quoteData = quoteInvoker.getQuote(quoteId)
 
 		// TODO: load addition values like names for option type etc etc
 
