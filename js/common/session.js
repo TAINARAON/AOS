@@ -23,27 +23,30 @@ var testBrokerId = 2;
 var testInsurerId = 1;
 var testClientId = 4;
 
-function checkLoginCredentials(username,password) {
+function getUser(username,password) {
 
 	var encodedPassword = encodePassword(password);
 
-	return testClientId;	//mockCommunicator.getUserByUsernamePassword(username,encodedPassword);
+	return mockCommunicator.getUserByUsernamePassword(username,encodedPassword);
 }
 
 var session = new function() {
 
 	this.login = function(username,password) {
 
-		var userId = checkLoginCredentials(username,password);
+		var user = getUser(username,password);
+		
+		if(user == null) {
 
-		if(userId == null) {
 			onLoginFailed();
 			return;
 		}
 
-		var user = userInvoker.getUser(userId);
+		var userId =  user['id'];
 
-		sessionStorage.setItem(USER_ID, userId);
+		console.log(user);
+
+		sessionStorage.setItem(USER_ID,userId);
 		
 		var nameOfUser = user['name'];
 		sessionStorage.setItem(NAME_OF_USER, nameOfUser);
@@ -51,7 +54,7 @@ var session = new function() {
 		var surnameOfUser = user['surname'];
 		sessionStorage.setItem(SURNAME_OF_USER, surnameOfUser);
 
-		var roleName = userInvoker.getRoleOfUser(user['id'])['name'];
+		var roleName = userInvoker.getRole(user['roleId'])['name'];
 		sessionStorage.setItem(ROLE_NAME, roleName);
 
 		switch(roleName) {
@@ -75,12 +78,13 @@ var session = new function() {
 	}
 }
 function onLoginFailed() {
+
 	alert('login credentials failed');
 }
 
-
 function encodePassword(password) {
-
+	// TODO
+	return password;
 }
 
 function onBrokerLogin(userId) {
@@ -98,8 +102,14 @@ function onBrokerLogin(userId) {
 	sessionStorage.setItem(BROKERAGE_CONACT_NUMBER, brokerage['contactNumber']);
 	sessionStorage.setItem(BROKERAGE_FSP_NUMBER, brokerage['fspNumber']);
 
-	if(broker['isAdmin']) {
+	if(broker['isAdmin'] == true) {
+
 		sessionStorage.setItem(ROLE_NAME, BROKER_ADMIN_NAME);
+		alert('Logged in as Broker Admin');
+
+	} else {
+
+		alert('Logged in as Broker');
 	}
 }
 	
@@ -109,10 +119,22 @@ function onClientLogin(userId) {
 
 	sessionStorage.setItem(CLIENT_ID_NUMBER, client['idNumber']);
 	sessionStorage.setItem(CLIENT_CONTACT_NUMBER, client['contactNumber']);
+
+	alert('Logged in as Client');
 }
 
 function onInsurerLogin(userId) {
 
+	var insurer = insurerInvoker.getInsurerByUserId(userId);
+
+	if(insurer['isAdmin'] == true) {
+
+		alert('Logged in as Insurer Admin');
+
+	} else {
+
+		alert('Logged in as Insurer');
+	}
 }
 
 

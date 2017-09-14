@@ -15,4 +15,7 @@ var userInvoker = new function() {
 
     	return mockCommunicator.getRole(this.getUser(userId)['roleId']);
     }
+    this.getRole = function(id) {
+        return mockCommunicator.getRole(id);
+    }
 }

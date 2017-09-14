@@ -42,7 +42,7 @@ var pageLoader = function()
 
 	var navigationBackStack = [];
 
-	function load(role) {
+	function load(role="") {
 		for(var i = 0; i < assetReferences.length; i++) {
 
 			if(assetReferences[i].role == role) {

@@ -37,6 +37,10 @@ var insurerInvoker = new function() {
 		return insurers;
     };
 
+    this.getInsurerByUserId = function(id) {
+        return mockCommunicator.getInsurerByUserId(id);
+    }
+
     this.getInsurerWithDetails = function(id) {
     	var insurer = mockCommunicator.getInsurer(id);
     	var user = mockCommunicator.getUser(insurer['userId']);

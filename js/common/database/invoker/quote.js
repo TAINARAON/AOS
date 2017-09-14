@@ -1,6 +1,5 @@
 var quoteInvoker = new function() {
 
-
     // NEEDED FOR QUOTE CREATION DROP DOWNS
     this.getProducts = function() {
 
@@ -13,6 +12,7 @@ var quoteInvoker = new function() {
     }
 
     this.getOptionTypes = function() {
+        
         return mockCommunicator.getOptionTypes();
     }
 
@@ -22,6 +22,7 @@ var quoteInvoker = new function() {
     }
 
     this.getDamageTypesAvailableForOption = function(tariffOptionId) {
+
         var tariffOptionDamageTypes =  mockCommunicator.getTariffOptionDamageTypesByTariffOption(tariffOptionId);
         var damageTypes = [];
 

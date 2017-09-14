@@ -97,7 +97,7 @@ var mockCommunicator = new function()
 	this.userTable = [
 		{
 			'id':'0',
-			'username':'LJenkins',
+			'username':'IA',
 			'password':'password',
 			'roleId':'1',
 			'name':'Leeroy',
@@ -107,7 +107,7 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'1',
-			'username':'ACarstens',
+			'username':'I',
 			'password':'password',
 			'roleId':'1',
 			'name':'Andre',
@@ -117,7 +117,7 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'2',
-			'username':'Cameo',
+			'username':'BA',
 			'password':'password',
 			'roleId':'2',
 			'name':'Cam',
@@ -127,7 +127,7 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'3',
-			'username':'DrAcula',
+			'username':'B',
 			'password':'password',
 			'roleId':'2',
 			'name':'Doctor',
@@ -137,7 +137,7 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'4',
-			'username':'DanWazoski',
+			'username':'C',
 			'password':'password',
 			'roleId':'3',
 			'name':'Dan',
@@ -147,7 +147,7 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'5',
-			'username':'Simonsays',
+			'username':'CA',
 			'password':'password',
 			'roleId':'3',
 			'name':'Simon',
@@ -304,6 +304,70 @@ var mockCommunicator = new function()
 		this.businessUnitTable[id] = data;
 	}
 
+// BUSINESS UNIT MEMBER 
+//		clientId may be null if the person is not on the system. If it is not null, then use either name/surname.
+	this.businessUnitMemberTable = [
+		{
+			'id':'0',
+			'businesUnitId':'0',
+			'name':'Anro',
+			'surname':'Swart',
+			'idNumber':'90051816248',
+			'active':'1',
+			'verified':'1',
+			'isAdmin':'1',
+			'clientId':'1',
+		},
+		{
+			'id':'1',
+			'businesUnitId':'0',
+			'name':'Tiaan',
+			'surname':'Gerber',
+			'idNumber':'90051816682',
+			'active':'1',
+			'verified':'1',
+			'isAdmin':'0',
+			'clientId':null,
+		}
+	];
+	
+	this.createBusinessUnit = function(data) {
+
+		data.id = this.businessUnitMemberTable.length;
+		this.businessUnitMemberTable.push(data);
+
+		return data.id;
+	}
+	
+	this.getBusinessUnit = function(id) {
+		for(var i=0;i<this.businessUnitMemberTable.length;i++) {
+			if(this.businessUnitMemberTable[i].id==id) {
+				return this.businessUnitMemberTable[i];
+			}
+		}
+	}
+	
+	this.getBusinessUnitByName = function(name) {
+		for(var i=0;i<this.businessUnitMemberTable.length;i++) {
+			if(this.businessUnitMemberTable[i].name==name) {
+				return this.businessUnitMemberTable[i];
+			}
+		}
+	}
+	
+	this.deleteBusinessUnit = function(id) {
+		for(var i=0;i<this.businessUnitMemberTable.length;i++) {
+			if(this.businessUnitMemberTable[i].id==id) {
+				this.businessUnitMemberTable.splice(i,1);
+			}
+		}
+	}
+	
+	this.updateBusinessUnit = function(id, data) {
+		data.id = id;
+		this.businessUnitTable[id] = data;
+	}
+
 // FARM
 	this.farmTable = [
 		{
@@ -358,13 +422,63 @@ var mockCommunicator = new function()
 		this.farmTable[id] = data;
 	}
 
+// LAND
+	this.landTable = [
+		{
+			'id':'0',
+			'farmId':'',
+			'name':'LR0051',
+			'longitude':'',
+			'latitude':''
+		},
+		{
+			'id':'1',
+			'farmId':'',
+			'name':'LR0052',
+			'longitude':'',
+			'latitude':''
+		}
+	];
+	this.createLand = function(data) {
+
+		data.id = this.landTable.length;
+		this.landTable.push(data);
+
+		return data.id;
+	}
+	this.getLand = function(id) {
+		for(var i=0;i<this.landTable.length;i++) {
+			if(this.landTable[i].id==id) {
+				return this.landTable[i];
+			}
+		}
+	}
+	this.getLandByName = function(name) {
+		for(var i=0;i<this.landTable.length;i++) {
+			if(this.landTable[i].name==name) {
+				return this.landTable[i];
+			}
+		}
+	}
+	this.deleteLand = function(id) {
+		for(var i=0;i<this.landTable.length;i++) {
+			if(this.landTable[i].id==id) {
+				this.landTable.splice(i,1);
+			}
+		}
+	}
+	this.updateLand = function(id, data) {
+		data.id = id;
+		this.landTable[id] = data;
+	}
+
 // INSURER
 	this.insurerTable = [
 		{
 			'id':'0',
 			'userId':'0',
 			'active':'1',
-			'isAdmin':'0',
+			'isAdmin':'1',
 		},
 		{
 			'id':'1',
@@ -398,6 +512,13 @@ var mockCommunicator = new function()
 		data.id = id;
 		this.insurerTable[id] = data;
 	}
+	this.getInsurerByUserId = function(userId) {
+		for(var i=0;i<this.insurerTable.length;i++) {
+			if(this.insurerTable[i].userId==userId) {
+				return this.insurerTable[i];
+			}
+		}
+	}
 
 // BROKER
 	this.brokerTable = [
@@ -405,7 +526,7 @@ var mockCommunicator = new function()
 			'id':'0',
 			'userId':'2',
 			'brokerageId':'0',
-			'isAdmin':'0'
+			'isAdmin':'1'
 		},
 		{
 			'id':'1',
@@ -785,7 +906,7 @@ var mockCommunicator = new function()
 
 // POLICY LAND ENTRY
 	this.policyLandEntryTable = [
-		/*{
+		{
 			'id':'0',
 			'policyId':'0',
 			'farmId':'0',
@@ -796,43 +917,7 @@ var mockCommunicator = new function()
 			'yield':'14.22',
 			'price':'5.48',
 			'tariffOptionId':'0',
-		},
-		{
-			'id':'1',
-			'policyId':'0',
-			'farmId':'1',
-			'landNumber':'100111',
-			'cropId':'0',
-			'cultivar':'Octopussy',
-			'area':'6.8',
-			'yield':'11.22',
-			'price':'4.78',
-			'tariffOptionId':'0',
-		},
-		{
-			'id':'2',
-			'policyId':'1',
-			'farmId':'0',
-			'landNumber':'000111',
-			'cropId':'1',
-			'cultivar':'Red Dwarf',
-			'area':'7.4',
-			'yield':'15.22',
-			'price':'4.48',
-			'tariffOptionId':'0',
-		},
-		{
-			'id':'3',
-			'policyId':'1',
-			'farmId':'1',
-			'landNumber':'100111',
-			'cropId':'0',
-			'cultivar':'Octopussy',
-			'area':'6.7',
-			'yield':'12.22',
-			'price':'4.98',
-			'tariffOptionId':'0',
-		}*/
+		}
 	];
 	this.createPolicyLandEntry = function(data) {
 
@@ -875,7 +960,7 @@ var mockCommunicator = new function()
 
 // POLICY LAND ENTRY DAMAGE TYPE - To Be Used In Policy Generation
 	this.policyLandEntryDamageTypeTable = [
-		/*{
+		{
 			'id':'0',
 			'policyLandEntryId':'0',
 			'tariffOptionDamageTypeId':'0',
@@ -884,27 +969,7 @@ var mockCommunicator = new function()
 			'id':'1',
 			'policyLandEntryId':'0',
 			'tariffOptionDamageTypeId':'1',
-		},
-		{
-			'id':'2',
-			'policyLandEntryId':'1',
-			'tariffOptionDamageTypeId':'0',
-		},
-		{
-			'id':'3',
-			'policyLandEntryId':'1',
-			'tariffOptionDamageTypeId':'1',
-		},
-		{
-			'id':'4',
-			'policyLandEntryId':'2',
-			'tariffOptionDamageTypeId':'0',
-		},
-		{
-			'id':'5',
-			'policyLandEntryId':'2',
-			'tariffOptionDamageTypeId':'1',
-		},*/
+		}
 	];
 	this.createPolicyLandEntryDamageType = function(data) {
 
@@ -936,7 +1001,6 @@ var mockCommunicator = new function()
 		data.id = id;
 		this.policyLandEntryDamageTypeTable[id] = data;
 	}
-
 
 // ########################### SYSTEM KEYS ###############################
 // PRODUCT
@@ -1295,13 +1359,15 @@ var mockCommunicator = new function()
 			'id':'0',
 			'tariffOptionId':'0',
 			'damageTypeId':'0',
-			'tariff':'0.175'
+			'tariff':'0.175',
+			'isDefault':'1'
 		},
 		{
 			'id':'1',
 			'tariffOptionId':'0',
 			'damageTypeId':'1',
-			'tariff':'0.235'
+			'tariff':'0.235',
+			'isDefault':'0'
 		},
 	];
 	this.createTariffOptionDamageType = function(data) {
