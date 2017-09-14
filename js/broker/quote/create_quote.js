@@ -33,6 +33,7 @@ var quoteCreator = new function()
 	var dropdown_product = document.getElementById("produk_dropdown");
 	var dropdown_crop = document.getElementById("gewas_dropdown");
 	var dropdown_option_type = document.getElementById("opsie_tiepe_dropdown");
+	var dropdown_coverage = document.getElementById("dekking_dropdown");
 	// ^ Selector fields ^
 
 	// Check box fields
@@ -442,7 +443,7 @@ var quoteCreator = new function()
 		input_farm.onblur = function(){toggleFieldsVisible(validateFarm());};
 
 		// Select fields
-		dropdown_product.onchange = function(){loadProductSpecificCrops(dropdown_product.value)};
+		dropdown_product.onchange = function(){loadCoverage(); loadProductSpecificCrops(dropdown_product.value)};
 	}
 
 	function toggleFarmInputVisibility(state)
@@ -545,6 +546,23 @@ var quoteCreator = new function()
 			option.innerHTML = availableCrop[i].name;
 			dropdown_crop.appendChild(option);
 		}
+	}
+
+	function loadCoverage()
+	{
+		var farmId = getFarmId();
+		var cropId = getCropObjectIdByName(asdasddsa);
+		var optionTypeId = getOptionTypeObjectIdByName(asdasddsa);
+
+		if(hasValue(farmId) && hasValue(cropId) && hasValue(optionTypeId)
+		{
+			// Call invoker here
+		}
+	}
+
+	function hasValue(value)
+	{
+		return value != null && value.trim() != "";
 	}
 	// ^ Change listener content ^
 
