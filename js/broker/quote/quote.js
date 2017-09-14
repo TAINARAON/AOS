@@ -24,6 +24,7 @@ var quoteViewer = new function()
 
 	(function init(){
 		createModal("modal_container");
+		createAcceptQuoteModal("modal_confirm_accept_quote");
 		createFilterFields("search_container");
 		setupQuoteAccordion(quoteAccordioncontainer, loadData(""));
 	})();
@@ -93,9 +94,14 @@ var quoteViewer = new function()
 		loader.loadPartOfPage("html/broker/quote/create.html", id);
 	}
 
+	function createAcceptQuoteModal(id)
+	{
+		loader.loadPartOfPage("html/broker/quote/accept.html", id);
+	}
+
 	function loadData(quoteNumber)
 	{
-		var quotes = [];
+		let quotes = [];
 		// TODO: do filtering
 		if(quoteNumber.trim() == "" || quoteNumber.trim() == "*")
 		{
@@ -258,6 +264,7 @@ var quoteViewer = new function()
 
 	function reQuote(event, id)
 	{
+		console.log("ID: " + id);
 		event.preventDefault();
 		quoteCreator.openModalAndReQuote(id);
 	}
@@ -283,15 +290,7 @@ var quoteViewer = new function()
 	function acceptQuote(event, id)
 	{
 		event.preventDefault();
-
-		var quote = quoteInvoker.getQuote(id);
-		
-		policyInvoker.create(quote);
-
-		// deleteLinkedQuotes
-		// deleteQuote
-
-
+		quoteAcceptModal.show(id);
 	}
 
 	function createPrintQuoteBtn(container, id)
