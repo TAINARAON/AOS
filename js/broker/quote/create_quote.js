@@ -555,12 +555,26 @@ var quoteCreator = new function()
 	{
 		var farmId = getFarmId();
 		var cropId = getCropObjectIdByName(dropdown_crop.value);
-		debugger;
 		var optionTypeId = getOptionTypeObjectIdByName(dropdown_option_type.value);
+
 		if(hasValue(farmId) && hasValue(cropId) && hasValue(optionTypeId))
-		{
-			// Call invoker here
-			alert("All values present");
+		{	
+			var dekkingTypes = quoteInvoker.getOptionsByFarmCropType(farmId, cropId, optionTypeId);
+
+			for(var i = 0; i < dekkingTypes.length; i++)
+			{
+				if(i == 0)
+				{
+					var option = document.createElement("OPTION");
+					$(option).attr("disabled selected value");
+					dropdown_crop.appendChild(option);
+				}
+				
+				var option = document.createElement("OPTION");
+				option.innerHTML = dekkingTypes[i].coverage;
+
+				dropdown_coverage.appendChild(option);				
+			}
 		}
 	}
 
