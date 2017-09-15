@@ -134,7 +134,8 @@ function onInsurerLogin(userId) {
 
 	if(insurer['isAdmin'] == true) {
 
-		alert('Logged in as Insurer Admin - no landing page defined yet');
+		alert('Logged in as Insurer Admin');
+		loader.loadRole('insurerAdmin');
 		
 	} else {
 

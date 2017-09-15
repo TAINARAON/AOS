@@ -435,14 +435,14 @@ var mockCommunicator = new function()
 	this.landTable = [
 		{
 			'id':'0',
-			'farmId':'',
+			'farmId':'0',
 			'name':'LR0051',
 			'longitude':'',
 			'latitude':''
 		},
 		{
 			'id':'1',
-			'farmId':'',
+			'farmId':'0',
 			'name':'LR0052',
 			'longitude':'',
 			'latitude':''

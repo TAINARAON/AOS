@@ -30,6 +30,15 @@ var pageLoader = function()
 			}
 		},
 		{
+			"role":"insurerAdmin",
+			"cssFiles":[],
+			"jsFiles":["js/insurer_admin/nav.js"],
+			"htmlFiles":{
+				"navbar":"html/common/nav.html",
+				"landing_page":"html/common/home.html"
+			}
+		},
+		{
 			"role":"",
 			"cssFiles":["css/common/login.css"],
 			"jsFiles":["js/common/login.js"],
