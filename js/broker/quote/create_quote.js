@@ -2,6 +2,7 @@ var quoteCreator = new function()
 {
 	var businessUnitId;
 	var farmId;
+	var landNumberId;
 	var allValuesEntered = false;
 	var allValuesSeleted = false;
 
@@ -15,6 +16,7 @@ var quoteCreator = new function()
 	// Labels
 	var label_business_unit = document.getElementById("boerderyLabel");
 	var label_farm = document.getElementById("plaasLabel");
+	var label_land_number = document.getElementById("landNumberLabel");
 	// ^ Labels ^
 
 	// Input fields
@@ -46,6 +48,7 @@ var quoteCreator = new function()
 	// Containers for hiding and displaying purposes
 	// Farm container
 	var farm_container = document.getElementById("farmContainer");
+	var land_number_container = document.getElementById("landNumberContainer");
 	// ^ Farm container ^
 	// Row containers
 	var row1 = document.getElementById("row1Container");
@@ -92,6 +95,21 @@ var quoteCreator = new function()
 	function resetFarmId()
 	{
 		farmId = undefined;
+	}
+
+	function setLandNumberId(id)
+	{
+		landNumberId = id;
+	}
+
+	function getLandNumberId()
+	{
+		return landNumberId;
+	}
+
+	function resetLandNumberId()
+	{
+		landNumberId = undefined;
 	}
 
 	function getAllInputValuesEnteredState()
@@ -365,6 +383,16 @@ var quoteCreator = new function()
 		farm_container.style.display = "none";
 	}
 
+	function showLandNumber()
+	{
+		land_number_container.style.display = "block";
+	}
+
+	function hideLandNumber()
+	{
+		land_number_container.style.display = "none";
+	}
+
 	function showFields()
 	{
 		row1.style.display = "block";
@@ -430,6 +458,11 @@ var quoteCreator = new function()
 		label_farm.innerHTML = "Plaas:";
 	}
 
+	function resetLandNumberLabel()
+	{
+		landNumberLabel.innerHTML = "Land Nommer:";
+	}
+
 	function resetQuoteObject()
 	{
 		quote = {};
@@ -471,7 +504,7 @@ var quoteCreator = new function()
 	function setInitialInputVisibility()
 	{
 		hideFarm();
-
+		hideLandNumber();
 		hideFields();
 	}
 
@@ -479,7 +512,9 @@ var quoteCreator = new function()
 	function addOnChangeListeners()
 	{
 		input_business_unit.onblur = function(){toggleFarmInputVisibility(validateBusinessUnit());};
-		input_farm.onblur = function(){loadCoverage(); toggleFieldsVisible(validateFarm());};
+		//input_farm.onblur = function(){loadCoverage(); toggleFieldsVisible(validateFarm());};
+		input_farm.onblur = function(){loadCoverage(); toggleLandNumberVisible(validateFarm());};
+		input_land_number.onblur = function(){toggleFieldsVisible(validateLandNumber());};
 
 		// Select fields
 		dropdown_product.onchange = function(){loadProductSpecificCrops(dropdown_product.value)};
@@ -566,6 +601,46 @@ var quoteCreator = new function()
 	function notifyUserOfCorrectFarm()
 	{
 		label_farm.innerHTML = "Plaas: &#x2713;";
+	}
+
+	function toggleLandNumberVisible(state)
+	{
+		if(state)
+			showLandNumber();
+		else
+			hideLandNumber();
+	}
+
+	function validateLandNumber()
+	{
+		var val = getInputLandNumberValue();
+		console.log("In validate land");
+		if(val != undefined && val != "")
+		{
+			console.log("Val not empty: " + val);
+			console.log("Farm id: " + getFarmId());
+			debugger;
+			var response = quoteInvoker.getLandByNameAndFarmId(val, getFarmId());
+			console.log(response);
+			if(response != undefined && response != null)
+			{
+				console.log("weeee setting");
+				setLandNumberId(response.id);
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	function notifyUserOfIncorrectLandNumber()
+	{
+		landNumberLabel.innerHTML = "Land Nommer: &#x2717";
+	}
+
+	function notifyUserOfCorrectLandNumber()
+	{
+		landNumberLabel.innerHTML = "Land Nommer: &#x2713;";
 	}
 
 	function loadProductSpecificCrops(name)
@@ -693,7 +768,7 @@ var quoteCreator = new function()
 		{
 			var option = document.createElement("OPTION");
 			option.innerHTML = availableProducts[i].name;
-			$(option).attr("VALUE", availableProducts[i].name);
+			//$(option).attr("VALUE", availableProducts[i].name);
 			dropdown_product.appendChild(option);
 		}
 	}
@@ -707,7 +782,7 @@ var quoteCreator = new function()
 		{
 			var option = document.createElement("OPTION");
 			option.innerHTML = availableOptionTypes[i].name;
-			$(option).attr("VALUE", availableOptionTypes[i].name);
+			//$(option).attr("VALUE", availableOptionTypes[i].name);
 			dropdown_option_type.appendChild(option);
 		}
 	}
@@ -1030,6 +1105,7 @@ var quoteCreator = new function()
 		// Remove notification status of validity
 		resetFarmLabel();
 		resetBusinessUnitLabel();
+		resetLandNumberLabel();
 		// Remove disble state from business unit
 		removeDisableStatusFromBusinessUnit();
 		// Clear all values
