@@ -59,6 +59,10 @@ var quoteInvoker = new function() {
         return quoteId;
     };
 
+    this.getFarmByNameAndBusinessId = function(farmName, businessId) {
+        return mockCommunicator.getFarmIdByNameAndBusinessId(farmName, businessId);
+    }
+
     this.getQuote = function(id) {
 
         return mockCommunicator.getQuote(id);

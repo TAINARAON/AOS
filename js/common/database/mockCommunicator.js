@@ -421,6 +421,13 @@ var mockCommunicator = new function()
 		data.id = id;
 		this.farmTable[id] = data;
 	}
+	this.getFarmByNameAndBusinessId = function(farmName,businessUnitId) {
+		for(var i=0;i<this.farmTable.length;i++) {
+			if(this.farmTable[i].name==farmName && farmTable[i].businessUnitId == businessUnitId) {
+				return this.farmTable[i];
+			}
+		}
+	}
 
 // LAND
 	this.landTable = [
