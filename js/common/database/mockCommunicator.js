@@ -469,6 +469,13 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+	this.getLandByNameAndFarmId = function(landNumber,farmId) {
+		for(var i=0;i<this.landTable.length;i++) {
+			if(this.landTable[i]['name']==landNumber && this.landTable[i]['farmId']==farmId) {
+				return this.landTable[i];
+			}
+		}
+	}
 	this.deleteLand = function(id) {
 		for(var i=0;i<this.landTable.length;i++) {
 			if(this.landTable[i].id==id) {

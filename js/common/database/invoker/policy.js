@@ -4,7 +4,7 @@ var policyInvoker = new function() {
 
         if(!isValidTime(timeSigned)) {
 
-            timeSigned = getCurrentTime();
+            timeSigned = util.getCurrentDateTime();
         }
 
         // Get quote, create policy object from quote object. 
