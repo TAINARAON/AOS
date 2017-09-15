@@ -3,6 +3,7 @@ var quoteCreator = new function()
 	var businessUnitId;
 	var farmId;
 	var allValuesEntered = false;
+	var allValuesSeleted = false;
 
 	// This modal will only contain a quote for one business unit at a time
 	var quote = {};
@@ -19,10 +20,10 @@ var quoteCreator = new function()
 	// Input fields
 	var input_business_unit = document.getElementById("business_unit");
 	var input_farm = document.getElementById("farm");
-	var input_product = document.getElementById("produk");
-	var input_crop = document.getElementById("gewas");
-	var input_option_type = document.getElementById("opsie_tiepe");
-	var input_persentage = document.getElementById("persentasie");
+	//var input_product = document.getElementById("produk");
+	//var input_crop = document.getElementById("gewas");
+	//var input_option_type = document.getElementById("opsie_tiepe");
+	//var input_persentage = document.getElementById("persentasie");
 	var input_land_number = document.getElementById("land_nommer");
 	var input_cultivar = document.getElementById("kultivar");
 	var input_area = document.getElementById("oppervlakte");
@@ -101,6 +102,16 @@ var quoteCreator = new function()
 	function setAllInputValuesEnteredState(state)
 	{
 		allValuesEntered = state;
+	}
+
+	function getAllSelectValuesSelectedState()
+	{
+		return allValuesSeleted;
+	}
+
+	function setAllSelectValuesSelectedState(state)
+	{
+		allValuesSeleted = state;
 	}
 
 	function getQuoteObject()
@@ -226,42 +237,50 @@ var quoteCreator = new function()
 
 	function getInputProductValue()
 	{
-		return input_product.value;
+		//return input_product.value;
+		return dropdown_product.value;
 	}
 
 	function setInputProductValue(value)
 	{
-		input_product.value = value;
+		//input_product.value = value;
+		dropdown_product.value = value;
 	}
 
 	function getInputCropValue()
 	{
-		return input_crop.value;
+		//return input_crop.value;
+		return dropdown_crop.value;
 	}
 
 	function setInputCropValue(value)
 	{
-		input_crop.value = value;
+		//input_crop.value = value;
+		dropdown_crop.value = value;
 	}
 
 	function getInputOptionTypeValue()
 	{
-		return input_option_type.value;
+		//return input_option_type.value;
+		return dropdown_option_type.value;
 	}
 
 	function setInputOptionTypeValue(value)
 	{
-		input_option_type.value = value;
+		//input_option_type.value = value;
+		dropdown_option_type.value = value;
 	}
 
 	function getInputPersentageValue()
 	{
-		return input_persentage.value;
+		//return input_persentage.value;
+		return dropdown_coverage.value;
 	}
 
 	function setInputPersentageValue(value)
 	{
-		input_persentage.value = value;
+		//input_persentage.value = value;
+		dropdown_coverage.value = value;
 	}
 
 	function getInputLandNumberValue()
@@ -443,6 +462,7 @@ var quoteCreator = new function()
 		setInitialInputVisibility();
 		addOnChangeListeners();
 		addInputValueListeners();
+		addSelectValueListeners();
 		setupModalButtonClickListeners();
 		setupDropDownValues();
 	})();
@@ -576,6 +596,9 @@ var quoteCreator = new function()
 
 	function loadCoverage()
 	{
+		dropdown_coverage.innerHTML = "";
+		dropdown_coverage.value = "";
+
 		var farmId = getFarmId();
 		var cropId = getCropObjectIdByName(dropdown_crop.value);
 		var optionTypeId = getOptionTypeObjectIdByName(dropdown_option_type.value);
@@ -584,9 +607,6 @@ var quoteCreator = new function()
 		{	
 			var dekkingTypes = quoteInvoker.getOptionsByFarmCropType(farmId, cropId, optionTypeId);
 			setOptionsByFarmCropTypeObject(dekkingTypes);
-
-			dropdown_coverage.innerHTML = "";
-			dropdown_coverage.value = "";
 
 			for(var i = 0; i < dekkingTypes.length; i++)
 			{
@@ -629,6 +649,27 @@ var quoteCreator = new function()
         setAllInputValuesEnteredState(!empty);
 	}
 
+	function addSelectValueListeners()
+	{
+		debugTool.print("Adding select listeners", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
+		$('#quote_input_container > div > div > select').on("change.v" ,function(){quoteSelectOnChangeListener();});
+	}
+
+	function quoteSelectOnChangeListener()
+	{
+		console.log("Checking select val");
+		var empty = false;
+        $('#quote_input_container > div > div > select').each(function() {
+        	console.log("Here");
+        	console.log($(this).find("option:selected").val());
+            if ($(this).find("option:selected").val() == '') {
+                empty = true;
+            }
+        });
+
+        setAllSelectValuesSelectedState(!empty);
+	}
+
 	function setupModalButtonClickListeners()
 	{
 		debugTool.print("Adding click listeners", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
@@ -652,6 +693,7 @@ var quoteCreator = new function()
 		{
 			var option = document.createElement("OPTION");
 			option.innerHTML = availableProducts[i].name;
+			$(option).attr("VALUE", availableProducts[i].name);
 			dropdown_product.appendChild(option);
 		}
 	}
@@ -665,6 +707,7 @@ var quoteCreator = new function()
 		{
 			var option = document.createElement("OPTION");
 			option.innerHTML = availableOptionTypes[i].name;
+			$(option).attr("VALUE", availableOptionTypes[i].name);
 			dropdown_option_type.appendChild(option);
 		}
 	}
@@ -695,7 +738,7 @@ var quoteCreator = new function()
 		
 		// More validation of other fields can be done here
 
-		return allValuesEntered;
+		return getAllInputValuesEnteredState() && getAllSelectValuesSelectedState();
 	}
 
 	function parseInputDataIntoJSONQuote()
@@ -716,8 +759,13 @@ var quoteCreator = new function()
 						"plaas":getInputFarmValue(),
 						"produk":getInputProductValue(),
 						"gewas":getInputCropValue(),
+						//"gewas":dropdown_crop.value,
+						"cropId":getCropObjectIdByName(dropdown_crop.value),
 						"opsie_tiepe":getInputOptionTypeValue(),
+						//"opsie_tiepe":dropdown_option_type.value,
 						"persentasie":getInputPersentageValue(),
+						//"persentasie":dropdown_coverage.value,
+						"tariffOptionId":getOptionsByFarmCropTypeObjectIdByCoverage(dropdown_coverage.value),
 						"landNumber":getInputLandNumberValue(),
 						"cultivar":getInputCultivarValue(),
 						"area":getInputAreaValue(),
