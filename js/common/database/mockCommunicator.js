@@ -417,10 +417,12 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+	
 	this.updateFarm = function(id, data) {
 		data.id = id;
 		this.farmTable[id] = data;
 	}
+
 	this.getFarmByNameAndBusinessId = function(farmName,businessUnitId) {
 		for(var i=0;i<this.farmTable.length;i++) {
 			if(this.farmTable[i].name==farmName && farmTable[i].businessUnitId == businessUnitId) {

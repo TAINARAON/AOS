@@ -60,7 +60,7 @@ var quoteInvoker = new function() {
     };
 
     this.getFarmByNameAndBusinessId = function(farmName, businessId) {
-        return mockCommunicator.getFarmIdByNameAndBusinessId(farmName, businessId);
+        return mockCommunicator.getFarmByNameAndBusinessId(farmName, businessId);
     }
 
     this.getQuote = function(id) {
