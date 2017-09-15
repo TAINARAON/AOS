@@ -152,7 +152,7 @@ var quoteCreator = new function()
 	{
 		for(var i = 0; i < optionTypes.length; i++)
 		{
-			if(optionTypes[i] == name)
+			if(optionTypes[i],name == name)
 			{
 				return optionTypes[i].id;
 			}
@@ -440,10 +440,10 @@ var quoteCreator = new function()
 	function addOnChangeListeners()
 	{
 		input_business_unit.onblur = function(){toggleFarmInputVisibility(validateBusinessUnit());};
-		input_farm.onblur = function(){toggleFieldsVisible(validateFarm());};
+		input_farm.onblur = function(){loadCoverage(); toggleFieldsVisible(validateFarm());};
 
 		// Select fields
-		dropdown_product.onchange = function(){loadCoverage(); loadProductSpecificCrops(dropdown_product.value)};
+		dropdown_product.onchange = function(){loadProductSpecificCrops(dropdown_product.value)};
 		dropdown_crop.onchange = function(){loadCoverage();};
 		dropdown_option_type.onchange = function(){loadCoverage();};
 	}
@@ -464,7 +464,7 @@ var quoteCreator = new function()
 			var response = clientInvoker.getBusinessUnitByName(val);
 			//setBusinessUnitId(Math.floor((Math.random() * 1000) + 1));
 			setBusinessUnitId(response != null ?  response.id: -1);
-			
+
 			if(response != null)
 			{
 				notifyUserOfCorrectBusinessUnit();
@@ -555,8 +555,8 @@ var quoteCreator = new function()
 	{
 		var farmId = getFarmId();
 		var cropId = getCropObjectIdByName(dropdown_crop.value);
+		debugger;
 		var optionTypeId = getOptionTypeObjectIdByName(dropdown_option_type.value);
-
 		if(hasValue(farmId) && hasValue(cropId) && hasValue(optionTypeId))
 		{
 			// Call invoker here
@@ -566,7 +566,7 @@ var quoteCreator = new function()
 
 	function hasValue(value)
 	{
-		return value != null && value.trim() != "";
+		return value != undefined && value != null && (value + '').trim() != "" && (value + '').trim() != "-1";
 	}
 	// ^ Change listener content ^
 
@@ -618,7 +618,7 @@ var quoteCreator = new function()
 	function setupOptionTypeDropdownValues()
 	{
 		var availableOptionTypes = quoteInvoker.getOptionTypes();
-		setOptionTypeObject(optionTypes);
+		setOptionTypeObject(availableOptionTypes);
 
 		for(var i = 0; i < availableOptionTypes.length; i++)
 		{
