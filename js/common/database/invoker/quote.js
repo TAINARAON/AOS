@@ -18,7 +18,7 @@ var quoteInvoker = new function() {
 
     this.getOptionsByFarmCropType = function(farmId,cropId,typeId) {
         
-        var districtId = mockCommuncator.getFarm(farmId)['districtId'];
+        var districtId = mockCommunicator.getFarm(farmId)['districtId'];
 
         return mockCommunicator.getOptionsByDistrictCropType(districtId,cropId,typeId);
     }
