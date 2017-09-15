@@ -9,6 +9,7 @@ var quoteCreator = new function()
 	var products = {};
 	var crops = {};
 	var optionTypes = {};
+	var optionsByFarmCropType = {};
 
 	// Labels
 	var label_business_unit = document.getElementById("boerderyLabel");
@@ -164,6 +165,24 @@ var quoteCreator = new function()
 	function setOptionTypeObject(value)
 	{
 		optionTypes = value;
+	}
+
+	function getOptionsByFarmCropTypeObjectIdByCoverage(coverage)
+	{
+		for(var i = 0; i < optionsByFarmCropType.length; i++)
+		{
+			if(optionsByFarmCropType[i].coverage == coverage)
+			{
+				return optionsByFarmCropType[i].id;
+			}
+		}
+
+		return -1;
+	}
+
+	function setOptionsByFarmCropTypeObject(value)
+	{
+		optionsByFarmCropType = value;
 	}
 
 	function getBrokerId()
@@ -503,7 +522,11 @@ var quoteCreator = new function()
 		var val = getInputFarmValue();
 		if(val != undefined && val != "")
 		{
-			var response = clientInvoker.getFarmByName(val);
+			//var response = clientInvoker.getFarmByName(val);
+			console.log("Name: " + val);
+			console.log("BU Id: " + getBusinessUnitId());
+			var response = quoteInvoker.getFarmByNameAndBusinessId(val, getBusinessUnitId());
+			console.log(response);
 			setFarmId(response != null ?  response.id: -1);
 			if(response != null)
 			{
@@ -560,6 +583,10 @@ var quoteCreator = new function()
 		if(hasValue(farmId) && hasValue(cropId) && hasValue(optionTypeId))
 		{	
 			var dekkingTypes = quoteInvoker.getOptionsByFarmCropType(farmId, cropId, optionTypeId);
+			setOptionsByFarmCropTypeObject(dekkingTypes);
+
+			dropdown_coverage.innerHTML = "";
+			dropdown_coverage.value = "";
 
 			for(var i = 0; i < dekkingTypes.length; i++)
 			{
@@ -569,7 +596,7 @@ var quoteCreator = new function()
 					$(option).attr("disabled selected value");
 					dropdown_crop.appendChild(option);
 				}
-				
+
 				var option = document.createElement("OPTION");
 				option.innerHTML = dekkingTypes[i].coverage;
 

@@ -425,7 +425,7 @@ var mockCommunicator = new function()
 
 	this.getFarmByNameAndBusinessId = function(farmName,businessUnitId) {
 		for(var i=0;i<this.farmTable.length;i++) {
-			if(this.farmTable[i].name==farmName && farmTable[i].businessUnitId == businessUnitId) {
+			if(this.farmTable[i].name==farmName && this.farmTable[i].businessUnitId == businessUnitId) {
 				return this.farmTable[i];
 			}
 		}
