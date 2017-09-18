@@ -55,6 +55,7 @@ var quoteCreator = new function()
 	var row2 = document.getElementById("row2Container");
 	var row3 = document.getElementById("row3Container");
 	var row4 = document.getElementById("row4Container");
+	var damageTypeRowContainer = document.getElementById("damageTypeCheckboxContainer");
 	// ^ Row containers ^
 	// ^ Containers for hiding and displaying purposes ^
 
@@ -65,6 +66,8 @@ var quoteCreator = new function()
 	var open_modal_button = document.getElementById("openModalBtn");
 	var include_row_button = document.getElementById("includeRow");
 	var close_modal_button = document.getElementById("close_modal");
+
+	var create_quote_button = document.getElementById("acceptQuote");
 
 	// Getters & Setters
 	function setBusinessUnitId(id)
@@ -408,6 +411,16 @@ var quoteCreator = new function()
 		row3.style.display = "none";
 		row4.style.display = "none";
 	}
+
+	function showCreateQuoteButton()
+	{
+		create_quote_button.style.display = "block";
+	}
+
+	function hideCreateQuoteButton()
+	{
+		create_quote_button.style.display = "none";
+	}
 	// ^ Showing and hiding of elements ^
 
 	// Cleanup functions
@@ -503,6 +516,7 @@ var quoteCreator = new function()
 	// Initial setup function
 	function setInitialInputVisibility()
 	{
+		hideCreateQuoteButton();
 		hideFarm();
 		hideLandNumber();
 		hideFields();
@@ -520,6 +534,7 @@ var quoteCreator = new function()
 		dropdown_product.onchange = function(){loadProductSpecificCrops(dropdown_product.value)};
 		dropdown_crop.onchange = function(){loadCoverage();};
 		dropdown_option_type.onchange = function(){loadCoverage();};
+		dropdown_coverage.onchange = function(){alert("weee"); loadDamageTypesForSpecificTarrifOptionId(dropdown_coverage.value);};
 	}
 
 	function toggleFarmInputVisibility(state)
@@ -617,19 +632,17 @@ var quoteCreator = new function()
 		console.log("In validate land");
 		if(val != undefined && val != "")
 		{
-			console.log("Val not empty: " + val);
-			console.log("Farm id: " + getFarmId());
-			debugger;
 			var response = quoteInvoker.getLandByNameAndFarmId(val, getFarmId());
-			console.log(response);
+			
 			if(response != undefined && response != null)
 			{
-				console.log("weeee setting");
 				setLandNumberId(response.id);
+				notifyUserOfCorrectLandNumber();
 				return true;
 			}
 		}
 
+		notifyUserOfIncorrectLandNumber();
 		return false;
 	}
 
@@ -689,7 +702,7 @@ var quoteCreator = new function()
 				{
 					var option = document.createElement("OPTION");
 					$(option).attr("disabled selected value");
-					dropdown_crop.appendChild(option);
+					dropdown_coverage.appendChild(option);
 				}
 
 				var option = document.createElement("OPTION");
@@ -703,6 +716,63 @@ var quoteCreator = new function()
 	function hasValue(value)
 	{
 		return value != undefined && value != null && (value + '').trim() != "" && (value + '').trim() != "-1";
+	}
+
+	function loadDamageTypesForSpecificTarrifOptionId(coverage)
+	{	
+		console.log("Load the damage types");
+		damageTypeRowContainer.innerHTML = "";
+
+		var id = getOptionsByFarmCropTypeObjectIdByCoverage(coverage);
+		if(id != undefined && id != null)
+		{
+			var response = quoteInvoker.getDamageTypesAvailableForOption(id);
+
+			// TODO: Save object to save id when values are selected
+
+			if(response != undefined && response != null)
+			{
+				var checkboxContainer;
+
+				for(var i = 0; i < response.length; i++)
+				{
+					if(i % 3 == 0)
+					{
+						checkboxContainer = document.createElement("DIV");
+						checkboxContainer.className = "row";
+						damageTypeRowContainer.appendChild(checkboxContainer);
+					}
+					
+					var name = response[i].name;
+					createDamageTypeCheckbox(name, checkboxContainer);
+				}
+			}
+		}
+	}
+
+	function createDamageTypeCheckbox(title, container)
+	{
+		var innerContainer = document.createElement("DIV");
+		innerContainer.className = "col-md-4";
+
+		var div = document.createElement("DIV");
+		div.className = "checkbox";
+
+		var label = document.createElement("LABEL");
+
+		var input = document.createElement("INPUT");
+		input.type = "checkbox";
+		input.id = title + "_checkbox";
+		input.title = title;
+
+		label.appendChild(input);
+		label.innerHTML += title;
+
+		div.appendChild(label);
+
+		innerContainer.appendChild(div);
+
+		container.appendChild(innerContainer);
 	}
 	// ^ Change listener content ^
 
@@ -750,7 +820,7 @@ var quoteCreator = new function()
 		debugTool.print("Adding click listeners", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
 		document.getElementById("includeRow").onclick = function(e) {addToQuote();};
 		document.getElementById("cancelQuote").onclick = function(e) {cancelCreatingQuote();};
-		document.getElementById("acceptQuote").onclick = function(e) {createQuoteAndAddToView()};
+		create_quote_button.onclick = function(e) {createQuoteAndAddToView()};
 	}
 
 	function setupDropDownValues()
@@ -792,6 +862,8 @@ var quoteCreator = new function()
 	{
 		if(validateInputs())
 		{
+			showCreateQuoteButton();
+
 			var quoteData = parseInputDataIntoJSONQuote();
 
 			// Save this quoteData to the main quote
@@ -1095,6 +1167,11 @@ var quoteCreator = new function()
 		debugTool.print(quote, FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
 
 		reloadLandEntryTable();	
+
+		if(quote.quoteLandEntries.length <= 0)
+		{
+			hideCreateQuoteButton();
+		}
 	}
 	// ^ Delete button functionality ^
 
