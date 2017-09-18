@@ -437,11 +437,13 @@ var quoteCreator = new function()
 		setInputAreaValue("");
 		setInputYieldValue("");
 		setInputPriceValue("");
+
+		allValuesEntered = false;
 	}
 
 	function clearInputsForNextEntry()
 	{
-		setInputLandNumberValue("");
+		//setInputLandNumberValue("");
 		setInputCultivarValue("");
 		setInputAreaValue("");
 
@@ -454,6 +456,8 @@ var quoteCreator = new function()
 		{
 			setInputPriceValue("");
 		}
+
+		allValuesEntered = false;
 	}
 
 	function resetLandEntryTable()
@@ -534,7 +538,7 @@ var quoteCreator = new function()
 		dropdown_product.onchange = function(){loadProductSpecificCrops(dropdown_product.value)};
 		dropdown_crop.onchange = function(){loadCoverage();};
 		dropdown_option_type.onchange = function(){loadCoverage();};
-		dropdown_coverage.onchange = function(){alert("weee"); loadDamageTypesForSpecificTarrifOptionId(dropdown_coverage.value);};
+		dropdown_coverage.onchange = function(){loadDamageTypesForSpecificTarrifOptionId(dropdown_coverage.value);};
 	}
 
 	function toggleFarmInputVisibility(state)
@@ -884,6 +888,8 @@ var quoteCreator = new function()
 		debugTool.print("checking validity", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
 		
 		// More validation of other fields can be done here
+		debugTool.print("All inputs values present: " + getAllInputValuesEnteredState(), FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
+		debugTool.print("All select values present: " + getAllSelectValuesSelectedState(), FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
 
 		return getAllInputValuesEnteredState() && getAllSelectValuesSelectedState();
 	}
@@ -1033,7 +1039,7 @@ var quoteCreator = new function()
 
 	function editLandEntry(landEntry)
 	{
-		hideIncludeRowButton();
+		//hideIncludeRowButton();
 		setInputFieldsToExistingQuoteForEditing(landEntry);
 		createTemporaryButtonsForHandelingQuoteEdit(landEntry);
 	}
@@ -1042,6 +1048,9 @@ var quoteCreator = new function()
 	{
 		debugTool.print("Ready inputs for editing", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
 		debugTool.print(landEntry, FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
+
+		setInputBusinessUnitValue(clientInvoker.getCleanBusinessUnit(quoteInvoker.getQuote(landEntry.quoteId).businessUnitId).name);
+		setInputFarmValue(clientInvoker.getFarm(landEntry.farmId).name);
 
 		setInputProductValue(landEntry.produk);
 		setInputCropValue(landEntry.gewas);
@@ -1191,6 +1200,8 @@ var quoteCreator = new function()
 		resetLandEntryTable();
 		// Start right at the beginning
 		setInitialInputVisibility();
+		// Remove temp buttons if they still exist
+		removeTemporaryButtons();
 	}
 
 	function cancelCreatingQuote()
@@ -1276,12 +1287,14 @@ var quoteCreator = new function()
 		// Display all fields
 		showFarm();
 		showFields();
+		showLandNumber();
 		// Disable business unit
 		disableBusinessUnit();
 		// Load land entries into table
 		loadLandEntriesValues(quoteId);
+		
 		// Reload accordion
-		quoteViewer.reloadAccordion();
+		//quoteViewer.reloadAccordion();
 	}
 
 	function loadLandEntriesValues(quoteId)
@@ -1290,11 +1303,12 @@ var quoteCreator = new function()
 		resetQuoteObject();
 		// Load values into quote object
 		saveToMainQuoteObject(getQuote(quoteId));
-		// Make sure the table is reloaded - references main quote object
+		// Make sure the table is reloaded - references main quote object -- // Load land entries into table
 		reloadLandEntryTable();
 		// Make sure no residual values are left - perhaps from incomplete opperation
 		clearAllInputValues();
-		// Load land entries into table
+		// Make create quote button available
+		showCreateQuoteButton();
 	}
 
 	function getQuote(quoteId)
@@ -1302,6 +1316,8 @@ var quoteCreator = new function()
 		debugger;
 		//var quoteData = quoteInvoker.getDetailsOfQuote(quoteId)
 		var quoteData = quoteInvoker.getQuote(quoteId)
+		var businessUnit = clientInvoker.getCleanBusinessUnit(quoteData.businessUnitId);
+
 
 		// TODO: load addition values like names for option type etc etc
 
