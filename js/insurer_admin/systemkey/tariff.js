@@ -195,12 +195,13 @@ function saveTariff() {
 		'cropId':cropId,
 		'districtId':districtId,
 		'coverage':coverage,
-		'tariffOptionDamageTypes':tariffOptionDamageTypeArray
 	}
 
 	console.log(tariffOptionObject);
+	console.log(tariffOptionDamageTypeArray);
 
 	if(validateValues(coverage,tariffOptionDamageTypeArray)) {
+		insurerInvoker.createTariffOption(tariffOptionObject,tariffOptionDamageTypeArray);
 		displaySuccessNotification();
 		resetModal();
 	} else {
@@ -220,17 +221,17 @@ function resetModal() {
 }
 
 function displayFailureNotification(message) {
-	alert(message);
+	$.notify(
+	  message,
+	  { position:"top center",className: "error"},
+	);
 }
 function displaySuccessNotification() {
-	/*$.notify({
-		// options
-		message: 'Hello World' 
-	},{
-		// settings
-		type: 'success'
-	});*/
-	alert("Tariff Saved");
+	
+	$.notify(
+	  "Tariff Created!",
+	  { position:"top center",className: "success"},
+	);
 }
 
 function validateValues(coveragePercentage,tariffOptionDamageTypesArray) {

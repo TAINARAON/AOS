@@ -870,7 +870,7 @@ var mockCommunicator = new function()
 
 // POLICY
 	this.policyTable = [
-		/*{
+		{
 			'id':'0',
 			'policyNumber':'00000',
 			'businessUnitId':'0',
@@ -889,7 +889,7 @@ var mockCommunicator = new function()
 			'signedOn':'2017-08-30 19:03:05',
 			'active':'1',
 			'linkedToPolicyId':null,	
-		},*/
+		}
 	];
 	this.createPolicy = function(data) {
 
@@ -1465,4 +1465,16 @@ var mockCommunicator = new function()
 		this.tariffOptionDamageTypeTable[id] = data;
 	}
 
+// INCEPTION DATE
+	this.inceptionDelayTable = [
+		{
+			'id':'0',
+			'delay': 604800000
+		},
+	];
+
+	// 7 days in milliseconds
+	this.getInceptionDelay = function() {
+		return 604800000;
+	}
 };

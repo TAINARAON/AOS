@@ -24,6 +24,37 @@ var insurerInvoker = new function() {
     	return cleanInsurer;
     }
 
+    this.createTariffOption = function(tariffOption,tariffOptionDamageTypes) {
+
+        var inceptionDelay = mockCommunicator.getInceptionDelay();
+        var coverageStartDateTime = util.addTimeToDateTime(util.getCurrentDateTime(),inceptionDelay,'milliseconds');
+        tariffOption['coverageStart'] = coverageStartDateTime;
+
+        var coverageEndDateTime = util.addTimeToDateTime(coverageStartDateTime,52,'weeks');
+        tariffOption['coverageEnd'] = coverageEndDateTime;
+
+        var newTariffId = mockCommunicator.createTariffOption(tariffOption);
+
+        if(newTariffId != null) {
+
+            for ( var i = 0; i < tariffOptionDamageTypes.length; i++ ) {
+
+                var tariffOptionDamageType = tariffOptionDamageTypes[i];
+                tariffOptionDamageType['tariffOptionId'] = newTariffId;
+
+                var newTariffOptionDamageTypeId = mockCommunicator.createTariffOptionDamageType(tariffOptionDamageType);
+                
+                if(newTariffOptionDamageTypeId == null) {
+                    alert('ERROR. Need to revert whole tariff creation.');
+                }   
+            } 
+        } else {
+            alert('error. Tariff could not be saved.');
+        }
+
+        return newTariffId;
+    }
+
     this.getInsurersWithDetails = function() {
 
     	var insurers = mockCommunicator.getInsurers();
@@ -69,6 +100,9 @@ var insurerInvoker = new function() {
     }
     this.getProducts = function() {
         return mockCommunicator.getProducts();
+    }
+    this.getInceptionDelayInSeconds = function() {
+        return mockCommunicator.getInceptionDelayInSeconds();
     }
     
 }
