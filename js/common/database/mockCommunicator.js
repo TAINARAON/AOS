@@ -1150,6 +1150,9 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+	this.getPriceUoms = function() {
+		return this.priceUomTable;
+	}
 	this.deletePriceUom = function(id) {
 		for(var i=0;i<this.priceUomTable.length;i++) {
 			if(this.priceUomTable[i].id==id) {
@@ -1166,11 +1169,11 @@ var mockCommunicator = new function()
 	this.areaUomTable = [
 		{
 			'id':'0',
-			'name':'R/Ton',
+			'name':'Hectare',
 		},
 		{
 			'id':'1',
-			'name':'R/Unit',
+			'name':'Tree',
 		},
 	];
 	this.createAreaUom = function(data) {
@@ -1186,6 +1189,9 @@ var mockCommunicator = new function()
 				return this.areaUomTable[i];
 			}
 		}
+	}
+	this.getAreaUoms = function() {
+		return this.areaUomTable;
 	}
 	this.deleteAreaUom = function(id) {
 		for(var i=0;i<this.areaUomTable.length;i++) {
@@ -1212,28 +1218,31 @@ var mockCommunicator = new function()
 			'active':'1'
 		},
 	];
-	this.createAreaUom = function(data) {
+	this.createDistrict = function(data) {
 
 		data.id = this.districtTable.length;
 		this.districtTable.push(data);
 
 		return data.id;
 	}
-	this.getAreaUom = function(id) {
+	this.getDistrict = function(id) {
 		for(var i=0;i<this.districtTable.length;i++) {
 			if(this.districtTable[i].id==id) {
 				return this.districtTable[i];
 			}
 		}
 	}
-	this.deleteAreaUom = function(id) {
+	this.getDistricts = function() {
+		return this.districtTable;
+	}
+	this.deleteDistrict = function(id) {
 		for(var i=0;i<this.districtTable.length;i++) {
 			if(this.districtTable[i].id==id) {
 				this.districtTable.splice(i,1);
 			}
 		}
 	}
-	this.updateAreaUom = function(id, data) {
+	this.updateDistrict = function(id, data) {
 		data.id = id;
 		this.districtTable[id] = data;
 	}
@@ -1351,6 +1360,22 @@ var mockCommunicator = new function()
 			'id':'1',
 			'name':'Flood',
 		},
+		{
+			'id':'2',
+			'name':'Dew',
+		},
+		{
+			'id':'3',
+			'name':'Bugs',
+		},
+		{
+			'id':'4',
+			'name':'Godzilla',
+		},
+		{
+			'id':'5',
+			'name':'Your mom',
+		},
 	];
 	this.createDamageType = function(data) {
 
@@ -1365,6 +1390,9 @@ var mockCommunicator = new function()
 				return this.damageTypeTable[i];
 			}
 		}
+	}
+	this.getPerils = function() {
+		return this.damageTypeTable;
 	}
 	this.deleteDamageType = function(id) {
 		for(var i=0;i<this.damageTypeTable.length;i++) {

@@ -13,7 +13,7 @@ var pageLoader = function()
 		},
 		{
 			"role":"brokerAdmin",
-			"cssFiles":[],
+			"cssFiles":[],			//"css/insurer_admin/systemkey.css"
 			"jsFiles":["js/broker_admin/nav.js"],
 			"htmlFiles":{
 				"navbar":"html/common/nav.html",
@@ -46,7 +46,17 @@ var pageLoader = function()
 				"navbar":"html/common/nav.html",
 				"landing_page":"html/common/login.html"
 			}
+		},
+		{
+			"role":"test",
+			"cssFiles":["css/common/login.css"],
+			"jsFiles":["js/common/login.js"],
+			"htmlFiles":{
+				"navbar":"html/common/nav.html",
+				"landing_page":"html/insurer_admin/systemkeys.html"
+			}
 		}
+		
 	];
 
 	var navigationBackStack = [];

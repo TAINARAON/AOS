@@ -1,25 +1,296 @@
-<!--<div class="col-md-1">
-	<div class="row">
-		<div class="col-md-2">
-			<div id="systemkeys_index_button_crops" class="row btn btn-default">Crops</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-2">
-			<div id="systemkeys_index_button_districts" class="row btn btn-default">Districts</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-2">
-			<div id="systemkeys_index_button_tariffs" class="row btn btn-default">Tariffs</div>
-		</div>
-	</div>
-</div>-->
 
-<div class="vertical-menu">
-  <a href="#" class="active">Home</a>
-  <a href="#">Link 1</a>
-  <a href="#">Link 2</a>
-  <a href="#">Link 3</a>
-  <a href="#">Link 4</a>
+<link rel="stylesheet" type="text/css" href="css/insurer_admin/systemkey.css" />
+
+<div class="navbar navbar-inverse navbar-fixed-left">
+  <ul class="nav navbar-nav">
+    <li><a id="systemkey_menu_item_crops">Crops</a></li>
+	<li><a id="systemkey_menu_item_price_uoms">Price Measurement Units</a></li>
+	<li><a id="systemkey_menu_item_area_uoms">Area Measurement Units</a></li>
+	<li><a id="systemkey_menu_item_districts">Districts</a></li>
+	<li><a id="systemkey_menu_item_tariffs">Tariffs</a></li>
+	<li><a id="systemkey_menu_item_perils">Perils</a></li>
+	<li><a id="systemkey_menu_item_tax">Tax</a></li>
+	<li><a id="systemkey_menu_item_inception_date">Inception Date</a></li>
+  </ul>
 </div>
+<div class="container">
+ <div id="systemkeys_content_div">
+   <h2>Left side Navigation bar (Fixed)</h2>
+   
+   <p>Left side Navigation</p>
+ </div>
+</div>
+
+<!-- Crop Modal -->
+<div id="crop_modal_container">
+	<div id="cropModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Create Crop</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	          <div class="col-md-6">
+	            <h6 class="text-left">Product</h6>
+	            <select id="systemkey_crop_product_dropdown" class="form-control">
+	              <option disabled selected value></option>
+	            </select>
+	          </div>
+		      <div class="col-md-12">
+		        <h6 class="text-left">Name</h6>
+		        <input id="systemkey_crop_name_input" class="form-control">
+		      </div>
+	          <div class="col-md-6">
+	            <h6 class="text-left">Price Unit of Measure</h6>
+	            <select id="systemkey_crop_price_uom_dropdown" class="form-control">
+	              <option disabled selected value></option>
+	            </select>
+	          </div>
+	          <div class="col-md-6">
+	            <h6 class="text-left">Area Unit of Measure</h6>
+	            <select id="systemkey_crop_area_uom_dropdown" class="form-control">
+	              <option disabled selected value></option>
+	            </select>
+	          </div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <div id="systemkey_crop_save_button" class="btn btn-success" data-dismiss="modal">Save</div>
+	        <button id="systemkey_crop_cancel_button" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+<!-- Price UOM Modal -->
+<div id="price_uom_modal_container">
+	<div id="priceUomModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Create Price Measurement Unit</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	          <div class="col-md-12">
+	            <h6 class="text-left">Name</h6>
+	            <input id="systemkey_price_uom_name" class="form-control">
+	          </div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <div id="systemkey_price_uom_save_button" class="btn btn-success" data-dismiss="modal">Save</div>
+	        <button id="systemkey_price_uom_cancel_button" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+<!-- Area UOM Modal -->
+<div id="area_uom_modal_container">
+	<div id="areaUomModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Create Area Measurement Unit</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	          <div class="col-md-12">
+	            <h6 class="text-left">Name</h6>
+	            <input id="edit_broker_name_input" class="form-control">
+	          </div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <div id="systemkey_area_uom_save_button" class="btn btn-success" data-dismiss="modal">Save</div>
+	        <button id="systemkey_area_uom_cancel_button" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+<!-- District Modal -->
+<div id="district_modal_container">
+	<div id="districtModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Create District</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	          <div class="col-md-12">
+	            <h6 class="text-left">Name</h6>
+	            <input id="systemkey_district_name_input" class="form-control">
+	          </div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <div id="systemkey_district_save_button" class="btn btn-success" data-dismiss="modal">Save</div>
+	        <button id="systemkey_district_cancel_button" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+<!-- Tariff Modal -->
+<div id="tariff_modal_container">
+	<div id="tariffModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Create Tariff</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	          <div class="col-md-4">
+	            <h6 class="text-left">Option Type</h6>
+	            <select id="systemkey_tariff_option_type_dropdown" class="form-control">
+	              <option disabled selected value></option>
+	            </select>
+	          </div>
+	          <div class="col-md-4">
+	            <h6 class="text-left">Products</h6>
+	            <select id="systemkey_tariff_product_dropdown" class="form-control">
+	              <option disabled selected value></option>
+	            </select>
+	          </div>
+	          <div hidden id="systemkey_tariff_crop_dropdown_container" class="col-md-4">
+	            <h6 class="text-left">Crop</h6>
+	            <select id="systemkey_tariff_crop_dropdown" class="form-control">
+	              <option disabled selected value></option>
+	            </select>
+	          </div>
+	          <div class="col-md-4">
+	            <h6 class="text-left">District</h6>
+	            <select id="systemkey_tariff_district_dropdown" class="form-control">
+	              <option disabled selected value></option>
+	            </select>
+	          </div>
+	        </div>
+	        <div class="row">
+	          <div class="col-md-2">
+	            <h6 class="text-left">Coverage ( % )</h6>
+	            <input id="systemkey_tariff_coverage_input" class="form-control">
+	          </div>
+	          <div class="col-md-10">
+	          	<h6 class="text-left">Perils</h6>
+	          	<div id="systemkey_tariff_peril_container"></div>
+	          </div>
+	        </div>
+	        <br>
+	        <div class="row">
+		        <div hidden id="peril_tariff_entries_main_container">
+		          <h5 class="col-md-3 text-center">Peril</h5><h5 class="col-md-2 text-center">Tariff</h5>
+			      <div id="peril_tariff_entries_container" class="row"></div>
+			      <br>
+			      <h4 class="col-md-3">Total:</h4><div class="col-md-2"><input id="systemkey_tarif_total" disabled class="form-control"></input></div>
+			    </div>
+	      	</div>
+	      <div class="modal-footer">
+	        <div id="systemkey_tariff_save_button" class="btn btn-success">Save</div>
+	        <button id="systemkey_tariff_cancel_button" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+<!-- Peril Modal -->
+<div id="peril_modal_container">
+	<div id="perilModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Edit Broker</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	          <div class="col-md-12">
+	            <h6 class="text-left">Name</h6>
+	            <input id="edit_broker_name_input" class="form-control">
+	          </div>
+	          <div class="col-md-12">
+	            <h6 class="text-left">Surname</h6>
+	            <input id="edit_broker_surname_input" class="form-control">
+	          </div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <div id="edit_broker_save_button" class="btn btn-success" data-dismiss="modal">Save</div>
+	        <button id="edit_broker_cancel_button" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+<!-- Tax Modal -->
+<div id="tax_modal_container">
+	<div id="taxModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Edit Broker</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	          <div class="col-md-12">
+	            <h6 class="text-left">Name</h6>
+	            <input id="edit_broker_name_input" class="form-control">
+	          </div>
+	          <div class="col-md-12">
+	            <h6 class="text-left">Surname</h6>
+	            <input id="edit_broker_surname_input" class="form-control">
+	          </div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <div id="edit_broker_save_button" class="btn btn-success" data-dismiss="modal">Save</div>
+	        <button id="edit_broker_cancel_button" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+<!-- Inception Date Modal -->
+<div id="inception_date_modal_container">
+	<div id="inceptionDateModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Edit Broker</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	          <div class="col-md-12">
+	            <h6 class="text-left">Name</h6>
+	            <input id="edit_broker_name_input" class="form-control">
+	          </div>
+	          <div class="col-md-12">
+	            <h6 class="text-left">Surname</h6>
+	            <input id="edit_broker_surname_input" class="form-control">
+	          </div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <div id="edit_broker_save_button" class="btn btn-success" data-dismiss="modal">Save</div>
+	        <button id="edit_broker_cancel_button" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+
+<script type="text/javascript" src="js/insurer_admin/systemkey/systemkeys.js"></script>
+
+<script type="text/javascript" src="js/insurer_admin/systemkey/crop.js"></script>
+<script type="text/javascript" src="js/insurer_admin/systemkey/tariff.js"></script>
