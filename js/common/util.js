@@ -36,6 +36,7 @@ var util = new function() {
 	}
 
 	this.getCurrentDateTime = function() {
+
 		return new Date().getTime();
 	}
 
@@ -65,5 +66,14 @@ var util = new function() {
 		}
 		
 		return new Date(dateTime).getTime() + amount;
+	}
+
+	// success, error, info, warn
+	this.createNotification = function(message,type='success') {
+
+		$.notify(
+		  message,
+		  { position:"top center",className: type},
+		);
 	}
 }

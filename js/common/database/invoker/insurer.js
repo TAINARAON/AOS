@@ -104,5 +104,118 @@ var insurerInvoker = new function() {
     this.getInceptionDelayInSeconds = function() {
         return mockCommunicator.getInceptionDelayInSeconds();
     }
-    
+    this.createCrop = function(cropObject) {
+        return mockCommunicator.createCrop(cropObject);
+    }
+    this.getCrops = function() {
+        return mockCommunicator.getCrops();
+    }
+    this.getOptionTypes = function() {
+        return mockCommunicator.getOptionTypes();
+    }
+    this.getDistricts = function() {
+        return mockCommunicator.getDistricts();
+    }
+    this.getDetailsOfTariffs = function(tariffs) {
+
+        var detailedTariffs = [];
+
+        for (var i = 0; i < tariffs.length; i++ ) {
+
+            var tariff = tariffs[i];
+
+            var coverage = tariff['coverage'];
+            var coverageStart = tariff['coverageStart'];
+            var coverageEnd = tariff['coverageEnd'];
+            var tariffOptionTypeId = tariff['tariffOptionTypeId'];
+            var cropId = tariff['cropId'];
+            var districtId = tariff['districtId'];
+
+            var optionTypeName = mockCommunicator.getTariffOptionType(tariffOptionTypeId)['name'];
+            var cropName = mockCommunicator.getCrop(cropId)['name'];
+            var districtName = mockCommunicator.getDistrict(districtId)['name'];
+
+            var detailedTariff = {
+                'coverage':coverage,
+                'coverageStart':coverageStart,
+                'coverageEnd':coverageEnd,
+                'tariffOptionTypeName':optionTypeName,
+                'cropName':cropName,
+                'districtName':districtName,
+            };
+
+            detailedTariffs.push(detailedTariff);
+        }   
+
+        return detailedTariffs;
+    }
+
+    this.getDetailsOfCrops = function(crops) {
+
+        var detailedCrops = [];
+
+        for (var i = 0; i < crops.length; i++ ) {
+
+            var productId = crops[i]['productId'];
+            var areaUomId = crops[i]['areaUomId'];
+            var priceUomId = crops[i]['priceUomId'];
+
+            var productName = mockCommunicator.getProduct(productId)['name'];
+            var priceUomName = mockCommunicator.getPriceUom(priceUomId)['name'];
+            var areaUomName = mockCommunicator.getAreaUom(areaUomId)['name'];
+
+            var detailedCrop = {
+                'name':crops[i]['name'],
+                'productName':productName,
+                'priceUomName':priceUomName,
+                'areaUomName':areaUomName
+            };
+
+            detailedCrops.push(detailedCrop);
+        }   
+
+        return detailedCrops;
+    }
+
+    this.getTariffsByCropDistrictOptionType = function(cropId,districtId,tariffOptionTypeId) {
+
+        var validTariffs = [];
+        var tariffs = mockCommunicator.getTariffOptions();
+
+        for ( var i = 0; i < tariffs.length; i++ ) {
+
+            var tariff = tariffs[i];
+            // Filter by CropId
+            if(cropId != 'ALL') {
+
+                // Break out if doesnt pass
+                if(tariff['cropId'] != cropId) {
+                    continue;
+                }
+            }
+
+            // Filter by DistrictId
+            if(districtId != 'ALL') {
+
+                // Break out if doesnt pass
+                if(tariff['districtId'] != districtId) {
+                    continue;
+                }
+            }
+
+            // Filter by OptionTypeId
+            if(tariffOptionTypeId != 'ALL') {
+
+                // Break out if doesnt pass
+                if(tariff['tariffOptionTypeId'] != tariffOptionTypeId) {
+                    continue;
+                }
+            }
+
+            // If it has passed all the filters, add to valid tariff array
+            validTariffs.push(tariff);
+        }
+
+        return validTariffs;
+    }
 }

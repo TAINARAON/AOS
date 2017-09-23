@@ -1086,12 +1086,21 @@ var mockCommunicator = new function()
 			'priceUomId':'0',
 			'areaUomId':'0'
 		},
+		{
+			'id':'2',
+			'name':'Zebra Fruit',
+			'productId':'1',
+			'active':'1',
+			'priceUomId':'1',
+			'areaUomId':'0'
+		},
 	];
 	this.createCrop = function(data) {
 
 		data.id = this.cropTable.length;
 		this.cropTable.push(data);
-
+		console.log('Crops:');
+		console.log(this.cropTable);
 		return data.id;
 	}
 	this.getCrop = function(id) {
@@ -1100,6 +1109,9 @@ var mockCommunicator = new function()
 				return this.cropTable[i];
 			}
 		}
+	}
+	this.getCrops = function() {
+		return this.cropTable;
 	}
 	this.getCropsOfProduct = function(productId) {
 
@@ -1292,8 +1304,8 @@ var mockCommunicator = new function()
 			'cropId':'0',
 			'districtId':'0',
 			'coverage':'5',
-			'coverageStart':'0',
-			'coverageEnd':'0',
+			'coverageStart':'2017-05-01 00:00:00',
+			'coverageEnd':'2018-05-01 00:00:00',
 		},
 		{
 			'id':'1',
@@ -1318,6 +1330,9 @@ var mockCommunicator = new function()
 				return this.tariffOptionTable[i];
 			}
 		}
+	}
+	this.getTariffOptions = function() {
+		return this.tariffOptionTable;
 	}
 	this.getOptionsByDistrictCropType = function(districtId,cropId,typeId) {
 

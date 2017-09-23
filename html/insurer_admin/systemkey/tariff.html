@@ -1,1 +1,48 @@
-<div id="tariff_button" data-toggle="modal" data-target="#tariffModal" class="btn btn-primary pull-right">Create Tariff</div> 
+<div>
+  <div class="row">
+    <h3 class="col-md-offset-3 col-md-4 text-center">Tariffs</h3>
+    <div id="tariff_button" data-toggle="modal" data-target="#tariffModal" class="btn btn-primary pull-right">
+		Create Tariff
+	</div> 
+  </div>
+	<div class="row">
+	  <div class="col-md-3">
+	    <label class="text-left">Option Type</label>
+	    <select id="systemkey_tariff_view_option_type_dropdown" class="form-control">
+	      <option selected value='ALL'>All</option>
+	    </select>
+	  </div>
+	  <div class="col-md-3">
+	    <label class="text-left">District</label>
+	    <select id="systemkey_tariff_view_district_dropdown" class="form-control">
+	      <option selected value='ALL'>All</option>
+	    </select>
+	  </div>
+	  <div class="col-md-3">
+	    <label class="text-left">Crop</label>
+	    <select id="systemkey_tariff_view_crop_dropdown" class="form-control">
+	      <option selected value='ALL'>All</option>
+	    </select>
+	  </div>
+	</div>
+  	<br>
+  	<br>
+  	<div class="row">
+  	  <table class="table table-striped table-bordered table-hover table-condensed">
+    	<thead>
+      	  <tr>
+          	<th>Option Type</th>
+            <th>District</th>
+            <th>Crop</th>
+            <th>Coverage</th>
+            <th>CoverageStart</th>
+            <th>CoverageEnd</th>
+      	  </tr>
+    	</thead>
+      <tbody id="systemkey_tariff_view_tariff_table_body">
+      </tbody>
+  	</table>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/insurer_admin/systemkey/tariff.js"></script>
