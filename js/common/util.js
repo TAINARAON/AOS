@@ -76,4 +76,57 @@ var util = new function() {
 		  { position:"top center",className: type},
 		);
 	}
+
+	this.convertMillisecondsTo = function(amount,unit) {
+
+		var newAmount = 0;
+
+		switch(unit) {
+			case 'seconds':
+				newAmount = amount / 1000;
+				break;
+			case 'minutes':
+				newAmount = amount / 1000 / 60;
+				break;
+			case 'hours':
+				newAmount = amount / 1000 / 60 / 60;
+				break;
+			case 'days':
+				newAmount = amount / 1000 / 60 / 60 / 24; 
+				break;
+			case 'weeks':
+				newAmount = amount / 1000 / 60 / 60 / 24 / 7; 
+				break;
+			default: 
+				alert('invalid unit. Valid units are seconds,minutes,hours,days,weeks');
+		}
+
+		return newAmount;
+	}
+	this.convertToMilliseconds = function(amount,unit) {
+
+		var newAmount = 0;
+
+		switch(unit) {
+			case 'seconds':
+				newAmount = amount * 1000;
+				break;
+			case 'minutes':
+				newAmount = amount * 1000 * 60;
+				break;
+			case 'hours':
+				newAmount = amount * 1000 * 60 * 60;
+				break;
+			case 'days':
+				newAmount = amount * 1000 * 60 * 60 * 24; 
+				break;
+			case 'weeks':
+				newAmount = amount * 1000 * 60 * 60 * 24 * 7; 
+				break;
+			default: 
+				alert('invalid unit. Valid units are seconds,minutes,hours,days,weeks');
+		}
+
+		return newAmount;
+	}
 }

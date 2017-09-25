@@ -1,11 +1,11 @@
-const USERNAME = 0;
-const PASSWORD = 1;
-const PASSWORD2 = 2;
-const EMAIL = 3;
-const ID_NUMBER = 4;
-const CONTACT_NUMBER = 5;
-const NAME = 6;
-const SURNAME = 7;
+var USERNAME = 0;
+var PASSWORD = 1;
+var PASSWORD2 = 2;
+var EMAIL = 3;
+var ID_NUMBER = 4;
+var CONTACT_NUMBER = 5;
+var NAME = 6;
+var SURNAME = 7;
 
 var inputArray = [false,false,false,false,false,false,false,false];
 

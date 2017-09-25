@@ -1,4 +1,4 @@
-const TARGET_CONTAINER = "systemkeys_content_div";
+var TARGET_CONTAINER = "systemkeys_content_div";
 
 $('#systemkey_menu_item_crops').on('click',function() {
 	loader.loadPartOfPage("html/insurer_admin/systemkey/crop.html",TARGET_CONTAINER);

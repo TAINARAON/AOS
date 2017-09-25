@@ -6,7 +6,12 @@ var insurerInvoker = new function() {
     {
         var newUserId = mockCommunicator.createUser(userData);
 		
+        if(newUserId == null) {
+            return null;
+        }
+
 		insurerData.user_id = newUserId;
+
 		return mockCommunicator.createInsurer(insurerData);
     };
 
@@ -71,9 +76,11 @@ var insurerInvoker = new function() {
     this.getInsurerByUserId = function(id) {
         return mockCommunicator.getInsurerByUserId(id);
     }
+
     this.getPriceUoms = function() {
         return mockCommunicator.getPriceUoms();
     }
+
     this.getAreaUoms = function() {
         return mockCommunicator.getAreaUoms();
     }
@@ -106,6 +113,18 @@ var insurerInvoker = new function() {
     }
     this.createCrop = function(cropObject) {
         return mockCommunicator.createCrop(cropObject);
+    }
+    this.createPriceUom = function(priceUomObject) {
+        return mockCommunicator.createPriceUom(priceUomObject);
+    }
+    this.createAreaUom = function(areaUomObject) {
+        return mockCommunicator.createAreaUom(areaUomObject);
+    }
+    this.createPeril = function(perilObject) {
+        return mockCommunicator.createDamageType(perilObject);
+    }
+    this.createDistrict = function(districtObject) {
+        return mockCommunicator.createDistrict(districtObject);
     }
     this.getCrops = function() {
         return mockCommunicator.getCrops();
@@ -218,4 +237,29 @@ var insurerInvoker = new function() {
 
         return validTariffs;
     }
+
+    this.getPriceUoms = function() {
+        return mockCommunicator.getPriceUoms();
+    }
+    this.getAreaUoms = function() {
+        return mockCommunicator.getAreaUoms();
+    }
+    this.getPerils = function() {
+        return mockCommunicator.getPerils();
+    }
+    this.getInceptionDelay = function() {
+        return mockCommunicator.getInceptionDelay();
+    }
+    this.updateInceptionDelay = function(inceptionDelayInMillis) {
+
+        return mockCommunicator.updateInceptionDelay(inceptionDelayInMillis);
+    }
+    this.getTax = function() {
+        return mockCommunicator.getTax();
+    }
+    this.updateTax = function(inceptionDelayInMillis) {
+
+        return mockCommunicator.updateTax(inceptionDelayInMillis);
+    }
+
 }

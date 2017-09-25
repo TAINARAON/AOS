@@ -2,23 +2,23 @@
 
 	var leftButtons = 
  	[
+ 		
  		/*{
- 			'text':'Damage Report',
- 			'pageUrl':'html/broker/damage_report.html'
- 		},
- 		{
  			'text':'Policy',
  			'pageUrl':'html/broker/policy.html'
  		},
  		{
  			'text':'Quote',
  			'pageUrl':'html/broker/quote/quote.html'
- 		},*/
+ 		}*/
  	];
 
  	var rightButtons = 
  	[
  		{
+ 			'text':'Create Insurer',
+ 			'pageUrl':'html/insurer_admin/create_insurer.html'
+ 		},{
  			'text':'System Keys',
  			'pageUrl':'html/insurer_admin/systemkeys.html'
  		},

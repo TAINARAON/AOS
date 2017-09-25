@@ -1488,8 +1488,30 @@ var mockCommunicator = new function()
 		},
 	];
 
-	// 7 days in milliseconds
 	this.getInceptionDelay = function() {
-		return 604800000;
+		return this.inceptionDelayTable[0]['delay'];
+	}
+	this.updateInceptionDelay = function(delay) {
+		this.inceptionDelayTable[0]['delay'] = delay;
+
+		return 1;
+	}
+
+// TAX
+	this.taxTable = [
+		{
+			'id':'0',
+			'percentage': 0.14
+		},
+	];
+
+	// 7 days in milliseconds
+	this.getTax = function() {
+		return this.taxTable[0]['percentage'];
+	}
+	this.updateTax = function(percentage) {
+		this.taxTable[0]['percentage'] = percentage;
+
+		return 1;
 	}
 };
