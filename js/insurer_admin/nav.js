@@ -3,13 +3,16 @@
 	var leftButtons = 
  	[
  		
+ 		{
+ 			'text':"",
+ 			'pageUrl':'html/insurer_admin/insurance_agency.html'
+ 		},
  		/*{
- 			'text':'Policy',
- 			'pageUrl':'html/broker/policy.html'
+ 			'text':'Quote',
+ 			'pageUrl':'html/insurer_admin/quote/quote.html'
  		},
  		{
- 			'text':'Quote',
- 			'pageUrl':'html/broker/quote/quote.html'
+ 			'pageUrl':'html/insurer_admin/quote/quote.html'
  		}*/
  	];
 
@@ -18,7 +21,8 @@
  		{
  			'text':'Create Insurer',
  			'pageUrl':'html/insurer_admin/create_insurer.html'
- 		},{
+ 		},
+ 		{
  			'text':'System Keys',
  			'pageUrl':'html/insurer_admin/systemkeys.html'
  		},
@@ -30,11 +34,15 @@
 
  	(function init(){
  		setupNavStructure();
+
  	})();
 
  	
  	function setupNavStructure() {
  		var navbarButtonContainer = $('#navbar_button_container');
+
+ 		var insuranceAgencyName = insurerInvoker.getInsuranceAgency()['name'];
+ 		leftButtons[0]['text'] = insuranceAgencyName;
 
  		createLeftsideNav(navbarButtonContainer);
  		createRightsideNav(navbarButtonContainer);

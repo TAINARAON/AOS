@@ -643,6 +643,17 @@ var mockCommunicator = new function()
 		this.brokerageTable[id] = data;
 	}
 
+// INSURANCE AGENCY
+	this.insuranceAgency = 
+	[
+		{
+			'name':'Versekerings Ltd.',
+		}
+	];
+		
+	this.getInsuranceAgency = function(id=0) {
+		return this.insuranceAgency[id];
+	}
 // ############################# QUOTES ################################
 // QUOTE
 	this.quoteTable = [

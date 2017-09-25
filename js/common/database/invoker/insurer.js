@@ -261,5 +261,8 @@ var insurerInvoker = new function() {
 
         return mockCommunicator.updateTax(inceptionDelayInMillis);
     }
+    this.getInsuranceAgency = function(id) {
+        return mockCommunicator.getInsuranceAgency(id);
+    }
 
 }
