@@ -106,15 +106,13 @@ function onBrokerLogin(userId) {
 	if(broker['isAdmin'] == true) {
 
 		sessionStorage.setItem(ROLE_NAME, BROKER_ADMIN_NAME);
-		alert('Logged in as Broker Admin');
+		util.createNotification('Logged in as Broker Admin');
 		loader.loadRole('brokerAdmin');
-
 
 	} else {
 
-		alert('Logged in as Broker');
+		util.createNotification('Logged in as Broker');
 		loader.loadRole('broker');
-
 	}
 }
 	
@@ -125,6 +123,7 @@ function onClientLogin(userId) {
 	sessionStorage.setItem(CLIENT_ID_NUMBER, client['idNumber']);
 	sessionStorage.setItem(CLIENT_CONTACT_NUMBER, client['contactNumber']);
 
+	util.createNotification('Logged in as Client');
 	loader.loadRole('client');
 }
 
@@ -134,12 +133,12 @@ function onInsurerLogin(userId) {
 
 	if(insurer['isAdmin'] == true) {
 
-		alert('Logged in as Insurer Admin');
+		util.createNotification('Logged in as Insurer Admin');
 		loader.loadRole('insurerAdmin');
 		
 	} else {
 
-		alert('Logged in as Insurer');
+		util.createNotification('Logged in as Insurer');
 	}
 }
 

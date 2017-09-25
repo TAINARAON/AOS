@@ -648,6 +648,8 @@ var mockCommunicator = new function()
 	[
 		{
 			'name':'Versekerings Ltd.',
+			'email':'versekerings.ltd@gmail.com',
+			'contactNumber':'062 352 1341',
 		}
 	];
 		
@@ -1397,10 +1399,6 @@ var mockCommunicator = new function()
 		{
 			'id':'4',
 			'name':'Godzilla',
-		},
-		{
-			'id':'5',
-			'name':'Your mom',
 		},
 	];
 	this.createDamageType = function(data) {

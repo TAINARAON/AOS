@@ -121,12 +121,14 @@ function saveInsurer() {
 	if(newInsurerId != null) {
 
 		util.createNotification("Insurer created");
+			// TODO
+		loader.loadPage('html/insurer_admin/insurance_agency.html');
+		// Redirect to some other page. 
 
 	} else {
 
 		util.createNotification('Failed to create Insurer.','error');
 	}
 
-	// TODO
-	// Redirect to some other page. 
+
 }

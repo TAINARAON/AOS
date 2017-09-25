@@ -6,10 +6,10 @@ const INSURER_ADMIN = "insurerAdmin";
 const TEST = "test";
 
 (function(){        
-    console.log("Main linked");
+
     loader = pageLoader();
 
-    loader.load(INSURER_ADMIN);
+    loader.load();
 
     // REAL DATABASE
     //var myCom = httpCommunicator();

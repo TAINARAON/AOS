@@ -1,43 +1,42 @@
-(function(){
- 	console.log("Login Linked");
+$().ready(function(){
 
+	setDefaultOnEnterButton();
 
- 	// set enter as default for login button
-	$(document).ready(function(){
-	    $('#login_container').keypress(function(e){
-	      if(e.keyCode==13)
-	      	attemptLogin();
-	    });
-	});
+ 	$('#login_button').on('click',function(){
+ 		attemptLogin();
+ 	});
 
- 	// Login button
- 	document.getElementById("login_button").onclick = function() {attemptLogin()};
+ 	$('#register_button').on('click',function(){
+ 		loadRegisterPage();
+ 	});
 
- 	// Register button
- 	document.getElementById("register_button").onclick = function() {loadRegisterPage()};
+ 	$('#retrieve_lost_credentials_button').on('click',function(){
+ 		initiateCredentialRetrieval()
+ 	});
+});
 
- 	// Retrieve Lost Credentials button
- 	document.getElementById("retrieve_lost_credentials_button").onclick = function() {initiateCredentialRetrieval()};
+function loadRegisterPage() {
 
-	function loadRegisterPage() {
+	loader.loadPage("html/common/register.html");
+}
 
-		loader.loadPage("html/common/register.html");
-	}
+function attemptLogin() {
 
-	function attemptLogin() {
+	var username = document.getElementById("username").value;
+	var password = document.getElementById("password").value;
 
-		var username = document.getElementById("username").value;
-		var password = document.getElementById("password").value;
+	session.login(username,password);
+}
 
-		session.login(username,password);
-	}
+function initiateCredentialRetrieval() {
+	alert("Herstel wagwoord");
 
- 	function initiateCredentialRetrieval() {
- 		alert("Herstel wagwoord");
+	// Redirect to new page here
+}
 
- 		// Redirect to new page here
- 	}
-
-
-
-})();
+function setDefaultOnEnterButton() {
+	$('#login_container').keypress(function(e){
+	    if(e.keyCode==13)
+	      attemptLogin();
+		});
+}
