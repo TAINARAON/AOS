@@ -11,6 +11,11 @@ var quoteInvoker = new function() {
         return mockCommunicator.getCropsOfProduct(productId);
     }
 
+    this.getProductOfCrop(cropId) {
+
+        return mockCommunicator.getProduct(mockCommunicator.getCrop(cropId)['productId']);
+    }
+
     this.getOptionTypes = function() {
         
         return mockCommunicator.getOptionTypes();
