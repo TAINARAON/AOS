@@ -1052,12 +1052,17 @@ var quoteCreator = new function()
 		setInputBusinessUnitValue(clientInvoker.getCleanBusinessUnit(quoteInvoker.getQuote(landEntry.quoteId).businessUnitId).name);
 		setInputFarmValue(clientInvoker.getFarm(landEntry.farmId).name);
 
+		// Testing
+
 		//setInputProductValue(landEntry.produk);
 		console.log("asdasdasdasdasd" + landEntry.produk);
 		$(dropdown_product).val(landEntry.produk).change();
-		setInputCropValue(landEntry.gewas);
-		setInputOptionTypeValue(landEntry.opsie_tiepe);
-		setInputPersentageValue(landEntry.persentasie);
+		//setInputCropValue(landEntry.gewas);
+		$(dropdown_crop).val(landEntry.gewas).change();
+		//setInputOptionTypeValue(landEntry.opsie_tiepe);
+		$(dropdown_option_type).val(landEntry.opsie_tiepe).change();
+		//setInputPersentageValue(landEntry.persentasie);
+		$(dropdown_coverage).val(landEntry.persentasie).change();
 		setInputLandNumberValue(landEntry.landNumber);
 		setInputCultivarValue(landEntry.cultivar);
 		setInputAreaValue(landEntry.area);
@@ -1108,16 +1113,23 @@ var quoteCreator = new function()
 
 	function save(landEntry)
 	{
-		var editedQuote = parseInputDataIntoJSONQuote();
+		if(validateInputs())
+		{
+			var editedQuote = parseInputDataIntoJSONQuote();
 
-		updateQuoteLandEntry(editedQuote.quoteLandEntries[0], landEntry);
-			
-		removeTemporaryButtons();
-		showIncludeRowButton();
+			updateQuoteLandEntry(editedQuote.quoteLandEntries[0], landEntry);
+				
+			removeTemporaryButtons();
+			showIncludeRowButton();
 
-		reloadLandEntryTable();
+			reloadLandEntryTable();
 
-		clearInputsForNextEntry();
+			clearInputsForNextEntry();
+		}
+		else
+		{
+			alert("Could not update record, please supply all values");
+		}
 	}
 
 	function updateQuoteLandEntry(editedLandEntry, originalLandEntry)
@@ -1315,11 +1327,9 @@ var quoteCreator = new function()
 
 	function getQuote(quoteId)
 	{
-		debugger;
-		//var quoteData = quoteInvoker.getDetailsOfQuote(quoteId)
 		var quoteData = quoteInvoker.getQuote(quoteId)
 		console.log(quoteData);
-		//var businessUnit = clientInvoker.getCleanBusinessUnit(quoteData.businessUnitId);
+		
 		for(var i = 0; i < quoteData.quoteLandEntries.length; i++)
 		{
 			var landEntry = quoteData.quoteLandEntries[i];
@@ -1330,28 +1340,18 @@ var quoteCreator = new function()
 			var crop = clientInvoker.getCrop(landEntry.cropId);
 			quoteData.quoteLandEntries[i]["gewas"] = crop.name;
 
-			
+			var product = quoteInvoker.getProductOfCrop(landEntry.cropId);
+			quoteData.quoteLandEntries[i]["produk"] = product.name;
 
-			var tariffOptionDamageTypesSelectedOfLandEntry = quoteInvoker.getTariffOptionDamageTypesSelectedOfLandEntry(landEntry.tariffOptionId);
-			console.log(tariffOptionDamageTypesSelectedOfLandEntry);
-			
-			// TODO: fix
-			for(var j = 0; j < tariffOptionDamageTypesSelectedOfLandEntry.length; j++)
-			{
-				var tarrifOptionDamageTypes = quoteInvoker.getTariffOptionDamageType(tariffOptionDamageTypesSelectedOfLandEntry[i].tariffOptionDamageTypeId);
-				console.log(tarrifOptionDamageTypes);
-				quoteData.quoteLandEntries[i]["persentasie"] += tarrifOptionDamageTypes.tariff + " ";
+			var tariffOption = quoteInvoker.getTariffOption(landEntry.tariffOptionId);
+			quoteData.quoteLandEntries[i]["persentasie"] = tariffOption.coverage;
 
-				var tarrifOption = quoteInvoker.getTariffOptionType(tarrifOptionDamageTypes.tariffOptionId);
-				console.log(tarrifOption);
-				quoteData.quoteLandEntries[i]["opsie_tiepe"] += tarrifOption.name = " ";
-			}
+			var tariffOptionType = quoteInvoker.getTariffOptionType(landEntry.tariffOptionId);
+			quoteData.quoteLandEntries[i]["opsie_tiepe"] = tariffOptionType.name;
 
 			var versekerings_waarde = quoteInvoker.getTotalTariffOfQuoteLandEntry(landEntry.id);
 			quoteData.quoteLandEntries[i]["versekerings_waarde"] = versekerings_waarde;		
 		}
-
-		// TODO: load addition values like names for option type etc etc
 
 		return quoteData;
 	}

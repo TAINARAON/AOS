@@ -294,6 +294,11 @@ var quoteInvoker = new function() {
         return mockCommunicator.getTariffOptionType(typeId);
     }
 
+    this.getTariffOption = function(id)
+    {
+        return mockCommunicator.getTariffOption(id);
+    }
+
     this.getTariffOptionDamageType = function(id)
     {
         return mockCommunicator.getTariffOptionDamageType(id);
