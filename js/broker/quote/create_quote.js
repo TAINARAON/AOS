@@ -410,6 +410,7 @@ var quoteCreator = new function()
 		row2.style.display = "none";
 		row3.style.display = "none";
 		row4.style.display = "none";
+		damageTypeRowContainer.style.display = "none";
 	}
 
 	function showCreateQuoteButton()
@@ -752,6 +753,8 @@ var quoteCreator = new function()
 				}
 			}
 		}
+
+		damageTypeRowContainer.style.display = "block";
 	}
 
 	function createDamageTypeCheckbox(title, container)
@@ -1049,9 +1052,17 @@ var quoteCreator = new function()
 		debugTool.print("Ready inputs for editing", FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
 		debugTool.print(landEntry, FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
 
+		input_business_unit.focus();
 		setInputBusinessUnitValue(clientInvoker.getCleanBusinessUnit(quoteInvoker.getQuote(landEntry.quoteId).businessUnitId).name);
-		setInputFarmValue(clientInvoker.getFarm(landEntry.farmId).name);
+		input_business_unit.blur();
 
+		input_farm.focus();
+		setInputFarmValue(clientInvoker.getFarm(landEntry.farmId).name);
+		input_farm.blur();
+
+		input_land_number.focus();
+		setInputLandNumberValue(landEntry.landNumber);
+		input_land_number.blur();
 		// Testing
 
 		//setInputProductValue(landEntry.produk);
@@ -1063,7 +1074,7 @@ var quoteCreator = new function()
 		$(dropdown_option_type).val(landEntry.opsie_tiepe).change();
 		//setInputPersentageValue(landEntry.persentasie);
 		$(dropdown_coverage).val(landEntry.persentasie).change();
-		setInputLandNumberValue(landEntry.landNumber);
+		
 		setInputCultivarValue(landEntry.cultivar);
 		setInputAreaValue(landEntry.area);
 		setInputYieldValue(landEntry.yield);
@@ -1299,11 +1310,13 @@ var quoteCreator = new function()
 		// Open modal 
 		openModal();
 		// Display all fields
-		showFarm();
-		showFields();
-		showLandNumber();
+		//showFarm();
+		//showFields();
+		//showLandNumber();
+		
 		// Disable business unit
-		disableBusinessUnit();
+		//disableBusinessUnit();
+		
 		// Load land entries into table
 		loadLandEntriesValues(quoteId);
 		
