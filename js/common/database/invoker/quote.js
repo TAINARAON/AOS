@@ -11,7 +11,7 @@ var quoteInvoker = new function() {
         return mockCommunicator.getCropsOfProduct(productId);
     }
 
-    this.getProductOfCrop(cropId) {
+    this.getProductOfCrop = function(cropId) {
 
         return mockCommunicator.getProduct(mockCommunicator.getCrop(cropId)['productId']);
     }
