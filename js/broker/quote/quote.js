@@ -53,6 +53,7 @@ var quoteViewer = new function()
 
 		var input = document.createElement("INPUT");
 		input.className = "form-control";
+		addOnEnterKeyPressedListenerForSearchInput(input);
 
 		innerContainer.appendChild(label);
 		innerContainer.appendChild(input);
@@ -60,6 +61,14 @@ var quoteViewer = new function()
 		container.appendChild(innerContainer);
 
 		return input;
+	}
+
+	function addOnEnterKeyPressedListenerForSearchInput(searchInput)
+	{
+		$(searchInput).keypress(function(e){
+	    if(e.keyCode==13)
+	      search();
+		});
 	}
 
 	function createSearchButton(container)

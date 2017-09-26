@@ -1052,7 +1052,9 @@ var quoteCreator = new function()
 		setInputBusinessUnitValue(clientInvoker.getCleanBusinessUnit(quoteInvoker.getQuote(landEntry.quoteId).businessUnitId).name);
 		setInputFarmValue(clientInvoker.getFarm(landEntry.farmId).name);
 
-		setInputProductValue(landEntry.produk);
+		//setInputProductValue(landEntry.produk);
+		console.log("asdasdasdasdasd" + landEntry.produk);
+		$(dropdown_product).val(landEntry.produk).change();
 		setInputCropValue(landEntry.gewas);
 		setInputOptionTypeValue(landEntry.opsie_tiepe);
 		setInputPersentageValue(landEntry.persentasie);
@@ -1316,8 +1318,38 @@ var quoteCreator = new function()
 		debugger;
 		//var quoteData = quoteInvoker.getDetailsOfQuote(quoteId)
 		var quoteData = quoteInvoker.getQuote(quoteId)
-		var businessUnit = clientInvoker.getCleanBusinessUnit(quoteData.businessUnitId);
+		console.log(quoteData);
+		//var businessUnit = clientInvoker.getCleanBusinessUnit(quoteData.businessUnitId);
+		for(var i = 0; i < quoteData.quoteLandEntries.length; i++)
+		{
+			var landEntry = quoteData.quoteLandEntries[i];
 
+			var farm = clientInvoker.getFarm(landEntry.farmId);
+			quoteData.quoteLandEntries[i]["plaas"] = farm.name;
+
+			var crop = clientInvoker.getCrop(landEntry.cropId);
+			quoteData.quoteLandEntries[i]["gewas"] = crop.name;
+
+			
+
+			var tariffOptionDamageTypesSelectedOfLandEntry = quoteInvoker.getTariffOptionDamageTypesSelectedOfLandEntry(landEntry.tariffOptionId);
+			console.log(tariffOptionDamageTypesSelectedOfLandEntry);
+			
+			// TODO: fix
+			for(var j = 0; j < tariffOptionDamageTypesSelectedOfLandEntry.length; j++)
+			{
+				var tarrifOptionDamageTypes = quoteInvoker.getTariffOptionDamageType(tariffOptionDamageTypesSelectedOfLandEntry[i].tariffOptionDamageTypeId);
+				console.log(tarrifOptionDamageTypes);
+				quoteData.quoteLandEntries[i]["persentasie"] += tarrifOptionDamageTypes.tariff + " ";
+
+				var tarrifOption = quoteInvoker.getTariffOptionType(tarrifOptionDamageTypes.tariffOptionId);
+				console.log(tarrifOption);
+				quoteData.quoteLandEntries[i]["opsie_tiepe"] += tarrifOption.name = " ";
+			}
+
+			var versekerings_waarde = quoteInvoker.getTotalTariffOfQuoteLandEntry(landEntry.id);
+			quoteData.quoteLandEntries[i]["versekerings_waarde"] = versekerings_waarde;		
+		}
 
 		// TODO: load addition values like names for option type etc etc
 

@@ -284,4 +284,13 @@ var quoteInvoker = new function() {
         return premium;
     }
 
+    this.getTariffOptionType = function(typeId)
+    {
+        return mockCommunicator.getTariffOptionType(typeId);
+    }
+
+    this.getTariffOptionDamageType = function(id)
+    {
+        return mockCommunicator.getTariffOptionDamageType(id);
+    }
 }
