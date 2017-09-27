@@ -897,7 +897,7 @@ var quoteCreator = new function()
 		return getAllInputValuesEnteredState() && getAllSelectValuesSelectedState();
 	}
 
-	function parseInputDataIntoJSONQuote()
+	function parseInputDataIntoJSONQuote(linkedQuoteId = null)
 	{
 		var quoteData = {
 				"brokerId":getBrokerId(),
@@ -906,7 +906,7 @@ var quoteCreator = new function()
 				'active':'1',
 				'acceptable':'1',
 				'quoteNumber': "00001",
-				'linkedToQuoteId':null,
+				'linkedToQuoteId':linkedQuoteId,
 				'dateCreated':'1990-05-18 19:01:05',
 				"boerdery":getInputBusinessUnitValue(),
 				quoteLandEntries:[
@@ -922,7 +922,8 @@ var quoteCreator = new function()
 						"persentasie":getInputPersentageValue(),
 						//"persentasie":dropdown_coverage.value,
 						"tariffOptionId":getOptionsByFarmCropTypeObjectIdByCoverage(dropdown_coverage.value),
-						"landNumber":getInputLandNumberValue(),
+						//"landNumber":getInputLandNumberValue(),
+						"landId":getLandNumberId(),
 						"cultivar":getInputCultivarValue(),
 						"area":getInputAreaValue(),
 						"yield":getInputYieldValue(),
@@ -1061,7 +1062,8 @@ var quoteCreator = new function()
 		input_farm.blur();
 
 		input_land_number.focus();
-		setInputLandNumberValue(landEntry.landNumber);
+		//setInputLandNumberValue(landEntry.landNumber);
+		setInputLandNumberValue(quoteInvoker.getLandById(landEntry.landId).name);
 		input_land_number.blur();
 		// Testing
 
@@ -1342,6 +1344,8 @@ var quoteCreator = new function()
 	{
 		var quoteData = quoteInvoker.getQuote(quoteId)
 		console.log(quoteData);
+
+		quoteData.linkedToQuoteId = quoteId;
 		
 		for(var i = 0; i < quoteData.quoteLandEntries.length; i++)
 		{

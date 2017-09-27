@@ -59,6 +59,8 @@ var quoteInvoker = new function() {
         		console.error("A land entry failed to be created. Roll back whole quote entry");
         		return;
         	}
+
+            
         }
 
         return quoteId;
@@ -70,6 +72,11 @@ var quoteInvoker = new function() {
 
     this.getLandByNameAndFarmId = function(landNumber,farmId) {
         return mockCommunicator.getLandByNameAndFarmId(landNumber,farmId);
+    }
+
+    this.getLandById = function(landId)
+    {
+        return mockCommunicator.getLand(landId);
     }
 
     this.getQuote = function(id) {
