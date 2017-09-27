@@ -14,18 +14,38 @@ $().ready(function(){
 
 function populateInsurerTable() {
 
-	var insurers = insurerInvoker.getAllInsurersClean();
-
+	
 	var tableBody = $('#insurance_agency_insurer_table_body');
 	tableBody.empty();
 
-	for ( var i = 0; i < insurers.length; i++ ) {
-		var tr = $('<tr></tr>')
-			.append($('<td></td>').text(insurers[i]['name']))
-			.append($('<td></td>').text(insurers[i]['surname']))
+	var ulAccordian = $('<ul></ul>').addClass('accordion');
+	tableBody.append(ulAccordian);
 
-		tableBody.append(tr);
+	var insurers = insurerInvoker.getAllInsurersClean();
+	for ( var i = 0; i < insurers.length; i++ ) {
+
+		var tr = $('<li></li>');
+		ulAccordian.append(tr);
+
+		var aToggle = $('<a></a>').addClass('toggle');
+		aToggle.append($('<td></td>')).text(insurers[i]['name']);
+		tr.append(aToggle);
+
+		var ulInner = $('<ul></ul').addClass('inner');
+		tr.append(ulInner);
+
+		ulInner.append($('<li>Hello Text</li>'));
 	}
+
+	/*<ul class="accordion">
+  <li>
+    <a class="toggle">Item 1</a>
+    <ul class="inner">
+      <li>Option 1</li>
+      <li>Option 2</li>
+      <li>Option 3</li>
+    </ul>
+  </li>*/
 }
 
 $('.toggle').click(function(e) {
