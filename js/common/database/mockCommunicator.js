@@ -517,6 +517,9 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+	this.getInsurers = function(id) {
+		return this.insurerTable;
+	}
 	this.deleteInsurer = function(id) {
 		for(var i=0;i<this.insurerTable.length;i++) {
 			if(this.insurerTable[i].id==id) {

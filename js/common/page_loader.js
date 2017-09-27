@@ -53,7 +53,7 @@ var pageLoader = function()
 			"jsFiles":["js/common/login.js"],
 			"htmlFiles":{
 				"navbar":"html/common/nav.html",
-				"landing_page":"html/insurer_admin/systemkeys.html"
+				"landing_page":"html/insurer_admin/insurance_agency.html"
 			}
 		}
 		

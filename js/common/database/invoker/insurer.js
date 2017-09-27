@@ -29,6 +29,19 @@ var insurerInvoker = new function() {
     	return cleanInsurer;
     }
 
+    this.getAllInsurersClean = function() {
+
+        var insurers = mockCommunicator.getInsurers();
+        var cleanInsurers = [];
+
+        for ( var i = 0; i < insurers.length; i++ ) {
+
+            cleanInsurers.push(this.getCleanInsurer(insurers[i]['id']));
+        }
+
+        return cleanInsurers;
+    }
+
     this.createTariffOption = function(tariffOption,tariffOptionDamageTypes) {
 
         var inceptionDelay = mockCommunicator.getInceptionDelay();

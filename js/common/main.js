@@ -9,7 +9,7 @@ const TEST = "test";
 
     loader = pageLoader();
 
-    loader.load();
+    loader.load(TEST);
 
     // REAL DATABASE
     //var myCom = httpCommunicator();

@@ -1,4 +1,75 @@
-<div>
+<style>
+	
+* {
+    box-sizing: border-box;
+    font-family: 'Open Sans',sans-serif;
+    font-weight: 300;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+p {
+    font-size:1.1em;
+    margin: 1em 0;
+}
+
+.description {
+  margin: 1em auto 2.25em;
+}
+
+/*body {
+    width: 40%;
+    min-width: 300px;
+    max-width: 400px;
+    margin: 1.5em auto;
+    color: #333;
+}*/
+
+h1 {
+    font-family: 'Pacifico', cursive;
+    font-weight: 400;
+    font-size: 2.5em;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+  
+    .inner {
+        padding-left: 1em;
+        overflow: hidden;
+        display: none;
+      
+        &.show {
+          /*display: block;*/
+        }
+    }
+  
+    li {
+        margin: .5em 0;
+      
+        a.toggle {
+            width: 100%;
+            display: block;
+            background: rgba(0,0,0,0.78);
+            color: #fefefe;
+            padding: .75em;
+            border-radius: 0.15em;
+            transition: background .3s ease;
+          
+            &:hover {
+                background: rgba(0, 0, 0, 0.9);
+            }
+        }
+    }
+}
+
+</style>
+
+<div class="col-md-11">
   <div class="row">
 	<div class="col-md-4">
 	  <label>Company Name</label>
@@ -13,32 +84,41 @@
 	  <p id="insurance_agency_email"></p>
 	</div>
   </div>
-  <h3>Table of Insurers</h3>
-  <!--<div class="row">
-    <h3 class="col-md-offset-3 col-md-5 text-center">Districts</h3>
-    <div id="district_button" data-toggle="modal" data-target="#districtModal" class="btn btn-primary pull-right">		  	Create District
-    </div>
-  </div>
-  <br>
   <div class="row">
+  	<h3>Insurers</h3>
   	<table class="table table-striped table-bordered table-hover table-condensed">
       <thead>
       	<tr>
           <th>Name</th>
+          <th>Surname</th>
       	</tr>
       </thead>
-      <tbody id="systemkey_district_view_district_table_body">
+      <tbody id="insurance_agency_insurer_table_body">
       </tbody>
   	</table>
-  </div>-->
+  </div>
+
+  <ul class="accordion">
+  <li>
+    <a class="toggle" href="javascript:void(0);">Item 1</a>
+    <ul class="inner">
+      <li>Option 1</li>
+      <li>Option 2</li>
+      <li>Option 3</li>
+    </ul>
+  </li>
+  <li>
+    <a class="toggle" href="javascript:void(0);">Item 2</a>
+    <ul class="inner">
+      <li>Option 1</li>
+      <li>Option 2</li>
+      <li>Option 3</li>
+    </ul>
+  </li>
+</ul>
 </div>
-
-<script type="text/javascript" src="js/insurer_admin/systemkey/district.js"></script>
-
-
-
-
 
 
 
 <script type="text/javascript" src="js/insurer_admin/insurance_agency.js"></script>
+
