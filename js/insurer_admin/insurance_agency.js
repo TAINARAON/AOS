@@ -9,17 +9,32 @@ $().ready(function(){
  	$('#insurance_agency_email').text(agency['email']);
 
  	populateInsurerTable();
- 	
+
 });
+
+function setOnAccordionClicked() {
+	$('.toggle').click(function(e) {
+
+	  	e.preventDefault();
+	  
+	    var $this = $(this);
+	  
+	    if ($this.next().hasClass('show')) {
+	        $this.next().removeClass('show');
+	        $this.next().slideUp(350);
+	    } else {
+	        $this.parent().parent().find('li .inner').removeClass('show');
+	        $this.parent().parent().find('li .inner').slideUp(350);
+	        $this.next().toggleClass('show');
+	        $this.next().slideToggle(350);
+	    }
+	});
+}
 
 function populateInsurerTable() {
 
-	
-	var tableBody = $('#insurance_agency_insurer_table_body');
-	tableBody.empty();
-
-	var ulAccordian = $('<ul></ul>').addClass('accordion');
-	tableBody.append(ulAccordian);
+	var ulAccordian = $('#insurance_agency_insurer_table_body');
+	ulAccordian.empty();
 
 	var insurers = insurerInvoker.getAllInsurersClean();
 	for ( var i = 0; i < insurers.length; i++ ) {
@@ -27,8 +42,8 @@ function populateInsurerTable() {
 		var tr = $('<li></li>');
 		ulAccordian.append(tr);
 
-		var aToggle = $('<a></a>').addClass('toggle');
-		aToggle.append($('<td></td>')).text(insurers[i]['name']);
+		var aToggle = $('<a></a>').addClass('toggle').prop('href',"javascript:void(0);");
+		aToggle.append($('<td></td>')).text(insurers[i]['name'] + " " + insurers[i]['surname']);
 		tr.append(aToggle);
 
 		var ulInner = $('<ul></ul').addClass('inner');
@@ -37,30 +52,8 @@ function populateInsurerTable() {
 		ulInner.append($('<li>Hello Text</li>'));
 	}
 
-	/*<ul class="accordion">
-  <li>
-    <a class="toggle">Item 1</a>
-    <ul class="inner">
-      <li>Option 1</li>
-      <li>Option 2</li>
-      <li>Option 3</li>
-    </ul>
-  </li>*/
+	setOnAccordionClicked();
 }
 
-$('.toggle').click(function(e) {
-  	e.preventDefault();
-  
-    var $this = $(this);
-  
-    if ($this.next().hasClass('show')) {
-        $this.next().removeClass('show');
-        $this.next().slideUp(350);
-    } else {
-        $this.parent().parent().find('li .inner').removeClass('show');
-        $this.parent().parent().find('li .inner').slideUp(350);
-        $this.next().toggleClass('show');
-        $this.next().slideToggle(350);
-    }
-});
+
 
