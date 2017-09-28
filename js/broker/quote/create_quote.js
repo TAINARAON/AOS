@@ -908,7 +908,7 @@ var quoteCreator = new function()
 				"businessUnitId":getBusinessUnitId(),
 				'active':'1',
 				'acceptable':'1',
-				'quoteNumber': "00001",
+				'quoteNumber': Math.floor((Math.random() * 100000) + 1),
 				'linkedToQuoteId':linkedQuoteId,
 				'dateCreated':'1990-05-18 19:01:05',
 				"boerdery":getInputBusinessUnitValue(),
@@ -1352,6 +1352,7 @@ var quoteCreator = new function()
 		console.log(quoteData);
 
 		quoteData.linkedToQuoteId = quoteId;
+		quoteData.quoteNumber = Math.floor((Math.random() * 100000) + 1);
 		
 		for(var i = 0; i < quoteData.quoteLandEntries.length; i++)
 		{
