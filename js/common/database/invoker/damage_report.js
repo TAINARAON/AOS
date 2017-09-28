@@ -20,8 +20,14 @@ var damageReportInvoker = new function()
 		return businessUnits;
 	}
 
-	this.getFarmByBusinessUnitId = function(businessUnitId)
+	this.getFarmByBusinessUnitId = function(brokerId, businessUnitId)
 	{
-		
+		// TODO: create new mock method
+		var quotes = mockCommunicator.getQuotesByBrokerId(brokerId);
+
+		for(var i = 0; i < quotes.length; i++)
+		{
+			// Get the farm here
+		}	
 	}
 }
