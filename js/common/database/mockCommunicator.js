@@ -781,8 +781,8 @@ var mockCommunicator = new function()
 	this.getQuotesByBrokerId = function(brokerId) {
 		var quotes = [];
 
-		for (var i = quoteTable.length - 1; i >= 0; i--) {
-			var quote = quoteTable[i];
+		for (var i = this.quoteTable.length - 1; i >= 0; i--) {
+			var quote = this.quoteTable[i];
 
 			if(quote['brokerId'] == brokerId) {
 				quotes.push(quote);

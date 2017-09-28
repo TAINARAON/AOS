@@ -11,6 +11,8 @@ const TEST = "test";
 
     loader.load();
 
+    console.log(mockCommunicator.getQuotesByBrokerId(0));
+
     // REAL DATABASE
     //var myCom = httpCommunicator();
     // MOCK DATABAS	E
