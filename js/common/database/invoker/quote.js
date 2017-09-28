@@ -45,7 +45,7 @@ var quoteInvoker = new function() {
 
     this.url =  "someUrlToGetToQuoteTable";
 
-    this.create = function (quoteData,quoteLandEntries)  {
+    this.create = function (quoteData,quoteLandEntries,tariffOptionDamageTypeIdArray)  {
 
         var quoteId = mockCommunicator.createQuote(quoteData);
 
@@ -60,7 +60,21 @@ var quoteInvoker = new function() {
         		return;
         	}
 
-            
+            for(var j = 0; j < tariffOptionDamageTypeIdArray.length; j++)
+            {
+                var tObj = {
+                    "quoteLandEntryId":landEntryId,
+                    "tariffOptionDamageTypeId":tariffOptionDamageTypeIdArray[j]
+                }
+
+                var id = mockCommunicator.createQuoteLandEntryDamageType(tObj);
+
+                if(id == null)
+                {
+                    console.error("A Quote land damage type entry failed to be created. Roll back whole quote entry");
+                    return;
+                }
+            }
         }
 
         return quoteId;

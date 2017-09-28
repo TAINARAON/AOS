@@ -312,7 +312,7 @@ var quoteViewer = new function()
 		var row = document.createElement("DIV");
 		row.className = "row";
 
-		createColumn(landEntry.landNumber, row);
+		createColumn(quoteInvoker.getLandById(landEntry.landId)["name"], row);
 		createColumn("Add crop here", row);
 		createColumn(landEntry.cultivar, row);
 		createColumn(landEntry.area, row);

@@ -751,10 +751,13 @@ var quoteCreator = new function()
 					var name = response[i].name;
 					createDamageTypeCheckbox(name, checkboxContainer);
 				}
+
+				damageTypeRowContainer.style.display = "block";
+				return;
 			}
 		}
 
-		damageTypeRowContainer.style.display = "block";
+		damageTypeRowContainer.style.display = "none";
 	}
 
 	function createDamageTypeCheckbox(title, container)
@@ -1086,8 +1089,8 @@ var quoteCreator = new function()
 	function createTemporaryButtonsForHandelingQuoteEdit(landEntry)
 	{
 		removeTemporaryButtons();	
-
 		createTemporaryButtons(row4, landEntry);
+		hideIncludeRowButton();
 	}
 
 	function tempButtonsAlreadyExists(container, saveId, cancelId)
@@ -1105,6 +1108,8 @@ var quoteCreator = new function()
 			row4.removeChild(document.getElementById(saveId));
 			row4.removeChild(document.getElementById(cancelId));
 		}
+
+		showIncludeRowButton();
 	}
 
 	function createTemporaryButtons(container, landEntry)
@@ -1262,6 +1267,7 @@ var quoteCreator = new function()
 
 		debugTool.print(landEntries, FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
 
+		// TODO: send damage type array
 		var resultId = quoteInvoker.create(getCleanBusinessUnitObject(quote), landEntries);
 
 		debugTool.print("Commit result: " + resultId, FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
