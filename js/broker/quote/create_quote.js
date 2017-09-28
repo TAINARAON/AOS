@@ -13,6 +13,8 @@ var quoteCreator = new function()
 	var optionTypes = {};
 	var optionsByFarmCropType = {};
 
+	var damageTypeStates = [];
+
 	// Labels
 	var label_business_unit = document.getElementById("boerderyLabel");
 	var label_farm = document.getElementById("plaasLabel");
@@ -769,10 +771,12 @@ var quoteCreator = new function()
 		div.className = "checkbox";
 
 		var label = document.createElement("LABEL");
+		label.setAttribute("for", title + "_checkbox");
 
-		var input = document.createElement("INPUT");
+		let input = document.createElement("INPUT");
 		input.type = "checkbox";
 		input.id = title + "_checkbox";
+		input.name = title + "_checkbox";
 		input.title = title;
 
 		label.appendChild(input);
@@ -783,6 +787,34 @@ var quoteCreator = new function()
 		innerContainer.appendChild(div);
 
 		container.appendChild(innerContainer);
+
+		//label.onchange = function(){trackDamageTypeState(title, input.checked);};
+		//$(label).change(function(){alert("Here"); trackDamageTypeState(title, input.checked);});
+		$(document).on("change", "input[name='"+title + "_checkbox"+"']", function(){trackDamageTypeState(title, this.checked);});
+	}
+
+	function trackDamageTypeState(title, state)
+	{
+		console.log("Box: " + title + " State: " + state);
+
+		var tObj = {
+			"name":title,
+			"state":state
+		};
+
+		for(var i = 0; i < damageTypeStates.length; i++)
+		{
+			if(damageTypeStates[i].name == title)
+			{
+				damageTypeStates[i].state = state;
+				console.log(damageTypeStates);
+				return;
+			}
+		}
+			
+		damageTypeStates.push(tObj);
+
+		console.log(damageTypeStates);
 	}
 	// ^ Change listener content ^
 
