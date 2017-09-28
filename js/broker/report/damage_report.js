@@ -2,18 +2,11 @@ var damageReport = new function()
 {
 	var modalButtonContainer;
 
-	var businessUnit;
-
-	var businessUnitId;
-	var farmId;
-	var landId;
-
 	(function init()
 	{
 		createDamageReportModal("report_modal_container");
-
 		initModalButtonContainer();
-		initBusinessUnitDropdown();
+		createReportModalButton();
 	})();
 
 	function createDamageReportModal(id)
@@ -26,29 +19,6 @@ var damageReport = new function()
 		modalButtonContainer = document.getElementById("create_report_btn_container");
 	}
 
-	function initBusinessUnitDropdown()
-	{
-		businessUnit = document.getElementById("business_unit_dropdown");
-		loadBusinessUnitDropdownChoisesForBroker();
-		businessUnit.onchange = function(){toggelDisplayCreateReportModalButton(businessUnit.value)};
-	}
-
-	function loadBusinessUnitDropdownChoisesForBroker()
-	{
-		
-	}
-
-	function toggelDisplayCreateReportModalButton(val)
-	{
-		if(val != null  && val != "")
-		{	
-			createReportModalButton();
-			return;
-		}
-
-		removeReportModalButton();
-	}
-
 	function createReportModalButton()
 	{
 		var button = document.createElement("BUTTON");
@@ -57,18 +27,7 @@ var damageReport = new function()
 		button.setAttribute("data-toggle", "modal");
 		button.setAttribute("data-target", "#myModal");
 		button.innerHTML = "Create Damage Report";
-		button.onclick = function() {showReportModal(businessUnitId)};
 
 		modalButtonContainer.appendChild(button);
-	}
-
-	function removeReportModalButton()
-	{
-		modalButtonContainer.innerHTML = "";
-	}
-
-	function showReportModal(businessUnitId)
-	{
-		modalDamageReport.update(businessUnitId);
 	}
 }
