@@ -5,6 +5,8 @@ var damageReport = new function()
 	var businessUnit;
 
 	var businessUnitId;
+	var farmId;
+	var landId;
 
 	(function init()
 	{
@@ -12,7 +14,6 @@ var damageReport = new function()
 
 		initModalButtonContainer();
 		initBusinessUnitDropdown();
-		createReportModalButton();
 	})();
 
 	function createDamageReportModal(id)
@@ -28,7 +29,13 @@ var damageReport = new function()
 	function initBusinessUnitDropdown()
 	{
 		businessUnit = document.getElementById("business_unit_dropdown");
+		loadBusinessUnitDropdownChoisesForBroker();
 		businessUnit.onchange = function(){toggelDisplayCreateReportModalButton(businessUnit.value)};
+	}
+
+	function loadBusinessUnitDropdownChoisesForBroker()
+	{
+		
 	}
 
 	function toggelDisplayCreateReportModalButton(val)

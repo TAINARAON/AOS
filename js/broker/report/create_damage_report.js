@@ -3,7 +3,6 @@ var modalDamageReport = new function()
 	(function init()
 	{
 		
-
 	})();
 
 
