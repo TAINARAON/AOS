@@ -2,7 +2,7 @@ var mockCommunicator = new function()
 {
 	console.warn("Mock Communicator being used.");
 
-// OPTION TYPES
+// OPTION TYPE - done
 	this.optionTypeTable = [
 		{
 			'id':'0',
@@ -44,7 +44,7 @@ var mockCommunicator = new function()
 	}
 
 // ############################# USERS #################################
-// ROLE
+// ROLE - done
 	this.roleTable = [
 		{
 			'id':'0',
@@ -93,7 +93,7 @@ var mockCommunicator = new function()
 		this.roleTable[id] = data;
 	}
 
-// USER
+// USER - done
 	this.userTable = [
 		{
 			'id':'0',
@@ -103,7 +103,8 @@ var mockCommunicator = new function()
 			'name':'Leeroy',
 			'surname':'Nnnjenkinsss',
 			'email':'ljenkins@gmail.com',
-			'active':'1'
+			'active':'1',
+			'validated':'1'
 		},
 		{
 			'id':'1',
@@ -113,7 +114,8 @@ var mockCommunicator = new function()
 			'name':'Andre',
 			'surname':'Carstens',
 			'email':'acarstens@gmail.com',
-			'active':'1'
+			'active':'1',
+			'validated':'1'
 		},
 		{
 			'id':'2',
@@ -123,7 +125,8 @@ var mockCommunicator = new function()
 			'name':'Cam',
 			'surname':'Eonona',
 			'email':'cameo@gmail.com',
-			'active':'1'
+			'active':'1',
+			'validated':'1'
 		},
 		{
 			'id':'3',
@@ -133,7 +136,8 @@ var mockCommunicator = new function()
 			'name':'Doctor',
 			'surname':'Acula',
 			'email':'dracula@gmail.com',
-			'active':'1'
+			'active':'1',
+			'validated':'1'
 		},
 		{
 			'id':'4',
@@ -143,7 +147,8 @@ var mockCommunicator = new function()
 			'name':'Dan',
 			'surname':'Wazoski',
 			'email':'danwaz@gmail.com',
-			'active':'1'
+			'active':'1',
+			'validated':'1'
 		},
 		{
 			'id':'5',
@@ -153,7 +158,8 @@ var mockCommunicator = new function()
 			'name':'Simon',
 			'surname':'Says',
 			'email':'simonsays@gmail.com',
-			'active':'1'
+			'active':'1',
+			'validated':'1'
 		},
 	];
 	this.createUser = function(data) {
@@ -191,7 +197,7 @@ var mockCommunicator = new function()
 		this.userTable[id] = data;
 	}
 
-// CLIENT
+// CLIENT - done
 	this.clientTable = [
 		{
 			'id':'0',
@@ -246,7 +252,7 @@ var mockCommunicator = new function()
 		this.clientTable[id] = data;
 	}
 
-// BUSINESS UNIT
+// BUSINESS UNIT - done
 	this.businessUnitTable = [
 		{
 			'id':'0',
@@ -304,8 +310,8 @@ var mockCommunicator = new function()
 		this.businessUnitTable[id] = data;
 	}
 
-// BUSINESS UNIT MEMBER 
-//		clientId may be null if the person is not on the system. If it is not null, then use either name/surname.
+// BUSINESS UNIT MEMBER - done
+	// clientId may be null if the person is not on the system. If it is not null, then use either name/surname.
 	this.businessUnitMemberTable = [
 		{
 			'id':'0',
@@ -368,7 +374,7 @@ var mockCommunicator = new function()
 		this.businessUnitMemberTable[id] = data;
 	}
 
-// FARM
+// FARM - done
 	this.farmTable = [
 		{
 			'id':'0',
@@ -431,7 +437,7 @@ var mockCommunicator = new function()
 		}
 	}
 
-// LAND
+// LAND - done
 	this.landTable = [
 		{
 			'id':'0',
@@ -488,19 +494,56 @@ var mockCommunicator = new function()
 		this.landTable[id] = data;
 	}
 
-// INSURER
-	this.insurerTable = [
+// INSURER ADMIN - done
+	this.insurerAdminTable = [
 		{
 			'id':'0',
 			'userId':'0',
 			'active':'1',
-			'isAdmin':'1',
 		},
+	];
+	this.createInsurerAdmin = function(data) {
+
+		data.id = this.insurerAdminTable.length;
+		this.insurerAdminTable.push(data);
+
+		return data.id;
+	}
+	this.getInsurerAdmin = function(id) {
+		for(var i=0;i<this.insurerAdminTable.length;i++) {
+			if(this.insurerAdminTable[i].id==id) {
+				return this.insurerAdminTable[i];
+			}
+		}
+	}
+	this.getInsurerAdmins = function(id) {
+		return this.insurerAdminTable;
+	}
+	this.deleteInsurerAdmin = function(id) {
+		for(var i=0;i<this.insurerAdminTable.length;i++) {
+			if(this.insurerAdminTable[i].id==id) {
+				this.insurerAdminTable.splice(i,1);
+			}
+		}
+	}
+	this.updateInsurerAdmin = function(id, data) {
+		data.id = id;
+		this.insurerAdminTable[id] = data;
+	}
+	this.getInsurerAdminByUserId = function(userId) {
+		for(var i=0;i<this.insurerAdminTable.length;i++) {
+			if(this.insurerAdminTable[i].userId==userId) {
+				return this.insurerAdminTable[i];
+			}
+		}
+	}
+
+// INSURER - done
+	this.insurerTable = [
 		{
-			'id':'1',
+			'id':'0',
 			'userId':'1',
 			'active':'1',
-			'isAdmin':'0',
 		},
 	];
 	this.createInsurer = function(data) {
@@ -539,19 +582,47 @@ var mockCommunicator = new function()
 		}
 	}
 
-// BROKER
-	this.brokerTable = [
+// BROKER ADMIN - done
+	this.brokerAdminTable = [
 		{
 			'id':'0',
 			'userId':'2',
 			'brokerageId':'0',
-			'isAdmin':'1'
 		},
+	];
+	this.createBrokerAdmin = function(data) {
+
+		data.id = this.brokerAdminTable.length;
+		this.brokerAdminTable.push(data);
+
+		console.log(this.brokerAdminTable[data.id]);
+
+		return data.id;
+	}
+	this.getBrokerAdmin = function(id) {
+		for(var i=0;i<this.brokerAdminTable.length;i++) {
+			if(this.brokerAdminTable[i].id==id) {
+				return this.brokerAdminTable[i];
+			}
+		}
+	}
+	this.getBrokerAdmins = function() {
+		return this.brokerAdminTable;
+	}
+	this.deleteBrokerAdmin = function(id) {
+		for(var i=0;i<this.brokerAdminTable.length;i++) {
+			if(this.brokerAdminTable[i].id==id) {
+				this.brokerAdminTable.splice(i,1);
+			}
+		}
+	}
+
+// BROKER - done
+	this.brokerTable = [
 		{
 			'id':'1',
 			'userId':'3',
 			'brokerageId':'0',
-			'isAdmin':'0'
 		},
 	];
 	this.createBroker = function(data) {
@@ -592,7 +663,7 @@ var mockCommunicator = new function()
 		this.brokerTable[id] = data;
 	}
 
-// BROKERAGE
+// BROKERAGE - done
 	this.brokerageTable = [
 		{
 			'id':'0',
@@ -646,7 +717,7 @@ var mockCommunicator = new function()
 		this.brokerageTable[id] = data;
 	}
 
-// INSURANCE AGENCY
+// INSURANCE AGENCY - done
 	this.insuranceAgency = 
 	[
 		{
@@ -660,7 +731,7 @@ var mockCommunicator = new function()
 		return this.insuranceAgency[id];
 	}
 // ############################# QUOTES ################################
-// QUOTE
+// QUOTE - done
 	this.quoteTable = [
 		{
 			'id':'0',
@@ -725,12 +796,11 @@ var mockCommunicator = new function()
 		this.quoteTable[id]['active'] = false;
 	}
 
-// QUOTE LAND ENTRY
+// QUOTE LAND ENTRY - done
 	this.quoteLandEntryTable = [
 		{
 			'id':'0',
 			'quoteId':'0',
-			'farmId':'0',
 			'landId':'0',
 			'cropId':'1',
 			'cultivar':'Red Dwarf',
@@ -742,7 +812,6 @@ var mockCommunicator = new function()
 		{
 			'id':'1',
 			'quoteId':'0',
-			'farmId':'1',
 			'landId':'1',
 			'cropId':'0',
 			'cultivar':'Octopussy',
@@ -754,8 +823,7 @@ var mockCommunicator = new function()
 		{
 			'id':'2',
 			'quoteId':'1',
-			'farmId':'0',
-			'landNumber':'000111',
+			'landId':'2',
 			'cropId':'1',
 			'cultivar':'Red Dwarf',
 			'area':'7.4',
@@ -766,8 +834,7 @@ var mockCommunicator = new function()
 		{
 			'id':'3',
 			'quoteId':'1',
-			'farmId':'1',
-			'landNumber':'100111',
+			'landId':'3',
 			'cropId':'0',
 			'cultivar':'Octopussy',
 			'area':'6.7',
@@ -818,7 +885,7 @@ var mockCommunicator = new function()
 		this.quoteLandEntryTable[id]['active'] = false;
 	}	
 
-// QUOTE LAND ENTRY DAMAGE TYPE - To Be Used In Quote Generation
+// QUOTE LAND ENTRY DAMAGE TYPE - done
 	this.quoteLandEntryDamageTypeTable = [
 		{
 			'id':'0',
@@ -884,7 +951,7 @@ var mockCommunicator = new function()
 		this.quoteLandEntryDamageTypeTable[id]['active'] = false;
 	}
 
-// POLICY
+// POLICY - done
 	this.policyTable = [
 		{
 			'id':'0',
@@ -892,7 +959,7 @@ var mockCommunicator = new function()
 			'businessUnitId':'0',
 			'brokerId':'0',
 			'insurerId':null,
-			'signedOn':'2017-08-30 19:01:05',
+			'acceptedOn':'2017-08-30 19:01:05',
 			'active':'1',
 			'linkedToPolicyId':null,	
 		},
@@ -902,7 +969,7 @@ var mockCommunicator = new function()
 			'businessUnitId':'1',
 			'brokerId':'0',
 			'insurerId':null,
-			'signedOn':'2017-08-30 19:03:05',
+			'acceptedOn':'2017-08-30 19:03:05',
 			'active':'1',
 			'linkedToPolicyId':null,	
 		}
@@ -945,13 +1012,12 @@ var mockCommunicator = new function()
 		this.policyTable[id] = data;
 	}
 
-// POLICY LAND ENTRY
+// POLICY LAND ENTRY - done
 	this.policyLandEntryTable = [
 		{
 			'id':'0',
 			'policyId':'0',
-			'farmId':'0',
-			'landNumber':'000111',
+			'landId':'000111',
 			'cropId':'1',
 			'cultivar':'Red Dwarf',
 			'area':'7.4',
@@ -999,7 +1065,7 @@ var mockCommunicator = new function()
 		this.policyLandEntryTable[id] = data;
 	}	
 
-// POLICY LAND ENTRY DAMAGE TYPE - To Be Used In Policy Generation
+// POLICY LAND ENTRY DAMAGE TYPE - done
 	this.policyLandEntryDamageTypeTable = [
 		{
 			'id':'0',
@@ -1044,7 +1110,7 @@ var mockCommunicator = new function()
 	}
 
 // ########################### SYSTEM KEYS ###############################
-// PRODUCT
+// PRODUCT - done
 	this.productTable = [
 		{
 			'id':'0',
@@ -1084,7 +1150,7 @@ var mockCommunicator = new function()
 		this.productTable[id] = data;
 	}
 
-// CROP
+// CROP - done
 	this.cropTable = [
 		{
 			'id':'0',
@@ -1153,7 +1219,7 @@ var mockCommunicator = new function()
 		this.cropTable[id] = data;
 	}
 
-// PRICE UOM
+// PRICE UOM - done
 	this.priceUomTable = [
 		{
 			'id':'0',
@@ -1193,7 +1259,7 @@ var mockCommunicator = new function()
 		this.priceUomTable[id] = data;
 	}
 
-// AREA UOM
+// AREA UOM - done
 	this.areaUomTable = [
 		{
 			'id':'0',
@@ -1233,7 +1299,7 @@ var mockCommunicator = new function()
 		this.areaUomTable[id] = data;
 	}
 
-// DISTRICT
+// DISTRICT - done
 	this.districtTable = [
 		{
 			'id':'0',
@@ -1275,7 +1341,7 @@ var mockCommunicator = new function()
 		this.districtTable[id] = data;
 	}
 
-// TARIFF OPTION TYPE
+// TARIFF OPTION TYPE - done
 	this.tariffOptionTypeTable = [
 		{
 			'id':'0',
@@ -1312,7 +1378,7 @@ var mockCommunicator = new function()
 		this.tariffOptionTypeTable[id] = data;
 	}
 
-// TARIFF OPTION
+// TARIFF OPTION - done
 	this.tariffOptionTable = [
 		{
 			'id':'0',
@@ -1381,7 +1447,7 @@ var mockCommunicator = new function()
 		this.tariffOptionTable[id] = data;
 	}
 
-// DAMAGE TYPE
+// DAMAGE TYPE - done
 	this.damageTypeTable = [
 		{
 			'id':'0',
@@ -1433,7 +1499,7 @@ var mockCommunicator = new function()
 		this.damageTypeTable[id] = data;
 	}
 
-// TARIFF OPTION DAMAGE TYPE - To Be Used For System Keys
+// TARIFF OPTION DAMAGE TYPE - done
 	this.tariffOptionDamageTypeTable = [
 		{
 			'id':'0',
@@ -1492,7 +1558,7 @@ var mockCommunicator = new function()
 		this.tariffOptionDamageTypeTable[id] = data;
 	}
 
-// INCEPTION DATE
+// INCEPTION DELAY - done
 	this.inceptionDelayTable = [
 		{
 			'id':'0',
@@ -1509,7 +1575,7 @@ var mockCommunicator = new function()
 		return 1;
 	}
 
-// TAX
+// TAX - done
 	this.taxTable = [
 		{
 			'id':'0',
@@ -1525,5 +1591,91 @@ var mockCommunicator = new function()
 		this.taxTable[0]['percentage'] = percentage;
 
 		return 1;
+	}
+
+// DAMAGE REPORT - done
+	this.damageReportTable = [
+		{
+			'id':'0',
+			'dateOfDamage':'2017/05/11',
+			'dateOfReporting':'2017/05/11',
+			'landId':''
+		},
+		{
+			'id':'1',
+			'dateOfDamage':'2017/05/11',
+			'dateOfReporting':'2017/05/11',
+			'landId':''
+		},
+	];
+	this.createDamageReport = function(data) {
+
+		data.id = this.damageReportTable.length;
+		this.damageReportTable.push(data);
+
+		return data.id;
+	}
+	this.getDamageReport = function(id) {
+		for(var i=0;i<this.damageReportTable.length;i++) {
+			if(this.damageReportTable[i].id==id) {
+				return this.damageReportTable[i];
+			}
+		}
+	}
+	this.getDamageReports = function() {
+		return this.damageReportTable;
+	}
+	this.deleteDamageReport = function(id) {
+		for(var i=0;i<this.damageReportTable.length;i++) {
+			if(this.damageReportTable[i].id==id) {
+				this.damageReportTable.splice(i,1);
+			}
+		}
+	}
+	this.updateDamageReport = function(id, data) {
+		data.id = id;
+		this.damageReportTable[id] = data;
+	}
+
+// DAMAGE REPORT DAMAGE TYPE - done
+	this.damageReportDamageTypeTable = [
+		{
+			'id':'0',
+			'damageReportId':'0',
+			'damageTypeId':'0',
+		},
+		{
+			'id':'1',
+			'damageReportId':'0',
+			'damageTypeId':'1',
+		},
+	];
+	this.createDamageReportDamageType = function(data) {
+
+		data.id = this.damageReportDamageTypeTable.length;
+		this.damageReportDamageTypeTable.push(data);
+
+		return data.id;
+	}
+	this.getDamageReportDamageType = function(id) {
+		for(var i=0;i<this.damageReportDamageTypeTable.length;i++) {
+			if(this.damageReportDamageTypeTable[i].id==id) {
+				return this.damageReportDamageTypeTable[i];
+			}
+		}
+	}
+	this.getDamageReportDamageTypes = function() {
+		return this.damageReportDamageTypeTable;
+	}
+	this.deleteDamageReportDamageType = function(id) {
+		for(var i=0;i<this.damageReportDamageTypeTable.length;i++) {
+			if(this.damageReportDamageTypeTable[i].id==id) {
+				this.damageReportDamageTypeTable.splice(i,1);
+			}
+		}
+	}
+	this.updateDamageReportDamageType = function(id, data) {
+		data.id = id;
+		this.damageReportDamageTypeTable[id] = data;
 	}
 };
