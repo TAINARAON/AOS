@@ -4,7 +4,7 @@
  	[
  		{
  			'text':'Damage Report',
- 			'pageUrl':'html/broker/damage_report.html'
+ 			'pageUrl':'html/broker/report/damage_report.html'
  		},
  		{
  			'text':'Policy',
