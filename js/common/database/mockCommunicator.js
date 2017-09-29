@@ -437,63 +437,6 @@ var mockCommunicator = new function()
 		}
 	}
 
-// LAND - done
-	this.landTable = [
-		{
-			'id':'0',
-			'farmId':'0',
-			'name':'LR0051',
-			'longitude':'',
-			'latitude':''
-		},
-		{
-			'id':'1',
-			'farmId':'0',
-			'name':'LR0052',
-			'longitude':'',
-			'latitude':''
-		}
-	];
-	this.createLand = function(data) {
-
-		data.id = this.landTable.length;
-		this.landTable.push(data);
-
-		return data.id;
-	}
-	this.getLand = function(id) {
-		for(var i=0;i<this.landTable.length;i++) {
-			if(this.landTable[i].id==id) {
-				return this.landTable[i];
-			}
-		}
-	}
-	this.getLandByName = function(name) {
-		for(var i=0;i<this.landTable.length;i++) {
-			if(this.landTable[i].name==name) {
-				return this.landTable[i];
-			}
-		}
-	}
-	this.getLandByNameAndFarmId = function(landNumber,farmId) {
-		for(var i=0;i<this.landTable.length;i++) {
-			if(this.landTable[i]['name']==landNumber && this.landTable[i]['farmId']==farmId) {
-				return this.landTable[i];
-			}
-		}
-	}
-	this.deleteLand = function(id) {
-		for(var i=0;i<this.landTable.length;i++) {
-			if(this.landTable[i].id==id) {
-				this.landTable.splice(i,1);
-			}
-		}
-	}
-	this.updateLand = function(id, data) {
-		data.id = id;
-		this.landTable[id] = data;
-	}
-
 // INSURER ADMIN - done
 	this.insurerAdminTable = [
 		{
@@ -620,9 +563,13 @@ var mockCommunicator = new function()
 // BROKER - done
 	this.brokerTable = [
 		{
-			'id':'1',
+			'id':'0',
 			'userId':'3',
 			'brokerageId':'0',
+			'quoteRights':'1',
+			'policyRights':'1',
+			'damageReportRights':'1',
+			'clientCreationRights':'1'
 		},
 	];
 	this.createBroker = function(data) {
@@ -661,6 +608,43 @@ var mockCommunicator = new function()
 	this.updateBroker = function(id, data) {
 		data.id = id;
 		this.brokerTable[id] = data;
+	}
+
+// BROKER VIEWABLE BROKER
+this.brokerViewableBrokerTable = [
+		{
+			'id':'0',
+			'mainBrokerId':'0',
+			'viewableBrokerId':'1',
+		},
+	];
+	this.createBrokerViewableBroker = function(data) {
+
+		data.id = this.brokerViewableBrokerTable.length;
+		this.brokerViewableBrokerTable.push(data);
+
+		return data.id;
+	}
+	this.getBrokerViewableBroker = function(id) {
+		for(var i=0;i<this.brokerViewableBrokerTable.length;i++) {
+			if(this.brokerViewableBrokerTable[i].id==id) {
+				return this.brokerViewableBrokerTable[i];
+			}
+		}
+	}
+	this.getBrokerViewableBrokers = function() {
+		return this.brokerViewableBrokerTable;
+	}
+	this.deleteBrokerViewableBroker = function(id) {
+		for(var i=0;i<this.brokerViewableBrokerTable.length;i++) {
+			if(this.brokerViewableBrokerTable[i].id==id) {
+				this.brokerViewableBrokerTable.splice(i,1);
+			}
+		}
+	}
+	this.updateBrokerViewableBroker = function(id, data) {
+		data.id = id;
+		this.brokerViewableBrokerTable[id] = data;
 	}
 
 // BROKERAGE - done
@@ -814,7 +798,10 @@ var mockCommunicator = new function()
 		{
 			'id':'0',
 			'quoteId':'0',
-			'landId':'0',
+			'farmId':'0',
+			'landNumber':'00001',
+			'landLongitude':'1.3361',
+			'landLatitude':'-0.1215',
 			'cropId':'1',
 			'cultivar':'Red Dwarf',
 			'area':'7.4',
@@ -825,7 +812,10 @@ var mockCommunicator = new function()
 		{
 			'id':'1',
 			'quoteId':'0',
-			'landId':'1',
+			'farmId':'0',
+			'landNumber':'00002',
+			'landLongitude':'1.3361',
+			'landLatitude':'-0.1215',
 			'cropId':'0',
 			'cultivar':'Octopussy',
 			'area':'6.8',
@@ -836,7 +826,10 @@ var mockCommunicator = new function()
 		{
 			'id':'2',
 			'quoteId':'1',
-			'landId':'2',
+			'farmId':'0',
+			'landNumber':'00003',
+			'landLongitude':'1.3361',
+			'landLatitude':'-0.1215',
 			'cropId':'1',
 			'cultivar':'Red Dwarf',
 			'area':'7.4',
@@ -847,7 +840,10 @@ var mockCommunicator = new function()
 		{
 			'id':'3',
 			'quoteId':'1',
-			'landId':'3',
+			'farmId':'0',
+			'landNumber':'00004',
+			'landLongitude':'1.3361',
+			'landLatitude':'-0.1215',
 			'cropId':'0',
 			'cultivar':'Octopussy',
 			'area':'6.7',
@@ -1030,7 +1026,10 @@ var mockCommunicator = new function()
 		{
 			'id':'0',
 			'policyId':'0',
-			'landId':'000111',
+			'farmId':'0',
+			'landNumber':'00001',
+			'landLongitude':'1.3361',
+			'landLatitude':'-0.1215',
 			'cropId':'1',
 			'cultivar':'Red Dwarf',
 			'area':'7.4',
@@ -1612,13 +1611,13 @@ var mockCommunicator = new function()
 			'id':'0',
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
-			'landId':''
+			'policyLandEntryId':'0'
 		},
 		{
 			'id':'1',
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
-			'landId':''
+			'policyLandEntryId':'0'
 		},
 	];
 	this.createDamageReport = function(data) {
