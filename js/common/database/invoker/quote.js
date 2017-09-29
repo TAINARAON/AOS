@@ -45,7 +45,7 @@ var quoteInvoker = new function() {
 
     this.url =  "someUrlToGetToQuoteTable";
 
-    this.create = function (quoteData,quoteLandEntries,tariffOptionDamageTypeIdArray)  {
+    this.create = function (quoteData,quoteLandEntries)  {
 
         var quoteId = mockCommunicator.createQuote(quoteData);
 
@@ -60,11 +60,13 @@ var quoteInvoker = new function() {
         		return;
         	}
 
+            var tariffOptionDamageTypeIdArray = quoteLandEntry.tariffOptionDamageTypes;
+
             for(var j = 0; j < tariffOptionDamageTypeIdArray.length; j++)
             {
                 var tObj = {
                     "quoteLandEntryId":landEntryId,
-                    "tariffOptionDamageTypeId":tariffOptionDamageTypeIdArray[j]
+                    "tariffOptionDamageTypeId":tariffOptionDamageTypeIdArray[j].id
                 }
 
                 var id = mockCommunicator.createQuoteLandEntryDamageType(tObj);

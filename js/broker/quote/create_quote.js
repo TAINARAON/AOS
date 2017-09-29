@@ -13,6 +13,9 @@ var quoteCreator = new function()
 	var optionTypes = {};
 	var optionsByFarmCropType = {};
 
+	// Used to contain the tariffOptionDamageType data
+	var tariffOptionDamageTypeArr = [];
+	// Used to keep track of the checkbox state
 	var damageTypeStates = [];
 
 	// Labels
@@ -199,6 +202,17 @@ var quoteCreator = new function()
 	function setOptionTypeObject(value)
 	{
 		optionTypes = value;
+	}
+
+	function getTariffOptionDamageTypeIdByName(name)
+	{
+		for(var i = 0; i < tariffOptionDamageTypeArr.length; i++)
+		{
+			if(tariffOptionDamageTypeArr[i].name = name)
+			{
+				return tariffOptionDamageTypeArr[i].id;
+			}
+		}
 	}
 
 	function getOptionsByFarmCropTypeObjectIdByCoverage(coverage)
@@ -736,6 +750,7 @@ var quoteCreator = new function()
 			var response = quoteInvoker.getDamageTypesAvailableForOption(id);
 
 			// TODO: Save object to save id when values are selected
+			tariffOptionDamageTypeArr = response;
 
 			if(response != undefined && response != null)
 			{
@@ -963,12 +978,32 @@ var quoteCreator = new function()
 						"area":getInputAreaValue(),
 						"yield":getInputYieldValue(),
 						"price":getInputPriceValue(),
-						"versekerings_waarde":berekenVersekeringsWaarde()
+						"versekerings_waarde":berekenVersekeringsWaarde(),
+						"tariffOptionDamageTypes":createTariffOptionDamageTypeArr()
 					}
 				]
 			};
 
 		return quoteData;
+	}
+
+	function createTariffOptionDamageTypeArr()
+	{
+		var tariffOptionDamageTypes = [];
+
+		for(var i = 0; i < damageTypeStates.length; i++)
+		{
+			if(damageTypeStates[i].state)
+			{
+				var tObj = {
+					"id": getTariffOptionDamageTypeIdByName(damageTypeStates[i].name)
+				};
+
+				tariffOptionDamageTypes.push(tObj);
+			}
+		}
+
+		return tariffOptionDamageTypes;
 	}
 
 	function saveToMainQuoteObject(quoteData)
@@ -1294,6 +1329,7 @@ var quoteCreator = new function()
 
 	function persistQuoteData(quote)
 	{
+		debugger;
 		// TODO: fix object values to suite mock
 		var landEntries = quote.quoteLandEntries;
 
