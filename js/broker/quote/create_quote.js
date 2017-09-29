@@ -549,7 +549,9 @@ var quoteCreator = new function()
 		input_business_unit.onblur = function(){toggleFarmInputVisibility(validateBusinessUnit());};
 		//input_farm.onblur = function(){loadCoverage(); toggleFieldsVisible(validateFarm());};
 		input_farm.onblur = function(){loadCoverage(); toggleLandNumberVisible(validateFarm());};
-		input_land_number.onblur = function(){toggleFieldsVisible(validateLandNumber());};
+		// TODO: fix 
+		//input_land_number.onblur = function(){toggleFieldsVisible(validateLandNumber());};
+		input_land_number.onblur = function(){toggleFieldsVisible(true);};
 
 		// Select fields
 		dropdown_product.onchange = function(){loadProductSpecificCrops(dropdown_product.value)};
@@ -777,8 +779,9 @@ var quoteCreator = new function()
 		damageTypeRowContainer.style.display = "none";
 	}
 
-	function createDamageTypeCheckbox(title, container)
+	function createDamageTypeCheckbox(title, container, state = false)
 	{
+		debugger;
 		var innerContainer = document.createElement("DIV");
 		innerContainer.className = "col-md-4";
 
@@ -805,6 +808,7 @@ var quoteCreator = new function()
 
 		//label.onchange = function(){trackDamageTypeState(title, input.checked);};
 		//$(label).change(function(){alert("Here"); trackDamageTypeState(title, input.checked);});
+		$(input).prop('checked', state);
 		$(document).on("change", "input[name='"+title + "_checkbox"+"']", function(){trackDamageTypeState(title, this.checked);});
 	}
 
@@ -955,6 +959,7 @@ var quoteCreator = new function()
 				"businessUnitId":getBusinessUnitId(),
 				'active':'1',
 				'acceptable':'1',
+	
 				'quoteNumber': Math.floor((Math.random() * 100000) + 1),
 				'linkedToQuoteId':linkedQuoteId,
 				'dateCreated':'1990-05-18 19:01:05',
@@ -973,7 +978,8 @@ var quoteCreator = new function()
 						//"persentasie":dropdown_coverage.value,
 						"tariffOptionId":getOptionsByFarmCropTypeObjectIdByCoverage(dropdown_coverage.value),
 						//"landNumber":getInputLandNumberValue(),
-						"landId":getLandNumberId(),
+						//"landId":getLandNumberId(),
+						"landNumber":getInputLandNumberValue(),
 						"cultivar":getInputCultivarValue(),
 						"area":getInputAreaValue(),
 						"yield":getInputYieldValue(),
@@ -984,6 +990,7 @@ var quoteCreator = new function()
 				]
 			};
 
+		console.log(quoteData);
 		return quoteData;
 	}
 
@@ -1132,8 +1139,8 @@ var quoteCreator = new function()
 		input_farm.blur();
 
 		input_land_number.focus();
-		//setInputLandNumberValue(landEntry.landNumber);
-		setInputLandNumberValue(quoteInvoker.getLandById(landEntry.landId).name);
+		setInputLandNumberValue(landEntry.landNumber);
+		//setInputLandNumberValue(quoteInvoker.getLandById(landEntry.landId).name);
 		input_land_number.blur();
 		// Testing
 
@@ -1151,6 +1158,48 @@ var quoteCreator = new function()
 		setInputAreaValue(landEntry.area);
 		setInputYieldValue(landEntry.yield);
 		setInputPriceValue(landEntry.price);
+
+		var tariffOptionDamageTypes = quoteInvoker.getQouteLandEntryDamageTypesByLandEntryId(landEntry.id);
+		createLocaltariffOptionDamageTypeArr(tariffOptionDamageTypes);
+		createTariffOptionDamageTypeCheckboxesForEdit();
+	}
+
+	function createLocaltariffOptionDamageTypeArr(tariffOptionDamageTypes)
+	{
+		for(var i = 0; i < tariffOptionDamageTypes.length; i++)
+		{
+			var damageTypeId = tariffOptionDamageTypes[i].tariffOptionDamageTypeId;
+			var tObj = {
+				"name":quoteInvoker.getDamageType(damageTypeId).name,
+				"state":true
+			};
+
+			damageTypeStates.push(tObj);
+		}
+
+		tariffOptionDamageTypeArr = tariffOptionDamageTypes;
+
+		return tariffOptionDamageTypes;
+	}
+
+	function createTariffOptionDamageTypeCheckboxesForEdit()
+	{
+		damageTypeRowContainer.innerHTML = "";
+
+		for(var i = 0; i < damageTypeStates.length; i++)
+		{
+			if(i % 3 == 0)
+			{
+				checkboxContainer = document.createElement("DIV");
+				checkboxContainer.className = "row";
+				damageTypeRowContainer.appendChild(checkboxContainer);
+			}
+			
+			var name = damageTypeStates[i].name;
+			createDamageTypeCheckbox(name, checkboxContainer, damageTypeStates[i].state);
+		}
+
+		damageTypeRowContainer.style.display = "block";
 	}
 
 	function createTemporaryButtonsForHandelingQuoteEdit(landEntry)
@@ -1329,7 +1378,6 @@ var quoteCreator = new function()
 
 	function persistQuoteData(quote)
 	{
-		debugger;
 		// TODO: fix object values to suite mock
 		var landEntries = quote.quoteLandEntries;
 
@@ -1442,7 +1490,7 @@ var quoteCreator = new function()
 			quoteData.quoteLandEntries[i]["opsie_tiepe"] = tariffOptionType.name;
 
 			var versekerings_waarde = quoteInvoker.getTotalTariffOfQuoteLandEntry(landEntry.id);
-			quoteData.quoteLandEntries[i]["versekerings_waarde"] = versekerings_waarde;		
+			quoteData.quoteLandEntries[i]["versekerings_waarde"] = versekerings_waarde;
 		}
 
 		return quoteData;

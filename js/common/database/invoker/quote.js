@@ -90,10 +90,10 @@ var quoteInvoker = new function() {
         return mockCommunicator.getLandByNameAndFarmId(landNumber,farmId);
     }
 
-    this.getLandById = function(landId)
+    /*this.getLandById = function(landId)
     {
         return mockCommunicator.getLand(landId);
-    }
+    }*/
 
     this.getQuote = function(id) {
 
@@ -325,5 +325,14 @@ var quoteInvoker = new function() {
     this.getTariffOptionDamageType = function(id)
     {
         return mockCommunicator.getTariffOptionDamageType(id);
+    }
+    this.getDamageType = function(id)
+    {
+        return mockCommunicator.getDamageType(id);
+    }
+
+    this.getQouteLandEntryDamageTypesByLandEntryId = function(landEntryId)
+    {
+        return mockCommunicator.getQouteLandEntryDamageTypesByLandEntryId(landEntryId);
     }
 }

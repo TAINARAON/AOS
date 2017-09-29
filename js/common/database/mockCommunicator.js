@@ -959,6 +959,20 @@ this.brokerViewableBrokerTable = [
 	this.deactivateQuoteLandEntryDamageType = function(id) {
 		this.quoteLandEntryDamageTypeTable[id]['active'] = false;
 	}
+	this.getQouteLandEntryDamageTypesByLandEntryId = function(landEntryId)
+	{
+		var damageTypes = [];
+
+		for(var i = 0; i < this.quoteLandEntryDamageTypeTable.length; i++)
+		{
+			if(this.quoteLandEntryDamageTypeTable[i].quoteLandEntryId == landEntryId)
+			{
+				damageTypes.push(this.quoteLandEntryDamageTypeTable[i]);
+			}
+		}
+
+		return damageTypes;
+	}
 
 // POLICY - done
 	this.policyTable = [
