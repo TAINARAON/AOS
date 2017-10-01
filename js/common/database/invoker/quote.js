@@ -335,4 +335,9 @@ var quoteInvoker = new function() {
     {
         return mockCommunicator.getQouteLandEntryDamageTypesByLandEntryId(landEntryId);
     }
+
+    this.getPerils = function()
+    {
+        return mockCommunicator.getPerils();
+    }
 }

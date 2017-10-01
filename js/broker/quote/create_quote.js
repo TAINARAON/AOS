@@ -14,7 +14,7 @@ var quoteCreator = new function()
 	var optionsByFarmCropType = {};
 
 	// Used to contain the tariffOptionDamageType data
-	var tariffOptionDamageTypeArr = [];
+	//var tariffOptionDamageTypeArr = [];
 	// Used to keep track of the checkbox state
 	var damageTypeStates = [];
 
@@ -206,11 +206,18 @@ var quoteCreator = new function()
 
 	function getTariffOptionDamageTypeIdByName(name)
 	{
-		for(var i = 0; i < tariffOptionDamageTypeArr.length; i++)
+		/*for(var i = 0; i < tariffOptionDamageTypeArr.length; i++)
 		{
 			if(tariffOptionDamageTypeArr[i].name = name)
 			{
 				return tariffOptionDamageTypeArr[i].id;
+			}
+		}*/
+		for(var i = 0; i < damageTypeStates.length; i++)
+		{
+			if(damageTypeStates[i].name == name)
+			{
+				return damageTypeStates[i].id;
 			}
 		}
 	}
@@ -741,6 +748,38 @@ var quoteCreator = new function()
 		return value != undefined && value != null && (value + '').trim() != "" && (value + '').trim() != "-1";
 	}
 
+	// TODO: implement this method
+	function loadDamageTypesCheckboxes()
+	{
+		// TODO: obtain landId, if no found, new entry
+		var landEntryId;
+		if(landEntryId != undefined && landEntryId != null)
+		{
+			// Load damage types specific to land entry
+
+			var tariffOptionDamageTypes = quoteInvoker.getQouteLandEntryDamageTypesByLandEntryId(landEntryId);
+			createLocaltariffOptionDamageTypeArr(tariffOptionDamageTypes);
+		}
+		else
+		{
+			// Load all perils as it's new quote, or no perils were selected last time
+			var perils = quoteInvoker.getPerils();
+			for(var i = 0; i < perils.length; i++)
+			{
+				var tObj = {
+					"id":perils.id,
+					"name":perils.name,
+					"state":false
+				};
+
+				damageTypeStates.push(tObj);
+			}
+		}
+
+		
+		createTariffOptionDamageTypeCheckboxesForEdit();
+	}
+
 	function loadDamageTypesForSpecificTarrifOptionId(coverage)
 	{	
 		console.log("Load the damage types");
@@ -752,7 +791,7 @@ var quoteCreator = new function()
 			var response = quoteInvoker.getDamageTypesAvailableForOption(id);
 
 			// TODO: Save object to save id when values are selected
-			tariffOptionDamageTypeArr = response;
+			//tariffOptionDamageTypeArr = response;
 
 			if(response != undefined && response != null)
 			{
@@ -781,7 +820,6 @@ var quoteCreator = new function()
 
 	function createDamageTypeCheckbox(title, container, state = false)
 	{
-		debugger;
 		var innerContainer = document.createElement("DIV");
 		innerContainer.className = "col-md-4";
 
@@ -806,9 +844,7 @@ var quoteCreator = new function()
 
 		container.appendChild(innerContainer);
 
-		//label.onchange = function(){trackDamageTypeState(title, input.checked);};
-		//$(label).change(function(){alert("Here"); trackDamageTypeState(title, input.checked);});
-		$(input).prop('checked', state);
+		$("input[name='"+title + "_checkbox"+"']").attr('checked', state);
 		$(document).on("change", "input[name='"+title + "_checkbox"+"']", function(){trackDamageTypeState(title, this.checked);});
 	}
 
@@ -1158,7 +1194,7 @@ var quoteCreator = new function()
 		setInputAreaValue(landEntry.area);
 		setInputYieldValue(landEntry.yield);
 		setInputPriceValue(landEntry.price);
-
+		debugger;
 		var tariffOptionDamageTypes = quoteInvoker.getQouteLandEntryDamageTypesByLandEntryId(landEntry.id);
 		createLocaltariffOptionDamageTypeArr(tariffOptionDamageTypes);
 		createTariffOptionDamageTypeCheckboxesForEdit();
@@ -1169,15 +1205,17 @@ var quoteCreator = new function()
 		for(var i = 0; i < tariffOptionDamageTypes.length; i++)
 		{
 			var damageTypeId = tariffOptionDamageTypes[i].tariffOptionDamageTypeId;
+			var damageTypes = quoteInvoker.getDamageType(damageTypeId);
 			var tObj = {
-				"name":quoteInvoker.getDamageType(damageTypeId).name,
+				"id":damageTypes.id,
+				"name":damageTypes.name,
 				"state":true
 			};
 
 			damageTypeStates.push(tObj);
 		}
 
-		tariffOptionDamageTypeArr = tariffOptionDamageTypes;
+		//tariffOptionDamageTypeArr = tariffOptionDamageTypes;
 
 		return tariffOptionDamageTypes;
 	}
