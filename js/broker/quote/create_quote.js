@@ -1217,11 +1217,11 @@ var quoteCreator = new function()
 		landEntryId = landEntry.id;
 		//hideIncludeRowButton();
 		debugger;
-		for(var i = 0; i < quote.quoteLandEntries.length; i++)
+		for(let i = 0; i < quote.quoteLandEntries.length; i++)
 		{
 			var existingLandEntry = quote.quoteLandEntries[i];
 
-			if(existingLandEntry.id = landEntryId)
+			if(existingLandEntry.id == landEntryId)
 			{
 				setInputFieldsToExistingQuoteForEditing(existingLandEntry);
 				createTemporaryButtonsForHandelingQuoteEdit(existingLandEntry);
@@ -1391,11 +1391,12 @@ var quoteCreator = new function()
 	function updateQuoteLandEntry(editedLandEntry, originalLandEntry)
 	{
 		debugTool.print("Update record", FILTER_LEVEL_MEDIUM, FILTER_TYPE_LOG);
-		for(var i = 0; i < quote.quoteLandEntries.length; i++)
+		for(let i = 0; i < quote.quoteLandEntries.length; i++)
 		{
 			if(quote.quoteLandEntries[i] == originalLandEntry)
 			{
 				quote.quoteLandEntries[i] = editedLandEntry;
+				quote.quoteLandEntries[i].id = originalLandEntry.id;
 			}
 		}
 	}

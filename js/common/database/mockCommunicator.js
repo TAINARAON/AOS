@@ -1167,6 +1167,16 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+	this.getPolicyLandEntriesByPolicyId = function(policyId)
+	{
+		var landEntries = [];
+		for(var i=0;i<this.policyLandEntryTable.length;i++) {
+			if(this.policyLandEntryTable[i].policyId==policyId) {
+				landEntries.push(this.policyLandEntryTable[i]);
+			}
+		}
+		return landEntries;
+	}
 	this.updatePolicyLandEntry = function(id, data) {
 		data.id = id;
 		this.policyLandEntryTable[id] = data;
@@ -1214,6 +1224,18 @@ var mockCommunicator = new function()
 	this.updatePolicyLandEntryDamageType= function(id, data) {
 		data.id = id;
 		this.policyLandEntryDamageTypeTable[id] = data;
+	}
+	this.getPolicyLandEntryDamageTypesByPolicyLandEntryId = function(policyLandEntryId)
+	{
+		var damageTypes = [];
+		for(var i = 0; i < this.policyLandEntryDamageTypeTable.length; i++)
+		{
+			if(this.policyLandEntryDamageTypeTable[i].policyLandEntryId == policyLandEntryId)
+			{
+				damageTypes.push(this.policyLandEntryDamageTypeTable[i]);
+			}
+		}
+		return damageTypes;
 	}
 
 // ########################### SYSTEM KEYS ###############################
