@@ -128,6 +128,8 @@ var policyInvoker = new function() {
         {
             policy.policyLandEntries[i]["policyLandEntryDamageType"] = getPolicyLandEntryDamageTypesByPolicyLandEntryId(policy.policyLandEntries[i].id);
             
+            policy.policyLandEntries[i]["crop"] = getCrop(policy.policyLandEntries[i].cropId);
+
             for(var j = 0; j < policy.policyLandEntries[i].policyLandEntryDamageType.length; j++)
             {   
                 var tariffOptionDamageTypeId = policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageTypeId;
