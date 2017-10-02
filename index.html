@@ -23,6 +23,42 @@
 	</div>
 </body>
 
+<!-- Upload File Modal -->
+<div id="upload_file_modal_container">
+	<div id="uploadFileModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Upload Supporting Documents</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	          <form>
+				<div>
+				  <label for="file">Choose file to upload</label>
+				  <input type="file" id="uploadFileInput" name="file" multiple="multiple">
+				</div>
+				<div>
+					<ul id="upload_file_uploaded_files_ul">
+						
+					</ul>
+				</div>
+				<div>
+				  <button>Submit</button>
+				</div>
+			  </form>
+	        </div>
+	  	  </div>
+	      <div class="modal-footer">
+	        <div id="change_me2" class="btn btn-success" data-dismiss="modal">-</div>
+	        <button id="change_me3" type="button" class="btn btn-danger" data-dismiss="modal">-</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+
 <!-- Debug script -->
 <script type="text/javascript" src="js/common/debug.js"></script>
 <script type="text/javascript" src="js/common/util.js"></script>

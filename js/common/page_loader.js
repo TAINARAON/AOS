@@ -107,7 +107,7 @@ var pageLoader = function()
 
 		navigationBackStack.push(navObject);
 
-		console.log(navigationBackStack);
+		//console.log(navigationBackStack);
 	}
 
 	function loadAssets(asset) {

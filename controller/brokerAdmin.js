@@ -42,11 +42,11 @@ var brokerAdminController = new function() {
 		Parameters: brokerId
 		Expects: 	name, surname, quoteRights, policyRights, damageReportRights, clientCreationRights
 					array of BrokerViewableBrokers' id,name,surname
-	*/
+	
 	this.getBrokerForEditModal = function(brokerId) {
 
 		return mockCommunicator.getBrokerDisplayable(brokerId);
-	}
+	}*/
 
 
 	this.getBrokerage = function() {
@@ -57,6 +57,10 @@ var brokerAdminController = new function() {
 	this.getBrokerAdmin = function() {
 
 		return brokerAdmin;
+	}
+
+	this.updateBroker = function(brokerData) {
+		alert('brokerAdminController updateBroker TODO');
 	}
 
 	this.getBrokerForEditModal = function(brokerId) {

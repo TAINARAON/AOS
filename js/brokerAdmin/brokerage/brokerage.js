@@ -7,10 +7,6 @@ function init() {
 	initializeModals();
 	setBrokerageDetails();
 	populateBrokerTable();
-
-
-	
-	initializeSelectorComponent();
 }
 
 function initializeModals() {
@@ -110,6 +106,7 @@ function populateEditBrokerModalText(brokerData) {
 	populateTextFields(brokerData);
 	populatePermissionCheckBoxes(brokerData);
 	populateBrokerViewableBrokersComponent(brokerData);
+	initializeSelectorComponent(brokerData);
 	
 }
 function populateTextFields(brokerData) {
@@ -126,8 +123,36 @@ function populateBrokerViewableBrokersComponent(brokerData) {
 function setOnClickForEditBrokerSaveButton(brokerId) {
 
 	$('#edit_broker_save_button').off().on('click', function() {
-		alert(brokerId + ' changed to ' + $('#edit_broker_name_input').val());
+
+		updateBroker(brokerId);
 	});
+}
+
+function updateBroker(brokerId) {
+
+	var name = "";
+	var surname = "";
+
+	var clientRight = "";
+	var policyRight = "";
+	var damageReportRight = "";
+	var quoteRight = "";
+
+	var viewableBrokers = [];
+
+	var brokerData = {
+
+	}
+
+	var result = brokerAdminController.updateBroker(brokerData);
+
+	// Probably need to bring up something to load supporting documents
+	util.createNotification('Request to update broker successfull.');
+	util.displayUploadFileModal('hi',test);
+}
+
+function test() {
+	alert('callback is working');
 }
 
 function onRevokeBroker(id) {
@@ -136,69 +161,16 @@ function onRevokeBroker(id) {
 }
 
 
-function initializeSelectorComponent() {
-	populateSelectorBox();
+function initializeSelectorComponent(brokerData) {
+	populateSelectorBox(brokerData);
 	onAddClickListener();
 	onRemoveClickListener();
 }
-function populateSelectorBox() {
+function populateSelectorBox(brokerData) {
 
 	// TODO
-	var brokers = 
-	[
-		{
-			'id':0,
-			'name':"Tiaan",
-			'surname':'Gerber'
-		},
-		{
-			'id':1,
-			'name':"Anro",
-			'surname':'White'
-		},
-		{
-			'id':0,
-			'name':"Tiaan",
-			'surname':'Gerber'
-		},
-		{
-			'id':1,
-			'name':"Anro",
-			'surname':'White'
-		},
-		{
-			'id':0,
-			'name':"Tiaan",
-			'surname':'Gerber'
-		},
-		{
-			'id':1,
-			'name':"Anro",
-			'surname':'White'
-		},
-		{
-			'id':0,
-			'name':"Tiaan",
-			'surname':'Gerber'
-		},
-		{
-			'id':1,
-			'name':"Anro",
-			'surname':'White'
-		},
-		{
-			'id':0,
-			'name':"Tiaan",
-			'surname':'Gerber'
-		},
-		{
-			'id':1,
-			'name':"Anro",
-			'surname':'White'
-		}
-	];
-
-
+	var brokers = brokerData['brokerViewableBrokers'];
+	
 	var availableBrokersUl = $('#availabe_brokers_ul');
 
 	for(let i = 0; i < brokers.length; i++) {
@@ -210,13 +182,6 @@ function populateSelectorBox() {
 		var li = $('<li></li>').prop('id',id).text(name + " " + surname).on('click',function() {
 
 			toggleSelectedListItem($(this));
-			/*if($(this).hasClass('selected')) {
-				$(this).removeClass('selected');
-				$(this).css('background-color','white');
-			} else {
-				$(this).addClass('selected');
-				$(this).css('background-color','grey');
-			}*/
 		});
 		availableBrokersUl.append(li);
 	}

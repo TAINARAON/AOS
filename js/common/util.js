@@ -1,5 +1,22 @@
 var util = new function() {
 
+	this.displayUploadFileModal = function(data,callback) {
+
+		// HACK
+		$("#uploadFileInput").unbind('change');
+		$('#uploadFileInput').on('change',function() {
+			
+			var filename = $('#uploadFileInput').val().match(/[^\\/]*$/)[0];
+			// Add name to file list
+			$('#upload_file_uploaded_files_ul').append($('<li></li>').text(filename));
+		});
+		// END OF HACK
+
+		$('#uploadFileModal').modal('show');
+
+		// set the onSave to call callback
+	}
+
 	this.getDateTimePretty =function (dateTime = null){
 	    
 	    var now;
