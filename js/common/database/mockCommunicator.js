@@ -285,7 +285,7 @@ var mockCommunicator = new function()
 	this.businessUnitTable = [
 		{
 			'id':'0',
-			'name':'Anro Boerdery Co (ABC)',
+			'name':'BU0',   //'Anro Boerdery Co (ABC)',
 			'contactNumber':'063-887-9635',
 			'contactPerson':'Anro Swart',
 			'email':'anro.swart@bing.com',
@@ -296,7 +296,7 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'1',
-			'name':'Tiaan and Anro Boerdery Amalgamated Co (TABACO)',
+			'name':'BU1',			//'Tiaan and Anro Boerdery Amalgamated Co (TABACO)',
 			'contactNumber':'062-352-1342',
 			'contactPerson':'Tiaan Swart',
 			'email':'tiaan.swart@yahoo.com',
@@ -407,7 +407,7 @@ var mockCommunicator = new function()
 	this.farmTable = [
 		{
 			'id':'0',
-			'name':'Plaas Anro Een',
+			'name':'P0',
 			'businessUnitId':'0',
 			'latitude':'1.22644',
 			'longitude':'-0.35428',
@@ -416,7 +416,7 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'1',
-			'name':'Plaas Anro Twee',
+			'name':'P1',
 			'businessUnitId':'0',
 			'latitude':'1.325642',
 			'longitude':'-0.35243',
@@ -704,7 +704,7 @@ var mockCommunicator = new function()
 	this.getBrokerViewableBrokersOfBroker = function(mainBrokerId) {
 
 		var brokers = [];
-		alert(mainBrokerId);
+
 		for(var i=0;i<this.brokerViewableBrokerTable.length;i++) {
 			if(this.brokerViewableBrokerTable[i].mainBrokerId==mainBrokerId) {
 				brokers.push(this.getBroker(this.brokerViewableBrokerTable[i]['viewableBrokerId']));

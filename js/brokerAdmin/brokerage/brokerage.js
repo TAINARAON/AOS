@@ -7,6 +7,10 @@ function init() {
 	initializeModals();
 	setBrokerageDetails();
 	populateBrokerTable();
+
+
+	
+	initializeSelectorComponent();
 }
 
 function initializeModals() {
@@ -129,4 +133,137 @@ function setOnClickForEditBrokerSaveButton(brokerId) {
 function onRevokeBroker(id) {
 	
 	alert("revoke: "+id);
+}
+
+
+function initializeSelectorComponent() {
+	populateSelectorBox();
+	onAddClickListener();
+	onRemoveClickListener();
+}
+function populateSelectorBox() {
+
+	// TODO
+	var brokers = 
+	[
+		{
+			'id':0,
+			'name':"Tiaan",
+			'surname':'Gerber'
+		},
+		{
+			'id':1,
+			'name':"Anro",
+			'surname':'White'
+		},
+		{
+			'id':0,
+			'name':"Tiaan",
+			'surname':'Gerber'
+		},
+		{
+			'id':1,
+			'name':"Anro",
+			'surname':'White'
+		},
+		{
+			'id':0,
+			'name':"Tiaan",
+			'surname':'Gerber'
+		},
+		{
+			'id':1,
+			'name':"Anro",
+			'surname':'White'
+		},
+		{
+			'id':0,
+			'name':"Tiaan",
+			'surname':'Gerber'
+		},
+		{
+			'id':1,
+			'name':"Anro",
+			'surname':'White'
+		},
+		{
+			'id':0,
+			'name':"Tiaan",
+			'surname':'Gerber'
+		},
+		{
+			'id':1,
+			'name':"Anro",
+			'surname':'White'
+		}
+	];
+
+
+	var availableBrokersUl = $('#availabe_brokers_ul');
+
+	for(let i = 0; i < brokers.length; i++) {
+
+		var id = brokers[i]['id'];
+		var name = brokers[i]['name'];
+		var surname = brokers[i]['surname'];
+
+		var li = $('<li></li>').prop('id',id).text(name + " " + surname).on('click',function() {
+
+			toggleSelectedListItem($(this));
+			/*if($(this).hasClass('selected')) {
+				$(this).removeClass('selected');
+				$(this).css('background-color','white');
+			} else {
+				$(this).addClass('selected');
+				$(this).css('background-color','grey');
+			}*/
+		});
+		availableBrokersUl.append(li);
+	}
+}
+
+
+function onAddClickListener() {
+
+	$('#add_button').on('click',function() {
+
+		var listItems = $('#availabe_brokers_ul .selected');
+
+		for(var i=0;i<listItems.length;i++) {
+
+			var item = listItems.eq(i);
+			item.detach();
+
+			$('#selected_brokers_ul').append(item);
+			toggleSelectedListItem(item);
+		}
+	});
+}
+
+
+function onRemoveClickListener() {
+
+	$('#remove_button').on('click',function() {
+
+		var listItems = $('#selected_brokers_ul .selected');
+
+		for(var i=0;i<listItems.length;i++) {
+
+			var item = listItems.eq(i);
+			item.detach();
+
+			$('#availabe_brokers_ul').append(item);
+			toggleSelectedListItem(item);
+		}
+	});
+}
+
+function toggleSelectedListItem(li) {
+	if(li.hasClass('selected')) {
+		li.removeClass('selected');
+		li.css('background-color','white');
+	} else {
+		li.addClass('selected');
+		li.css('background-color','grey');
+	}
 }

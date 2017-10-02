@@ -1,0 +1,10 @@
+.something {
+
+	height: 130px;
+	border: solid black 1pt;
+	overflow-y: auto;
+}
+
+.something li {
+	cursor: pointer;
+}

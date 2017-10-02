@@ -1,3 +1,5 @@
+<link rel = "stylesheet" type = "text/css" href = "css/brokerAdmin/brokerage.css" />
+
 <div class="row">
   	<div id="broker_admin_brokerage_details_container" class="col-md-10 col-md-offset-1">
   		
@@ -37,17 +39,51 @@
 	        <h4 class="modal-title">Edit Broker</h4>
 	      </div>
 	      <div class="modal-body">
-	        <div class="row">
-	          <div class="col-md-12">
-	            <h6 class="text-left">Name</h6>
-	            <input id="edit_broker_name_input" class="form-control">
+	          <div class="row">
+	          	<div class="col-md-12">
+	            	<label>Name</label>
+	            	<input id="edit_broker_name_input" class="form-control">
+	            </div>
 	          </div>
-	          <div class="col-md-12">
-	            <h6 class="text-left">Surname</h6>
-	            <input id="edit_broker_surname_input" class="form-control">
+	          <div class="row">
+	          	<div class="col-md-12">
+	              <label>Surname</label>
+	              <input id="edit_broker_surname_input" class="form-control">
+	            </div>
+	          </div>
+	          <div class="row">
+	          	<div class="col-md-12">
+	          		<label>Rights</label>
+          			<div class="row">
+            			<h6 class="col-md-3"><input id="" type="checkbox">Create Client</h6>
+            			<h6 class="col-md-3"><input id="" type="checkbox">Create Damage Report</h6>
+            			<h6 class="col-md-3"><input id="" type="checkbox">Create Quote</h6>
+            			<h6 class="col-md-3"><input id="" type="checkbox">Create Policy</h6>
+            		</div>
+		        </div>
+	          </div>
+	          <div class="row">
+	          	<div class="col-md-12">
+	              <label>Viewable Brokers</label>
+	              	<div id="viewable_brokers">
+	              		<div class="col-md-5">
+	              			<label>Available</label>
+	              			<ul id="availabe_brokers_ul" class="something"></ul>
+	              		</div>
+
+	              		<div class="col-md-2">
+	              			<div class="row center-block"><div id="add_button" class="btn btn-success center-block">&gt;&gt;</div></div>
+	              			<div class="row center-block"><div id="remove_button" class="btn btn-danger center-block">&lt;&lt;</div></div>
+	              		</div>
+
+	              		<div class="col-md-5">
+	              			<label>Selected</label>
+	              			<ul id="selected_brokers_ul" class="something"></ul>
+	              		</div>
+	              	</div>
+	            </div>
 	          </div>
 	        </div>
-	      </div>
 	      <div class="modal-footer">
 	        <div id="edit_broker_save_button" class="btn btn-success" data-dismiss="modal">Save</div>
 	        <button id="edit_broker_cancel_button" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
