@@ -14,7 +14,7 @@ var pageLoader = function()
 		{
 			"role":"brokerAdmin",
 			"cssFiles":[],			//"css/insurer_admin/systemkey.css"
-			"jsFiles":["js/broker_admin/nav.js"],
+			"jsFiles":["js/brokerAdmin/nav.js"],
 			"htmlFiles":{
 				"navbar":"html/common/nav.html",
 				"landing_page":"html/common/home.html"
@@ -33,6 +33,15 @@ var pageLoader = function()
 			"role":"insurerAdmin",
 			"cssFiles":[],
 			"jsFiles":["js/insurer_admin/nav.js"],
+			"htmlFiles":{
+				"navbar":"html/common/nav.html",
+				"landing_page":"html/common/home.html"
+			}
+		},
+		{
+			"role":"insurer",
+			"cssFiles":[],
+			"jsFiles":["js/insurer/nav.js"],
 			"htmlFiles":{
 				"navbar":"html/common/nav.html",
 				"landing_page":"html/common/home.html"

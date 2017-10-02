@@ -4,15 +4,15 @@
  	[
  		{
  			'text':'Brokerage',
- 			'pageUrl':'html/broker_admin/brokerage.html'
+ 			'pageUrl':'html/brokerAdmin/brokerage/brokerage.html'
  		},
  		{
  			'text':'Quotes',
- 			'pageUrl':'html/broker_admin/quotes.html'
+ 			'pageUrl':'html/brokerAdmin/quotes.html'
  		},
  		{
  			'text':'Policies',
- 			'pageUrl':'html/broker_admin/policies.html'
+ 			'pageUrl':'html/brokerAdmin/policies.html'
  		},
  	];
 

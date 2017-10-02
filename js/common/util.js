@@ -1,6 +1,5 @@
 var util = new function() {
 
-
 	this.getDateTimePretty =function (dateTime = null){
 	    
 	    var now;

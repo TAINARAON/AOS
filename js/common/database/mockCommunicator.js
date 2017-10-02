@@ -52,14 +52,22 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'1',
-			'name':'Insurer',
+			'name':'Insurer Administrator',
 		},
 		{
 			'id':'2',
-			'name':'Broker',
+			'name':'Insurer',
 		},
 		{
 			'id':'3',
+			'name':'Broker Administrator',
+		},
+		{
+			'id':'4',
+			'name':'Broker',
+		},
+		{
+			'id':'5',
 			'name':'Client',
 		},
 	];
@@ -97,8 +105,18 @@ var mockCommunicator = new function()
 	this.userTable = [
 		{
 			'id':'0',
+			'username':'SA',
+			'password':'',
+			'roleId':'0',
+			'name':'Leeroy',
+			'surname':'Nnnjenkinsss',
+			'email':'ljenkins@gmail.com',
+			'active':'1',
+			'validated':'1'
+		},{
+			'id':'1',
 			'username':'IA',
-			'password':'password',
+			'password':'',
 			'roleId':'1',
 			'name':'Leeroy',
 			'surname':'Nnnjenkinsss',
@@ -107,10 +125,10 @@ var mockCommunicator = new function()
 			'validated':'1'
 		},
 		{
-			'id':'1',
+			'id':'2',
 			'username':'I',
-			'password':'password',
-			'roleId':'1',
+			'password':'',
+			'roleId':'2',
 			'name':'Andre',
 			'surname':'Carstens',
 			'email':'acarstens@gmail.com',
@@ -118,32 +136,32 @@ var mockCommunicator = new function()
 			'validated':'1'
 		},
 		{
-			'id':'2',
+			'id':'3',
 			'username':'BA',
-			'password':'password',
-			'roleId':'2',
-			'name':'Cam',
-			'surname':'Eonona',
+			'password':'',
+			'roleId':'3',
+			'name':'BAName',
+			'surname':'BASurname',
 			'email':'cameo@gmail.com',
 			'active':'1',
 			'validated':'1'
 		},
 		{
-			'id':'3',
-			'username':'B',
-			'password':'password',
-			'roleId':'2',
-			'name':'Doctor',
-			'surname':'Acula',
+			'id':'4',
+			'username':'BM',
+			'password':'',
+			'roleId':'4',
+			'name':'BMName',
+			'surname':'BMSurname',
 			'email':'dracula@gmail.com',
 			'active':'1',
 			'validated':'1'
 		},
 		{
-			'id':'4',
+			'id':'5',
 			'username':'CA',
-			'password':'password',
-			'roleId':'3',
+			'password':'',
+			'roleId':'5',
 			'name':'Dan',
 			'surname':'Wazoski',
 			'email':'danwaz@gmail.com',
@@ -151,16 +169,27 @@ var mockCommunicator = new function()
 			'validated':'1'
 		},
 		{
-			'id':'5',
+			'id':'6',
 			'username':'C',
-			'password':'password',
-			'roleId':'3',
+			'password':'',
+			'roleId':'5',
 			'name':'Simon',
 			'surname':'Says',
 			'email':'simonsays@gmail.com',
 			'active':'1',
 			'validated':'1'
 		},
+		{
+			'id':'7',
+			'username':'B',
+			'password':'',
+			'roleId':'4',
+			'name':'Viewable Broker Name',
+			'surname':'Surname',
+			'email':'viewableBroker@gmail.com',
+			'active':'1',
+			'validated':'1'
+		}
 	];
 	this.createUser = function(data) {
 
@@ -441,7 +470,7 @@ var mockCommunicator = new function()
 	this.insurerAdminTable = [
 		{
 			'id':'0',
-			'userId':'0',
+			'userId':'1',
 			'active':'1',
 		},
 	];
@@ -485,7 +514,7 @@ var mockCommunicator = new function()
 	this.insurerTable = [
 		{
 			'id':'0',
-			'userId':'1',
+			'userId':'2',
 			'active':'1',
 		},
 	];
@@ -529,7 +558,7 @@ var mockCommunicator = new function()
 	this.brokerAdminTable = [
 		{
 			'id':'0',
-			'userId':'2',
+			'userId':'3',
 			'brokerageId':'0',
 		},
 	];
@@ -544,7 +573,14 @@ var mockCommunicator = new function()
 	}
 	this.getBrokerAdmin = function(id) {
 		for(var i=0;i<this.brokerAdminTable.length;i++) {
-			if(this.brokerAdminTable[i].id==id) {
+			if(this.brokerAdminTable[i]['id']==id) {
+				return this.brokerAdminTable[i];
+			}
+		}
+	}
+	this.getBrokerAdminByUserId = function(id) {
+		for(var i=0;i<this.brokerAdminTable.length;i++) {
+			if(this.brokerAdminTable[i]['userId']==id) {
 				return this.brokerAdminTable[i];
 			}
 		}
@@ -564,7 +600,16 @@ var mockCommunicator = new function()
 	this.brokerTable = [
 		{
 			'id':'0',
-			'userId':'3',
+			'userId':'4',
+			'brokerageId':'0',
+			'quoteRights':'1',
+			'policyRights':'1',
+			'damageReportRights':'1',
+			'clientCreationRights':'1'
+		},
+		{
+			'id':'1',
+			'userId':'7',
 			'brokerageId':'0',
 			'quoteRights':'1',
 			'policyRights':'1',
@@ -572,6 +617,30 @@ var mockCommunicator = new function()
 			'clientCreationRights':'1'
 		},
 	];
+
+	// User by: brokerAdmin
+	this.getBrokersForBrokerTableInBrokerageTab = function(brokerageId) {
+		var brokers = [];
+		for(var i=0;i<this.brokerTable.length;i++) {
+			if(this.brokerTable[i].brokerageId==brokerageId) {
+
+				var broker = this.brokerTable[i];
+				var user = this.getUser(broker['userId']);
+
+				var neededInfo = 
+				{
+					'id':broker['id'],
+					'name':user['name'],
+					'surname':user['surname']
+				}
+
+				brokers.push(neededInfo);
+			}
+		}
+
+		return brokers;
+	}
+
 	this.createBroker = function(data) {
 
 		data.id = this.brokerTable.length;
@@ -611,7 +680,7 @@ var mockCommunicator = new function()
 	}
 
 // BROKER VIEWABLE BROKER
-this.brokerViewableBrokerTable = [
+	this.brokerViewableBrokerTable = [
 		{
 			'id':'0',
 			'mainBrokerId':'0',
@@ -631,6 +700,18 @@ this.brokerViewableBrokerTable = [
 				return this.brokerViewableBrokerTable[i];
 			}
 		}
+	}
+	this.getBrokerViewableBrokersOfBroker = function(mainBrokerId) {
+
+		var brokers = [];
+		alert(mainBrokerId);
+		for(var i=0;i<this.brokerViewableBrokerTable.length;i++) {
+			if(this.brokerViewableBrokerTable[i].mainBrokerId==mainBrokerId) {
+				brokers.push(this.getBroker(this.brokerViewableBrokerTable[i]['viewableBrokerId']));
+			}
+		}
+
+		return brokers;
 	}
 	this.getBrokerViewableBrokers = function() {
 		return this.brokerViewableBrokerTable;

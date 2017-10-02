@@ -6,12 +6,14 @@ var ROLE_NAME = 'roleName';
 var SESSION_ADMINISTRATOR_NAME = 'System Administrator';
 var CLIENT_NAME = 'Client';
 var BROKER_NAME = 'Broker';
-var BROKER_ADMIN_NAME = 'Broker Admin';
+var BROKER_ADMIN_NAME = 'Broker Administrator';
 var INSURER_NAME = 'Insurer';
+var INSURER_ADMIN_NAME = 'Insurer Administrator';
 
 var BROKERAGE_NAME = 'brokerageName';
 var BROKERAGE_ID = 'brokerageId';
 var BROKER_ID = 'brokerId';
+var BROKER_ADMIN_ID = 'brokerAdminId';
 var BROKERAGE_EMAIL = 'brokerageEmail';
 var BROKERAGE_CONACT_NUMBER = 'brokerageContactNumber';
 var BROKERAGE_FSP_NUMBER = 'brokerageFspNumber';
@@ -25,12 +27,13 @@ var testClientId = 4;
 
 function getUser(username,password) {
 
-	var encodedPassword = encodePassword(password);
-
-	return mockCommunicator.getUserByUsernamePassword(username,encodedPassword);
+	return mockCommunicator.getUserByUsernamePassword(username,password);
 }
 
 var session = new function() {
+
+	var name = null;
+	var surname = null;
 
 	this.login = function(username,password) {
 
@@ -42,18 +45,11 @@ var session = new function() {
 			return;
 		}
 
+		name = user['name'];
+		surname = user['surname'];
+
 		var userId =  user['id'];
-
-		sessionStorage.setItem(USER_ID,userId);
-		
-		var nameOfUser = user['name'];
-		sessionStorage.setItem(NAME_OF_USER, nameOfUser);
-		
-		var surnameOfUser = user['surname'];
-		sessionStorage.setItem(SURNAME_OF_USER, surnameOfUser);
-
 		var roleName = userInvoker.getRole(user['roleId'])['name'];
-		sessionStorage.setItem(ROLE_NAME, roleName);
 
 		switch(roleName) {
 		    case CLIENT_NAME:
@@ -62,30 +58,51 @@ var session = new function() {
 		    case BROKER_NAME:
 		        onBrokerLogin(userId);
 		        break;
+		    case BROKER_ADMIN_NAME:
+		        onBrokerAdminLogin(userId);
+		        break;
 		    case INSURER_NAME:
 		        onInsurerLogin(userId);
 		        break;
+		    case INSURER_ADMIN_NAME:
+		        onInsurerAdminLogin(userId);
+		        break;
 		    default:
 		        alert("role log in error");
+		        this.logout();
 		}
 	};
 
 	this.logout = function() {
+
 		sessionStorage.clear();
+
+		name = null;
+		surname = null;
+
 		loader.load();
-		console.log(sessionStorage);
+		util.createNotification('Logged out','info');
+	}
+
+	this.getName = function() {
+
+		return name;
+	}
+	this.getSurname = function() {
+
+		return surname;
 	}
 }
+
 function onLoginFailed() {
 
 	alert('login credentials failed.');
-	alert('Valid usernames: IA, I, BA, B, CA, C.  Password = password');
+	alert('Valid usernames: IA, I, BA, B, CA, C.  Password = not needed');
 }
 
 function encodePassword(password) {
 	// TODO
 	return password;
-
 }
 
 function onBrokerLogin(userId) {
@@ -103,17 +120,15 @@ function onBrokerLogin(userId) {
 	sessionStorage.setItem(BROKERAGE_CONACT_NUMBER, brokerage['contactNumber']);
 	sessionStorage.setItem(BROKERAGE_FSP_NUMBER, brokerage['fspNumber']);
 
-	if(broker['isAdmin'] == true) {
+	util.createNotification('Logged in as Broker');
+	loader.loadRole('broker');
+}
 
-		sessionStorage.setItem(ROLE_NAME, BROKER_ADMIN_NAME);
-		util.createNotification('Logged in as Broker Admin');
-		loader.loadRole('brokerAdmin');
+function onBrokerAdminLogin(userId) {
 
-	} else {
-
-		util.createNotification('Logged in as Broker');
-		loader.loadRole('broker');
-	}
+	brokerAdminController.init(userId);
+	util.createNotification('Logged in as Broker Admin');
+	loader.loadRole('brokerAdmin');
 }
 	
 function onClientLogin(userId) {
@@ -127,19 +142,16 @@ function onClientLogin(userId) {
 	loader.loadRole('client');
 }
 
+function onInsurerAdminLogin(userId) {
+
+	util.createNotification('Logged in as Insurer Admin');
+	loader.loadRole('insurerAdmin');
+}
+
 function onInsurerLogin(userId) {
 
-	var insurer = insurerInvoker.getInsurerByUserId(userId);
-
-	if(insurer['isAdmin'] == true) {
-
-		util.createNotification('Logged in as Insurer Admin');
-		loader.loadRole('insurerAdmin');
-		
-	} else {
-
-		util.createNotification('Logged in as Insurer');
-	}
+	util.createNotification('Logged in as Insurer');
+	loader.loadRole('insurer');
 }
 
 

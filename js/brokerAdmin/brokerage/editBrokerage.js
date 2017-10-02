@@ -3,15 +3,20 @@ $(function() {
   });
 
 function init() {
+
 	initText();
 	initOnClickListeners();
 }
 
+
 function initText() {
-	$('#edit_brokerage_brokerage_name_input').val(getNameOfBrokerage());
-	$('#edit_brokerage_email_input').val(getEmailOfBrokerage());
-	$('#edit_brokerage_contact_number_input').val(getContactNumberOfBrokerage());
-	$('#edit_brokerage_fsp_number_input').val(getFspNumberOfBrokerage());
+
+	var brokerage = brokerAdminController.getBrokerage();
+
+	$('#edit_brokerage_brokerage_name_input').val(brokerage['name']);
+	$('#edit_brokerage_email_input').val(brokerage['email']);
+	$('#edit_brokerage_contact_number_input').val(brokerage['contactNumber']);
+	$('#edit_brokerage_fsp_number_input').val(brokerage['fspNumber']);
 }
 
 function initOnClickListeners() {

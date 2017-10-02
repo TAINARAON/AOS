@@ -2,7 +2,6 @@ var brokerInvoker = new function() {
 
     this.url =  "someUrlToGetToBrokerTable";
 
-    // not here
     this.create = function (userData,brokerData) 
     {
         var newUserId = mockCommunicator.createUser(userData);
@@ -11,7 +10,6 @@ var brokerInvoker = new function() {
 		return mockCommunicator.createBroker(brokerData);
     };
 
-    // not here
     this.getBrokersDetailed = function() {
 
     	var brokers = mockCommunicator.getBrokers();
@@ -26,7 +24,7 @@ var brokerInvoker = new function() {
     };
 
     this.getBrokerDisplayable = function(id) {
-        
+
     	var broker = mockCommunicator.getBroker(id);
     	var user = mockCommunicator.getUser(broker.userId);
     
@@ -46,10 +44,15 @@ var brokerInvoker = new function() {
     this.getBroker = function(id) {
         return mockCommunicator.getBroker(id);
     }
+    this.getBrokerAdmin = function(id) {
+        return mockCommunicator.getBrokerAdmin(id);
+    }
     this.getBrokerByUserId = function(userId) {
         return mockCommunicator.getBrokerByUserId(userId);
     }
-    
+    this.getBrokerAdminByUserId = function(userId) {
+        return mockCommunicator.getBrokerAdminByUserId(userId);
+    }
     this.getCleanBrokerage = function(id) {
     	var brokerage = mockCommunicator.getBrokerage(id);
 

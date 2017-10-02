@@ -2,37 +2,32 @@ $(function() {
     init();
   });
 
-function test() {
-	console.log(quoteInvoker.getDetailsOfQuote(1));
-	//quoteInvoker.getDetailsOfQuote(0);
-}
-
 function init() {
-	
-	test();
-
 
 	initializeModals();
-	initializeText();
+	setBrokerageDetails();
 	populateBrokerTable();
 }
 
 function initializeModals() {
 	
-	loader.loadPartOfPage("html/broker_admin/edit_brokerage.html", 'edit_brokerage_modal_container');
+	loader.loadPartOfPage("html/brokerAdmin/brokerage/editBrokerage.html", 'edit_brokerage_modal_container');
 }
 
-function initializeText() {
-	setBrokerageNameText();
-	setBrokerageEmailText();
-	setBrokerageFspNumberText();
-	setBrokerageContactNumberText();
+function setBrokerageDetails() {
+
+	var brokerageDetails = brokerAdminController.getBrokerage();
+
+	$('#broker_admin_brokerage_name').text(brokerageDetails['name']);
+	$('#broker_admin_brokerage_email').text(brokerageDetails['email']);
+	$('#broker_admin_brokerage_fsp_number').text(brokerageDetails['fspNumber']);
+	$('#broker_admin_brokerage_contact_number').text(brokerageDetails['contactNumber']);
 }
 
 function populateBrokerTable() {
 
 	var container = $('#broker_admin_broker_container');
-	var brokers = getBrokersDetails();
+	var brokers = brokerAdminController.getBrokersForBrokerTableInBrokerageTab();
 
 	for(var i = 0;i<brokers.length;i++) {
 		createBrokerEntry(brokers[i],container);
@@ -102,13 +97,27 @@ function toggleDataContainer(e) {
 
 function onEditBroker(id) {
 
-	populateEditBrokerModalText(brokerInvoker.getBrokerWithDetails(id));
+	populateEditBrokerModalText(brokerAdminController.getBrokerForEditModal(id));
 	setOnClickForEditBrokerSaveButton(id);
 }
 
-function populateEditBrokerModalText(broker) {
-	$('#edit_broker_name_input').val(broker.name);
-	$('#edit_broker_surname_input').val(broker.surname);
+function populateEditBrokerModalText(brokerData) {
+
+	populateTextFields(brokerData);
+	populatePermissionCheckBoxes(brokerData);
+	populateBrokerViewableBrokersComponent(brokerData);
+	
+}
+function populateTextFields(brokerData) {
+
+	$('#edit_broker_name_input').val(brokerData.name);
+	$('#edit_broker_surname_input').val(brokerData.surname);
+}
+function populatePermissionCheckBoxes(brokerData) {
+	console.log(brokerData);
+}
+function populateBrokerViewableBrokersComponent(brokerData) {
+	// TODO
 }
 function setOnClickForEditBrokerSaveButton(brokerId) {
 
@@ -118,41 +127,6 @@ function setOnClickForEditBrokerSaveButton(brokerId) {
 }
 
 function onRevokeBroker(id) {
-	debugTool.print('TODO',1,2);
-	// Create dialog for user asking if he wants to revoke user <name><surname>.
-	// Sends email to broker_admin with new credentials of account. 
+	
 	alert("revoke: "+id);
-}
-
-function getBrokersDetails() {
-	return brokerInvoker.getBrokersWithDetails();
-}
-
-function setBrokerageNameText() {
-	$('#broker_admin_brokerage_name').text(getNameOfBrokerage());
-}
-
-function setBrokerageEmailText() {
-	$('#broker_admin_brokerage_email').text(getEmailOfBrokerage());
-}
-
-function setBrokerageFspNumberText() {
-	$('#broker_admin_brokerage_fsp_number').text(getFspNumberOfBrokerage());
-}
-
-function setBrokerageContactNumberText() {
-	$('#broker_admin_brokerage_contact_number').text(getContactNumberOfBrokerage());
-}
-
-function getNameOfBrokerage() {
-	return "Lukraak Makelaars";
-}
-function getEmailOfBrokerage() {
-	return "lmakelaars@gmail.com";
-}
-function getFspNumberOfBrokerage() {
-	return "1ukr44km4k3144r5";
-}
-function getContactNumberOfBrokerage() {
-	return "062-LUKRAAK";
 }
