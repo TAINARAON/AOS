@@ -60,7 +60,12 @@ var brokerAdminController = new function() {
 	}
 
 	this.updateBroker = function(brokerData) {
-		alert('brokerAdminController updateBroker TODO');
+
+		console.log(brokerData);
+		
+		// return mockCommunicator.updateBroker(brokerData);
+
+		return 1;
 	}
 
 	this.getBrokerForEditModal = function(brokerId) {

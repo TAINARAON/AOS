@@ -99,13 +99,13 @@ function onEditBroker(id) {
 
 	populateEditBrokerModalText(brokerAdminController.getBrokerForEditModal(id));
 	setOnClickForEditBrokerSaveButton(id);
+	setOnClickForEditBrokerCancelButton();
 }
 
 function populateEditBrokerModalText(brokerData) {
 
 	populateTextFields(brokerData);
 	populatePermissionCheckBoxes(brokerData);
-	populateBrokerViewableBrokersComponent(brokerData);
 	initializeSelectorComponent(brokerData);
 	
 }
@@ -117,38 +117,70 @@ function populateTextFields(brokerData) {
 function populatePermissionCheckBoxes(brokerData) {
 	console.log(brokerData);
 }
-function populateBrokerViewableBrokersComponent(brokerData) {
-	// TODO
-}
 function setOnClickForEditBrokerSaveButton(brokerId) {
 
 	$('#edit_broker_save_button').off().on('click', function() {
 
 		updateBroker(brokerId);
+		resetEditBrokerModal();
 	});
+}
+
+function setOnClickForEditBrokerCancelButton() {
+	$('#edit_broker_cancel_button').off().on('click', function() {
+		resetEditBrokerModal();
+	});
+}
+
+function resetEditBrokerModal() {
+
+	$('#edit_broker_client_creation_rights_checkbox').attr('checked', false);
+	$('#edit_broker_damage_report_rights_checkbox').attr('checked', false);
+	$('#edit_broker_quote_rights_checkbox').attr('checked', false);
+	$('#edit_broker_policy_rights_checkbox').attr('checked', false);
+
+	$('#available_brokers_ul').empty();
+	$('#selected_brokers_ul').empty();
 }
 
 function updateBroker(brokerId) {
 
-	var name = "";
-	var surname = "";
+	//var name = $('#edit_broker_name_input').val();
+	//var surname = $('#edit_broker_surname_input').val();
 
-	var clientRight = "";
-	var policyRight = "";
-	var damageReportRight = "";
-	var quoteRight = "";
+	var clientCreationRights = $('#edit_broker_client_creation_rights_checkbox').is(':checked');
+	var damageReportRights = $('#edit_broker_damage_report_rights_checkbox').is(':checked');
+	var quoteRights = $('#edit_broker_quote_rights_checkbox').is(':checked');
+	var policyRights = $('#edit_broker_policy_rights_checkbox').is(':checked');
 
-	var viewableBrokers = [];
+	var brokerViewableBrokers = [];
 
-	var brokerData = {
+	var selectedBrokersListItems = $('#selected_brokers_ul li');
 
+	for(var i = 0; i < selectedBrokersListItems.length; i++) {
+
+		var viewableBrokerId = selectedBrokersListItems.eq(i).prop('id');
+		brokerViewableBrokers.push(viewableBrokerId);
 	}
 
-	var result = brokerAdminController.updateBroker(brokerData);
+	var broker = {
+		'id':brokerId,
+		'clientCreationRights':clientCreationRights,
+		'damageReportRights':damageReportRights,
+		'quoteRights':quoteRights,
+		'policyRights':policyRights
+	};
 
-	// Probably need to bring up something to load supporting documents
-	util.createNotification('Request to update broker successfull.');
-	util.displayUploadFileModal('hi',test);
+	var dataObject = {
+		'broker':broker,
+		'brokerViewableBrokers':brokerViewableBrokers
+	};
+
+	var result = brokerAdminController.updateBroker(dataObject);
+	
+	if(result == 1) {
+		util.createNotification('Request to update broker successful.');
+	}
 }
 
 function test() {
@@ -171,7 +203,7 @@ function populateSelectorBox(brokerData) {
 	// TODO
 	var brokers = brokerData['brokerViewableBrokers'];
 	
-	var availableBrokersUl = $('#availabe_brokers_ul');
+	var availableBrokersUl = $('#available_brokers_ul');
 
 	for(let i = 0; i < brokers.length; i++) {
 
@@ -192,7 +224,7 @@ function onAddClickListener() {
 
 	$('#add_button').on('click',function() {
 
-		var listItems = $('#availabe_brokers_ul .selected');
+		var listItems = $('#available_brokers_ul .selected');
 
 		for(var i=0;i<listItems.length;i++) {
 
@@ -217,7 +249,7 @@ function onRemoveClickListener() {
 			var item = listItems.eq(i);
 			item.detach();
 
-			$('#availabe_brokers_ul').append(item);
+			$('#available_brokers_ul').append(item);
 			toggleSelectedListItem(item);
 		}
 	});

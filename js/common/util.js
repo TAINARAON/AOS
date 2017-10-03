@@ -7,8 +7,10 @@ var util = new function() {
 		$('#uploadFileInput').on('change',function() {
 			
 			var filename = $('#uploadFileInput').val().match(/[^\\/]*$/)[0];
+			
 			// Add name to file list
-			$('#upload_file_uploaded_files_ul').append($('<li></li>').text(filename));
+			onFileAdded(filename);
+			
 		});
 		// END OF HACK
 
@@ -145,4 +147,8 @@ var util = new function() {
 
 		return newAmount;
 	}
+}
+
+function onFileAdded(filename) {
+	$('#upload_file_uploaded_files_ul').append($('<li></li>').text(filename));
 }

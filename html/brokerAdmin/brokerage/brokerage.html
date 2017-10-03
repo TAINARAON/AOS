@@ -35,30 +35,29 @@
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
 	        <h4 class="modal-title">Edit Broker</h4>
 	      </div>
 	      <div class="modal-body">
 	          <div class="row">
 	          	<div class="col-md-12">
 	            	<label>Name</label>
-	            	<input id="edit_broker_name_input" class="form-control">
+	            	<input disabled id="edit_broker_name_input" class="form-control">
 	            </div>
 	          </div>
 	          <div class="row">
 	          	<div class="col-md-12">
 	              <label>Surname</label>
-	              <input id="edit_broker_surname_input" class="form-control">
+	              <input disabled id="edit_broker_surname_input" class="form-control">
 	            </div>
 	          </div>
 	          <div class="row">
 	          	<div class="col-md-12">
 	          		<label>Rights</label>
           			<div class="row">
-            			<h6 class="col-md-3"><input id="" type="checkbox">Create Client</h6>
-            			<h6 class="col-md-3"><input id="" type="checkbox">Create Damage Report</h6>
-            			<h6 class="col-md-3"><input id="" type="checkbox">Create Quote</h6>
-            			<h6 class="col-md-3"><input id="" type="checkbox">Create Policy</h6>
+            			<h6 class="col-md-3"><input id="edit_broker_client_creation_rights_checkbox" type="checkbox">Create Client</h6>
+            			<h6 class="col-md-3"><input id="edit_broker_damage_report_rights_checkbox" type="checkbox">Create Damage Report</h6>
+            			<h6 class="col-md-3"><input id="edit_broker_quote_rights_checkbox" type="checkbox">Create Quote</h6>
+            			<h6 class="col-md-3"><input id="edit_broker_policy_rights_checkbox" type="checkbox">Create Policy</h6>
             		</div>
 		        </div>
 	          </div>
@@ -68,7 +67,7 @@
 	              	<div id="viewable_brokers">
 	              		<div class="col-md-5">
 	              			<label>Available</label>
-	              			<ul id="availabe_brokers_ul" class="something"></ul>
+	              			<ul id="available_brokers_ul" class="selectionBox"></ul>
 	              		</div>
 
 	              		<div class="col-md-2">
@@ -78,7 +77,7 @@
 
 	              		<div class="col-md-5">
 	              			<label>Selected</label>
-	              			<ul id="selected_brokers_ul" class="something"></ul>
+	              			<ul id="selected_brokers_ul" class="selectionBox"></ul>
 	              		</div>
 	              	</div>
 	            </div>
