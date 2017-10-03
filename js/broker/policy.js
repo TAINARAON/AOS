@@ -58,7 +58,7 @@ var policyViewer = new function ()
 		createAccordionItemDetailDiv("Policy Number: " + policy.policyNumber, parentTitle);
 		createAccordionItemDetailDiv("Business Unit: " + policy.businessUnit.name, parentTitle);
 		createAccordionItemDetailDiv("Policy Start: " + policy.acceptedOn, parentTitle);
-		createAccordionItemDetailDiv("Premium: " + "???", parentTitle);
+		createAccordionItemDetailDiv("Premium: " + policy.premium, parentTitle);
 
 		var childContainer = document.createElement("UL");
 		childContainer.className = "inner";
@@ -87,11 +87,11 @@ var policyViewer = new function ()
 
 		createAccordionItemDetailDiv("Land Number: " + landEntry.landNumber , childTitle);
 		createAccordionItemDetailDiv("Crop: " + landEntry.crop.name, childTitle);
-		createAccordionItemDetailDiv("Cultivar" + landEntry.cultivar, childTitle);
+		createAccordionItemDetailDiv("Cultivar: " + landEntry.cultivar, childTitle);
 		createAccordionItemDetailDiv("Area: " + landEntry.area, childTitle);
 		createAccordionItemDetailDiv("Yield " + landEntry.yield, childTitle);
 		createAccordionItemDetailDiv("Price: " + landEntry.price, childTitle);
-		createAccordionItemDetailDiv("Tariff Option: " + landEntry.tariffOptionDamageType, childTitle);
+		createAccordionItemDetailDiv("Tariff Option: " + landEntry.tariff, childTitle);
 
 		var childDetail = document.createElement("DIV");
 		childDetail.className = "inner";

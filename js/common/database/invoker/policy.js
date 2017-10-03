@@ -232,6 +232,9 @@ var policyInvoker = new function() {
     {
         var value = getValueOfLandEntry(landEntry);
         var tariff = getLandEntryTariff(landEntry);
+
+        landEntry["tariff"] = tariff;
+
         return value * tariff;
     }
 
