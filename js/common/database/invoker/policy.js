@@ -127,7 +127,7 @@ var policyInvoker = new function() {
         for(var i = 0; i < policy.policyLandEntries.length; i++)
         {
             policy.policyLandEntries[i]["policyLandEntryDamageType"] = getPolicyLandEntryDamageTypesByPolicyLandEntryId(policy.policyLandEntries[i].id);
-            
+
             policy.policyLandEntries[i]["crop"] = getCrop(policy.policyLandEntries[i].cropId);
 
             for(var j = 0; j < policy.policyLandEntries[i].policyLandEntryDamageType.length; j++)
@@ -161,7 +161,14 @@ var policyInvoker = new function() {
                     var areaUomId = policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k].tariffOption.crop.areaUomId;
                     policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k].tariffOption.crop["areaUom"] = getAreaUom(areaUomId);
                 }
-            }            
+            }
+            
+            var totalPremium = 0;
+            for(var i = 0; i < policy.policyLandEntries.length; i++)
+            {
+                totalPremium += policy.policyLandEntries[i]["premiumContribution"] = getPremiumContributionOfLandEntry(policy.policyLandEntries[i]);
+            }
+            policy["premium"] = totalPremium;
         }
         return policy;
     }
@@ -219,5 +226,38 @@ var policyInvoker = new function() {
     function getAreaUom(id)
     {
         return mockCommunicator.getAreaUom(id);
+    }
+
+    function getPremiumContributionOfLandEntry(landEntry)
+    {
+        var value = getValueOfLandEntry(landEntry);
+        var tariff = getLandEntryTariff(landEntry);
+        return value * tariff;
+    }
+
+    function getValueOfLandEntry(landEntry)
+    {
+        var price = landEntry['price'];
+        var cropYield = landEntry['yield'];
+        var area = landEntry['area'];
+
+        return (price * cropYield * area);
+    }
+
+    function getLandEntryTariff(landEntry)
+    {
+        var tariff = 0;
+
+        for(var h  = 0; h < landEntry.policyLandEntryDamageType.length; h++)
+        {
+            var policyLandEntryDamageType = landEntry.policyLandEntryDamageType[h];
+            for(var i = 0; i < policyLandEntryDamageType.tariffOptionDamageType.length; i++)
+            {
+                var tariffOptionDamageType = landEntry.policyLandEntryDamageType[h].tariffOptionDamageType[i];
+                tariff += (tariffOptionDamageType['tariff']*1);
+            }
+        }
+        console.log(landEntry);
+        return tariff;
     }
 }

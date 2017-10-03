@@ -1131,6 +1131,20 @@ var mockCommunicator = new function()
 			'yield':'14.22',
 			'price':'5.48',
 			'tariffOptionId':'0',
+		},
+		{
+			'id':'1',
+			'policyId':'1',
+			'farmId':'1',
+			'landNumber':'00002',
+			'landLongitude':'1.3361',
+			'landLatitude':'-0.1215',
+			'cropId':'1',
+			'cultivar':'Something',
+			'area':'8.4',
+			'yield':'16.11',
+			'price':'9.48',
+			'tariffOptionId':'0',
 		}
 	];
 	this.createPolicyLandEntry = function(data) {
@@ -1644,6 +1658,20 @@ var mockCommunicator = new function()
 			'tariff':'0.235',
 			'isDefault':'0'
 		},
+		{
+			'id':'2',
+			'tariffOptionId':'1',
+			'damageTypeId':'0',
+			'tariff':'0.175',
+			'isDefault':'1'
+		},
+		{
+			'id':'3',
+			'tariffOptionId':'1',
+			'damageTypeId':'1',
+			'tariff':'0.235',
+			'isDefault':'0'
+		}
 	];
 	this.createTariffOptionDamageType = function(data) {
 

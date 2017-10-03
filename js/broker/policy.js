@@ -5,7 +5,6 @@ var policyViewer = new function ()
 	var policyAccordion = document.getElementById("policy_accordion");
 
 	(function init(){
-		setupAccordionClickHandler();
 		getInitialPolicies();
 	})();
 
@@ -31,6 +30,7 @@ var policyViewer = new function ()
 	{
 		policies = policyInvoker.getPolicies();
 		createAccordionPolicyItems(policies);
+		setupAccordionClickHandler();
 	}
 
 	function createAccordionPolicyItems(policies)
