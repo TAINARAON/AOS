@@ -189,6 +189,17 @@ var mockCommunicator = new function()
 			'email':'viewableBroker@gmail.com',
 			'active':'1',
 			'validated':'1'
+		},
+		{
+			'id':'8',
+			'username':'VB2',
+			'password':'',
+			'roleId':'4',
+			'name':'Viewable2 Broker2 Name2',
+			'surname':'Surname2',
+			'email':'viewable2Broker2@gmail.com',
+			'active':'1',
+			'validated':'1'
 		}
 	];
 	this.createUser = function(data) {
@@ -616,6 +627,15 @@ var mockCommunicator = new function()
 			'damageReportRights':'1',
 			'clientCreationRights':'1'
 		},
+		{
+			'id':'2',
+			'userId':'8',
+			'brokerageId':'0',
+			'quoteRights':'1',
+			'policyRights':'1',
+			'damageReportRights':'1',
+			'clientCreationRights':'1'
+		},
 	];
 
 	// User by: brokerAdmin
@@ -685,6 +705,11 @@ var mockCommunicator = new function()
 			'id':'0',
 			'mainBrokerId':'0',
 			'viewableBrokerId':'1',
+		},
+		{
+			'id':'1',
+			'mainBrokerId':'0',
+			'viewableBrokerId':'2',
 		},
 	];
 	this.createBrokerViewableBroker = function(data) {

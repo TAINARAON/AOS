@@ -23,6 +23,43 @@ var brokerInvoker = new function() {
 		return brokers;
     };
 
+    this.getViewableBrokers = function(brokerId) {
+
+        //return mockCommunicator.getViewableBrokers(brokerId);
+        /* 
+        [
+            {
+                'id',   (id of the viewable broker)
+                'name',
+                'surname'
+            }
+        ]
+        */
+
+        var viewableBrokers = [];
+
+        var allViewableBrokers = mockCommunicator.getBrokerViewableBrokers();
+
+        for(var i =0; i< allViewableBrokers.length;i++) {
+            var viewableBroker = allViewableBrokers[i];
+            if(viewableBroker['mainBrokerId'] == brokerId) {
+
+                var broker = mockCommunicator.getBroker(viewableBroker['viewableBrokerId']);
+                var user = mockCommunicator.getUser(broker['userId']);
+
+                var neededInfo = {
+                    'brokerId':broker['id'],
+                    'name':user['name'],
+                    'surname':user['surname']
+                }
+
+                viewableBrokers.push(neededInfo);
+            }
+        }
+
+        return viewableBrokers;
+    }
+
     this.getBrokerDisplayable = function(id) {
 
     	var broker = mockCommunicator.getBroker(id);
