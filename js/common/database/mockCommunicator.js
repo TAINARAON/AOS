@@ -1101,6 +1101,26 @@ var mockCommunicator = new function()
 			'acceptedOn':'2017-08-30 19:03:05',
 			'active':'1',
 			'linkedToPolicyId':null,	
+		},
+		{
+			'id':'2',
+			'policyNumber':'00002',
+			'businessUnitId':'0',
+			'brokerId':'1',
+			'insurerId':null,
+			'acceptedOn':'2017-08-30 19:01:05',
+			'active':'1',
+			'linkedToPolicyId':null,	
+		},
+		{
+			'id':'3',
+			'policyNumber':'00003',
+			'businessUnitId':'1',
+			'brokerId':'1',
+			'insurerId':null,
+			'acceptedOn':'2017-08-30 19:03:05',
+			'active':'1',
+			'linkedToPolicyId':null,	
 		}
 	];
 	this.createPolicy = function(data) {
@@ -1212,6 +1232,34 @@ var mockCommunicator = new function()
 			'yield':'16.11',
 			'price':'9.48',
 			'tariffOptionId':'0',
+		},
+		{
+			'id':'2',
+			'policyId':'2',
+			'farmId':'0',
+			'landNumber':'00003',
+			'landLongitude':'1.3361',
+			'landLatitude':'-0.1215',
+			'cropId':'1',
+			'cultivar':'Red Dwarf',
+			'area':'7.4',
+			'yield':'14.22',
+			'price':'5.48',
+			'tariffOptionId':'0',
+		},
+		{
+			'id':'3',
+			'policyId':'3',
+			'farmId':'1',
+			'landNumber':'00004',
+			'landLongitude':'1.3361',
+			'landLatitude':'-0.1215',
+			'cropId':'1',
+			'cultivar':'Something',
+			'area':'8.4',
+			'yield':'16.11',
+			'price':'9.48',
+			'tariffOptionId':'0',
 		}
 	];
 	this.createPolicyLandEntry = function(data) {
@@ -1283,6 +1331,16 @@ var mockCommunicator = new function()
 		{
 			'id':'1',
 			'policyLandEntryId':'1',
+			'tariffOptionDamageTypeId':'1',
+		},
+		{
+			'id':'0',
+			'policyLandEntryId':'2',
+			'tariffOptionDamageTypeId':'0',
+		},
+		{
+			'id':'1',
+			'policyLandEntryId':'3',
 			'tariffOptionDamageTypeId':'1',
 		}
 	];

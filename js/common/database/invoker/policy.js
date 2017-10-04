@@ -107,14 +107,17 @@ var policyInvoker = new function() {
 
     // Newly methods
 
-    this.getPolicies = function()
+    this.getPolicies = function(brokerId)
     {
         var policies = [];
 
         var tPolicies = mockCommunicator.getPolicies();
         for(var i = 0; i < tPolicies.length; i++)
         {
-            policies.push(getFullPolicy(tPolicies[i]));
+            if(tPolicies[i].brokerId == brokerId)
+            {
+                policies.push(getFullPolicy(tPolicies[i]));
+            }
         }
 
         return policies;
@@ -125,18 +128,13 @@ var policyInvoker = new function() {
         policy["businessUnit"] = getBusinessUnit(policy.businessUnitId);
         policy["policyLandEntries"] = getPolicyLandEntriesByPolicyId(policy.id);
 
-        console.log(policy.policyLandEntries.length);
-
         for(var i = 0; i < policy.policyLandEntries.length; i++)
         {
             var landEntry = policy.policyLandEntries[i];
-            console.log("Looping through land entry: " + i);
-
+            
             addCropToLandEntry(landEntry, getCrop(landEntry.cropId));
 
             addPolicyLandEntryDamageTypeToLandEntry(landEntry, getPolicyLandEntryDamageTypesByPolicyLandEntryId(landEntry.id));
-
-            console.log(landEntry);
 
             for(var j = 0; j < landEntry.policyLandEntryDamageType.length; j++)
             {   
@@ -144,8 +142,6 @@ var policyInvoker = new function() {
 
                 var tariffOptionDamageTypeId = policyLandEntryDamageType.tariffOptionDamageTypeId;
                 addTariffOptionDamageTypeTopolicyLandEntryDamageType(policyLandEntryDamageType, getTariffOptionDamageTypesByTariffOption(tariffOptionDamageTypeId));
-
-                console.log(policyLandEntryDamageType);
 
                 for(var k = 0; k < policyLandEntryDamageType.tariffOptionDamageType.length; k++)
                 {
@@ -157,8 +153,6 @@ var policyInvoker = new function() {
                     var tariffOptionId = tariffOptionDamageType.tariffOptionId;
                     addTariffOptionToTariffOptionDamageType(tariffOptionDamageType, getTariffOption(tariffOptionId));
 
-                    console.log(tariffOptionDamageType);
-
                     // Adding values to tariffOption
                     var tariffOption = tariffOptionDamageType.tariffOption;
                     var tariffOptionTypeId = tariffOption.tariffOptionTypeId;
@@ -166,8 +160,6 @@ var policyInvoker = new function() {
 
                     var cropId = tariffOption.cropId;
                     addCropToTariffOption(tariffOption, getCrop(cropId));
-
-                    console.log(tariffOption);
 
                     // Adding values to crop
                     /*var productId = tariffOptionDamageType.tariffOption.crop.productId;
@@ -318,7 +310,7 @@ var policyInvoker = new function() {
         return tariff;
     }
 
-    this.searchForPolicy = function(policyNumber, businessUnitName)
+    this.searchForPolicy = function(brokerId, policyNumber, businessUnitName)
     {
         var policies = [];
         if(policyNumber != "" && businessUnitName == "")
@@ -344,11 +336,15 @@ var policyInvoker = new function() {
             }
         }
 
+        var finalPolicies = [];
         for(var i = 0; i < policies.length; i++)
         {
-            policies[i] = getFullPolicy(policies[i]);
+            if(policies[i].brokerId == brokerId)
+            {
+                finalPolicies.push(getFullPolicy(policies[i]));
+            }
         }
 
-        return policies;
+        return finalPolicies;
     }
 }

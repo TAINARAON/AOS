@@ -1,18 +1,41 @@
 var policyViewer = new function ()
 {
 	var policies = [];
+	var viewableBrokers; 
 
+	var brokerSelect = document.getElementById("available_broker_dropdown");
 	var policyNumberInput = document.getElementById("policy_number_input");
 	var businessUnitInput = document.getElementById("business_unit_input");
 	var searchButton = document.getElementById("search_button");
 	var policyAccordion = document.getElementById("policy_accordion");
 
 	(function init(){
+		setAvailableBrokers();
 		setSearchButtonClickListener();
 		addOnEnterKeyPressedListenerForSearchInput(policyNumberInput);
 		addOnEnterKeyPressedListenerForSearchInput(businessUnitInput);
-		getInitialPolicies();
+		search();
 	})();
+
+	function setAvailableBrokers()
+	{	
+		// TODO: use sessionStorage.brokerId instead of 0
+		var currentUserBrokerId = sessionStorage.brokerId;
+
+		viewableBrokers = brokerInvoker.getViewableBrokers(0);
+		
+		var tSelfObj = brokerInvoker.getBrokerDisplayable(0);
+		tSelfObj["brokerId"] = 0;
+		viewableBrokers.push(tSelfObj);
+
+		for(var i = 0; i < viewableBrokers.length; i++)
+		{
+			var option = document.createElement("OPTION");
+			option.innerHTML = viewableBrokers[i].name;
+
+			brokerSelect.appendChild(option);
+		}
+	}
 
 	function setupAccordionClickHandler()
 	{
@@ -47,17 +70,35 @@ var policyViewer = new function ()
 
 	function search()
 	{
+		var tBrokerName = $(brokerSelect).val().trim();
+		var brokerId = getIdOfSelectedBroker(tBrokerName);
 		var policyNumber = $(policyNumberInput).val().trim();
 		var businessUnitName = $(businessUnitInput).val().trim();
 
-		if(policyNumber == "" && businessUnitName == "")
+		if(brokerId != -1)
 		{
-			getInitialPolicies();
+			if(policyNumber == "" && businessUnitName == "")
+			{
+				getInitialPolicies(brokerId);
+			}
+			else
+			{
+				setSpecificPolicies(policyInvoker.searchForPolicy(brokerId, policyNumber, businessUnitName));
+			}
 		}
-		else
+	}
+
+	function getIdOfSelectedBroker(name)
+	{
+		for(var i = 0; i < viewableBrokers.length; i++)
 		{
-			setSpecificPolicies(policyInvoker.searchForPolicy(policyNumber, businessUnitName));
+			if(viewableBrokers[i].name == name)
+			{
+				return viewableBrokers[i].brokerId;
+			}
 		}
+
+		return -1;
 	}
 
 	function setSpecificPolicies(pol)
@@ -67,9 +108,9 @@ var policyViewer = new function ()
 		setupAccordionClickHandler();
 	}
 
-	function getInitialPolicies()
+	function getInitialPolicies(brokerId)
 	{
-		policies = policyInvoker.getPolicies();
+		policies = policyInvoker.getPolicies(brokerId);
 		createAccordionPolicyItems(policies);
 		setupAccordionClickHandler();
 	}
