@@ -1,7 +1,9 @@
 var policyViewer = new function ()
 {
 	var policies = [];
-	var viewableBrokers; 
+	var viewableBrokers;
+
+	var landEntryMaps = [];
 
 	var brokerSelect = document.getElementById("available_broker_dropdown");
 	var policyNumberInput = document.getElementById("policy_number_input");
@@ -182,10 +184,50 @@ var policyViewer = new function ()
 		childDetail.className = "inner";
 
 		// TODO: add detail
+		createChildDetailMapItem("map" + landEntry.id, landEntry.landLatitude, landEntry.landLongitude, childDetail);
 
 		childLi.appendChild(childTitle);
 		childLi.appendChild(childDetail);
 
 		container.appendChild(childLi);
+	}
+
+	function createChildDetailMapItem(id, landEntryLatitude, landEntryLongitude, container) {
+		
+		var mapDiv = document.createElement("DIV");
+		mapDiv.id = id;
+
+		var tMapObj = {
+			"id":id,
+			"landEntryLatitude":landEntryLatitude,
+			"landEntryLongitude":landEntryLongitude
+		};
+
+		landEntryMaps.push(tMapObj);
+
+		container.appendChild(mapDiv);
+	}
+
+	this.initMap = function() {
+		for(var i = 0; i < landEntryMaps.length; i++)
+		{
+			var latitude = landEntryMaps[i].landEntryLatitude * 1;
+			var longitude = landEntryMaps[i].landEntryLongitude * 1;
+
+			var uluru = {lat: latitude, lng: longitude};
+			console.log(uluru);
+
+			var map = new google.maps.Map(document.getElementById(landEntryMaps[i].id), {
+				zoom: 4,
+				center: uluru
+			});
+
+			var marker = new google.maps.Marker({
+			  position: uluru,
+			  map: map
+			});
+
+			document.getElementById(landEntryMaps[i].id).style.cssText += "min-height: 400px;";
+		}
 	}
 }

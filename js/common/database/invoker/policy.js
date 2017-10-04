@@ -181,6 +181,8 @@ var policyInvoker = new function() {
         }
         policy["premium"] = totalPremium;
 
+        console.log(policy);
+
         return policy;
     }
 
