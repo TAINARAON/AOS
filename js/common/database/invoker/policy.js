@@ -124,52 +124,71 @@ var policyInvoker = new function() {
     {
         policy["businessUnit"] = getBusinessUnit(policy.businessUnitId);
         policy["policyLandEntries"] = getPolicyLandEntriesByPolicyId(policy.id);
+
+        console.log(policy.policyLandEntries.length);
+
         for(var i = 0; i < policy.policyLandEntries.length; i++)
         {
-            policy.policyLandEntries[i]["policyLandEntryDamageType"] = getPolicyLandEntryDamageTypesByPolicyLandEntryId(policy.policyLandEntries[i].id);
+            var landEntry = policy.policyLandEntries[i];
+            console.log("Looping through land entry: " + i);
 
-            policy.policyLandEntries[i]["crop"] = getCrop(policy.policyLandEntries[i].cropId);
+            addCropToLandEntry(landEntry, getCrop(landEntry.cropId));
 
-            for(var j = 0; j < policy.policyLandEntries[i].policyLandEntryDamageType.length; j++)
+            addPolicyLandEntryDamageTypeToLandEntry(landEntry, getPolicyLandEntryDamageTypesByPolicyLandEntryId(landEntry.id));
+
+            console.log(landEntry);
+
+            for(var j = 0; j < landEntry.policyLandEntryDamageType.length; j++)
             {   
-                var tariffOptionDamageTypeId = policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageTypeId;
-                policy.policyLandEntries[i].policyLandEntryDamageType[j]["tariffOptionDamageType"] = getTariffOptionDamageTypesByTariffOption(tariffOptionDamageTypeId);
+                var policyLandEntryDamageType = landEntry.policyLandEntryDamageType[j];
 
-                for(var k = 0; k < policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType.length; k++)
+                var tariffOptionDamageTypeId = policyLandEntryDamageType.tariffOptionDamageTypeId;
+                addTariffOptionDamageTypeTopolicyLandEntryDamageType(policyLandEntryDamageType, getTariffOptionDamageTypesByTariffOption(tariffOptionDamageTypeId));
+
+                console.log(policyLandEntryDamageType);
+
+                for(var k = 0; k < policyLandEntryDamageType.tariffOptionDamageType.length; k++)
                 {
-                    var damageTypeId = policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k].damageTypeId;
-                    policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k]["damageType"] = getDamageType(damageTypeId);
+                    var tariffOptionDamageType = policyLandEntryDamageType.tariffOptionDamageType[k];
 
-                    var tariffOptionId = policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k].tariffOptionId;
-                    policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k]["tariffOption"] = getTariffOption(tariffOptionId);
+                    var damageTypeId = tariffOptionDamageType.damageTypeId;
+                    addDamageTypeToTariffOptionDamageType(tariffOptionDamageType, getDamageType(damageTypeId));
 
-                    /*for(var l = 0; i < policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k].tariffOption.length; l++)
-                    {*/
-                    var tariffOptionTypeId = policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k].tariffOption.tariffOptionTypeId;
-                    policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k].tariffOption["tariffOptionType"] = getTariffOptionType(tariffOptionTypeId);   
-                    //}
+                    var tariffOptionId = tariffOptionDamageType.tariffOptionId;
+                    addTariffOptionToTariffOptionDamageType(tariffOptionDamageType, getTariffOption(tariffOptionId));
 
-                    var cropId = policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k].tariffOption.cropId;
-                    policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k].tariffOption["crop"] = getCrop(cropId);
+                    console.log(tariffOptionDamageType);
 
-                    var productId = policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k].tariffOption.crop.productId;
+                    // Adding values to tariffOption
+                    var tariffOption = tariffOptionDamageType.tariffOption;
+                    var tariffOptionTypeId = tariffOption.tariffOptionTypeId;
+                    addTariffOptionTypeToTariffOption(tariffOption, getTariffOptionType(tariffOptionTypeId));
+
+                    var cropId = tariffOption.cropId;
+                    addCropToTariffOption(tariffOption, getCrop(cropId));
+
+                    console.log(tariffOption);
+
+                    // Adding values to crop
+                    /*var productId = tariffOptionDamageType.tariffOption.crop.productId;
                     policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k].tariffOption.crop["product"] = getProduct(productId);
 
-                    var priceUomId = policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k].tariffOption.crop.priceUomId;
+                    var priceUomId = tariffOptionDamageType.tariffOption.crop.priceUomId;
                     policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k].tariffOption.crop["priceUom"] = getPriceUom(priceUomId);
 
-                    var areaUomId = policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k].tariffOption.crop.areaUomId;
-                    policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k].tariffOption.crop["areaUom"] = getAreaUom(areaUomId);
+                    var areaUomId = tariffOptionDamageType.tariffOption.crop.areaUomId;
+                    policy.policyLandEntries[i].policyLandEntryDamageType[j].tariffOptionDamageType[k].tariffOption.crop["areaUom"] = getAreaUom(areaUomId);*/
                 }
             }
-            
-            var totalPremium = 0;
-            for(var i = 0; i < policy.policyLandEntries.length; i++)
-            {
-                totalPremium += policy.policyLandEntries[i]["premiumContribution"] = getPremiumContributionOfLandEntry(policy.policyLandEntries[i]);
-            }
-            policy["premium"] = totalPremium;
         }
+
+        var totalPremium = 0;
+        for(var i = 0; i < policy.policyLandEntries.length; i++)
+        {
+            totalPremium += policy.policyLandEntries[i]["premiumContribution"] = getPremiumContributionOfLandEntry(policy.policyLandEntries[i]);
+        }
+        policy["premium"] = totalPremium;
+
         return policy;
     }
 
@@ -188,9 +207,19 @@ var policyInvoker = new function() {
         return mockCommunicator.getPolicyLandEntryDamageTypesByPolicyLandEntryId(id);
     }
 
+    function addPolicyLandEntryDamageTypeToLandEntry(landEntry, policyLandEntryDamageTypeData)
+    {
+        landEntry["policyLandEntryDamageType"] = policyLandEntryDamageTypeData;
+    }
+
     function getTariffOptionDamageTypesByTariffOption(id)
     {
         return mockCommunicator.getTariffOptionDamageTypesByTariffOption(id);
+    }
+
+    function addTariffOptionDamageTypeTopolicyLandEntryDamageType(policyLandEntryDamageType, tariffOptionDamageTypeData)
+    {
+        policyLandEntryDamageType["tariffOptionDamageType"] = tariffOptionDamageTypeData;
     }
 
     function getDamageType(id)
@@ -198,9 +227,19 @@ var policyInvoker = new function() {
         return mockCommunicator.getDamageType(id);
     }
 
+    function addDamageTypeToTariffOptionDamageType(tariffOptionDamageType, damageTypeData)
+    {
+        tariffOptionDamageType["damageType"] = damageTypeData;
+    }
+
     function getTariffOption(id)
     {
         return mockCommunicator.getTariffOption(id);
+    }
+
+    function addTariffOptionToTariffOptionDamageType(tariffOptionDamageType, tariffOptionData)
+    {
+        tariffOptionDamageType["tariffOption"] = tariffOptionData;
     }
 
     function getTariffOptionType(id)
@@ -208,9 +247,24 @@ var policyInvoker = new function() {
         return mockCommunicator.getTariffOptionType(id);
     }
 
+    function addTariffOptionTypeToTariffOption(tariffOption, tariffOptionTypeData)
+    {
+        tariffOption["tariffOptionType"] = tariffOptionTypeData;
+    }
+
     function getCrop(id)
     {
         return mockCommunicator.getCrop(id);
+    }
+
+    function addCropToLandEntry(landEntry, cropData)
+    {
+        landEntry["crop"] = cropData;
+    }
+
+    function addCropToTariffOption(tariffOption, cropData)
+    {
+        tariffOption["crop"] = cropData;
     }
 
     function getProduct(id)
@@ -260,7 +314,7 @@ var policyInvoker = new function() {
                 tariff += (tariffOptionDamageType['tariff']*1);
             }
         }
-        console.log(landEntry);
+        
         return tariff;
     }
 
