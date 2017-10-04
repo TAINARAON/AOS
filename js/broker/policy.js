@@ -95,6 +95,7 @@ var policyViewer = new function ()
 
 		var parentTitle = document.createElement("A");
 		parentTitle.className = "toggle";
+		parentTitle.style.cssText = "display: flex;";
 
 		createAccordionItemDetailDiv("Policy Number: " + policy.policyNumber, parentTitle);
 		createAccordionItemDetailDiv("Business Unit: " + policy.businessUnit.name, parentTitle);
@@ -116,6 +117,7 @@ var policyViewer = new function ()
 	{
 		var tDiv = document.createElement("DIV");
 		tDiv.innerHTML = val;
+		tDiv.style.cssText = "margin-right: 80px;";
 		container.appendChild(tDiv);
 	}
 
@@ -125,6 +127,7 @@ var policyViewer = new function ()
 
 		var childTitle = document.createElement("A");
 		childTitle.className = "toggle";
+		childTitle.style.cssText = "display: flex;";
 
 		createAccordionItemDetailDiv("Land Number: " + landEntry.landNumber , childTitle);
 		createAccordionItemDetailDiv("Crop: " + landEntry.crop.name, childTitle);
