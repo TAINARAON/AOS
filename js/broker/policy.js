@@ -2,9 +2,15 @@ var policyViewer = new function ()
 {
 	var policies = [];
 
+	var policyNumberInput = document.getElementById("policy_number_input");
+	var businessUnitInput = document.getElementById("business_unit_input");
+	var searchButton = document.getElementById("search_button");
 	var policyAccordion = document.getElementById("policy_accordion");
 
 	(function init(){
+		setSearchButtonClickListener();
+		addOnEnterKeyPressedListenerForSearchInput(policyNumberInput);
+		addOnEnterKeyPressedListenerForSearchInput(businessUnitInput);
 		getInitialPolicies();
 	})();
 
@@ -24,6 +30,41 @@ var policyViewer = new function ()
 		        //$this.next().slideToggle(350);
 		    }
 		});
+	}
+
+	function setSearchButtonClickListener()
+	{
+		searchButton.onclick = function(){search();};
+	}
+
+	function addOnEnterKeyPressedListenerForSearchInput(searchInput)
+	{
+		$(searchInput).keypress(function(e){
+	    if(e.keyCode==13)
+	      search();
+		});
+	}
+
+	function search()
+	{
+		var policyNumber = $(policyNumberInput).val().trim();
+		var businessUnitName = $(businessUnitInput).val().trim();
+
+		if(policyNumber == "" && businessUnitName == "")
+		{
+			getInitialPolicies();
+		}
+		else
+		{
+			setSpecificPolicies(policyInvoker.searchForPolicy(policyNumber, businessUnitName));
+		}
+	}
+
+	function setSpecificPolicies(pol)
+	{
+		policies = pol;
+		createAccordionPolicyItems(policies);
+		setupAccordionClickHandler();
 	}
 
 	function getInitialPolicies()

@@ -263,4 +263,38 @@ var policyInvoker = new function() {
         console.log(landEntry);
         return tariff;
     }
+
+    this.searchForPolicy = function(policyNumber, businessUnitName)
+    {
+        var policies = [];
+        if(policyNumber != "" && businessUnitName == "")
+        {
+            policies.push(mockCommunicator.getPolicyByPolicyNumber(policyNumber));
+        }
+        else if(businessUnitName != "" && policyNumber == "")
+        {
+            var businessUnit = mockCommunicator.getBusinessUnitByName(businessUnitName);
+            policies = mockCommunicator.getPoliciesByBusinessUnitId(businessUnit.id);
+        }
+        else
+        {
+            var businessUnit = mockCommunicator.getBusinessUnitByName(businessUnitName);
+            var tPolicies = mockCommunicator.getPoliciesByBusinessUnitId(businessUnit.id);
+
+            for(var i = 0; i < tPolicies.length; i++)
+            {
+                if(tPolicies[i].policyNumber == policyNumber)
+                {
+                    policies.push(tPolicies[i]);
+                }
+            }
+        }
+
+        for(var i = 0; i < policies.length; i++)
+        {
+            policies[i] = getFullPolicy(policies[i]);
+        }
+
+        return policies;
+    }
 }

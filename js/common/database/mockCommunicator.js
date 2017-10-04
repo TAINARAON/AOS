@@ -1115,6 +1115,20 @@ var mockCommunicator = new function()
 		data.id = id;
 		this.policyTable[id] = data;
 	}
+	this.getPoliciesByBusinessUnitId = function(id)
+	{
+		var policies = [];
+
+		for(var i = 0; i < this.policyTable.length; i++)
+		{
+			if(this.policyTable[i].businessUnitId == id)
+			{
+				policies.push(this.policyTable[i]);
+			}
+		}
+
+		return policies;
+	}
 
 // POLICY LAND ENTRY - done
 	this.policyLandEntryTable = [
