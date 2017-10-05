@@ -4,6 +4,7 @@ var policyViewer = new function ()
 	var viewableBrokers;
 
 	var landEntryMaps = [];
+	var mapScriptContainer = document.getElementById("mapScriptContainer");
 
 	var brokerSelect = document.getElementById("available_broker_dropdown");
 	var policyNumberInput = document.getElementById("policy_number_input");
@@ -72,6 +73,8 @@ var policyViewer = new function ()
 
 	function search()
 	{
+		landEntryMaps = [];
+
 		var tBrokerName = $(brokerSelect).val().trim();
 		var brokerId = getIdOfSelectedBroker(tBrokerName);
 		var policyNumber = $(policyNumberInput).val().trim();
@@ -120,6 +123,7 @@ var policyViewer = new function ()
 	function createAccordionPolicyItems(policies)
 	{
 		policyAccordion.innerHTML = "";
+		mapScriptContainer.innerHTML = "";
 
 		for(var i = 0; i < policies.length; i++)
 		{
@@ -130,6 +134,8 @@ var policyViewer = new function ()
 				createPolicyAccordionChildItem(policies[i].policyLandEntries[j], childContainer);
 			}
 		}
+
+		addMapScriptForUpdatingLandEntryMaps(mapScriptContainer);
 	}
 
 	function createPolicyAccordionParentItem(policy, container)
@@ -192,8 +198,8 @@ var policyViewer = new function ()
 		container.appendChild(childLi);
 	}
 
-	function createChildDetailMapItem(id, landEntryLatitude, landEntryLongitude, container) {
-		
+	function createChildDetailMapItem(id, landEntryLatitude, landEntryLongitude, container) 
+	{
 		var mapDiv = document.createElement("DIV");
 		mapDiv.id = id;
 
@@ -208,7 +214,17 @@ var policyViewer = new function ()
 		container.appendChild(mapDiv);
 	}
 
+	function addMapScriptForUpdatingLandEntryMaps(container)
+	{
+		var mapScript = document.createElement("SCRIPT");
+		mapScript.type = "text/javascript";
+		mapScript.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAv9T_ISeUi2Jf9FcFpXO24VkRUByr5_ek&callback=policyViewer.initMap";
+
+		container.appendChild(mapScript);
+	}
+
 	this.initMap = function() {
+		console.log("Triggers updating of maps");
 		for(var i = 0; i < landEntryMaps.length; i++)
 		{
 			var latitude = landEntryMaps[i].landEntryLatitude * 1;
