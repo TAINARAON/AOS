@@ -134,7 +134,10 @@ var quoteViewer = new function ()
 			}
 		}
 
-		addMapScriptForUpdatingLandEntryMaps(mapScriptContainer);
+		if(quotes.length > 0)
+		{
+			addMapScriptForUpdatingLandEntryMaps(mapScriptContainer);
+		}
 	}
 
 	function createQuoteAccordionParentItem(quote, container)
@@ -147,7 +150,7 @@ var quoteViewer = new function ()
 
 		createAccordionItemDetailDiv("Quote Number: " + quote.quoteNumber, parentTitle);
 		createAccordionItemDetailDiv("Business Unit: " + quote.businessUnit.name, parentTitle);
-		//createAccordionItemDetailDiv("Policy Start: " + quote.acceptedOn, parentTitle);
+		createAccordionItemDetailDiv("Date Created: " + quote.dateCreated, parentTitle);
 		createAccordionItemDetailDiv("Premium: " + quote.premium, parentTitle);
 
 		var childContainer = document.createElement("UL");

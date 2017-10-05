@@ -847,7 +847,7 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'2',
-			'quoteNumber':'00001',
+			'quoteNumber':'00003',
 			'businessUnitId':'0',
 			'brokerId':'1',
 			'insurerId':'0',
@@ -858,7 +858,7 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'3',
-			'quoteNumber':'00002',
+			'quoteNumber':'00004',
 			'businessUnitId':'0',
 			'brokerId':'1',
 			'insurerId':'0',

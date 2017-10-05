@@ -346,7 +346,7 @@ var quoteInvoker = new function() {
     this.searchForQuote = function(brokerId, quoteNumber, businessUnitName)
     {
         var quotes = [];
-        debugger;
+        
         if(quoteNumber == "" && businessUnitName == "")
         {
             quotes = mockCommunicator.getQuotes();
