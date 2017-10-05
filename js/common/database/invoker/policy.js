@@ -106,21 +106,46 @@ var policyInvoker = new function() {
     }
 
     // Newly methods
-
-    this.getPolicies = function(brokerId)
+    this.searchForPolicy = function(brokerId, policyNumber, businessUnitName)
     {
         var policies = [];
-
-        var tPolicies = mockCommunicator.getPolicies();
-        for(var i = 0; i < tPolicies.length; i++)
+        if(policyNumber == "" && businessUnitName == "")
         {
-            if(tPolicies[i].brokerId == brokerId)
+            policies = mockCommunicator.getPolicies();
+        }
+        else if(policyNumber != "" && businessUnitName == "")
+        {
+            policies.push(mockCommunicator.getPolicyByPolicyNumber(policyNumber));
+        }
+        else if(businessUnitName != "" && policyNumber == "")
+        {
+            var businessUnit = mockCommunicator.getBusinessUnitByName(businessUnitName);
+            policies = mockCommunicator.getPoliciesByBusinessUnitId(businessUnit.id);
+        }
+        else
+        {
+            var businessUnit = mockCommunicator.getBusinessUnitByName(businessUnitName);
+            var tPolicies = mockCommunicator.getPoliciesByBusinessUnitId(businessUnit.id);
+
+            for(var i = 0; i < tPolicies.length; i++)
             {
-                policies.push(getFullPolicy(tPolicies[i]));
+                if(tPolicies[i].policyNumber == policyNumber)
+                {
+                    policies.push(tPolicies[i]);
+                }
             }
         }
 
-        return policies;
+        var finalPolicies = [];
+        for(var i = 0; i < policies.length; i++)
+        {
+            if(policies[i].brokerId == brokerId)
+            {
+                finalPolicies.push(getFullPolicy(policies[i]));
+            }
+        }
+
+        return finalPolicies;
     }
 
     function getFullPolicy(policy)
@@ -310,43 +335,5 @@ var policyInvoker = new function() {
         }
         
         return tariff;
-    }
-
-    this.searchForPolicy = function(brokerId, policyNumber, businessUnitName)
-    {
-        var policies = [];
-        if(policyNumber != "" && businessUnitName == "")
-        {
-            policies.push(mockCommunicator.getPolicyByPolicyNumber(policyNumber));
-        }
-        else if(businessUnitName != "" && policyNumber == "")
-        {
-            var businessUnit = mockCommunicator.getBusinessUnitByName(businessUnitName);
-            policies = mockCommunicator.getPoliciesByBusinessUnitId(businessUnit.id);
-        }
-        else
-        {
-            var businessUnit = mockCommunicator.getBusinessUnitByName(businessUnitName);
-            var tPolicies = mockCommunicator.getPoliciesByBusinessUnitId(businessUnit.id);
-
-            for(var i = 0; i < tPolicies.length; i++)
-            {
-                if(tPolicies[i].policyNumber == policyNumber)
-                {
-                    policies.push(tPolicies[i]);
-                }
-            }
-        }
-
-        var finalPolicies = [];
-        for(var i = 0; i < policies.length; i++)
-        {
-            if(policies[i].brokerId == brokerId)
-            {
-                finalPolicies.push(getFullPolicy(policies[i]));
-            }
-        }
-
-        return finalPolicies;
     }
 }

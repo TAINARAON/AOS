@@ -82,14 +82,7 @@ var policyViewer = new function ()
 
 		if(brokerId != -1)
 		{
-			if(policyNumber == "" && businessUnitName == "")
-			{
-				getInitialPolicies(brokerId);
-			}
-			else
-			{
-				setSpecificPolicies(policyInvoker.searchForPolicy(brokerId, policyNumber, businessUnitName));
-			}
+			setPolicies(policyInvoker.searchForPolicy(brokerId, policyNumber, businessUnitName));
 		}
 	}
 
@@ -106,16 +99,9 @@ var policyViewer = new function ()
 		return -1;
 	}
 
-	function setSpecificPolicies(pol)
+	function setPolicies(pol)
 	{
 		policies = pol;
-		createAccordionPolicyItems(policies);
-		setupAccordionClickHandler();
-	}
-
-	function getInitialPolicies(brokerId)
-	{
-		policies = policyInvoker.getPolicies(brokerId);
 		createAccordionPolicyItems(policies);
 		setupAccordionClickHandler();
 	}
