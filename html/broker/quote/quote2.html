@@ -1,0 +1,40 @@
+<div id="quote_container">
+	<div class="row">
+		<div class="col-md-2 col-md-offset-2">
+			<button id="openModalBtn" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Create Quote</button>
+		</div>
+	</div>
+	<div id="search_criteria_container" class="row">
+		<div class="col-md-2 col-md-offset-2">
+			<h6 class="text-left">Available brokers:</h6>
+			<select id="available_broker_dropdown" name="available_broker_dropdown" class="form-control">
+              <!--<option disabled selected value></option>-->
+
+            </select>
+		</div>
+		<div class="col-md-2">
+			<h6 class="text-left">Quote Number:</h6>
+            <input id="quote_number_input" name="quote_number_input" class="form-control">
+		</div>
+		<div class="col-md-2">
+			<h6 class="text-left">Business Unit:</h6>
+            <input id="business_unit_input" name="business_unit_input" class="form-control">
+		</div>
+		<div class="col-md-2">
+			<h6  style="color:transparent;">Search:</h6>
+			<div id="search_button" class="btn btn-success">Search</div>
+		</div>
+	</div>
+	<div id="quote_view_container" class="row">
+		<div class="col-md-10 col-md-offset-1">
+			<ul id="quote_accordion" class="accordion"></ul>
+			<div id="mapScriptContainer"></div>
+		</div>
+	</div>
+
+	<div id="modal_container"></div>
+	<div id="modal_confirm_accept_quote"></div>
+
+</div>
+
+<script type="text/javascript" src="js/broker/quote/quote3.js"></script>

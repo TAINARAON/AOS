@@ -845,6 +845,28 @@ var mockCommunicator = new function()
 			'linkedToQuoteId':'0',
 			'acceptable':'1'
 		},
+		{
+			'id':'2',
+			'quoteNumber':'00001',
+			'businessUnitId':'0',
+			'brokerId':'1',
+			'insurerId':'0',
+			'active':'1',
+			'dateCreated':'2017-05-18 19:01:05',
+			'linkedToQuoteId':null,
+			'acceptable':'1'	
+		},
+		{
+			'id':'3',
+			'quoteNumber':'00002',
+			'businessUnitId':'0',
+			'brokerId':'1',
+			'insurerId':'0',
+			'active':'1',
+			'dateCreated':'2017-05-18 19:02:05',
+			'linkedToQuoteId':'0',
+			'acceptable':'1'
+		}
 	];
 	this.createQuote = function(data) {
 
@@ -897,6 +919,20 @@ var mockCommunicator = new function()
 	}
 	this.deactivateQuote = function(id) {
 		this.quoteTable[id]['active'] = false;
+	}
+	this.getQuotesByBusinessUnitId = function(businessUnitId)
+	{
+		var quotes = [];
+
+		for(var i = 0; i < this.quoteTable.length; i++)
+		{
+			if(this.quoteTable[i].businessUnitId == businessUnitId)
+			{
+				quotes.push(this.quoteTable[i]);
+			}
+		}
+
+		return quotes;
 	}
 
 // QUOTE LAND ENTRY - done
@@ -956,6 +992,34 @@ var mockCommunicator = new function()
 			'yield':'12.22',
 			'price':'4.98',
 			'tariffOptionId':'0',
+		},
+		{
+			'id':'4',
+			'quoteId':'2',
+			'farmId':'0',
+			'landNumber':'00005',
+			'landLongitude':'1.3361',
+			'landLatitude':'-0.1215',
+			'cropId':'1',
+			'cultivar':'Red Dwarf',
+			'area':'7.4',
+			'yield':'15.22',
+			'price':'4.48',
+			'tariffOptionId':'0',
+		},
+		{
+			'id':'5',
+			'quoteId':'3',
+			'farmId':'0',
+			'landNumber':'00006',
+			'landLongitude':'1.3361',
+			'landLatitude':'-0.1215',
+			'cropId':'0',
+			'cultivar':'Octopussy',
+			'area':'6.7',
+			'yield':'12.22',
+			'price':'4.98',
+			'tariffOptionId':'0',
 		}
 	];
 	this.createQuoteLandEntry = function(data) {
@@ -998,7 +1062,21 @@ var mockCommunicator = new function()
 	}
 	this.deactivateQuoteLandEntry = function(id) {
 		this.quoteLandEntryTable[id]['active'] = false;
-	}	
+	}
+	this.getQuoteLandEntriesByQuoteId = function(quoteId)
+	{
+		var landEntries = [];
+
+		for(var i = 0; i < this.quoteLandEntryTable.length; i++)
+		{
+			if(this.quoteLandEntryTable[i].quoteId == quoteId)
+			{
+				landEntries.push(this.quoteLandEntryTable[i]);
+			}
+		}
+
+		return landEntries;
+	}
 
 // QUOTE LAND ENTRY DAMAGE TYPE - done
 	this.quoteLandEntryDamageTypeTable = [
@@ -1065,7 +1143,7 @@ var mockCommunicator = new function()
 	this.deactivateQuoteLandEntryDamageType = function(id) {
 		this.quoteLandEntryDamageTypeTable[id]['active'] = false;
 	}
-	this.getQouteLandEntryDamageTypesByLandEntryId = function(landEntryId)
+	this.getQuoteLandEntryDamageTypesByQuoteLandEntryId = function(landEntryId)
 	{
 		var damageTypes = [];
 
@@ -1182,8 +1260,8 @@ var mockCommunicator = new function()
 			'policyId':'0',
 			'farmId':'0',
 			'landNumber':'00001',
-			'landLongitude':'1.3361',
-			'landLatitude':'-0.1215',
+			'landLongitude':'131.044',
+			'landLatitude':'-25.363',
 			'cropId':'1',
 			'cultivar':'Red Dwarf',
 			'area':'7.4',
@@ -1196,8 +1274,8 @@ var mockCommunicator = new function()
 			'policyId':'1',
 			'farmId':'1',
 			'landNumber':'00002',
-			'landLongitude':'1.3361',
-			'landLatitude':'-0.1215',
+			'landLongitude':'131.044',
+			'landLatitude':'-25.363',
 			'cropId':'1',
 			'cultivar':'Something',
 			'area':'8.4',
@@ -1210,8 +1288,8 @@ var mockCommunicator = new function()
 			'policyId':'0',
 			'farmId':'0',
 			'landNumber':'00003',
-			'landLongitude':'1.3361',
-			'landLatitude':'-0.1215',
+			'landLongitude':'131.044',
+			'landLatitude':'-25.363',
 			'cropId':'1',
 			'cultivar':'Red Dwarf',
 			'area':'7.4',
@@ -1224,8 +1302,8 @@ var mockCommunicator = new function()
 			'policyId':'1',
 			'farmId':'1',
 			'landNumber':'00004',
-			'landLongitude':'1.3361',
-			'landLatitude':'-0.1215',
+			'landLongitude':'131.044',
+			'landLatitude':'-25.363',
 			'cropId':'1',
 			'cultivar':'Something',
 			'area':'8.4',
@@ -1238,8 +1316,8 @@ var mockCommunicator = new function()
 			'policyId':'2',
 			'farmId':'0',
 			'landNumber':'00003',
-			'landLongitude':'1.3361',
-			'landLatitude':'-0.1215',
+			'landLongitude':'131.044',
+			'landLatitude':'-25.363',
 			'cropId':'1',
 			'cultivar':'Red Dwarf',
 			'area':'7.4',
@@ -1252,8 +1330,8 @@ var mockCommunicator = new function()
 			'policyId':'3',
 			'farmId':'1',
 			'landNumber':'00004',
-			'landLongitude':'1.3361',
-			'landLatitude':'-0.1215',
+			'landLongitude':'131.044',
+			'landLatitude':'-25.363',
 			'cropId':'1',
 			'cultivar':'Something',
 			'area':'8.4',

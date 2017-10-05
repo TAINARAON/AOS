@@ -1,24 +1,37 @@
-var policyViewer = new function ()
+var quoteViewer = new function () 
 {
-	var policies = [];
+	var quotes = [];
 	var viewableBrokers;
 
 	var landEntryMaps = [];
 	var mapScriptContainer = document.getElementById("mapScriptContainer");
 
 	var brokerSelect = document.getElementById("available_broker_dropdown");
-	var policyNumberInput = document.getElementById("policy_number_input");
+	var quoteNumberInput = document.getElementById("quote_number_input");
 	var businessUnitInput = document.getElementById("business_unit_input");
 	var searchButton = document.getElementById("search_button");
-	var policyAccordion = document.getElementById("policy_accordion");
+	var quoteAccordion = document.getElementById("quote_accordion");
 
 	(function init(){
+		createModal("modal_container");
+		createAcceptQuoteModal("modal_confirm_accept_quote");
+
 		setAvailableBrokers();
 		setSearchButtonClickListener();
-		addOnEnterKeyPressedListenerForSearchInput(policyNumberInput);
+		addOnEnterKeyPressedListenerForSearchInput(quoteNumberInput);
 		addOnEnterKeyPressedListenerForSearchInput(businessUnitInput);
 		search();
 	})();
+
+	function createModal(id)
+	{
+		loader.loadPartOfPage("html/broker/quote/create.html", id);
+	}
+
+	function createAcceptQuoteModal(id)
+	{
+		loader.loadPartOfPage("html/broker/quote/accept.html", id);
+	}
 
 	function setAvailableBrokers()
 	{	
@@ -77,19 +90,12 @@ var policyViewer = new function ()
 
 		var tBrokerName = $(brokerSelect).val().trim();
 		var brokerId = getIdOfSelectedBroker(tBrokerName);
-		var policyNumber = $(policyNumberInput).val().trim();
+		var quoteNumber = $(quoteNumberInput).val().trim();
 		var businessUnitName = $(businessUnitInput).val().trim();
 
 		if(brokerId != -1)
 		{
-			if(policyNumber == "" && businessUnitName == "")
-			{
-				getInitialPolicies(brokerId);
-			}
-			else
-			{
-				setSpecificPolicies(policyInvoker.searchForPolicy(brokerId, policyNumber, businessUnitName));
-			}
+			setupQuotes(quoteInvoker.searchForQuote(brokerId, quoteNumber, businessUnitName));
 		}
 	}
 
@@ -106,39 +112,32 @@ var policyViewer = new function ()
 		return -1;
 	}
 
-	function setSpecificPolicies(pol)
+	function setupQuotes(quotes)
 	{
-		policies = pol;
-		createAccordionPolicyItems(policies);
+		this.quotes = quotes;
+		createAccordionQuoteItems(quotes);
 		setupAccordionClickHandler();
 	}
 
-	function getInitialPolicies(brokerId)
+	function createAccordionQuoteItems(quotes)
 	{
-		policies = policyInvoker.getPolicies(brokerId);
-		createAccordionPolicyItems(policies);
-		setupAccordionClickHandler();
-	}
-
-	function createAccordionPolicyItems(policies)
-	{
-		policyAccordion.innerHTML = "";
+		quoteAccordion.innerHTML = "";
 		mapScriptContainer.innerHTML = "";
 
-		for(var i = 0; i < policies.length; i++)
+		for(var i = 0; i < quotes.length; i++)
 		{
-			var childContainer = createPolicyAccordionParentItem(policies[i], policyAccordion);
+			var childContainer = createQuoteAccordionParentItem(quotes[i], quoteAccordion);
 
-			for(var j = 0; j < policies[i].policyLandEntries.length; j++)
+			for(var j = 0; j < quotes[i].quoteLandEntries.length; j++)
 			{
-				createPolicyAccordionChildItem(policies[i].policyLandEntries[j], childContainer);
+				createQuoteAccordionChildItem(quotes[i].quoteLandEntries[j], childContainer);
 			}
 		}
 
 		addMapScriptForUpdatingLandEntryMaps(mapScriptContainer);
 	}
 
-	function createPolicyAccordionParentItem(policy, container)
+	function createQuoteAccordionParentItem(quote, container)
 	{
 		var parentLi = document.createElement("LI");
 
@@ -146,10 +145,10 @@ var policyViewer = new function ()
 		parentTitle.className = "toggle";
 		parentTitle.style.cssText = "display: flex;";
 
-		createAccordionItemDetailDiv("Policy Number: " + policy.policyNumber, parentTitle);
-		createAccordionItemDetailDiv("Business Unit: " + policy.businessUnit.name, parentTitle);
-		createAccordionItemDetailDiv("Policy Start: " + policy.acceptedOn, parentTitle);
-		createAccordionItemDetailDiv("Premium: " + policy.premium, parentTitle);
+		createAccordionItemDetailDiv("Quote Number: " + quote.quoteNumber, parentTitle);
+		createAccordionItemDetailDiv("Business Unit: " + quote.businessUnit.name, parentTitle);
+		//createAccordionItemDetailDiv("Policy Start: " + quote.acceptedOn, parentTitle);
+		createAccordionItemDetailDiv("Premium: " + quote.premium, parentTitle);
 
 		var childContainer = document.createElement("UL");
 		childContainer.className = "inner";
@@ -170,7 +169,7 @@ var policyViewer = new function ()
 		container.appendChild(tDiv);
 	}
 
-	function createPolicyAccordionChildItem(landEntry, container)
+	function createQuoteAccordionChildItem(landEntry, container)
 	{
 		var childLi = document.createElement("LI");
 
@@ -218,7 +217,7 @@ var policyViewer = new function ()
 	{
 		var mapScript = document.createElement("SCRIPT");
 		mapScript.type = "text/javascript";
-		mapScript.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAv9T_ISeUi2Jf9FcFpXO24VkRUByr5_ek&callback=policyViewer.initMap";
+		mapScript.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAv9T_ISeUi2Jf9FcFpXO24VkRUByr5_ek&callback=quoteViewer.initMap";
 
 		container.appendChild(mapScript);
 	}

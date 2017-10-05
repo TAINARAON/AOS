@@ -340,4 +340,238 @@ var quoteInvoker = new function() {
     {
         return mockCommunicator.getPerils();
     }
+
+    // New methods
+
+    this.searchForQuote = function(brokerId, quoteNumber, businessUnitName)
+    {
+        var quotes = [];
+        debugger;
+        if(quoteNumber == "" && businessUnitName == "")
+        {
+            quotes = mockCommunicator.getQuotes();
+        }
+        else if(quoteNumber != "" && businessUnitName == "")
+        {
+            quotes.push(mockCommunicator.getQuoteByQuoteNumber(quoteNumber));
+        }
+        else if(businessUnitName != "" && quoteNumber == "")
+        {
+            var businessUnit = mockCommunicator.getBusinessUnitByName(businessUnitName);
+            quotes = mockCommunicator.getQuotesByBusinessUnitId(businessUnit.id);
+        }
+        else
+        {
+            var businessUnit = mockCommunicator.getBusinessUnitByName(businessUnitName);
+            var tQuotes = mockCommunicator.getQuotesByBusinessUnitId(businessUnit.id);
+            for(var i = 0; i < tQuotes.length; i++)
+            {
+                if(tQuotes[i].quoteNumber == quoteNumber)
+                {
+                    quotes.push(tQuotes[i]);
+                }
+            }
+        }
+
+        // Convert to full quote
+        var finalQuotes = [];
+        for(var i = 0; i < quotes.length; i++)
+        {
+            if(quotes[i].brokerId == brokerId)
+            {
+                finalQuotes.push(getFullQuote(quotes[i]));
+            }
+        }
+
+        return finalQuotes;
+    }
+
+    function getFullQuote(quote)
+    {
+        quote["businessUnit"] = getBusinessUnit(quote.businessUnitId);
+        quote["quoteLandEntries"] = getQuoteLandEntriesByQuoteId(quote.id);
+
+        for(var i = 0; i < quote.quoteLandEntries.length; i++)
+        {
+            var landEntry = quote.quoteLandEntries[i];
+            
+            addCropToLandEntry(landEntry, getCrop(landEntry.cropId));
+
+            addQuoteLandEntryDamageTypeToLandEntry(landEntry, getQuoteLandEntryDamageTypesByQuoteLandEntryId(landEntry.id));
+
+            for(var j = 0; j < landEntry.quoteLandEntryDamageType.length; j++)
+            {   
+                var quoteLandEntryDamageType = landEntry.quoteLandEntryDamageType[j];
+
+                var tariffOptionDamageTypeId = quoteLandEntryDamageType.tariffOptionDamageTypeId;
+                addTariffOptionDamageTypeToQuoteLandEntryDamageType(quoteLandEntryDamageType, getTariffOptionDamageTypesByTariffOption(tariffOptionDamageTypeId));
+
+                for(var k = 0; k < quoteLandEntryDamageType.tariffOptionDamageType.length; k++)
+                {
+                    var tariffOptionDamageType = quoteLandEntryDamageType.tariffOptionDamageType[k];
+
+                    var damageTypeId = tariffOptionDamageType.damageTypeId;
+                    addDamageTypeToTariffOptionDamageType(tariffOptionDamageType, getDamageType(damageTypeId));
+
+                    var tariffOptionId = tariffOptionDamageType.tariffOptionId;
+                    addTariffOptionToTariffOptionDamageType(tariffOptionDamageType, getTariffOption(tariffOptionId));
+
+                    // Adding values to tariffOption
+                    var tariffOption = tariffOptionDamageType.tariffOption;
+                    var tariffOptionTypeId = tariffOption.tariffOptionTypeId;
+                    addTariffOptionTypeToTariffOption(tariffOption, getTariffOptionType(tariffOptionTypeId));
+
+                    var cropId = tariffOption.cropId;
+                    addCropToTariffOption(tariffOption, getCrop(cropId));
+
+                    // Adding values to crop
+                    /*var productId = tariffOptionDamageType.tariffOption.crop.productId;
+                    quote.quoteLandEntries[i].quoteLandEntryDamageType[j].tariffOptionDamageType[k].tariffOption.crop["product"] = getProduct(productId);
+
+                    var priceUomId = tariffOptionDamageType.tariffOption.crop.priceUomId;
+                    quote.quoteLandEntries[i].quoteLandEntryDamageType[j].tariffOptionDamageType[k].tariffOption.crop["priceUom"] = getPriceUom(priceUomId);
+
+                    var areaUomId = tariffOptionDamageType.tariffOption.crop.areaUomId;
+                    quote.quoteLandEntries[i].quoteLandEntryDamageType[j].tariffOptionDamageType[k].tariffOption.crop["areaUom"] = getAreaUom(areaUomId);*/
+                }
+            }
+        }
+
+        var totalPremium = 0;
+        for(var i = 0; i < quote.quoteLandEntries.length; i++)
+        {
+            totalPremium += quote.quoteLandEntries[i]["premiumContribution"] = getPremiumContributionOfLandEntry(quote.quoteLandEntries[i]);
+        }
+        quote["premium"] = totalPremium;
+
+        console.log(quote);
+
+        return quote;
+    }
+
+    function getBusinessUnit(id)
+    {
+        return mockCommunicator.getBusinessUnit(id);
+    }
+
+    function getQuoteLandEntriesByQuoteId(id)
+    {
+        return mockCommunicator.getQuoteLandEntriesByQuoteId(id);
+    }
+
+    function getQuoteLandEntryDamageTypesByQuoteLandEntryId(id)
+    {
+        return mockCommunicator.getQuoteLandEntryDamageTypesByQuoteLandEntryId(id);
+    }
+
+    function addQuoteLandEntryDamageTypeToLandEntry(landEntry, quoteLandEntryDamageTypeData)
+    {
+        landEntry["quoteLandEntryDamageType"] = quoteLandEntryDamageTypeData;
+    }
+
+    function getTariffOptionDamageTypesByTariffOption(id)
+    {
+        return mockCommunicator.getTariffOptionDamageTypesByTariffOption(id);
+    }
+
+    function addTariffOptionDamageTypeToQuoteLandEntryDamageType(quoteLandEntryDamageType, tariffOptionDamageTypeData)
+    {
+        quoteLandEntryDamageType["tariffOptionDamageType"] = tariffOptionDamageTypeData;
+    }
+
+    function getDamageType(id)
+    {
+        return mockCommunicator.getDamageType(id);
+    }
+
+    function addDamageTypeToTariffOptionDamageType(tariffOptionDamageType, damageTypeData)
+    {
+        tariffOptionDamageType["damageType"] = damageTypeData;
+    }
+
+    function getTariffOption(id)
+    {
+        return mockCommunicator.getTariffOption(id);
+    }
+
+    function addTariffOptionToTariffOptionDamageType(tariffOptionDamageType, tariffOptionData)
+    {
+        tariffOptionDamageType["tariffOption"] = tariffOptionData;
+    }
+
+    function getTariffOptionType(id)
+    {
+        return mockCommunicator.getTariffOptionType(id);
+    }
+
+    function addTariffOptionTypeToTariffOption(tariffOption, tariffOptionTypeData)
+    {
+        tariffOption["tariffOptionType"] = tariffOptionTypeData;
+    }
+
+    function getCrop(id)
+    {
+        return mockCommunicator.getCrop(id);
+    }
+
+    function addCropToLandEntry(landEntry, cropData)
+    {
+        landEntry["crop"] = cropData;
+    }
+
+    function addCropToTariffOption(tariffOption, cropData)
+    {
+        tariffOption["crop"] = cropData;
+    }
+
+    function getProduct(id)
+    {
+        return mockCommunicator.getProduct(id);
+    }
+
+    function getPriceUom(id)
+    {
+        return mockCommunicator.getPriceUom(id);
+    }
+
+    function getAreaUom(id)
+    {
+        return mockCommunicator.getAreaUom(id);
+    }
+
+    function getPremiumContributionOfLandEntry(landEntry)
+    {
+        var value = getValueOfLandEntry(landEntry);
+        var tariff = getLandEntryTariff(landEntry);
+
+        landEntry["tariff"] = tariff;
+
+        return value * tariff;
+    }
+
+    function getValueOfLandEntry(landEntry)
+    {
+        var price = landEntry['price'];
+        var cropYield = landEntry['yield'];
+        var area = landEntry['area'];
+
+        return (price * cropYield * area);
+    }
+
+    function getLandEntryTariff(landEntry)
+    {
+        var tariff = 0;
+
+        for(var h  = 0; h < landEntry.quoteLandEntryDamageType.length; h++)
+        {
+            var quoteLandEntryDamageType = landEntry.quoteLandEntryDamageType[h];
+            for(var i = 0; i < quoteLandEntryDamageType.tariffOptionDamageType.length; i++)
+            {
+                var tariffOptionDamageType = landEntry.quoteLandEntryDamageType[h].tariffOptionDamageType[i];
+                tariff += (tariffOptionDamageType['tariff']*1);
+            }
+        }
+        
+        return tariff;
+    }
 }

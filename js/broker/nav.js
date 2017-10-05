@@ -12,7 +12,7 @@
  		},
  		{
  			'text':'Quote',
- 			'pageUrl':'html/broker/quote/quote.html'
+ 			'pageUrl':'html/broker/quote/quote2.html'
  		},
  	];
 
