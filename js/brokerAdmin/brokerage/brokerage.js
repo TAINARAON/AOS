@@ -58,8 +58,31 @@ function createBrokerEntry(broker,container) {
 
 	var revokeButton = $('<button></button>')
 		.text('Revoke')
+		.attr('data-toggle','modal')
+		.attr('data-target','#revokeBrokerModal')
 		.on('click',function() {
-			onRevokeBroker(broker.id);
+			onRevokeBrokerClick(broker.id);
+		}
+	);
+
+	var viewQuotesButton = $('<button></button>')
+		.text('Quotes')
+		.on('click',function() {
+			viewQuotesOfBroker(broker.id);
+		}
+	);
+
+	var viewPoliciesButton = $('<button></button>')
+		.text('Policies')
+		.on('click',function() {
+			viewPoliciesOfBroker(broker.id);
+		}
+	);
+
+	var viewDamageReportsButton = $('<button></button>')
+		.text('Damage Reports')
+		.on('click',function() {
+			viewDamageReportsOfBroker(broker.id);
 		}
 	);
 
@@ -68,6 +91,9 @@ function createBrokerEntry(broker,container) {
 	
 	detailContainer.append(editButton);
 	detailContainer.append(revokeButton);
+	detailContainer.append(viewQuotesButton);
+	detailContainer.append(viewPoliciesButton);
+	detailContainer.append(viewDamageReportsButton);
 	detailContainer.append(details);
 
 	container.append(header);
@@ -115,7 +141,16 @@ function populateTextFields(brokerData) {
 	$('#edit_broker_surname_input').val(brokerData.surname);
 }
 function populatePermissionCheckBoxes(brokerData) {
-	console.log(brokerData);
+
+	var damageReportRights = brokerData['damageReportRights'];
+	var quoteRights = brokerData['quoteRights'];
+	var policyRights = brokerData['policyRights'];
+	var clientCreationRights = brokerData['clientCreationRights'];
+
+	$('#edit_broker_damage_report_rights_checkbox').attr('checked', damageReportRights);
+	$('#edit_broker_quote_rights_checkbox').attr('checked', quoteRights);
+	$('#edit_broker_policy_rights_checkbox').attr('checked', policyRights);
+	$('#edit_broker_client_creation_rights_checkbox').attr('checked', clientCreationRights);
 }
 function setOnClickForEditBrokerSaveButton(brokerId) {
 
@@ -184,20 +219,25 @@ function onBrokerEditCallback(response) {
 	util.createNotification('Request to update broker successful.');
 }
 
-function test() {
-	alert('callback is working');
+function onRevokeBrokerClick(brokerId) {
+
+	// Display Revoke Broker Modal
 }
 
-function onRevokeBroker(id) {
+function revokeBroker(id) {
 	
-	alert("revoke: "+id);
+	brokerAdminController.revokeBroker(id,revokeBrokerCallback);
+}
+
+function revokeBrokerCallback(result) {
+	util.createNotification('Broker removed.','error');
 }
 
 
 function initializeSelectorComponent(brokerData) {
 	populateSelectorBox(brokerData);
-	onAddClickListener();
-	onRemoveClickListener();
+	onAddFileClickListener();
+	onRemoveFileClickListener();
 }
 function populateSelectorBox(brokerData) {
 
@@ -221,7 +261,7 @@ function populateSelectorBox(brokerData) {
 }
 
 
-function onAddClickListener() {
+function onAddFileClickListener() {
 
 	$('#add_button').on('click',function() {
 
@@ -239,7 +279,7 @@ function onAddClickListener() {
 }
 
 
-function onRemoveClickListener() {
+function onRemoveFileClickListener() {
 
 	$('#remove_button').on('click',function() {
 
@@ -265,3 +305,17 @@ function toggleSelectedListItem(li) {
 		li.css('background-color','grey');
 	}
 }
+
+
+function viewQuotesOfBroker(brokerId) {
+
+}
+
+function viewPoliciesOfBroker(brokerId) {
+
+}
+
+function viewDamageReportsOfBroker(brokerId) {
+
+}
+

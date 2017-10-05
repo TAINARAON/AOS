@@ -613,28 +613,28 @@ var mockCommunicator = new function()
 			'id':'0',
 			'userId':'4',
 			'brokerageId':'0',
-			'quoteRights':'1',
-			'policyRights':'1',
-			'damageReportRights':'1',
-			'clientCreationRights':'1'
+			'quoteRights':false,
+			'policyRights':false,
+			'damageReportRights':true,
+			'clientCreationRights':true
 		},
 		{
 			'id':'1',
 			'userId':'7',
 			'brokerageId':'0',
-			'quoteRights':'1',
-			'policyRights':'1',
-			'damageReportRights':'1',
-			'clientCreationRights':'1'
+			'quoteRights':true,
+			'policyRights':true,
+			'damageReportRights':true,
+			'clientCreationRights':false
 		},
 		{
 			'id':'2',
 			'userId':'8',
 			'brokerageId':'0',
-			'quoteRights':'1',
-			'policyRights':'1',
-			'damageReportRights':'1',
-			'clientCreationRights':'1'
+			'quoteRights':true,
+			'policyRights':true,
+			'damageReportRights':true,
+			'clientCreationRights':true
 		},
 	];
 

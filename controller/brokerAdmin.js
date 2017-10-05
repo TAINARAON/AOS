@@ -59,13 +59,11 @@ var brokerAdminController = new function() {
 		return brokerAdmin;
 	}
 
-	this.updateBroker = function(brokerData) {
-
+	this.updateBroker = function(brokerData,callback) {
+		console.log('updateBroker');
 		console.log(brokerData);
-		
 		// return mockCommunicator.updateBroker(brokerData);
-
-		return 1;
+		callback();
 	}
 
 	this.getBrokerForEditModal = function(brokerId) {
@@ -128,6 +126,11 @@ var brokerAdminController = new function() {
 		}
 
 		return response;
+	}
+
+	this.revokeBroker = function(brokerId,callback) {
+		// Deactivates Broker
+		callback();
 	}
 
 	// PRIVATE FUNCTIONS
