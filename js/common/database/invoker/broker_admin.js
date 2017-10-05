@@ -1,6 +1,6 @@
 var brokerAdminInvoker = new function() {
 
-	this.createBroker = function (userData,brokerData) 
+	/*this.createBroker = function (userData,brokerData) 
 	{
 	    var newUserId = mockCommunicator.createUser(userData);
 		
@@ -19,5 +19,5 @@ var brokerAdminInvoker = new function() {
 		}
 
 		return brokers;
-	};	
+	};	*/
 }

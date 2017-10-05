@@ -36,6 +36,9 @@ var brokerInvoker = new function() {
         ]
         */
 
+        console.log("Broker Id to get Viewable Brokers of");
+        console.log(brokerId);
+
         var viewableBrokers = [];
 
         var allViewableBrokers = mockCommunicator.getBrokerViewableBrokers();
@@ -56,6 +59,9 @@ var brokerInvoker = new function() {
                 viewableBrokers.push(neededInfo);
             }
         }
+
+        console.log("Viewable Brokers");
+        console.log(viewableBrokers);
 
         return viewableBrokers;
     }
