@@ -377,7 +377,8 @@ var quoteInvoker = new function() {
         var finalQuotes = [];
         for(var i = 0; i < quotes.length; i++)
         {
-            if(quotes[i].brokerId == brokerId)
+            var active = quotes[i].active * 1;
+            if(quotes[i].brokerId == brokerId && active)
             {
                 finalQuotes.push(getFullQuote(quotes[i]));
             }

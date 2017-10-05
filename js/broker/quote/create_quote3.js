@@ -173,7 +173,8 @@ var createQuote = new function()
 
 	function loadProducts()
 	{
-		
+		var products = quoteInvoker.getProducts();
+		// TODO: carry on here
 	}
 
 	function notifyUserOfIncorrectBusinessUnit()
