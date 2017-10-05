@@ -35,13 +35,12 @@ var quoteViewer = new function ()
 
 	function setAvailableBrokers()
 	{	
-		// TODO: use sessionStorage.brokerId instead of 0
 		var currentUserBrokerId = sessionStorage.brokerId;
 
-		viewableBrokers = brokerInvoker.getViewableBrokers(0);
+		viewableBrokers = brokerInvoker.getViewableBrokers(currentUserBrokerId);
 		
-		var tSelfObj = brokerInvoker.getBrokerDisplayable(0);
-		tSelfObj["brokerId"] = 0;
+		var tSelfObj = brokerInvoker.getBrokerDisplayable(currentUserBrokerId);
+		tSelfObj["brokerId"] = currentUserBrokerId;
 		viewableBrokers.push(tSelfObj);
 
 		for(var i = 0; i < viewableBrokers.length; i++)
@@ -196,7 +195,7 @@ var quoteViewer = new function ()
 		childDetail.className = "inner";
 
 		// TODO: add detail
-		createChildDetailMapItem("map" + landEntry.id, landEntry.landLatitude, landEntry.landLongitude, childDetail);
+		createChildDetailMapItem("quote_map" + landEntry.id, landEntry.landLatitude, landEntry.landLongitude, childDetail);
 
 		childLi.appendChild(childTitle);
 		childLi.appendChild(childDetail);
