@@ -1,36 +1,44 @@
-const USERNAME = 0;
-const PASSWORD = 1;
-const PASSWORD2 = 2;
-const EMAIL = 3;
-const BROKERAGE_NAME = 4;
-const BROKERAGE_EMAIL = 5;
-const BROKERAGE_CONTACT_NUMBER = 6;
-const FSP_NUMBER = 7;
+var USERNAME = 0;
+var PASSWORD = 1;
+var PASSWORD2 = 2;
+var EMAIL = 3;
+var BROKERAGE_NAME = 4;
+var BROKERAGE_EMAIL = 5;
+var BROKERAGE_CONTACT_NUMBER = 6;
+var FSP_NUMBER = 7;
 
 var inputArray = [false,false,false,false,false,false,false,false];
 
 function validateUsername(input) {
+	// TODO
 	inputArray[USERNAME] = 1;
 }
 function validatePassword(input) {
+	// TODO
 	inputArray[PASSWORD] = 1;
 }
 function validateConfirmPassword(input) {
+	// TODO
 	inputArray[PASSWORD2] = 1;
 }
 function validateEmail(input) {
+	// TODO
 	inputArray[EMAIL] = 1;
 }
 function validateBrokerageName(input) {
+	// TODO
 	inputArray[BROKERAGE_NAME] = 1;
 }
 function validateBrokerageEmail(input) {
+	// TODO
 	inputArray[BROKERAGE_EMAIL] = 1;
 }
 function validateBrokerageContactNumber(input) {
+	// TODO
 	inputArray[BROKERAGE_CONTACT_NUMBER] = 1;
 }
 function validateFspNumber(input) {
+	// TODO
 	inputArray[FSP_NUMBER] = 1;
 }
 
@@ -84,9 +92,27 @@ $( document ).on( 'click', '#broker_register_submit_button', function ( e ) {
 		}
 	}
 
-	alert("Submitted");
+	util.displayUploadFileModal("",onBrokerageRegistrationCallback);
 }); 
 
 function notifyUserOfInvalidField(invalidFieldIndex) {
 	alert("Field " + invalidFieldIndex + " is invalid." );
+}
+
+function onBrokerageRegistrationCallback(response) {
+
+	// TODO
+	if(response == true) {
+		onSuccessfulBrokerageRegistration();
+	} else {
+		onUnsuccessfulBrokerageRegistration();
+	}
+}
+
+function onSuccessfulBrokerageRegistration() {
+	util.createNotification('Registration request successfull!');
+	util.createNotification('Support will send a verification email shortly.');
+}
+function onUnsuccessfulBrokerageRegistration() {
+	util.createNotification('Failure to create Brokerage. Please contact Support.','error');
 }

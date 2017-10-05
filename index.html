@@ -34,25 +34,21 @@
 	      </div>
 	      <div class="modal-body">
 	        <div class="row">
-	          <form>
+	          <form id="upload_file_modal_form" action="/upload" method="POST" enctype="multipart/form-data">
 				<div>
 				  <label for="file">Choose file to upload</label>
 				  <input type="file" id="uploadFileInput" name="file" multiple="multiple">
 				</div>
 				<div>
 					<ul id="upload_file_uploaded_files_ul">
-						
 					</ul>
-				</div>
-				<div>
-				  <button>Submit</button>
 				</div>
 			  </form>
 	        </div>
 	  	  </div>
 	      <div class="modal-footer">
-	        <div id="change_me2" class="btn btn-success" data-dismiss="modal">-</div>
-	        <button id="change_me3" type="button" class="btn btn-danger" data-dismiss="modal">-</button>
+	        <div id="upload_file_modal_upload_button" class="btn btn-success" data-dismiss="modal">Upload</div>
+	        <button id="upload_file_modal_cancel_button" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 	      </div>
 	    </div>
 	  </div>

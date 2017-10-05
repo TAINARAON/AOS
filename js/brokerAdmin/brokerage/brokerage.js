@@ -176,11 +176,12 @@ function updateBroker(brokerId) {
 		'brokerViewableBrokers':brokerViewableBrokers
 	};
 
-	var result = brokerAdminController.updateBroker(dataObject);
-	
-	if(result == 1) {
-		util.createNotification('Request to update broker successful.');
-	}
+	brokerAdminController.updateBroker(dataObject,onBrokerEditCallback);
+}
+
+function onBrokerEditCallback(response) {
+	// TODO
+	util.createNotification('Request to update broker successful.');
 }
 
 function test() {

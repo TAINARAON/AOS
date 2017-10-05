@@ -1,22 +1,24 @@
 var util = new function() {
 
-	this.displayUploadFileModal = function(data,callback) {
+	this.displayUploadFileModal = function(action,data,callback) {
 
-		// HACK
-		$("#uploadFileInput").unbind('change');
-		$('#uploadFileInput').on('change',function() {
-			
-			var filename = $('#uploadFileInput').val().match(/[^\\/]*$/)[0];
-			
-			// Add name to file list
-			onFileAdded(filename);
-			
-		});
-		// END OF HACK
+		// TODO 
+		// Set Action
+		$('#upload_file_modal_form').prop('action',action);
+
+		// Clear all files loaded
+		$("#uploadFileInput").val('');
 
 		$('#uploadFileModal').modal('show');
+	}
 
-		// set the onSave to call callback
+	// success, error, info, warn
+	this.createNotification = function(message,type='success') {
+
+		$.notify(
+		  message,
+		  { position:"top center",className: type},
+		);
 	}
 
 	this.getDateTimePretty =function (dateTime = null){
@@ -86,14 +88,7 @@ var util = new function() {
 		return new Date(dateTime).getTime() + amount;
 	}
 
-	// success, error, info, warn
-	this.createNotification = function(message,type='success') {
-
-		$.notify(
-		  message,
-		  { position:"top center",className: type},
-		);
-	}
+	
 
 	this.convertMillisecondsTo = function(amount,unit) {
 
@@ -147,8 +142,4 @@ var util = new function() {
 
 		return newAmount;
 	}
-}
-
-function onFileAdded(filename) {
-	$('#upload_file_uploaded_files_ul').append($('<li></li>').text(filename));
 }

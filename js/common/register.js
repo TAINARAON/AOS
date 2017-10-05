@@ -15,14 +15,14 @@ document.getElementById("register_client_button").onclick = function() {
     }
 };
 
-// Register Client button
+// Register Broker button
 document.getElementById("register_broker_button").onclick = function() {
 
     $("#registerClientContent").hide();
     $("#registerBrokerContent").show();
 
     if(!registerBrokerHtmlIsLoaded) {
-        loader.loadPartOfPage("html/broker/register.html","registerBrokerContent");
+        loader.loadPartOfPage("html/brokerAdmin/brokerage/registerBrokerage.html","registerBrokerContent");
         registerBrokerHtmlIsLoaded = true;
     }
 };
