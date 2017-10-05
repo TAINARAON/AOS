@@ -130,6 +130,10 @@ var quoteViewer = new function ()
 
 			for(var j = 0; j < quotes[i].quoteLandEntries.length; j++)
 			{
+				if(j == 0)
+				{
+					createQuoteButtons(quotes[i], childContainer);
+				}
 				createQuoteAccordionChildItem(quotes[i].quoteLandEntries[j], childContainer);
 			}
 		}
@@ -214,6 +218,94 @@ var quoteViewer = new function ()
 		landEntryMaps.push(tMapObj);
 
 		container.appendChild(mapDiv);
+	}
+
+	function createQuoteButtons(quote, container)
+	{
+		var childLi = document.createElement("LI");
+
+		createReQuoteBtn(container, quote);
+		createDeleteBtn(container, quote);
+		createAcceptButton(container, quote);
+		createPrintQuoteBtn(container, quote);
+		createEmailQuoteBtn(container, quote);
+
+		container.appendChild(childLi);
+	}
+
+	function createSuccessButton(title, container)
+	{
+		var button = document.createElement("DIV");
+		button.className = "btn btn-success col-md-1";
+		button.innerHTML = title;
+
+		container.appendChild(button);
+
+		return button;
+	}
+
+	function createDangerButton(title, container)
+	{
+		var button = document.createElement("DIV");
+		button.className = "btn btn-danger col-md-1";
+		button.innerHTML = title;
+
+		container.appendChild(button);
+
+		return button;
+	}
+
+	function createReQuoteBtn(container, quote)
+	{
+		createSuccessButton("Re-Quote", container).onclick = function(e) {reQuote(e, quote);};
+	}
+
+	function reQuote(event, quote)
+	{
+		console.log("ID: " + quote.id);
+		event.preventDefault();
+		quoteCreator.openModalAndReQuote(quote.id);
+	}
+
+	function createDeleteBtn(container, quote)
+	{
+		createDangerButton("Delete Quote", container).onclick = function(e) {deleteQuote(e, quote);};
+	}
+
+	function deleteQuote(event, quote)
+	{
+		quoteInvoker.deleteQuote(quote.id);
+		search();
+	}
+
+	function createAcceptButton(container, quote)
+	{
+		createSuccessButton("Accept Quote", container).onclick = function(e) {acceptQuote(e, quote);};
+	}
+
+	function acceptQuote(event, quote)
+	{
+		quoteAcceptModal.show(quote.id);
+	}
+
+	function createPrintQuoteBtn(container, quote)
+	{
+		createSuccessButton("Print Quote", container).onclick = function(e) {printQuote(e, quote);};
+	}
+
+	function printQuote(event, quote)
+	{
+		alert("To be added at a later stage");
+	}
+
+	function createEmailQuoteBtn(container, quote)
+	{
+		createSuccessButton("Email Quote", container).onclick = function(e) {emailQuote(e, quote);};
+	}
+
+	function emailQuote(event, quote)
+	{
+		alert("To be added at a later stage");
 	}
 
 	function addMapScriptForUpdatingLandEntryMaps(container)
