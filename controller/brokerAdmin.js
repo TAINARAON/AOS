@@ -73,10 +73,7 @@ var brokerAdminController = new function() {
 			{
 				name,
 				surname,
-				clientCreationRights,
-				damageReportRights,
-				policyRights,
-				quoteRights,
+				creationRights,
 				brokerViewableBrokers: [
 					{
 						id (broker)
@@ -93,10 +90,10 @@ var brokerAdminController = new function() {
 		var name = user['name'];
 		var surname = user['surname'];
 
-		var quoteRights = broker['quoteRights'];
+		/*var quoteRights = broker['quoteRights'];
 		var policyRights = broker['policyRights'];
-		var damageReportRights = broker['damageReportRights'];
-		var	clientCreationRights = broker['clientCreationRights'];
+		var damageReportRights = broker['damageReportRights'];*/
+		var	creationRights = broker['creationRights'];
 
 		var brokerViewableBrokersDetails = [];
 		var brokerViewableBrokers = mockCommunicator.getBrokerViewableBrokersOfBroker(brokerId);
@@ -118,10 +115,10 @@ var brokerAdminController = new function() {
 		{
 			'name':name,
 			'surname':surname,
-			'quoteRights':quoteRights,
+			/*'quoteRights':quoteRights,
 			'policyRights':policyRights,
-			'damageReportRights':damageReportRights,
-			'clientCreationRights':clientCreationRights,
+			'damageReportRights':damageReportRights,*/
+			'creationRights':creationRights,
 			'brokerViewableBrokers':brokerViewableBrokersDetails
 		}
 

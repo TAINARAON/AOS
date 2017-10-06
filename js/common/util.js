@@ -10,6 +10,16 @@ var util = new function() {
 		$("#uploadFileInput").val('');
 
 		$('#uploadFileModal').modal('show');
+
+		// Remove onClickListener of Upload button and add onClick that does callback sent in
+		$("#upload_file_modal_upload_button").off();
+		$("#upload_file_modal_upload_button").on('click',function() {
+
+			// TODO: I think the result needs to be sent back through the callback
+			var result = "placeholder for result";
+
+			callback(result);
+		});
 	}
 
 	// success, error, info, warn

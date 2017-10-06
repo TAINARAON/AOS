@@ -6,18 +6,14 @@
  			'text':'Brokerage',
  			'pageUrl':'html/brokerAdmin/brokerage/brokerage.html'
  		},
- 		{
- 			'text':'Quotes',
- 			'pageUrl':'html/brokerAdmin/quotes.html'
- 		},
- 		{
- 			'text':'Policies',
- 			'pageUrl':'html/brokerAdmin/policies.html'
- 		},
  	];
 
  	var rightButtons = 
  	[
+ 		{
+ 			'text':'Create Broker',
+ 			'pageUrl':'html/brokerAdmin/createBroker.html'
+ 		},
  		{
  			'text':'Logout',
  			'pageUrl':'html/common/logout.html'

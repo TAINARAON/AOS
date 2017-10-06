@@ -65,35 +65,11 @@ function createBrokerEntry(broker,container) {
 		}
 	);
 
-	var viewQuotesButton = $('<button></button>')
-		.text('Quotes')
-		.on('click',function() {
-			viewQuotesOfBroker(broker.id);
-		}
-	);
-
-	var viewPoliciesButton = $('<button></button>')
-		.text('Policies')
-		.on('click',function() {
-			viewPoliciesOfBroker(broker.id);
-		}
-	);
-
-	var viewDamageReportsButton = $('<button></button>')
-		.text('Damage Reports')
-		.on('click',function() {
-			viewDamageReportsOfBroker(broker.id);
-		}
-	);
-
 	var details = createDetailsOfBrokerHtml(broker);
 	//$('<p></p>').text("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.");
 	
 	detailContainer.append(editButton);
 	detailContainer.append(revokeButton);
-	detailContainer.append(viewQuotesButton);
-	detailContainer.append(viewPoliciesButton);
-	detailContainer.append(viewDamageReportsButton);
 	detailContainer.append(details);
 
 	container.append(header);
@@ -142,15 +118,15 @@ function populateTextFields(brokerData) {
 }
 function populatePermissionCheckBoxes(brokerData) {
 
-	var damageReportRights = brokerData['damageReportRights'];
+	/*var damageReportRights = brokerData['damageReportRights'];
 	var quoteRights = brokerData['quoteRights'];
-	var policyRights = brokerData['policyRights'];
-	var clientCreationRights = brokerData['clientCreationRights'];
+	var policyRights = brokerData['policyRights'];*/
+	var creationRights = brokerData['creationRights'];
 
-	$('#edit_broker_damage_report_rights_checkbox').attr('checked', damageReportRights);
+	/*$('#edit_broker_damage_report_rights_checkbox').attr('checked', damageReportRights);
 	$('#edit_broker_quote_rights_checkbox').attr('checked', quoteRights);
-	$('#edit_broker_policy_rights_checkbox').attr('checked', policyRights);
-	$('#edit_broker_client_creation_rights_checkbox').attr('checked', clientCreationRights);
+	$('#edit_broker_policy_rights_checkbox').attr('checked', policyRights);*/
+	$('#edit_broker_creation_rights_checkbox').attr('checked', creationRights);
 }
 function setOnClickForEditBrokerSaveButton(brokerId) {
 
@@ -169,10 +145,10 @@ function setOnClickForEditBrokerCancelButton() {
 
 function resetEditBrokerModal() {
 
-	$('#edit_broker_client_creation_rights_checkbox').attr('checked', false);
-	$('#edit_broker_damage_report_rights_checkbox').attr('checked', false);
+	$('#edit_broker_creation_rights_checkbox').attr('checked', false);
+	/*$('#edit_broker_damage_report_rights_checkbox').attr('checked', false);
 	$('#edit_broker_quote_rights_checkbox').attr('checked', false);
-	$('#edit_broker_policy_rights_checkbox').attr('checked', false);
+	$('#edit_broker_policy_rights_checkbox').attr('checked', false);*/
 
 	$('#available_brokers_ul').empty();
 	$('#selected_brokers_ul').empty();
@@ -183,10 +159,10 @@ function updateBroker(brokerId) {
 	//var name = $('#edit_broker_name_input').val();
 	//var surname = $('#edit_broker_surname_input').val();
 
-	var clientCreationRights = $('#edit_broker_client_creation_rights_checkbox').is(':checked');
-	var damageReportRights = $('#edit_broker_damage_report_rights_checkbox').is(':checked');
+	var creationRights = $('#edit_broker_creation_rights_checkbox').is(':checked');
+	/*var damageReportRights = $('#edit_broker_damage_report_rights_checkbox').is(':checked');
 	var quoteRights = $('#edit_broker_quote_rights_checkbox').is(':checked');
-	var policyRights = $('#edit_broker_policy_rights_checkbox').is(':checked');
+	var policyRights = $('#edit_broker_policy_rights_checkbox').is(':checked');*/
 
 	var brokerViewableBrokers = [];
 
@@ -200,10 +176,10 @@ function updateBroker(brokerId) {
 
 	var broker = {
 		'id':brokerId,
-		'clientCreationRights':clientCreationRights,
-		'damageReportRights':damageReportRights,
+		'creationRights':creationRights,
+		/*'damageReportRights':damageReportRights,
 		'quoteRights':quoteRights,
-		'policyRights':policyRights
+		'policyRights':policyRights*/
 	};
 
 	var dataObject = {
@@ -221,7 +197,10 @@ function onBrokerEditCallback(response) {
 
 function onRevokeBrokerClick(brokerId) {
 
-	// Display Revoke Broker Modal
+	// Note: RevokeModal gets toggled automatically
+
+	alert("TODO: BrokerAdmin #1");
+
 }
 
 function revokeBroker(id) {
@@ -305,17 +284,3 @@ function toggleSelectedListItem(li) {
 		li.css('background-color','grey');
 	}
 }
-
-
-function viewQuotesOfBroker(brokerId) {
-
-}
-
-function viewPoliciesOfBroker(brokerId) {
-
-}
-
-function viewDamageReportsOfBroker(brokerId) {
-
-}
-
