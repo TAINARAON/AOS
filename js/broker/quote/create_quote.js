@@ -692,15 +692,12 @@ var quoteCreator = new function()
 	function loadProductSpecificCrops(name)
 	{
 		dropdown_crop.innerHTML = "";
-		dropdown_crop.value = "";
 
 		var productId = getProductObjectIdByName(name);
 
-		var availableCrop = quoteInvoker.getCropsOfProduct(productId);
-		
-		setCropObject(availableCrop);
+		crops = quoteInvoker.getCropsOfProduct(productId);
 
-		for(var i = 0; i < availableCrop.length; i++)
+		for(var i = 0; i < crops.length; i++)
 		{
 			if(i == 0)
 			{
@@ -710,7 +707,7 @@ var quoteCreator = new function()
 			}
 
 			var option = document.createElement("OPTION");
-			option.innerHTML = availableCrop[i].name;
+			option.innerHTML = crops[i].name;
 			dropdown_crop.appendChild(option);
 		}
 	}
