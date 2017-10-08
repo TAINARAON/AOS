@@ -399,6 +399,7 @@ var quoteInvoker = new function() {
             landEntry["farm"] = mockCommunicator.getFarm(landEntry.farmId);
             
             addCropToLandEntry(landEntry, getCrop(landEntry.cropId));
+            landEntry.crop["product"] = getProduct(landEntry.crop.productId);
 
             addQuoteLandEntryDamageTypeToLandEntry(landEntry, getQuoteLandEntryDamageTypesByQuoteLandEntryId(landEntry.id));
 
@@ -473,6 +474,11 @@ var quoteInvoker = new function() {
     }
 
     function getTariffOptionDamageTypesByTariffOption(id)
+    {
+        return mockCommunicator.getTariffOptionDamageTypesByTariffOption(id);
+    }
+
+    this.getTariffOptionDamageTypesByTariffOption = function(id)
     {
         return mockCommunicator.getTariffOptionDamageTypesByTariffOption(id);
     }
