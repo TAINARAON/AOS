@@ -1101,6 +1101,16 @@ var mockCommunicator = new function()
 			'quoteLandEntryId':'2',
 			'tariffOptionDamageTypeId':'1',
 		},
+		{
+			'id':'6',
+			'quoteLandEntryId':'4',
+			'tariffOptionDamageTypeId':'0',
+		},
+		{
+			'id':'7',
+			'quoteLandEntryId':'5',
+			'tariffOptionDamageTypeId':'1',
+		}
 	];
 	this.createQuoteLandEntryDamageType = function(data) {
 

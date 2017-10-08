@@ -263,7 +263,8 @@ var quoteViewer = new function ()
 	{
 		console.log("ID: " + quote.id);
 		event.preventDefault();
-		quoteCreator.openModalAndReQuote(quote.id);
+		//quoteCreator.openModalAndReQuote(quote.id);
+		createQuote.reQuote(quote);
 	}
 
 	function createDeleteBtn(container, quote)
@@ -355,5 +356,10 @@ var quoteViewer = new function ()
 			var currCenter = map.getCenter();
 			map.setCenter(currCenter);
 		}
+	}
+
+	this.refresh = function()
+	{
+		search();
 	}
 }

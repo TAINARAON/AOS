@@ -395,6 +395,8 @@ var quoteInvoker = new function() {
         for(var i = 0; i < quote.quoteLandEntries.length; i++)
         {
             var landEntry = quote.quoteLandEntries[i];
+
+            landEntry["farm"] = mockCommunicator.getFarm(landEntry.farmId);
             
             addCropToLandEntry(landEntry, getCrop(landEntry.cropId));
 
