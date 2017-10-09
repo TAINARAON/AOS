@@ -259,11 +259,10 @@ var createQuote = new function()
 
 	function createColumnsForLandEntryRow(landEntry, container)
 	{
-		debugger;
 		console.log(landEntry);
 		createColumn(landEntry.farm.name, container);
 		createColumn(landEntry.landNumber, container);
-		createColumn(landEntry.crop.name, container);
+		createColumn(landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.crop.name, container);
 		createColumn(landEntry.cultivar, container);
 		createColumn(landEntry.area, container);
 		createColumn(landEntry.yield, container);
@@ -599,6 +598,23 @@ var createQuote = new function()
 			}
 		}*/
 
+		if(landEntryEligibleForEdit != undefined && landEntryEligibleForEdit != null)
+		{
+			for(var i = 0; i < landEntryEligibleForEdit.quoteLandEntryDamageTypes.length; i++)
+			{
+				var quoteLandEntryDamageType = landEntryEligibleForEdit.quoteLandEntryDamageTypes[i];
+				var damageType = quoteLandEntryDamageType.tariffOptionDamageType.damageType;
+				
+				for(var j = 0; j < damageTypeStates.length; j++)
+				{
+					if(damageType.name == damageTypeStates[j].name)
+					{
+						damageTypeStates[j].state = true;
+					}
+				}
+			}
+		}
+
 		if(damageTypeStates.length > 0)
 		{
 			var checkboxContainer;
@@ -699,9 +715,10 @@ var createQuote = new function()
 
 	function acceptQuote()
 	{
-		if(persistQuoteData(this.quote))
+		if(persistQuoteData(quote))
 		{
 			resetQuoteModal();
+			resetLandEntryTable();
 			quoteViewer.refresh();
 		}
 		else
@@ -785,24 +802,7 @@ var createQuote = new function()
 			tariffOptionDamageType["damageType"] = tempDamageType;
 			tariffOptionDamageType["tariffOption"] = tempTariffOption;
 
-
-			
-			/*for(var j = 0; j < tariffOptionDamageTypes.length; j++)
-			{
-				// Add if the id's match, and the user wants this option
-				if(tariffOptionDamageTypes[j].damageTypeId == allDamageTypesWithState[i].id && allDamageTypesWithState[i].state)
-				{
-					var tariffOptionDamageType = tariffOptionDamageTypes[j];
-					tariffOptionDamageType["damageType"] = allDamageTypesWithState[i];
-					tariffOptionDamageType["tariffOption"] = getOptionsByFarmCropType(dropdown_coverage.value);
-
-					//tObj.quoteLandEntryDamageType.push(tObj3);
-					//tObj2.tariffOptionDamageType.push(tObj3);
-					quoteLandEntryDamageType["tariffOptionDamageType"] = tariffOptionDamageType;
-					quoteLandEntryDamageType["tariffOptionDamageTypeId"] = tariffOptionDamageType.id;
-				}
-			}*/
-
+			tariffOptionDamageType.tariffOption["crop"] =  getCrop(dropdown_crop.value);
 
 			landEntry.quoteLandEntryDamageTypes.push(quoteLandEntryDamageType);
 		}
@@ -821,8 +821,6 @@ var createQuote = new function()
 			"landNumber": input_land_number.value,
 			"landLongitude": "",
 			"landLatitude": "",
-			"cropId": getCrop(dropdown_crop.value).id,
-			"crop": getCrop(dropdown_crop.value),
 			"cultivar": input_cultivar.value,
 			"area": input_area.value,
 			"yield": input_yield.value,
@@ -920,8 +918,8 @@ var createQuote = new function()
 		input_yield.value = landEntry.yield;
 		input_price.value = landEntry.price;
 
-		$(dropdown_product).val(landEntry.crop.product.name).change();
-		$(dropdown_crop).val(landEntry.crop.name).change();
+		$(dropdown_product).val(landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.crop.product.name).change();
+		$(dropdown_crop).val(landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.crop.name).change();
 
 		// TODO: does quoteLandEntryDamageType need to be an array
 		// Will be the same tariff option for all damage types selected

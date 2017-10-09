@@ -60,7 +60,30 @@ var quoteInvoker = new function() {
         		return;
         	}
 
-            var tariffOptionDamageTypeIdArray = quoteLandEntry.tariffOptionDamageTypes;
+            var quoteLandEntryDamageTypes = quoteLandEntry.quoteLandEntryDamageTypes;
+
+            for(var j = 0; j < quoteLandEntryDamageTypes.length; j++)
+            {
+                var damageType = quoteLandEntryDamageTypes[j].tariffOptionDamageType.damageType;
+
+                if(damageType.state)
+                {
+                    var tObj = {
+                        "quoteLandEntryId":landEntryId,
+                        "tariffOptionDamageTypeId":quoteLandEntryDamageTypes[j].tariffOptionDamageType.id
+                    }
+
+                    var id = mockCommunicator.createQuoteLandEntryDamageType(tObj);
+
+                    if(id == null)
+                    {
+                        console.error("A Quote land damage type entry failed to be created. Roll back whole quote entry");
+                        return;
+                    }
+                }
+            }
+
+            /*var tariffOptionDamageTypeIdArray = quoteLandEntry.tariffOptionDamageTypes;
 
             for(var j = 0; j < tariffOptionDamageTypeIdArray.length; j++)
             {
@@ -76,7 +99,9 @@ var quoteInvoker = new function() {
                     console.error("A Quote land damage type entry failed to be created. Roll back whole quote entry");
                     return;
                 }
-            }
+            }*/
+
+
         }
 
         return quoteId;

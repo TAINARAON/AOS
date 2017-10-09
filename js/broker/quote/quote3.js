@@ -225,6 +225,7 @@ var quoteViewer = new function ()
 
 		createReQuoteBtn(container, quote);
 		createDeleteBtn(container, quote);
+		// TODO: do acceptable check here
 		createAcceptButton(container, quote);
 		createPrintQuoteBtn(container, quote);
 		createEmailQuoteBtn(container, quote);
