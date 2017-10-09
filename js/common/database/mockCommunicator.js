@@ -935,12 +935,10 @@ var mockCommunicator = new function()
 			'landNumber':'00001',
 			'landLongitude':'1.3361',
 			'landLatitude':'-0.1215',
-			'cropId':'1',
 			'cultivar':'Red Dwarf',
 			'area':'7.4',
 			'yield':'14.22',
-			'price':'5.48',
-			'tariffOptionId':'0',
+			'price':'5.48'
 		},
 		{
 			'id':'1',
@@ -949,12 +947,10 @@ var mockCommunicator = new function()
 			'landNumber':'00002',
 			'landLongitude':'1.3361',
 			'landLatitude':'-0.1215',
-			'cropId':'0',
 			'cultivar':'Octopussy',
 			'area':'6.8',
 			'yield':'11.22',
-			'price':'4.78',
-			'tariffOptionId':'0',
+			'price':'4.78'
 		},
 		{
 			'id':'2',
@@ -963,12 +959,10 @@ var mockCommunicator = new function()
 			'landNumber':'00003',
 			'landLongitude':'1.3361',
 			'landLatitude':'-0.1215',
-			'cropId':'1',
 			'cultivar':'Red Dwarf',
 			'area':'7.4',
 			'yield':'15.22',
-			'price':'4.48',
-			'tariffOptionId':'0',
+			'price':'4.48'
 		},
 		{
 			'id':'3',
@@ -977,12 +971,10 @@ var mockCommunicator = new function()
 			'landNumber':'00004',
 			'landLongitude':'1.3361',
 			'landLatitude':'-0.1215',
-			'cropId':'0',
 			'cultivar':'Octopussy',
 			'area':'6.7',
 			'yield':'12.22',
-			'price':'4.98',
-			'tariffOptionId':'0',
+			'price':'4.98'
 		},
 		{
 			'id':'4',
@@ -991,12 +983,10 @@ var mockCommunicator = new function()
 			'landNumber':'00005',
 			'landLongitude':'1.3361',
 			'landLatitude':'-0.1215',
-			'cropId':'1',
 			'cultivar':'Red Dwarf',
 			'area':'7.4',
 			'yield':'15.22',
-			'price':'4.48',
-			'tariffOptionId':'0',
+			'price':'4.48'
 		},
 		{
 			'id':'5',
@@ -1005,12 +995,10 @@ var mockCommunicator = new function()
 			'landNumber':'00006',
 			'landLongitude':'1.3361',
 			'landLatitude':'-0.1215',
-			'cropId':'0',
 			'cultivar':'Octopussy',
 			'area':'6.7',
 			'yield':'12.22',
-			'price':'4.98',
-			'tariffOptionId':'0',
+			'price':'4.98'
 		}
 	];
 	this.createQuoteLandEntry = function(data) {
@@ -1970,6 +1958,16 @@ var mockCommunicator = new function()
 		}
 
 		return damageTypes;
+	}
+	this.getTariffOptionDamageTypeByTariffOptionIdAndDamageTypeID = function(tariffOptionId, damageTypeId)
+	{
+		for(var i = 0; i < this.tariffOptionDamageTypeTable.length; i++)
+		{
+			if(this.tariffOptionDamageTypeTable[i].tariffOptionId == tariffOptionId && this.tariffOptionDamageTypeTable[i].damageTypeId == damageTypeId)
+			{
+				return this.tariffOptionDamageTypeTable[i];
+			}
+		}
 	}
 	this.getTariffOptionDamageTypes = function() {
 

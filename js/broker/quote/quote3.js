@@ -184,7 +184,7 @@ var quoteViewer = new function ()
 		childTitle.style.cssText = "display: flex;";
 
 		createAccordionItemDetailDiv("Land Number: " + landEntry.landNumber , childTitle);
-		createAccordionItemDetailDiv("Crop: " + landEntry.crop.name, childTitle);
+		createAccordionItemDetailDiv("Crop: " + landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.crop.name, childTitle);
 		createAccordionItemDetailDiv("Cultivar: " + landEntry.cultivar, childTitle);
 		createAccordionItemDetailDiv("Area: " + landEntry.area, childTitle);
 		createAccordionItemDetailDiv("Yield " + landEntry.yield, childTitle);
