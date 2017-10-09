@@ -94,7 +94,13 @@ var quoteViewer = new function ()
 
 		if(brokerId != -1)
 		{
-			setupQuotes(quoteInvoker.searchForQuote(brokerId, quoteNumber, businessUnitName));
+			var tObj = {
+				"brokerId":brokerId,
+				"quoteNumber":quoteNumber,
+				"businessUnitName":businessUnitName
+			};
+			ajaxPost("Something", setupQuotes, function(){alert("Issue getting quote data");}, tObj, quoteInvoker.searchForQuote(brokerId, quoteNumber, businessUnitName));
+			//setupQuotes(quoteInvoker.searchForQuote(brokerId, quoteNumber, businessUnitName));
 		}
 	}
 

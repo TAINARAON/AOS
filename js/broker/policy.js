@@ -81,7 +81,13 @@ var policyViewer = new function ()
 
 		if(brokerId != -1)
 		{
-			setPolicies(policyInvoker.searchForPolicy(brokerId, policyNumber, businessUnitName));
+			var tObj = {
+				"brokerId":brokerId,
+				"policyNumber":policyNumber,
+				"businessUnitName":businessUnitName
+			};
+			ajaxPost("Something", setPolicies, function(){alert("Issue getting policy data");}, tObj, policyInvoker.searchForPolicy(brokerId, policyNumber, businessUnitName));
+			//setPolicies(policyInvoker.searchForPolicy(brokerId, policyNumber, businessUnitName));
 		}
 	}
 
