@@ -85,7 +85,7 @@ function onCreateBrokerClick() {
 	util.displayUploadFileModal(action,data,createBrokerSuccessfulCallback);
 }	
 
-function createBrokerSuccessfulCallback(result) {
+function documentsSubmittedCallback(result) {
 	
 	util.createNotification("Details submitted - awaiting approval");
 
