@@ -717,6 +717,8 @@ var createQuote = new function()
 	{
 		if(persistQuoteData(quote))
 		{
+			// hide the button
+			accept_quote_button.style.display = "none";
 			resetQuoteModal();
 			resetLandEntryTable();
 			quoteViewer.refresh();
@@ -879,7 +881,7 @@ var createQuote = new function()
 
 	function updateLandEntryInQuote(originalQuoteLandEntry, changedQuoteLandEntry)
 	{
-		for(var i = 0; i < quote.quoteLandEntries; i++)
+		for(var i = 0; i < quote.quoteLandEntries.length; i++)
 		{
 			if(quote.quoteLandEntries[i] == originalQuoteLandEntry)
 			{
@@ -927,12 +929,18 @@ var createQuote = new function()
 
 	function saveEditOfLandEntry(landEntry)
 	{
+		debugger;
 		updateLandEntryInQuote(landEntry, getLandEntryFromCriteriaValues());
 		resetModalForFurtherLandEntryEdit();
 		hideFields();
 		landEntryEligibleForEdit = undefined;
 		temporary_button_container.innerHTML = "";
 		include_land_entry_button.style.display = "block";
+
+		// Make sure the Skep button is displayed
+		accept_quote_button.style.display = "block";
+
+		loadLandEntryTable(quote);
 	}
 
 	function loadLandEntryValuesIntoCriteriaFieldsForEditing(landEntry)
@@ -978,6 +986,7 @@ var createQuote = new function()
 
 	function persistQuoteData(quote)
 	{
+		debugger;
 		// Set the current logged on broker's id as the one that created the quote
 		quote["businessUnit"] = businessUnit;
 		quote["businessUnitId"] = businessUnit.id;
@@ -986,7 +995,11 @@ var createQuote = new function()
 		quote["insurerId"] = null;
 		quote["active"] = "1";
 		quote["dateCreated"] = util.getCurrentDateTime();
-		quote["linkedToQuoteId"] = null;
+		if(!quote.hasOwnProperty("linkedToQuoteId"))
+		{
+			// If this isn't a requote, add the property
+			quote["linkedToQuoteId"] = null;
+		}
 		quote["acceptable"] = "1";
 
 		// TODO: fix object values to suite mock
@@ -1028,12 +1041,13 @@ var createQuote = new function()
 		return data;
 	}
 
-	this.reQuote = function(quote)
+	this.reQuote = function(otherQuote)
 	{
-		console.log(quote);
-		this.quote = quote;
+		debugger;
+		console.log(otherQuote);
+		quote = otherQuote;
 		// The new requote will be linked to the original quote through this id
-		this.quote.linkedToQuoteId = quote.id;
+		quote.linkedToQuoteId = otherQuote.id;
 
 		showModal();
 		// Reset the table
