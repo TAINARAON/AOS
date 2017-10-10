@@ -216,8 +216,8 @@ var createQuote = new function()
 		input_land_number.value = "";
 		input_cultivar.value = "";
 		input_area.value = "";
-		input_yield.value = "";
-		input_price.value = "";
+		//input_yield.value = "";
+		//input_price.value = "";
 
 		dropdown_coverage.innerHTML = "";
 		$(dropdown_coverage).append("<option disabled selected value></option>");
@@ -232,8 +232,11 @@ var createQuote = new function()
 
 		damageTypeCheckboxContainer.innerHTML = "";
 
-		checkbox_remember_price.checked = false;
-		checkbox_remember_yield.checked = false;
+		//checkbox_remember_price.checked = false;
+		//checkbox_remember_yield.checked = false;
+
+		input_yield.value = checkbox_remember_yield.checked ? input_yield.value : "";
+		input_price.value = checkbox_remember_price.checked ? input_price.value : "";
 	}
 
 	function resetLandEntryTable()
@@ -378,9 +381,12 @@ var createQuote = new function()
 
 	function addOnCriteriaFieldListeners()
 	{
-		input_business_unit.onblur = function(){loadProducts(); loadOptionTypes(); toggleFarmInputVisibility(validateBusinessUnit());};
-		input_farm.onblur = function(){loadCoverage(); toggleLandNumberVisible(validateFarm());};
-		input_land_number.onblur = function(){toggleFieldsVisible(true);};
+		//input_business_unit.onblur = function(){loadProducts(); loadOptionTypes(); toggleFarmInputVisibility(validateBusinessUnit());};
+		input_business_unit.onblur = function(){validateBusinessUnit();};
+		//input_farm.onblur = function(){loadCoverage(); toggleLandNumberVisible(validateFarm());};
+		input_farm.onblur = function(){validateFarm();};
+		//input_land_number.onblur = function(){toggleFieldsVisible(true);};
+		input_land_number.onblur = function(){toggleFieldsVisible(input_land_number.value.trim() != "" ? true : false);};
 
 		// Select fields
 		dropdown_product.onchange = function(){loadProductSpecificCrops(dropdown_product.value)};
@@ -400,14 +406,51 @@ var createQuote = new function()
 	function validateBusinessUnit()
 	{
 		var val = input_business_unit.value;
+		
+		if(val != undefined && val != "")
+		{
+			var response = clientInvoker.getBusinessUnitByName(val)
+			// The if won't be neccessary when backend is hooked up
+			if(response != null)
+			{
+				ajaxPost("Some url", 
+					function(response){
+						businessUnit = response;
+						notifyUserOfCorrectBusinessUnit();
+						disableBusinessUnit();
+
+						// load the other objects
+						toggleFarmInputVisibility(true);
+						// The calls that follow can be placed in the init
+						loadProducts();
+						loadOptionTypes();
+					}, 
+					function(){
+						removeDisableStatusFromBusinessUnit();
+						notifyUserOfIncorrectBusinessUnit();
+						toggleFarmInputVisibility(false);
+					},
+					{"businessUnitName":val} 
+					,
+					response
+				);
+			}
+			else
+			{
+				removeDisableStatusFromBusinessUnit();
+				// Display error - business unit not available
+				notifyUserOfIncorrectBusinessUnit();
+				toggleFarmInputVisibility(false);
+			}
+		}
+
+		/*var val = input_business_unit.value;
 		if(val != undefined && val != "")
 		{
 			var response = clientInvoker.getBusinessUnitByName(val);
 
 			if(response != null)
 			{
-				/*this.quote["businessUnit"] = response;
-				this.quote["businessUnitId"] = response.id;*/
 				businessUnit = response;
 
 				notifyUserOfCorrectBusinessUnit();
@@ -420,12 +463,44 @@ var createQuote = new function()
 			notifyUserOfIncorrectBusinessUnit();
 		}
 
-		return false;
+		return false;*/
 	}
 
 	function loadProducts()
 	{
-		products = quoteInvoker.getProducts();
+		dropdown_product.innerHTML = "";
+
+		var response = quoteInvoker.getProducts();
+		// The if won't be neccessary when backend is hooked up
+		if(response != null)
+		{
+			ajaxGet("Some url - a get", 
+				function(response){
+					products = response;
+
+					for(var i = 0; i < products.length; i++)
+					{
+						if(i == 0)
+						{
+							var option = document.createElement("OPTION");
+							$(option).attr("disabled selected value");
+							dropdown_product.appendChild(option);
+						}
+						
+						var option = document.createElement("OPTION");
+						option.innerHTML = products[i].name;
+						$(option).attr("value='"+products.id+"'");
+						dropdown_product.appendChild(option);
+					}
+				}, 
+				function(){
+					// Handle error here
+					alert("Could not retrieve products");
+				}, response
+			);
+		}
+
+		/*products = quoteInvoker.getProducts();
 		
 		dropdown_product.innerHTML = "";
 
@@ -442,12 +517,45 @@ var createQuote = new function()
 			option.innerHTML = products[i].name;
 			$(option).attr("value='"+products.id+"'");
 			dropdown_product.appendChild(option);
-		}
+		}*/
 	}
 
 	function loadOptionTypes()
 	{
 		dropdown_option_type.innerHTML = "";
+
+		var response = quoteInvoker.getOptionTypes();
+		// The if won't be neccessary when backend is hooked up
+		if(response != null)
+		{
+			ajaxGet("Some url - will be a get", 
+				function(response){
+					optionTypes = response;
+
+					for(var i = 0; i < optionTypes.length; i++)
+					{
+						if(i == 0)
+						{
+							var option = document.createElement("OPTION");
+							$(option).attr("disabled selected value");
+							dropdown_option_type.appendChild(option);
+						}
+
+						var option = document.createElement("OPTION");
+						option.innerHTML = optionTypes[i].name;
+						$(option).attr("value='"+products.id+"'");
+						dropdown_option_type.appendChild(option);
+					}
+				}, 
+				function(){
+					// Handle error here
+					alert("Could not retrieve options");
+				}, 
+				response
+			);
+		}
+
+		/*dropdown_option_type.innerHTML = "";
 
 		optionTypes = quoteInvoker.getOptionTypes();
 
@@ -464,7 +572,7 @@ var createQuote = new function()
 			option.innerHTML = optionTypes[i].name;
 			$(option).attr("value='"+products.id+"'");
 			dropdown_option_type.appendChild(option);
-		}
+		}*/
 	}
 
 	function toggleLandNumberVisible(state)
@@ -486,6 +594,41 @@ var createQuote = new function()
 	function validateFarm()
 	{
 		var val = input_farm.value;
+
+		if(val != undefined && val != "")
+		{
+			var response = quoteInvoker.getFarmByNameAndBusinessId(val, businessUnit.id);
+			// The if won't be neccessary when backend is hooked up
+			if(response != null)
+			{
+				ajaxPost("some url", 
+					function(response){
+						farm = response;
+						notifyUserOfCorrectFarm();
+						toggleLandNumberVisible(true);
+						loadCoverage();
+					}, 
+					function(){
+						notifyUserOfIncorrectFarm();
+						toggleLandNumberVisible(false);
+					}, 
+					{"farmName":val}, 
+					response
+				);
+			}
+			else
+			{
+				notifyUserOfIncorrectFarm();
+				toggleLandNumberVisible(false);
+			}
+		}
+		else
+		{
+			notifyUserOfIncorrectFarm();
+			toggleLandNumberVisible(false);
+		}
+
+		/*var val = input_farm.value;
 		if(val != undefined && val != "")
 		{
 			var response = quoteInvoker.getFarmByNameAndBusinessId(val, businessUnit.id);
@@ -497,7 +640,7 @@ var createQuote = new function()
 			}
 		}
 		notifyUserOfIncorrectFarm();
-		return false;
+		return false;*/
 	}
 
 	function toggleFieldsVisible(state)
@@ -511,6 +654,50 @@ var createQuote = new function()
 	function loadCoverage()
 	{
 		dropdown_coverage.innerHTML = "";
+
+		var farmId = farm != null ? farm.id : -1;
+		var cropId = getCrop(dropdown_crop.value) != null ? getCrop(dropdown_crop.value).id : -1;
+		var optionTypeId = getOptionTypes(dropdown_option_type.value) != null ? getOptionTypes(dropdown_option_type.value).id : -1;
+
+		if(hasValue(farmId) && hasValue(cropId) && hasValue(optionTypeId))
+		{
+			var response = quoteInvoker.getOptionsByFarmCropType(farmId, cropId, optionTypeId);
+			// The if won't be neccessary when backend is hooked up
+			if(response != null)
+			{
+				ajaxPost("Some url", 
+					function(response){
+						optionsByFarmCropType = response;
+
+						for(var i = 0; i < optionsByFarmCropType.length; i++)
+						{
+							if(i == 0)
+							{
+								var option = document.createElement("OPTION");
+								$(option).attr("disabled selected value");
+								dropdown_coverage.appendChild(option);
+							}
+
+							var option = document.createElement("OPTION");
+							option.innerHTML = optionsByFarmCropType[i].coverage;
+
+							dropdown_coverage.appendChild(option);
+						}
+					}, 
+					function(){
+						alert("Failed to retrieve coverage");
+					}, 
+					{
+						"farmId":farmId,
+						"cropId":cropId,
+						"optionTypeId":optionTypeId
+					}, 
+					response
+				);
+			}
+		}
+
+		/*dropdown_coverage.innerHTML = "";
 
 		var farmId = farm.id;
 		var cropId = getCrop(dropdown_crop.value).id;
@@ -534,7 +721,7 @@ var createQuote = new function()
 
 				dropdown_coverage.appendChild(option);
 			}
-		}
+		}*/
 	}
 
 	function hasValue(value)
@@ -545,6 +732,45 @@ var createQuote = new function()
 	function loadProductSpecificCrops(name)
 	{
 		dropdown_crop.innerHTML = "";
+
+		var productId = getProduct(name) != null ? getProduct(name).id : -1;
+
+		if(hasValue(productId))
+		{
+			var response = quoteInvoker.getCropsOfProduct(productId);
+			// The if won't be neccessary when backend is hooked up
+			if(response != null)
+			{
+				ajaxPost("Some url", 
+					function(response){
+						crops = response;
+
+						for(var i = 0; i < crops.length; i++)
+						{
+							if(i == 0)
+							{
+								var option = document.createElement("OPTION");
+								$(option).attr("disabled selected value");
+								dropdown_crop.appendChild(option);
+							}
+
+							var option = document.createElement("OPTION");
+							option.innerHTML = crops[i].name;
+							dropdown_crop.appendChild(option);
+						}
+					}, 
+					function(){
+						alert("Could not retrieve crops");
+					}, 
+					{
+						"productId":productId
+					}, 
+					response
+				);
+			} 
+		}
+
+		/*dropdown_crop.innerHTML = "";
 		
 		var productId = getProduct(name).id;
 		crops = quoteInvoker.getCropsOfProduct(productId);
@@ -561,7 +787,7 @@ var createQuote = new function()
 			var option = document.createElement("OPTION");
 			option.innerHTML = crops[i].name;
 			dropdown_crop.appendChild(option);
-		}
+		}*/
 	}
 
 	function loadDamageTypesCheckboxes(coverage)
@@ -571,7 +797,74 @@ var createQuote = new function()
 		
 		var tariffOptionDamageType = getOptionsByFarmCropType(coverage);
 
-		var response = quoteInvoker.getDamageTypesAvailableForOption(tariffOptionDamageType.id);
+		if(tariffOptionDamageType != null)
+		{
+			var response = quoteInvoker.getDamageTypesAvailableForOption(tariffOptionDamageType.id);
+
+			if(response != null)
+			{
+				ajaxPost("Some url", 
+					function(response){
+						for(var i = 0; i < response.length; i++)
+						{
+							var tObj = {
+								"id":response[i].id,
+								"name":response[i].name,
+								"state":false
+							};
+							damageTypeStates.push(tObj);
+						}
+
+						// TODO: place this somewherer else
+						if(landEntryEligibleForEdit != undefined && landEntryEligibleForEdit != null)
+						{
+							for(var i = 0; i < landEntryEligibleForEdit.quoteLandEntryDamageTypes.length; i++)
+							{
+								var quoteLandEntryDamageType = landEntryEligibleForEdit.quoteLandEntryDamageTypes[i];
+								var damageType = quoteLandEntryDamageType.tariffOptionDamageType.damageType;
+								
+								for(var j = 0; j < damageTypeStates.length; j++)
+								{
+									if(damageType.name == damageTypeStates[j].name)
+									{
+										damageTypeStates[j].state = true;
+									}
+								}
+							}
+						}
+
+						if(damageTypeStates.length > 0)
+						{
+							var checkboxContainer;
+							for(var i = 0; i < damageTypeStates.length; i++)
+							{
+								if(i % 3 == 0)
+								{
+									checkboxContainer = document.createElement("DIV");
+									checkboxContainer.className = "row";
+									damageTypeRowContainer.appendChild(checkboxContainer);
+								}
+								createDamageTypeCheckbox(damageTypeStates[i].name, checkboxContainer, damageTypeStates[i].state);
+							}
+							damageTypeRowContainer.style.display = "block";
+						}
+						else
+						{
+							damageTypeRowContainer.style.display = "none";
+						}
+					}, 
+					function(){
+						alert("Could not load damage types");
+					}, 
+					{
+						"tariffOptionDamageTypeId":tariffOptionDamageType.id
+					}, 
+					response
+				);
+			}
+		}
+
+		/*var response = quoteInvoker.getDamageTypesAvailableForOption(tariffOptionDamageType.id);
 		for(var i = 0; i < response.length; i++)
 		{
 			var tObj = {
@@ -583,20 +876,20 @@ var createQuote = new function()
 		}
 
 		// This is an edited quote, display the current land edited land entry's damage types
-		/*if(landEntryEligibleForEdit != undefined && landEntryEligibleForEdit != null)
-		{
-			for(var i = 0; i < landEntryEligibleForEdit.quoteLandEntryDamageType[0].tariffOptionDamageType.length; i++)
-			{
-				for(var j = 0; j < damageTypeStates.length; j++)
-				{
-					// TODO: does quoteLandEntryDamageType need to be an array ??
-					if(damageTypeStates[j].name == landEntryEligibleForEdit.quoteLandEntryDamageType[0].tariffOptionDamageType[i].damageType.name)
-					{
-						damageTypeStates[j].state = true;
-					}
-				}
-			}
-		}*/
+		//if(landEntryEligibleForEdit != undefined && landEntryEligibleForEdit != null)
+		//{
+		//	for(var i = 0; i < landEntryEligibleForEdit.quoteLandEntryDamageType[0].tariffOptionDamageType.length; i++)
+		//	{
+		//		for(var j = 0; j < damageTypeStates.length; j++)
+		//		{
+		//			// TODO: does quoteLandEntryDamageType need to be an array ??
+		//			if(damageTypeStates[j].name == landEntryEligibleForEdit.quoteLandEntryDamageType[0].tariffOptionDamageType[i].damageType.name)
+		//			{
+		//				damageTypeStates[j].state = true;
+		//			}
+		//		}
+		//	}
+		//}
 
 		if(landEntryEligibleForEdit != undefined && landEntryEligibleForEdit != null)
 		{
@@ -633,7 +926,7 @@ var createQuote = new function()
 		else
 		{
 			damageTypeRowContainer.style.display = "none";
-		}
+		}*/
 	}
 
 	function createDamageTypeCheckbox(title, container, state = false)
@@ -711,6 +1004,9 @@ var createQuote = new function()
 		// Reset the notify labels
 		resetBusinessUnitLabel();
 		resetFarmLabel();
+
+		checkbox_remember_price.checked = false;
+		checkbox_remember_yield.checked = false;
 	}
 
 	function acceptQuote()
@@ -929,7 +1225,7 @@ var createQuote = new function()
 
 	function saveEditOfLandEntry(landEntry)
 	{
-		debugger;
+		//debugger;
 		updateLandEntryInQuote(landEntry, getLandEntryFromCriteriaValues());
 		resetModalForFurtherLandEntryEdit();
 		hideFields();
@@ -945,6 +1241,9 @@ var createQuote = new function()
 
 	function loadLandEntryValuesIntoCriteriaFieldsForEditing(landEntry)
 	{
+		input_farm.value = landEntry.farm.name;
+		$(input_farm).blur();
+
 		input_land_number.value = landEntry.landNumber;
 		$(input_land_number).blur();
 
@@ -986,7 +1285,7 @@ var createQuote = new function()
 
 	function persistQuoteData(quote)
 	{
-		debugger;
+		//debugger;
 		// Set the current logged on broker's id as the one that created the quote
 		quote["businessUnit"] = businessUnit;
 		quote["businessUnitId"] = businessUnit.id;
@@ -1043,7 +1342,7 @@ var createQuote = new function()
 
 	this.reQuote = function(otherQuote)
 	{
-		debugger;
+		//debugger;
 		console.log(otherQuote);
 		quote = otherQuote;
 		// The new requote will be linked to the original quote through this id
