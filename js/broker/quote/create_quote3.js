@@ -740,7 +740,7 @@ var createQuote = new function()
 		}
 		else
 		{
-			alert("Insert all values");
+			alert("Insert all values. \nMake sure the last three fields have numbers.");
 		}
 	}
 
@@ -753,22 +753,49 @@ var createQuote = new function()
 
 	function inputCriteriaIsValid()
 	{
-		if(input_business_unit.value == "")
+		if(input_business_unit.value.trim() == "")
 			return false;
-		if(input_farm.value == "")
+		if(input_farm.value.trim() == "")
 			return false;
-		if(input_land_number == "")
+		if(input_land_number.value.trim() == "")
 			return false;
-		if(input_cultivar == "")
+		if(input_cultivar.value.trim() == "")
 			return false;
-		if(input_area == "")
+		if(input_area.value.trim() == "")
 			return false;
-		if(input_yield == "")
+		if(!criteriaFieldValueIsNumerical(input_area.value.trim()))
+		{
+			// notify user a diget is needed?
 			return false;
-		if(input_price == "")
+		}
+		if(input_yield.value.trim() == "")
 			return false;
+		if(!criteriaFieldValueIsNumerical(input_yield.value.trim()))
+		{
+			// notify user a diget is needed?
+			return false;
+		}
+		if(input_price.value.trim() == "")
+			return false;
+		if(!criteriaFieldValueIsNumerical(input_price.value.trim()))
+		{
+			// notify user a diget is needed?
+			return false;
+		}
 
 		return true;
+	}
+
+	function criteriaFieldValueIsNumerical(value)
+	{
+		var numberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
+
+		if(numberRegex.test(value))
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 	function getLandEntryFromCriteriaValues()
