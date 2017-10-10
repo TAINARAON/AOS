@@ -82,16 +82,32 @@ function onCreateBrokerClick() {
 		"brokerageId":brokerageId
 	};
 
-	util.displayUploadFileModal(action,data,createBrokerSuccessfulCallback);
-}	
-
-function documentsSubmittedCallback(result) {
-	
-	util.createNotification("Details submitted - awaiting approval");
-
-	loader.loadPage('html/brokerAdmin/brokerage/brokerage.html');
+	util.displayUploadFileModal(action,data,onCreateBrokerDocumentsSubmittedCallback);
 }
 
-function onCreateBrokerFailure() {
-	alert("createdBrokerFailure");
+function onCreateBrokerDocumentsSubmittedCallback(fileData,data) {
+
+	alert('h');
+	// TODO
+	if(fileData == "failed - not really a value") {
+
+		util.createNotification("Failed to upload documents","error");
+		onCreateBrokerClick();
+
+	} else {
+
+		ajaxCreateBroker(fileData,data);
+	}
+}
+
+function ajaxCreateBroker(fileData,data) {
+	
+}
+
+function onBrokerCreatedSuccess() {
+	loader.loadPage('html/brokerAdmin/brokerage/brokerage.html');
+}
+function onBrokerCreatedFailure() {
+
+	loader.reload();
 }

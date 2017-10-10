@@ -528,6 +528,16 @@ var mockCommunicator = new function()
 			'userId':'2',
 			'active':'1',
 		},
+		{
+			'id':'1',
+			'userId':'3',
+			'active':'1',
+		},
+		{
+			'id':'2',
+			'userId':'4',
+			'active':'1',
+		},
 	];
 	this.createInsurer = function(data) {
 
@@ -1630,7 +1640,7 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'1',
-			'name':'R/Unit',
+			'name':'R/Kg',
 		},
 	];
 	this.createPriceUom = function(data) {

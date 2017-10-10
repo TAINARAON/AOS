@@ -1,6 +1,6 @@
 var util = new function() {
 
-	this.displayUploadFileModal = function(action,data,callback) {
+	this.displayUploadFileModal = function(action,extraData,onSubmitCallback) {
 
 		// TODO 
 		// Set Action
@@ -18,7 +18,7 @@ var util = new function() {
 			// TODO: I think the result needs to be sent back through the callback
 			var result = "placeholder for result";
 
-			callback(result);
+			onSubmitCallback(result,extraData);
 		});
 	}
 

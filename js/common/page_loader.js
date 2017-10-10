@@ -81,6 +81,13 @@ var pageLoader = function()
 		}
 	}
 
+	function reload() {
+		alert('c');
+		var pageToLoad = navigationBackStack[navigationBackStack.length - 1];
+		loadPage(pageToLoad['pageUrl'],pageToLoad['state']);
+		util.createNotification('page reloaded','info');
+	}
+
 	function loadRole(role="") {
 		load(role);
 	}
@@ -186,6 +193,9 @@ var pageLoader = function()
 		},
 		loadPartOfPage: function(url, targetContainer) {
 			loadPartOfPage(url,targetContainer);
-		}
+		},
+		reload: function (){
+			reload();
+		},
 	};
 };

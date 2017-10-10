@@ -25,6 +25,9 @@ var brokerAdminController = new function() {
 	    	'brokerData':brokerData,
 	    	'viewableBrokerData':viewableBrokerData
 	    };
+
+	    console.log("create broker");
+	    console.log(dataObject);
 		
 		return mockCommunicator.createBroker(dataObject);
 	};
