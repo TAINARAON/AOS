@@ -16,7 +16,7 @@ var util = new function() {
 		$("#upload_file_modal_upload_button").on('click',function() {
 
 			// TODO: I think the result needs to be sent back through the callback
-			var result = "placeholder for result";
+			var result = { 'result':'placeholder text'};
 
 			onSubmitCallback(result,extraData);
 		});

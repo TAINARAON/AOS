@@ -6,6 +6,8 @@ var NAME_INDEX = 0;
 var SURNAME_INDEX = 1;
 var EMAIL_INDEX = 2;
 
+var CREATE_BROKER_URL = "";
+
 var requiredFields = [false,false,false];
 
 function init() {
@@ -87,7 +89,6 @@ function onCreateBrokerClick() {
 
 function onCreateBrokerDocumentsSubmittedCallback(fileData,data) {
 
-	alert('h');
 	// TODO
 	if(fileData == "failed - not really a value") {
 
@@ -101,13 +102,27 @@ function onCreateBrokerDocumentsSubmittedCallback(fileData,data) {
 }
 
 function ajaxCreateBroker(fileData,data) {
-	
+
+	var requestData = 
+	{
+		'fileData':fileData,
+		'data':data
+	};
+
+	var mockResponse = {
+		"id":'test'
+	};
+
+	ajaxPost(CREATE_BROKER_URL,onBrokerCreatedSuccess,onBrokerCreatedFailure,requestData,mockResponse);
 }
 
-function onBrokerCreatedSuccess() {
+function onBrokerCreatedSuccess(response) {
+
+	util.createNotification("Broker submitted. . .awaiting approval.");
 	loader.loadPage('html/brokerAdmin/brokerage/brokerage.html');
 }
-function onBrokerCreatedFailure() {
+function onBrokerCreatedFailure(result) {
 
+	util.createNotification("Failed to create Broker - Please contact support if the problem persists.","error")
 	loader.reload();
 }
