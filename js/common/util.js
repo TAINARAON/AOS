@@ -2,7 +2,7 @@ var util = new function() {
 
 	this.displayUploadFileModal = function(action,extraData,onSubmitCallback) {
 
-		// TODO 
+		// TODO: Is action needed? It should just return the files to the callback
 		// Set Action
 		$('#upload_file_modal_form').prop('action',action);
 
@@ -16,7 +16,12 @@ var util = new function() {
 		$("#upload_file_modal_upload_button").on('click',function() {
 
 			// TODO: I think the result needs to be sent back through the callback
-			var result = { 'result':'placeholder text'};
+			var result = 
+			[
+				{
+					'result':'placeholder text'
+				}
+			];
 
 			onSubmitCallback(result,extraData);
 		});

@@ -2,16 +2,18 @@ $(function() {
     init();
   });
 
+var EDIT_BROKERAGE_URL = "test url";
+var brokerage = {};
+
 function init() {
 
 	initText();
 	initOnClickListeners();
 }
 
-
 function initText() {
 
-	var brokerage = brokerAdminController.getBrokerage();
+	brokerage = brokerAdminController.getBrokerage();
 
 	$('#edit_brokerage_brokerage_name_input').val(brokerage['name']);
 	$('#edit_brokerage_email_input').val(brokerage['email']);
@@ -38,34 +40,105 @@ function onCancelButton() {
 }
 
 function resetText() {
+
 	initText();
 }
 
 function onChangeBrokerageDetails() {
 
-	var details = {
+	var action = "I dont think this is needed";
+
+	var data = {
+		"id":brokerage["id"],
 		"name":$('#edit_brokerage_brokerage_name_input').val(),
 		"email":$('#edit_brokerage_email_input').val(),
 		"contactNumber":$('#edit_brokerage_contact_number_input').val()
 	}
 
-	if(detailsChanged(details)) {
-		submitRequestToChangeBrokerageDetails(details);
+	if(detailsChanged(data)) {
+
+		util.displayUploadFileModal(action,data,onFilesSubmittedCallback);
+	
 	} else {
+
 		notifyUserThatNoChangesWereMade();
 	}
 }
 
-function submitRequestToChangeBrokerageDetails() {
-	alert("Request to change details submitted");
+function onFilesSubmittedCallback(fileData,data) {
+
+	if(fileData == null) {
+
+		util.createNotification("Failed to upload files","warn");
+
+	} else {
+
+		submitRequestToChangeBrokerageDetails(fileData,data);
+	}
+}
+
+/*
+	brokerAdmin/editBrokerage
+
+	requestObject:{
+		data:{
+			id,
+			contactNumber,
+			email,
+			name
+		},
+		fileData:{
+		}
+	}
+*/
+function submitRequestToChangeBrokerageDetails(fileData,data) {
+	
+	var requestObject = {
+		"data":data,
+		"fileData":fileData
+	};
+
+	var mockResponse = {
+		"result":"fake response"
+	};
+
+	ajaxPost(EDIT_BROKERAGE_URL,onChangeBrokerageSuccessCallback,onChangeBrokerageFailCallback,requestObject,mockResponse);
+}
+
+function onChangeBrokerageSuccessCallback(result) {
+
+	util.createNotification("Success submitting request to edit Brokerage.");
+	$("#editBrokerageModal").modal('toggle');
+}
+
+function onChangeBrokerageFailCallback(result) {
+
+	util.createNotification("Failure submitting request to edit Brokerage.","error");
 }
 
 function notifyUserThatNoChangesWereMade() {
+
+	util.createNotification("No changes were made","warn");
 }
 
 function detailsChanged(details) {
-	// check whether details are different from current data. if not, does not need to change
-	return 1;
+
+	// Test name
+	if(brokerage["name"] != details["name"]) {
+		return true;
+	}
+
+	// Test email
+	if(brokerage["email"] != details["email"]) {
+		return true;
+	}
+
+	// Test contact number
+	if(brokerage["contactNumber"] != details["contactNumber"]) {
+		return true;
+	}
+
+	return false;
 }
 
 function getNameOfBrokerage() {

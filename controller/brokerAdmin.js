@@ -51,7 +51,7 @@ var brokerAdminController = new function() {
 		return mockCommunicator.getBrokerDisplayable(brokerId);
 	}*/
 
-
+	// USED
 	this.getBrokerage = function() {
 
 		return brokerage;

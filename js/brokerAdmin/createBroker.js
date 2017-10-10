@@ -101,6 +101,34 @@ function onCreateBrokerDocumentsSubmittedCallback(fileData,data) {
 	}
 }
 
+
+function onBrokerCreatedSuccess(response) {
+
+	util.createNotification("Broker submitted. . .awaiting approval.");
+	loader.loadPage('html/brokerAdmin/brokerage/brokerage.html');
+}
+function onBrokerCreatedFailure(result) {
+
+	util.createNotification("Failed to create Broker - Please contact support if the problem persists.","error")
+	loader.reload();
+}
+
+
+/*
+	brokerAdmin/createBroker
+
+	requestObject:{
+		data:{
+			brokerageId,
+			createRights,
+			email,
+			name,
+			surname
+		},
+		fileData:{
+		}
+	}
+*/
 function ajaxCreateBroker(fileData,data) {
 
 	var requestData = 
@@ -114,15 +142,4 @@ function ajaxCreateBroker(fileData,data) {
 	};
 
 	ajaxPost(CREATE_BROKER_URL,onBrokerCreatedSuccess,onBrokerCreatedFailure,requestData,mockResponse);
-}
-
-function onBrokerCreatedSuccess(response) {
-
-	util.createNotification("Broker submitted. . .awaiting approval.");
-	loader.loadPage('html/brokerAdmin/brokerage/brokerage.html');
-}
-function onBrokerCreatedFailure(result) {
-
-	util.createNotification("Failed to create Broker - Please contact support if the problem persists.","error")
-	loader.reload();
 }

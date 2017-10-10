@@ -28,7 +28,7 @@ function ajaxPost(url,successCallback,failureCallback,requestData,mockResponse) 
 	console.log("AJAXPost:");
 	console.log(url);
 	console.log(requestData);
-	
+
 	successCallback(mockResponse);
 	/*var async = true;
 
