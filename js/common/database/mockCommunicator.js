@@ -2044,6 +2044,18 @@ var mockCommunicator = new function()
 			'dateOfReporting':'2017/05/11',
 			'policyLandEntryId':'0'
 		},
+		{
+			'id':'2',
+			'dateOfDamage':'2017/05/11',
+			'dateOfReporting':'2017/05/11',
+			'policyLandEntryId':'5'
+		},
+		{
+			'id':'3',
+			'dateOfDamage':'2017/05/11',
+			'dateOfReporting':'2017/05/11',
+			'policyLandEntryId':'7'
+		},
 	];
 	this.createDamageReport = function(data) {
 
@@ -2086,6 +2098,16 @@ var mockCommunicator = new function()
 			'damageReportId':'0',
 			'damageTypeId':'1',
 		},
+		{
+			'id':'2',
+			'damageReportId':'2',
+			'damageTypeId':'0',
+		},
+		{
+			'id':'3',
+			'damageReportId':'3',
+			'damageTypeId':'1',
+		},
 	];
 	this.createDamageReportDamageType = function(data) {
 
@@ -2114,5 +2136,19 @@ var mockCommunicator = new function()
 	this.updateDamageReportDamageType = function(id, data) {
 		data.id = id;
 		this.damageReportDamageTypeTable[id] = data;
+	}
+	this.getDamageReportDamageTypesByDamageReportId = function(damageReportId)
+	{
+		var damageTypes = [];
+
+		for(var i = 0; i < this.damageReportDamageTypeTable.length; i++)
+		{
+			if(this.damageReportDamageTypeTable[i].damageReportId == damageReportId)
+			{
+				damageTypes.push(this.damageReportDamageTypeTable[i]);
+			}
+		}
+
+		return damageTypes;
 	}
 };

@@ -156,6 +156,8 @@ var policyInvoker = new function() {
         for(var i = 0; i < policy.policyLandEntries.length; i++)
         {
             var landEntry = policy.policyLandEntries[i];
+
+            landEntry["farm"] = mockCommunicator.getFarm(landEntry.farmId);
             
             addCropToLandEntry(landEntry, getCrop(landEntry.cropId));
 
