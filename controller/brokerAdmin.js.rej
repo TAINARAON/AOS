@@ -1,0 +1,180 @@
+diff a/controller/brokerAdmin.js b/controller/brokerAdmin.js	(rejected hunks)
+@@ -4,139 +4,80 @@
+ 	var brokerage = null;
+ 	var brokerAdmin = null;
+ 
+-	var EDIT_BROKERAGE_URL = "EDIT_BROKERAGE_URL";
+-	var CREATE_BROKER_URL = "CREATE_BROKER_URL";
+-	var GET_BROKERAGE_ADMIN_BY_USER_ID_URL = "GET_BROKERAGE_ADMIN_BY_USER_ID_URL";
+-	var GET_BROKERAGE_URL = "GET_BROKERAGE_URL";
+-	var GET_BROKER_DETAILS_OF_BROKERAGE = "GET_BROKER_DETAILS_OF_BROKERAGE";
+-	var GET_BROKER_FOR_EDIT_MODAL = "GET_BROKER_FOR_EDIT_MODAL";
+-
++	// PUBLIC FUNCTIONS
+ 	this.init = function(userId) {
+ 
+-		ajaxGetBrokerAdminByUserId(userId);
+-		ajaxGetBrokerage(brokerAdmin['brokerageId']);
+-	}
++		brokerAdmin = 	getBrokerAdminByUserId(userId);
++		brokerage = 	getBrokerage(brokerAdmin['brokerageId']);
+ 
+-	/*
+-		brokerAdmin/editBrokerage
+-
+-		requestObject:{
+-			data:{
+-				id,
+-				contactNumber,
+-				email,
+-				name
+-			},
+-			fileData:{
+-			}
+-		}
+-
+-		responseObject:{
+-			status
+-		}
+-	*/
+-	this.editBrokerage = function(successCallback,failCallback,requestObject) {
+-
+-		var mockResponse = {
+-			"result":"fake response"
+-		};
+-
+-		ajaxPost(EDIT_BROKERAGE_URL,successCallback,failCallback,requestObject,mockResponse);
++		util.createNotification('brokerAdminController initialized','info');
+ 	}
+ 
+ 	/*
+-		brokerAdmin/createBroker
+-
+-		requestObject:{
+-			data:{
+-				brokerageId,
+-				createRights,
+-				email,
+-				name,
+-				surname
+-			},
+-			fileData:{
+-			}
+-		}
+-
+-		responseObject:{
+-			id
+-		}
++		Parameters: userData
++		Expects: id
+ 	*/
+-	this.createBroker = function (successCallback,failCallback,requestObject) {
+-
+-	    var mockResponse = {
+-			"id":'test'
+-		};
+-
+-	   ajaxPost(CREATE_BROKER_URL,successCallback,failCallback,requestObject,mockResponse);
++	this.createBroker = function (userData,brokerData,viewableBrokerData) 
++	{
++	    var dataObject = 
++	    {
++	    	'userData':userData,
++	    	'brokerData':brokerData,
++	    	'viewableBrokerData':viewableBrokerData
++	    };
++
++	    console.log("create broker");
++	    console.log(dataObject);
++		
++		return mockCommunicator.createBroker(dataObject);
+ 	};
+ 
+ 	/*
+-		brokerAdmin/getBrokerDetailsOfBrokerage
+-
+-		requestObject:{
+-			brokerageId
+-		}
+-
+-		responseObject:{
+-			brokers:
+-			[
+-				{
+-					id,
+-					name,
+-					surname
+-				}
+-			]
+-		}
++		Parameters: brokerageId
++		Expects: 	Array of Brokers WHERE brokerageId = parameter. Only need id, name and surname of Brokers. 
+ 	*/
+-	this.getBrokerDetailsOfBrokerage = function(successCallback,failCallback) {
++	this.getBrokersForBrokerTableInBrokerageTab = function() {
+ 
+-		var requestObject = 
+-		{
+-			"brokerageId":brokerage['id']
+-		};
++		return mockCommunicator.getBrokersForBrokerTableInBrokerageTab(brokerage['id']);
++	};	
+ 
+-		var mockResponse = {
+-			"brokers":mockCommunicator.getBrokersForBrokerTableInBrokerageTab(brokerage['id'])
+-		};
++	/*
++		Parameters: brokerId
++		Expects: 	name, surname, quoteRights, policyRights, damageReportRights, clientCreationRights
++					array of BrokerViewableBrokers' id,name,surname
++	
++	this.getBrokerForEditModal = function(brokerId) {
+ 
+-		ajaxPost(GET_BROKER_DETAILS_OF_BROKERAGE,successCallback,failCallback,requestObject,mockResponse);
+-	};	
++		return mockCommunicator.getBrokerDisplayable(brokerId);
++	}*/
+ 
+-	// NEEDED
++	// USED
+ 	this.getBrokerage = function() {
+ 
+ 		return brokerage;
+ 	}
+-	// NEEDED
++
+ 	this.getBrokerAdmin = function() {
+ 
+ 		return brokerAdmin;
+ 	}
+ 
+-	this.updateBroker = function(successCallback,failCallback,data) {
++	this.updateBroker = function(brokerData,callback) {
+ 		console.log('updateBroker');
+ 		console.log(brokerData);
+ 		// return mockCommunicator.updateBroker(brokerData);
+ 		callback();
+ 	}
+ 
+-	/*
+-		brokerAdmin/getBrokerForEditModal
+-
+-		requestObject:{
+-			brokerId
+-		}
++	this.getBrokerForEditModal = function(brokerId) {
+ 
+-		responseObject:{
+-			broker:
++		//return mockCommunicator.getBrokerForEditModal(brokerId);
++		/*
+ 			{
+ 				name,
+ 				surname,
+ 				creationRights,
+-				brokerViewableBrokers: 
+-				[
++				brokerViewableBrokers: [
+ 					{
+ 						id (broker)
+ 						name,
