@@ -6,8 +6,6 @@ var NAME_INDEX = 0;
 var SURNAME_INDEX = 1;
 var EMAIL_INDEX = 2;
 
-var CREATE_BROKER_URL = "";
-
 var requiredFields = [false,false,false];
 
 function init() {
@@ -66,7 +64,7 @@ function setSubmitButtonClickListener() {
 function onCreateBrokerClick() {
 
 	// TODO
-	var action = "soemthing/createBroker/";
+	var action = "something/createBroker/";
 
 	var email = $('#create_broker_email_input').val();
 	var name = $('#create_broker_name_input').val();
@@ -101,7 +99,16 @@ function onCreateBrokerDocumentsSubmittedCallback(fileData,data) {
 	}
 }
 
+function ajaxCreateBroker(fileData,data) {
 
+	var requestData = 
+	{
+		'fileData':fileData,
+		'data':data
+	};
+
+	brokerAdminController.createBroker(onBrokerCreatedSuccess,onBrokerCreatedFailure,requestData);
+}
 function onBrokerCreatedSuccess(response) {
 
 	util.createNotification("Broker submitted. . .awaiting approval.");
@@ -111,35 +118,4 @@ function onBrokerCreatedFailure(result) {
 
 	util.createNotification("Failed to create Broker - Please contact support if the problem persists.","error")
 	loader.reload();
-}
-
-
-/*
-	brokerAdmin/createBroker
-
-	requestObject:{
-		data:{
-			brokerageId,
-			createRights,
-			email,
-			name,
-			surname
-		},
-		fileData:{
-		}
-	}
-*/
-function ajaxCreateBroker(fileData,data) {
-
-	var requestData = 
-	{
-		'fileData':fileData,
-		'data':data
-	};
-
-	var mockResponse = {
-		"id":'test'
-	};
-
-	ajaxPost(CREATE_BROKER_URL,onBrokerCreatedSuccess,onBrokerCreatedFailure,requestData,mockResponse);
 }

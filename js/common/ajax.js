@@ -25,12 +25,15 @@ function ajaxGet(url,successCallback,failureCallback,mockResponse) {
 
 function ajaxPost(url,successCallback,failureCallback,requestData,mockResponse) {
 
-	console.log("AJAXPost:");
+	/*console.log("AJAXPost URL:");
 	console.log(url);
+	console.log("AJAXPost requestData:");
 	console.log(requestData);
+	console.log("AJAXPost mockResponse:");
+	console.log(mockResponse);
 
-	successCallback(mockResponse);
-	/*var async = true;
+	successCallback(mockResponse);*/
+	var async = true;
 
 	var request = new XMLHttpRequest();
 	request.onLoad = function() {
@@ -49,5 +52,5 @@ function ajaxPost(url,successCallback,failureCallback,requestData,mockResponse) 
 	
 	request.open("POST", url, async);
 	request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-	request.send(postData);*/
+	request.send(requestData);
 }

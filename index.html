@@ -83,4 +83,13 @@
 <script type="text/javascript" src="js/common/main.js"></script>
 <script type="text/javascript" src="js/common/bootstrap.js"></script>
 
+
+<script type="text/javascript">
+	alert("start");
+	var request = {"username": "admin", "password": "P@ssw0rd"};
+	ajaxPost("http://localhost:8080/login",function(response) {console.log(response);},function(response) {alert('lose');},request);
+	alert("end");
+</script>
+
+
 </html>

@@ -2,7 +2,7 @@ $(function() {
     init();
   });
 
-var EDIT_BROKERAGE_URL = "test url";
+
 var brokerage = {};
 
 function init() {
@@ -77,20 +77,6 @@ function onFilesSubmittedCallback(fileData,data) {
 	}
 }
 
-/*
-	brokerAdmin/editBrokerage
-
-	requestObject:{
-		data:{
-			id,
-			contactNumber,
-			email,
-			name
-		},
-		fileData:{
-		}
-	}
-*/
 function submitRequestToChangeBrokerageDetails(fileData,data) {
 	
 	var requestObject = {
@@ -98,11 +84,7 @@ function submitRequestToChangeBrokerageDetails(fileData,data) {
 		"fileData":fileData
 	};
 
-	var mockResponse = {
-		"result":"fake response"
-	};
-
-	ajaxPost(EDIT_BROKERAGE_URL,onChangeBrokerageSuccessCallback,onChangeBrokerageFailCallback,requestObject,mockResponse);
+	brokerAdminController.editBrokerage(onChangeBrokerageSuccessCallback,onChangeBrokerageFailCallback,requestObject);
 }
 
 function onChangeBrokerageSuccessCallback(result) {
