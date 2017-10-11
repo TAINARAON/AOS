@@ -160,7 +160,7 @@ function setOnClickForEditBrokerSaveButton(brokerId) {
 
 	$('#edit_broker_save_button').off().on('click', function() {
 
-		updateBroker(brokerId);
+		editBroker(brokerId);
 		resetEditBrokerModal();
 	});
 }
@@ -182,7 +182,7 @@ function resetEditBrokerModal() {
 	$('#selected_brokers_ul').empty();
 }
 
-function updateBroker(brokerId) {
+function editBroker(brokerId) {
 
 	//var name = $('#edit_broker_name_input').val();
 	//var surname = $('#edit_broker_surname_input').val();
@@ -210,17 +210,24 @@ function updateBroker(brokerId) {
 		'policyRights':policyRights*/
 	};
 
-	var dataObject = {
+	var requestObject = {
 		'broker':broker,
 		'brokerViewableBrokers':brokerViewableBrokers
 	};
 
-	brokerAdminController.updateBroker(dataObject,onBrokerEditCallback);
+	brokerAdminController.editBroker(editBrokerSuccessCallback,editBrokerFailureCallback,requestObject);
 }
 
-function onBrokerEditCallback(response) {
-	// TODO
+function editBrokerSuccessCallback(response) {
+
 	util.createNotification('Request to update broker successful.');
+	console.log("editBrokerSuccessCallback");
+	console.log(response);
+}
+
+function editBrokerFailureCallback(response) {
+	// TODO
+	util.createNotification('Request to update broker successful.',"error");
 }
 
 function onRevokeBrokerClick(brokerId) {

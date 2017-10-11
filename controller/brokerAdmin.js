@@ -10,6 +10,13 @@ var brokerAdminController = new function() {
 	var GET_BROKERAGE_URL = "GET_BROKERAGE_URL";
 	var GET_BROKER_DETAILS_OF_BROKERAGE = "GET_BROKER_DETAILS_OF_BROKERAGE";
 	var GET_BROKER_FOR_EDIT_MODAL = "GET_BROKER_FOR_EDIT_MODAL";
+	var EDIT_BROKER_URL = "EDIT_BROKER_URL";
+
+	// TODO
+	this.revokeBroker = function(brokerId,callback) {
+		// Deactivates Broker
+		callback();
+	}
 
 	this.init = function(userId) {
 
@@ -115,11 +122,32 @@ var brokerAdminController = new function() {
 		return brokerAdmin;
 	}
 
-	this.updateBroker = function(successCallback,failCallback,data) {
-		console.log('updateBroker');
-		console.log(brokerData);
-		// return mockCommunicator.updateBroker(brokerData);
-		callback();
+	/*
+		brokerAdmin/editBroker
+
+		requestObject:{
+			broker:{
+				id,
+				creationRights
+			},
+			brokerViewableBrokers:[
+				{
+					id
+				}
+			]
+		};
+
+		responseObject:{
+			status
+		}
+	*/
+	this.editBroker = function(successCallback,failCallback,requestObject) {
+		
+		var mockResponse = {
+			"status":"mockResponsee"
+		};
+
+		ajaxPost(EDIT_BROKER_URL,successCallback,failCallback,requestObject,mockResponse);
 	}
 
 	/*
@@ -132,6 +160,7 @@ var brokerAdminController = new function() {
 		responseObject:{
 			broker:
 			{
+				id,
 				name,
 				surname,
 				creationRights,
@@ -182,25 +211,22 @@ var brokerAdminController = new function() {
 		}
 
 		var mockResponse = {
-			"broker":{
-			'name':name,
-			'surname':surname,
-			/*'quoteRights':quoteRights,
-			'policyRights':policyRights,
-			'damageReportRights':damageReportRights,*/
-			'creationRights':creationRights,
-			'brokerViewableBrokers':brokerViewableBrokersDetails
+			"broker":
+			{
+				'id':brokerId,
+				'name':name,
+				'surname':surname,
+				/*'quoteRights':quoteRights,
+				'policyRights':policyRights,
+				'damageReportRights':damageReportRights,*/
+				'creationRights':creationRights,
+				'brokerViewableBrokers':brokerViewableBrokersDetails
 			}
 		}
 
 		// END OF CREATING MOCK RESPONSE
 
 		ajaxPost(GET_BROKER_FOR_EDIT_MODAL,successCallback,failCallback,requestObject,mockResponse);
-	}
-
-	this.revokeBroker = function(brokerId,callback) {
-		// Deactivates Broker
-		callback();
 	}
 
 	// PRIVATE FUNCTIONS
@@ -245,7 +271,6 @@ var brokerAdminController = new function() {
 	function onGetBrokerageFail(response) {
 
 		alert("ERROR! Could not initiate Brokerage");
-
 	}
 
 	/*
@@ -282,6 +307,5 @@ var brokerAdminController = new function() {
 	function onGetBrokerAdminFail(response) {
 
 		alert("ERROR! Could not initiate Brokerage");
-
 	}
 }
