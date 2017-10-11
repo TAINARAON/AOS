@@ -149,7 +149,7 @@ var damageReport = new function()
 
 		var parentTitle = document.createElement("A");
 		parentTitle.className = "toggle";
-		parentTitle.style.cssText = "display: flex;";
+		parentTitle.style.cssText = "display: flex; overflow-x: auto;";
 
 		createAccordionItemDetailDiv("Damage Report Number: " + damageReport.id, parentTitle);
 		//createAccordionItemDetailDiv("Policy Number: " + damageReport.policyLandEntry.policy.policyNumber, parentTitle);
@@ -158,6 +158,7 @@ var damageReport = new function()
 		createAccordionItemDetailDiv("Land Number: " + damageReport.policyLandEntry.landNumber, parentTitle);
 		createAccordionItemDetailDiv("Date of damage: " + damageReport.dateOfDamage, parentTitle);
 		createAccordionItemDetailDiv("Date of reporting: " + damageReport.dateOfReporting, parentTitle);
+		calculateDamageStatus(damageReport, createAccordionItemDetailDiv("Status: ", parentTitle));
 
 		var childContainer = document.createElement("UL");
 		childContainer.className = "inner";
@@ -170,12 +171,38 @@ var damageReport = new function()
 		return childContainer;
 	}
 
+	function calculateDamageStatus(damageReport, parentTitle)
+	{
+		var damageDiv = document.createElement("DIV");
+		damageDiv.style.cssText = "height: 20px; width: 20px; float: right;";
+
+		var count = damageReport.damageReportDamageTypes.length;
+		//var count = damageReport.policyLandEntry.policyLandEntryDamageTypes.length;
+
+		// TODO: discuss this
+		if(count <= 1)
+		{
+			damageDiv.style.cssText += "background-color: cadetblue;";
+		}
+		else if(count <= 2)
+		{
+			damageDiv.style.cssText += "background-color: darkkhaki;";
+		}
+		else
+		{
+			damageDiv.style.cssText += "background-color: tomato;";
+		}
+
+		parentTitle.appendChild(damageDiv);
+	}
+
 	function createAccordionItemDetailDiv(val, container)
 	{
 		var tDiv = document.createElement("DIV");
 		tDiv.innerHTML = val;
 		tDiv.style.cssText = "margin-right: 80px;";
 		container.appendChild(tDiv);
+		return tDiv;
 	}
 
 	function createDamageReportAccordionChildItem(damageReport, container)
