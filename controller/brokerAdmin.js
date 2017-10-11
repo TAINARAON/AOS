@@ -4,80 +4,139 @@ var brokerAdminController = new function() {
 	var brokerage = null;
 	var brokerAdmin = null;
 
-	// PUBLIC FUNCTIONS
+	var EDIT_BROKERAGE_URL = "EDIT_BROKERAGE_URL";
+	var CREATE_BROKER_URL = "CREATE_BROKER_URL";
+	var GET_BROKERAGE_ADMIN_BY_USER_ID_URL = "GET_BROKERAGE_ADMIN_BY_USER_ID_URL";
+	var GET_BROKERAGE_URL = "GET_BROKERAGE_URL";
+	var GET_BROKER_DETAILS_OF_BROKERAGE = "GET_BROKER_DETAILS_OF_BROKERAGE";
+	var GET_BROKER_FOR_EDIT_MODAL = "GET_BROKER_FOR_EDIT_MODAL";
+
 	this.init = function(userId) {
 
-		brokerAdmin = 	getBrokerAdminByUserId(userId);
-		brokerage = 	getBrokerage(brokerAdmin['brokerageId']);
-
-		util.createNotification('brokerAdminController initialized','info');
+		ajaxGetBrokerAdminByUserId(userId);
+		ajaxGetBrokerage(brokerAdmin['brokerageId']);
 	}
 
 	/*
-		Parameters: userData
-		Expects: id
-	*/
-	this.createBroker = function (userData,brokerData,viewableBrokerData) 
-	{
-	    var dataObject = 
-	    {
-	    	'userData':userData,
-	    	'brokerData':brokerData,
-	    	'viewableBrokerData':viewableBrokerData
-	    };
+		brokerAdmin/editBrokerage
 
-	    console.log("create broker");
-	    console.log(dataObject);
-		
-		return mockCommunicator.createBroker(dataObject);
+		requestObject:{
+			data:{
+				id,
+				contactNumber,
+				email,
+				name
+			},
+			fileData:{
+			}
+		}
+
+		responseObject:{
+			status
+		}
+	*/
+	this.editBrokerage = function(successCallback,failCallback,requestObject) {
+
+		var mockResponse = {
+			"result":"fake response"
+		};
+
+		ajaxPost(EDIT_BROKERAGE_URL,successCallback,failCallback,requestObject,mockResponse);
+	}
+
+	/*
+		brokerAdmin/createBroker
+
+		requestObject:{
+			data:{
+				brokerageId,
+				createRights,
+				email,
+				name,
+				surname
+			},
+			fileData:{
+			}
+		}
+
+		responseObject:{
+			id
+		}
+	*/
+	this.createBroker = function (successCallback,failCallback,requestObject) {
+
+	    var mockResponse = {
+			"id":'test'
+		};
+
+	   ajaxPost(CREATE_BROKER_URL,successCallback,failCallback,requestObject,mockResponse);
 	};
 
 	/*
-		Parameters: brokerageId
-		Expects: 	Array of Brokers WHERE brokerageId = parameter. Only need id, name and surname of Brokers. 
-	*/
-	this.getBrokersForBrokerTableInBrokerageTab = function() {
+		brokerAdmin/getBrokerDetailsOfBrokerage
 
-		return mockCommunicator.getBrokersForBrokerTableInBrokerageTab(brokerage['id']);
+		requestObject:{
+			brokerageId
+		}
+
+		responseObject:{
+			brokers:
+			[
+				{
+					id,
+					name,
+					surname
+				}
+			]
+		}
+	*/
+	this.getBrokerDetailsOfBrokerage = function(successCallback,failCallback) {
+
+		var requestObject = 
+		{
+			"brokerageId":brokerage['id']
+		};
+
+		var mockResponse = {
+			"brokers":mockCommunicator.getBrokersForBrokerTableInBrokerageTab(brokerage['id'])
+		};
+
+		ajaxPost(GET_BROKER_DETAILS_OF_BROKERAGE,successCallback,failCallback,requestObject,mockResponse);
 	};	
 
-	/*
-		Parameters: brokerId
-		Expects: 	name, surname, quoteRights, policyRights, damageReportRights, clientCreationRights
-					array of BrokerViewableBrokers' id,name,surname
-	
-	this.getBrokerForEditModal = function(brokerId) {
-
-		return mockCommunicator.getBrokerDisplayable(brokerId);
-	}*/
-
-	// USED
+	// NEEDED
 	this.getBrokerage = function() {
 
 		return brokerage;
 	}
-
+	// NEEDED
 	this.getBrokerAdmin = function() {
 
 		return brokerAdmin;
 	}
 
-	this.updateBroker = function(brokerData,callback) {
+	this.updateBroker = function(successCallback,failCallback,data) {
 		console.log('updateBroker');
 		console.log(brokerData);
 		// return mockCommunicator.updateBroker(brokerData);
 		callback();
 	}
 
-	this.getBrokerForEditModal = function(brokerId) {
+	/*
+		brokerAdmin/getBrokerForEditModal
 
-		//return mockCommunicator.getBrokerForEditModal(brokerId);
-		/*
+		requestObject:{
+			brokerId
+		}
+
+		responseObject:{
+			broker:
 			{
 				name,
 				surname,
 				creationRights,
-				brokerViewableBrokers: [
+				brokerViewableBrokers: 
+				[
 					{
 						id (broker)
 						name,
@@ -85,8 +144,16 @@ var brokerAdminController = new function() {
 					}
 				]
 			}
-		*/
+		}
+	*/
+	this.getBrokerForEditModal = function(successCallback,failCallback,brokerId) {
 
+		var requestObject = 
+		{
+			"brokerId":brokerId
+		};
+
+		// CREATING MOCK RESPONSE. MAY DELETE IF SERVER IS RUNNING
 		var broker = mockCommunicator.getBroker(brokerId);
 		var user = mockCommunicator.getUser(broker['userId']);
 
@@ -114,8 +181,8 @@ var brokerAdminController = new function() {
 			);
 		}
 
-		var response = 
-		{
+		var mockResponse = {
+			"broker":{
 			'name':name,
 			'surname':surname,
 			/*'quoteRights':quoteRights,
@@ -123,9 +190,12 @@ var brokerAdminController = new function() {
 			'damageReportRights':damageReportRights,*/
 			'creationRights':creationRights,
 			'brokerViewableBrokers':brokerViewableBrokersDetails
+			}
 		}
 
-		return response;
+		// END OF CREATING MOCK RESPONSE
+
+		ajaxPost(GET_BROKER_FOR_EDIT_MODAL,successCallback,failCallback,requestObject,mockResponse);
 	}
 
 	this.revokeBroker = function(brokerId,callback) {
@@ -135,16 +205,83 @@ var brokerAdminController = new function() {
 
 	// PRIVATE FUNCTIONS
 	/*
-		Parameters: brokerageId
-		Expects: 	name, email, contactNumber, fspNumber
-	*/
-	function getBrokerage(brokerageId) {
+		brokerAdmin/getBrokerage
 
-		return mockCommunicator.getBrokerage(brokerageId);
+		requestObject:{
+			brokerageId
+		}
+
+		responseObject:{
+			brokerage:{whole brokerage}
+		}
+	*/
+	function ajaxGetBrokerage(brokerageId) {
+
+		var requestObject = {
+			"brokerageId":brokerageId
+		};
+
+		var mockResponse = {
+			brokerage:{
+				'id':'0',
+				'name':'Breeker Brokerage',
+				'active':'1',
+				'dateCreated':'1990-08-25',
+				'email':'breeker.brokerage@gmail.com',
+				'contactNumber':'0623521574',
+				'fspNumber':'FSP000',
+				'verified':'1'
+			}
+		}
+
+		ajaxPost(GET_BROKERAGE_URL,onGetBrokerageSuccess,onGetBrokerageFail,requestObject,mockResponse);
+	}
+	// NEEDED
+	function onGetBrokerageSuccess(response) {
+
+		brokerage = response["brokerage"];
+	}
+	// NEEDED
+	function onGetBrokerageFail(response) {
+
+		alert("ERROR! Could not initiate Brokerage");
+
 	}
 
-	function getBrokerAdminByUserId(userId) {
+	/*
+		brokerAdmin/getBrokerAdminByUserId
 
-		return mockCommunicator.getBrokerAdminByUserId(userId);
+		requestObject:{
+			userId
+		}
+
+		responseObject:{
+			brokerAdmin:{whole brokerAdmin}
+		}
+	*/
+	function ajaxGetBrokerAdminByUserId(brokerageId) {
+
+		var requestObject = {
+			"brokerageId":brokerageId
+		};
+
+		var mockResponse = {
+			"brokerAdmin":{
+				"brokerageId":0
+			}
+		}
+
+		ajaxPost(GET_BROKERAGE_URL,onGetBrokerAdminSuccess,onGetBrokerAdminFail,requestObject,mockResponse);
+	}
+	// NEEDED
+	function onGetBrokerAdminSuccess(response) {
+
+		brokerAdmin = response["brokerAdmin"];
+	}
+	// NEEDED
+	function onGetBrokerAdminFail(response) {
+
+		alert("ERROR! Could not initiate Brokerage");
+
 	}
 }

@@ -2,6 +2,8 @@ $(function() {
     init();
   });
 
+var brokerage = {};
+
 function init() {
 
 	initializeModals();
@@ -16,22 +18,34 @@ function initializeModals() {
 
 function setBrokerageDetails() {
 
-	var brokerageDetails = brokerAdminController.getBrokerage();
+	brokerage = brokerAdminController.getBrokerage();
 
-	$('#broker_admin_brokerage_name').text(brokerageDetails['name']);
-	$('#broker_admin_brokerage_email').text(brokerageDetails['email']);
-	$('#broker_admin_brokerage_fsp_number').text(brokerageDetails['fspNumber']);
-	$('#broker_admin_brokerage_contact_number').text(brokerageDetails['contactNumber']);
+	$('#broker_admin_brokerage_name').text(brokerage['name']);
+	$('#broker_admin_brokerage_email').text(brokerage['email']);
+	$('#broker_admin_brokerage_fsp_number').text(brokerage['fspNumber']);
+	$('#broker_admin_brokerage_contact_number').text(brokerage['contactNumber']);
 }
 
 function populateBrokerTable() {
 
+	brokerAdminController.getBrokerDetailsOfBrokerage(getBrokerDetailsOfBrokerageSuccessCallback,getBrokerDetailsOfBrokerageFailCallback);
+}
+
+function getBrokerDetailsOfBrokerageSuccessCallback(response) {
+
 	var container = $('#broker_admin_broker_container');
-	var brokers = brokerAdminController.getBrokersForBrokerTableInBrokerageTab();
+
+	console.log('response');
+	console.log(response);
+	var brokers = response['brokers'];
 
 	for(var i = 0;i<brokers.length;i++) {
 		createBrokerEntry(brokers[i],container);
 	}
+}
+function getBrokerDetailsOfBrokerageFailCallback(response) {
+
+	alert("failed brokerAdmin/brokerage/brokerage.js getBrokerDetailsOfBrokerageFailCallback");
 }
 
 function createBrokerEntry(broker,container) {
@@ -99,9 +113,23 @@ function toggleDataContainer(e) {
 
 function onEditBroker(id) {
 
-	populateEditBrokerModalText(brokerAdminController.getBrokerForEditModal(id));
-	setOnClickForEditBrokerSaveButton(id);
+	brokerAdminController.getBrokerForEditModal(getBrokerForEditModalSuccessCallback,getBrokerForEditModalFailureCallback,id);
+	
+}
+
+function getBrokerForEditModalSuccessCallback(result) {
+
+	var broker = result["broker"];
+	
+	populateEditBrokerModalText(broker);
+	setOnClickForEditBrokerSaveButton(broker["id"]);
 	setOnClickForEditBrokerCancelButton();
+
+}
+function getBrokerForEditModalFailureCallback(result) {
+
+	alert("getBrokerForEditModalFailureCallback brokerAdmin/brokerage/brokerage.js");
+
 }
 
 function populateEditBrokerModalText(brokerData) {
