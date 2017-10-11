@@ -154,7 +154,7 @@ var damageReport = new function()
 		createAccordionItemDetailDiv("Damage Report Number: " + damageReport.id, parentTitle);
 		createAccordionItemDetailDiv("Policy Number: " + damageReport.policyLandEntry.policy.policyNumber, parentTitle);
 		createAccordionItemDetailDiv("Business Unit: " + damageReport.policyLandEntry.policy.businessUnit.name, parentTitle);
-		createAccordionItemDetailDiv("Business Unit: " + damageReport.policyLandEntry.landNumber, parentTitle);
+		createAccordionItemDetailDiv("Land Number: " + damageReport.policyLandEntry.landNumber, parentTitle);
 		createAccordionItemDetailDiv("Date of damage: " + damageReport.dateOfDamage, parentTitle);
 		createAccordionItemDetailDiv("Date of reporting: " + damageReport.dateOfReporting, parentTitle);
 
