@@ -152,8 +152,9 @@ var damageReport = new function()
 		parentTitle.style.cssText = "display: flex;";
 
 		createAccordionItemDetailDiv("Damage Report Number: " + damageReport.id, parentTitle);
-		createAccordionItemDetailDiv("Policy Number: " + damageReport.policyLandEntry.policy.policyNumber, parentTitle);
+		//createAccordionItemDetailDiv("Policy Number: " + damageReport.policyLandEntry.policy.policyNumber, parentTitle);
 		createAccordionItemDetailDiv("Business Unit: " + damageReport.policyLandEntry.policy.businessUnit.name, parentTitle);
+		createAccordionItemDetailDiv("Farm name: " + damageReport.policyLandEntry.farm.name, parentTitle);
 		createAccordionItemDetailDiv("Land Number: " + damageReport.policyLandEntry.landNumber, parentTitle);
 		createAccordionItemDetailDiv("Date of damage: " + damageReport.dateOfDamage, parentTitle);
 		createAccordionItemDetailDiv("Date of reporting: " + damageReport.dateOfReporting, parentTitle);
