@@ -481,6 +481,7 @@ var mockCommunicator = new function()
 	this.insurerAdminTable = [
 		{
 			'id':'0',
+			'insuranceAgencyId':0,
 			'userId':'1',
 			'active':'1',
 		},
@@ -526,16 +527,19 @@ var mockCommunicator = new function()
 		{
 			'id':'0',
 			'userId':'2',
+			'insuranceAgencyId':0,
 			'active':'1',
 		},
 		{
 			'id':'1',
 			'userId':'3',
+			'insuranceAgencyId':0,
 			'active':'1',
 		},
 		{
 			'id':'2',
 			'userId':'4',
+			'insuranceAgencyId':0,
 			'active':'1',
 		},
 	];
@@ -573,6 +577,20 @@ var mockCommunicator = new function()
 				return this.insurerTable[i];
 			}
 		}
+	}
+
+// INSURANCE AGENCY - done
+	this.insuranceAgency = 
+	[
+		{
+			'name':'Versekerings Ltd.',
+			'email':'versekerings.ltd@gmail.com',
+			'contactNumber':'062 352 1341',
+		}
+	];
+		
+	this.getInsuranceAgency = function(id=0) {
+		return this.insuranceAgency[id];
 	}
 
 // BROKER ADMIN - done
@@ -808,19 +826,6 @@ var mockCommunicator = new function()
 		this.brokerageTable[id] = data;
 	}
 
-// INSURANCE AGENCY - done
-	this.insuranceAgency = 
-	[
-		{
-			'name':'Versekerings Ltd.',
-			'email':'versekerings.ltd@gmail.com',
-			'contactNumber':'062 352 1341',
-		}
-	];
-		
-	this.getInsuranceAgency = function(id=0) {
-		return this.insuranceAgency[id];
-	}
 // ############################# QUOTES ################################
 // QUOTE - done
 	this.quoteTable = [
@@ -1281,6 +1286,7 @@ var mockCommunicator = new function()
 			'yield':'14.22',
 			'price':'5.48',
 			'tariffOptionId':'0',
+			'additionalTariff':0
 		},
 		{
 			'id':'1',
@@ -1295,6 +1301,7 @@ var mockCommunicator = new function()
 			'yield':'16.11',
 			'price':'9.48',
 			'tariffOptionId':'0',
+			'additionalTariff':0
 		},
 		{
 			'id':'2',
@@ -1309,6 +1316,7 @@ var mockCommunicator = new function()
 			'yield':'14.22',
 			'price':'5.48',
 			'tariffOptionId':'0',
+			'additionalTariff':0
 		},
 		{
 			'id':'3',
@@ -1323,6 +1331,7 @@ var mockCommunicator = new function()
 			'yield':'16.11',
 			'price':'9.48',
 			'tariffOptionId':'0',
+			'additionalTariff':0
 		},
 		{
 			'id':'4',
@@ -1337,6 +1346,7 @@ var mockCommunicator = new function()
 			'yield':'14.22',
 			'price':'5.48',
 			'tariffOptionId':'0',
+			'additionalTariff':0
 		},
 		{
 			'id':'5',
@@ -1351,6 +1361,7 @@ var mockCommunicator = new function()
 			'yield':'16.11',
 			'price':'9.48',
 			'tariffOptionId':'0',
+			'additionalTariff':0
 		},
 		{
 			'id':'6',
@@ -1365,6 +1376,7 @@ var mockCommunicator = new function()
 			'yield':'14.22',
 			'price':'5.48',
 			'tariffOptionId':'0',
+			'additionalTariff':0
 		},
 		{
 			'id':'7',
@@ -1379,6 +1391,7 @@ var mockCommunicator = new function()
 			'yield':'16.11',
 			'price':'9.48',
 			'tariffOptionId':'0',
+			'additionalTariff':0
 		}
 	];
 	this.createPolicyLandEntry = function(data) {
@@ -1537,6 +1550,62 @@ var mockCommunicator = new function()
 	}
 
 // ########################### SYSTEM KEYS ###############################
+
+// LIMITS
+/*
+	Per InsuranceAgency, per District, per Crop, there is only a certain amount that the InsuranceAgency will 
+	cover that specific crop in that district. Once the pool is empty, you cannot take out a policy for that crop
+	in that district by that Insurace Agency anymore. 
+	If you are getting close to depleting the pool (orangeLimit), the user gets notified that a limit is almost reached. 
+	If the limit is exceeded (redLimit), a quote cannot be created for that specific crop in that district for that InsuranceAgency. 
+	Any existing quotes that has already been created for that crop and district may not be accepted.
+	
+	The InsurerAdmin may log in and change the redLimit, and add an 'additionalTariff' that any new quotes will have to increase
+	their tariff by. 
+*/
+	this.limitTable = [
+		{
+			'id':'0',
+			'districtId',
+			'cropId',
+			'dateStart',
+			'dateEnd',
+			'orangeLimit',
+			'redLimit',
+			'runningValue',
+			'additionalTariff':0,
+			'insuranceAgencyId':0
+		}
+	];
+	this.createProduct = function(data) {
+
+		data.id = this.productTable.length;
+		this.productTable.push(data);
+
+		return data.id;
+	}
+	this.getProduct = function(id) {
+		for(var i=0;i<this.productTable.length;i++) {
+			if(this.productTable[i].id==id) {
+				return this.productTable[i];
+			}
+		}
+	}
+	this.getProducts = function() {
+		return this.productTable;
+	}
+	this.deleteProduct = function(id) {
+		for(var i=0;i<this.productTable.length;i++) {
+			if(this.productTable[i].id==id) {
+				this.productTable.splice(i,1);
+			}
+		}
+	}
+	this.updateProduct = function(id, data) {
+		data.id = id;
+		this.productTable[id] = data;
+	}
+
 // PRODUCT - done
 	this.productTable = [
 		{
@@ -2109,17 +2178,21 @@ var mockCommunicator = new function()
 		{
 			'id':'0',
 			'damageReportId':0,
-			'policyLandEntryId':0
+			'policyLandEntryId':0,
+			'requiresTaxation':true
 		},
 		{
 			'id':'1',
 			'damageReportId':0,
-			'policyLandEntryId':1
+			'policyLandEntryId':1,
+			'requiresTaxation':true
+
 		},
 		{
 			'id':'2',
 			'damageReportId':0,
-			'policyLandEntryId':2
+			'policyLandEntryId':2,
+			'requiresTaxation':true
 		}
 	];
 	this.createDamageReportLandEntry = function(data) {

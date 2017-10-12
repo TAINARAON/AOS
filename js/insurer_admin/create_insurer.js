@@ -7,50 +7,7 @@ var SURNAME = 5;
 
 var inputArray = [null,null,null,null,null,null];
 
-function validateUsername(input) {
 
-	if(1) {
-		inputArray[USERNAME] = input;
-	} else {
-		inputArray[USERNAME] = null;
-	}
-	
-}
-function validatePassword(input) {
-	if(1) {
-		inputArray[PASSWORD] = input;
-	} else {
-		inputArray[PASSWORD] = null;
-	}
-}
-function validateConfirmPassword(input) {
-	if(1) {
-		inputArray[PASSWORD2] = input;
-	} else {
-		inputArray[PASSWORD2] = null;
-	}
-}
-function validateEmail(input) {
-	if(1) {
-		inputArray[EMAIL] = input;
-	} else {
-		inputArray[EMAIL] = null;
-	}
-}
-function validateName(input) {
-	if(1) {
-		inputArray[NAME] = input;
-	} else {
-		inputArray[NAME] = null;
-	}
-}
-function validateSurname(input) {
-	if(1) {
-		inputArray[SURNAME] = input;
-	} else {
-		inputArray[SURNAME] = null;
-	}
-}
 
 // Username Input Change
 $( document ).on( 'change', '#insurer_register_username_input', function( e ) {
@@ -129,6 +86,53 @@ function saveInsurer() {
 
 		util.createNotification('Failed to create Insurer.','error');
 	}
+}
 
+function validateUsername(input) {
 
+	if(1) {
+		inputArray[USERNAME] = input;
+	} else {
+		inputArray[USERNAME] = null;
+	}	
+}
+
+function validatePassword(input) {
+	if(1) {
+		inputArray[PASSWORD] = input;
+	} else {
+		inputArray[PASSWORD] = null;
+	}
+}
+
+function validateConfirmPassword(input) {
+	if(1) {
+		inputArray[PASSWORD2] = input;
+	} else {
+		inputArray[PASSWORD2] = null;
+	}
+}
+
+function validateEmail(input) {
+	if(1) {
+		inputArray[EMAIL] = input;
+	} else {
+		inputArray[EMAIL] = null;
+	}
+}
+
+function validateName(input) {
+	if(1) {
+		inputArray[NAME] = input;
+	} else {
+		inputArray[NAME] = null;
+	}
+}
+
+function validateSurname(input) {
+	if(1) {
+		inputArray[SURNAME] = input;
+	} else {
+		inputArray[SURNAME] = null;
+	}
 }

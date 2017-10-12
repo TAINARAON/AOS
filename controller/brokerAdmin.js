@@ -284,10 +284,10 @@ var brokerAdminController = new function() {
 			brokerAdmin:{whole brokerAdmin}
 		}
 	*/
-	function ajaxGetBrokerAdminByUserId(brokerageId) {
+	function ajaxGetBrokerAdminByUserId(userId) {
 
 		var requestObject = {
-			"brokerageId":brokerageId
+			"userId":userId
 		};
 
 		var mockResponse = {

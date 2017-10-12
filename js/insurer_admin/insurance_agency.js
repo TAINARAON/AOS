@@ -1,5 +1,12 @@
 $().ready(function(){
 
+	populateBrokerageDetails();
+ 	populateInsurerTable();
+
+});
+
+function populateBrokerageDetails() {
+
 	var agency = insurerInvoker.getInsuranceAgency();
 
  	$('#insurance_agency_name').text(agency['name']);
@@ -7,27 +14,8 @@ $().ready(function(){
  	$('#insurance_agency_contact_number').text(agency['contactNumber']);
 
  	$('#insurance_agency_email').text(agency['email']);
-
- 	populateInsurerTable();
-
-});
-
-function setOnAccordionClicked() {
-	$('.toggle').click(function(e) {
-
-	  	e.preventDefault();
-
-	    if ($(this).next().hasClass('show')) {
-	        $(this).next().removeClass('show');
-	        $(this).next().slideUp(350);
-	    } else {
-	        $(this).parent().parent().find('li .inner').removeClass('show');
-	        $(this).parent().parent().find('li .inner').slideUp(350);
-	        $(this).next().toggleClass('show');
-	        $(this).next().slideToggle(350);
-	    }
-	});
 }
+
 
 function populateInsurerTable() {
 
@@ -51,6 +39,23 @@ function populateInsurerTable() {
 	}
 
 	setOnAccordionClicked();
+}
+
+function setOnAccordionClicked() {
+	$('.toggle').click(function(e) {
+
+	  	e.preventDefault();
+
+	    if ($(this).next().hasClass('show')) {
+	        $(this).next().removeClass('show');
+	        $(this).next().slideUp(350);
+	    } else {
+	        $(this).parent().parent().find('li .inner').removeClass('show');
+	        $(this).parent().parent().find('li .inner').slideUp(350);
+	        $(this).next().toggleClass('show');
+	        $(this).next().slideToggle(350);
+	    }
+	});
 }
 
 
