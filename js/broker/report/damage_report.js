@@ -130,16 +130,16 @@ var damageReport = new function()
 	function createAccordionDamageReportItems(damageReports)
 	{
 		damageReportAccordion.innerHTML = "";
-
+		
 		for(var i = 0; i < damageReports.length; i++)
 		{
 			var childContainer = createDamageReportAccordionParentItem(damageReports[i], damageReportAccordion);
 
-			createDamageReportAccordionChildItem(damageReports[i], childContainer);
-			/*for(var j = 0; j < damageReports[i].policyLandEntries.length; j++)
+			//createDamageReportAccordionChildItem(damageReports[i], childContainer);
+			for(var j = 0; j < damageReports[i].damageReportLandEntries.length; j++)
 			{
-				createDamageReportAccordionChildItem(damageReports[i].policyLandEntries[j], childContainer);
-			}*/
+				createDamageReportAccordionChildItem(damageReports[i].damageReportLandEntries[j], childContainer);
+			}
 		}
 	}
 
@@ -151,14 +151,18 @@ var damageReport = new function()
 		parentTitle.className = "toggle";
 		parentTitle.style.cssText = "display: flex; overflow-x: auto;";
 
-		createAccordionItemDetailDiv("Damage Report Number: " + damageReport.id, parentTitle);
+		/*createAccordionItemDetailDiv("Damage Report Number: " + damageReport.id, parentTitle);
 		//createAccordionItemDetailDiv("Policy Number: " + damageReport.policyLandEntry.policy.policyNumber, parentTitle);
 		createAccordionItemDetailDiv("Business Unit: " + damageReport.policyLandEntry.policy.businessUnit.name, parentTitle);
 		createAccordionItemDetailDiv("Farm name: " + damageReport.policyLandEntry.farm.name, parentTitle);
 		createAccordionItemDetailDiv("Land Number: " + damageReport.policyLandEntry.landNumber, parentTitle);
 		createAccordionItemDetailDiv("Date of damage: " + damageReport.dateOfDamage, parentTitle);
 		createAccordionItemDetailDiv("Date of reporting: " + damageReport.dateOfReporting, parentTitle);
-		calculateDamageStatus(damageReport, createAccordionItemDetailDiv("Status: ", parentTitle));
+		calculateDamageStatus(damageReport, createAccordionItemDetailDiv("Status: ", parentTitle));*/
+
+		createAccordionItemDetailDiv("Damage Type: " + damageReport.damageType.name, parentTitle);
+		createAccordionItemDetailDiv("Damage Date: " + damageReport.dateOfDamage, parentTitle);
+		createAccordionItemDetailDiv("Damage Number: " + damageReport.damageReportNumber, parentTitle);
 
 		var childContainer = document.createElement("UL");
 		childContainer.className = "inner";
@@ -205,9 +209,31 @@ var damageReport = new function()
 		return tDiv;
 	}
 
-	function createDamageReportAccordionChildItem(damageReport, container)
+	function createDamageReportAccordionChildItem(damageReportLandEntry, container)
 	{
+		var childLi = document.createElement("LI");
+
+		var childTitle = document.createElement("A");
+		childTitle.className = "toggle";
+		childTitle.style.cssText = "display: flex; background: cadetblue;";
+
+		createAccordionItemDetailDiv("Contact Person: " + damageReportLandEntry.policyLandEntry.policy.businessUnit.contactPerson, childTitle);
+		createAccordionItemDetailDiv("Contact Number: " +damageReportLandEntry.policyLandEntry.policy.businessUnit.contactNumber, childTitle);
+		createAccordionItemDetailDiv("Land Number: " + damageReportLandEntry.policyLandEntry.landNumber, childTitle);
+		createAccordionItemDetailDiv("Farm Name: " + damageReportLandEntry.policyLandEntry.farm.name, childTitle);
+		createAccordionItemDetailDiv("Crop Name: " + damageReportLandEntry.policyLandEntry.crop.name, childTitle);
+		createAccordionItemDetailDiv("Area: " + damageReportLandEntry.policyLandEntry.area, childTitle);
+		createAccordionItemDetailDiv("Taksasie TBA", childTitle);
+
 		var childDetail = document.createElement("DIV");
+		childDetail.className = "inner";
+
+		childLi.appendChild(childTitle);
+		childLi.appendChild(childDetail);
+
+		container.appendChild(childLi);
+
+		/*var childDetail = document.createElement("DIV");
 		//childDetail.className = "inner";
 
 		var coveredDamageTypesContainer = document.createElement("DIV");
@@ -247,7 +273,7 @@ var damageReport = new function()
 		sufferedDamageTypesContainer.appendChild(sufferedDamageTypes);
 		childDetail.appendChild(sufferedDamageTypesContainer);
 
-		container.appendChild(childDetail);
+		container.appendChild(childDetail);*/
 
 		/*var childLi = document.createElement("LI");
 

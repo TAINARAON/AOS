@@ -112,11 +112,152 @@ var damageReportInvoker = new function()
 		return tLandEntries;
 	}
 
+	this.getDamageTypes = function()
+	{
+		return mockCommunicator.getPerils();
+	}
+
 	// ---------------------------
 
 	this.getDamageReport = function(brokerId, businessUnitName, farmName)
 	{
 		var tDamageReports = [];
+
+		var damageReport = {
+			'id':'0',
+			'damageTypeId':0,
+			'damageReportNumber':'00000',
+			'dateOfDamage':'2017/05/11',
+			'dateOfReporting':'2017/05/11',
+		};
+
+		damageReport["damageType"] = {
+			'id':'0',
+			'name':'Fire'
+		};
+
+		damageReport["damageReportLandEntries"] = [
+			{
+				'id':'0',
+				'damageReportId':0,
+				'policyLandEntryId':0,
+				'policyLandEntry': {
+					'id':'0',
+					'policyId':'0',
+					'policy': {
+						'id':'0',
+						'policyNumber':'00000',
+						'businessUnitId':'0',
+						'businessUnit':{
+							'id':'0',
+							'name':'BU0',   //'Anro Boerdery Co (ABC)',
+							'contactNumber':'063-887-9635',
+							'contactPerson':'Anro Swart',
+							'email':'anro.swart@bing.com',
+							'vatNumber':'00625-4811',
+							'incomeTaxNumber':'5651484166',
+							'active':'1',
+							'verified':'1'
+						},
+						'brokerId':'0',
+						'insurerId':null,
+						'acceptedOn':'2017-08-30 19:01:05',
+						'active':'1',
+						'linkedToPolicyId':null
+					},
+					'farmId':'0',
+					'farm':{
+						'id':'0',
+						'name':'P0',
+						'businessUnitId':'0',
+						'latitude':'1.22644',
+						'longitude':'-0.35428',
+						'active':'1',
+						'districtId':'0'
+					},
+					'landNumber':'00001',
+					'landLongitude':'131.044',
+					'landLatitude':'-25.363',
+					'cropId':'1',
+					'crop':{
+						'id':'1',
+						'name':'Banana',
+						'productId':'0',
+						'active':'1',
+						'priceUomId':'0',
+						'areaUomId':'0'
+					},
+					'cultivar':'Red Dwarf',
+					'area':'7.4',
+					'yield':'14.22',
+					'price':'5.48',
+					'tariffOptionId':'0'
+				}
+			},
+			{
+				'id':'1',
+				'damageReportId':0,
+				'policyLandEntryId':1,
+				'policyLandEntry' : {
+					'id':'1',
+					'policyId':'0',
+					'policy': {
+						'id':'0',
+						'policyNumber':'00000',
+						'businessUnitId':'0',
+						'businessUnit':{
+							'id':'0',
+							'name':'BU0',   //'Anro Boerdery Co (ABC)',
+							'contactNumber':'063-887-9635',
+							'contactPerson':'Anro Swart',
+							'email':'anro.swart@bing.com',
+							'vatNumber':'00625-4811',
+							'incomeTaxNumber':'5651484166',
+							'active':'1',
+							'verified':'1'
+						},
+						'brokerId':'0',
+						'insurerId':null,
+						'acceptedOn':'2017-08-30 19:01:05',
+						'active':'1',
+						'linkedToPolicyId':null
+					},
+					'farmId':'1',
+					'farm':{
+						'id':'1',
+						'name':'P1',
+						'businessUnitId':'0',
+						'latitude':'1.325642',
+						'longitude':'-0.35243',
+						'active':'1',
+						'districtId':'0'
+					},
+					'landNumber':'00002',
+					'landLongitude':'131.044',
+					'landLatitude':'-25.363',
+					'cropId':'1',
+					'crop':{
+						'id':'1',
+						'name':'Banana',
+						'productId':'0',
+						'active':'1',
+						'priceUomId':'0',
+						'areaUomId':'0'
+					},
+					'cultivar':'Something',
+					'area':'8.4',
+					'yield':'16.11',
+					'price':'9.48',
+					'tariffOptionId':'0'
+				}
+			}
+		];		
+
+		tDamageReports.push(damageReport);
+
+		return tDamageReports;
+
+		/*var tDamageReports = [];
 
 		var damageReports = mockCommunicator.getDamageReports();
 
@@ -155,49 +296,12 @@ var damageReportInvoker = new function()
 
 		}
 
-		return tDamageReports;
-
-		/*var landEntries = [];
-
-		var policies = policyInvoker.searchForPolicy(brokerId, "", businessUnitName);
-
-		var damageReports = mockCommunicator.getDamageReports();
-
-		for(var k = 0; k < policies.length; k++)
-		{
-			var policy = policies[k];
-			for(var j = 0; j < policy.policyLandEntries.length; j++)
-			{
-				var landEntry = policy.policyLandEntries[j];
-
-				for(var i = 0; i < damageReports.length; i++)
-				{
-					if(landEntry.id == damageReports[i].policyLandEntryId)
-					{
-						if(farmName != "")
-						{
-							if(farmName == landEntry.farm.name)
-							{
-								landEntry["damageReport"] = getFullDamageReport(damageReports[i]);
-								landEntries.push(landEntry);
-							}
-						}
-						else
-						{
-							landEntry["damageReport"] = getFullDamageReport(damageReports[i]);
-							landEntries.push(landEntry);
-						}
-					}		
-				}
-			}
-		}
-		debugger;
-		return landEntries;*/
+		return tDamageReports;*/
 	}
 
 	function getFullDamageReport(damageReport)
 	{
-		damageReport["damageReportDamageTypes"] = mockCommunicator.getDamageReportDamageTypesByDamageReportId(damageReport.id);
+		/*damageReport["damageReportDamageTypes"] = mockCommunicator.getDamageReportDamageTypesByDamageReportId(damageReport.id);
 
 		for(var i = 0; i < damageReport.damageReportDamageTypes.length; i++)
 		{
@@ -225,6 +329,6 @@ var damageReportInvoker = new function()
 			policyLandEntryDamageType.tariffOptionDamageType["damageType"] = mockCommunicator.getDamageType(policyLandEntryDamageType.tariffOptionDamageType.damageTypeId);
 		}		
 
-		return damageReport;
+		return damageReport;*/
 	}
 }
