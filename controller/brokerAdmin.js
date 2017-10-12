@@ -3,6 +3,7 @@ var brokerAdminController = new function() {
 	// PRIVATE VARIABLES
 	var brokerage = null;
 	var brokerAdmin = null;
+	var brokersOfBrokerage = null;
 
 	var EDIT_BROKERAGE_URL = "EDIT_BROKERAGE_URL";
 	var CREATE_BROKER_URL = "CREATE_BROKER_URL";
@@ -11,6 +12,7 @@ var brokerAdminController = new function() {
 	var GET_BROKER_DETAILS_OF_BROKERAGE = "GET_BROKER_DETAILS_OF_BROKERAGE";
 	var GET_BROKER_FOR_EDIT_MODAL = "GET_BROKER_FOR_EDIT_MODAL";
 	var EDIT_BROKER_URL = "EDIT_BROKER_URL";
+	var GET_BROKERS_OF_BROKERAGE_URL = "GET_BROKERS_OF_BROKERAGE_URL";
 
 	// TODO
 	this.revokeBroker = function(brokerId,callback) {
@@ -20,8 +22,13 @@ var brokerAdminController = new function() {
 
 	this.init = function(userId) {
 
+		preloadData(userId);
+	}
+
+	function preloadData(userId) {
+
+		// Starts a chain
 		ajaxGetBrokerAdminByUserId(userId);
-		ajaxGetBrokerage(brokerAdmin['brokerageId']);
 	}
 
 	/*
@@ -120,6 +127,11 @@ var brokerAdminController = new function() {
 	this.getBrokerAdmin = function() {
 
 		return brokerAdmin;
+	}
+	// NEEDED
+	this.getBrokersOfBrokerage = function() {
+
+		return brokersOfBrokerage;
 	}
 
 	/*
@@ -266,9 +278,63 @@ var brokerAdminController = new function() {
 	function onGetBrokerageSuccess(response) {
 
 		brokerage = response["brokerage"];
+
+		ajaxGetBrokersOfBrokerage(brokerage['id']);
 	}
 	// NEEDED
 	function onGetBrokerageFail(response) {
+
+		alert("ERROR! Could not initiate Brokerage");
+	}
+
+	/*
+		brokerAdmin/getBrokersOfBrokerage
+
+		requestObject:{
+			brokerageId
+		}
+
+		responseObject:{
+			brokers:[
+				{
+					id  (broker),
+					name,
+					surname
+				}
+			]
+		}
+	*/
+	function ajaxGetBrokersOfBrokerage(brokerageId) {
+
+		var requestObject = {
+			"brokerageId":brokerageId
+		};
+
+		var mockResponse = {
+			brokers:
+			[
+				{
+					'id':'0',
+					'name':'Pieter',
+					'surname':'Vosloo'
+				},
+				{
+					'id':'1',
+					'name':'Janne',
+					'surname':'Man'
+				},
+			]
+		}
+
+		ajaxPost(GET_BROKERS_OF_BROKERAGE_URL,onGetBrokersOfBrokerageSuccess,onGetBrokersOfBrokerageFail,requestObject,mockResponse);
+	}
+	// NEEDED
+	function onGetBrokersOfBrokerageSuccess(response) {
+
+		brokersOfBrokerage = response["brokers"];
+	}
+	// NEEDED
+	function onGetBrokersOfBrokerageFail(response) {
 
 		alert("ERROR! Could not initiate Brokerage");
 	}
@@ -302,6 +368,8 @@ var brokerAdminController = new function() {
 	function onGetBrokerAdminSuccess(response) {
 
 		brokerAdmin = response["brokerAdmin"];
+
+		ajaxGetBrokerage(brokerAdmin['brokerageId']);
 	}
 	// NEEDED
 	function onGetBrokerAdminFail(response) {

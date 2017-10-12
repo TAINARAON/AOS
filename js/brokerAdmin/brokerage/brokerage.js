@@ -35,8 +35,6 @@ function getBrokerDetailsOfBrokerageSuccessCallback(response) {
 
 	var container = $('#broker_admin_broker_container');
 
-	console.log('response');
-	console.log(response);
 	var brokers = response['brokers'];
 
 	for(var i = 0;i<brokers.length;i++) {
@@ -253,6 +251,7 @@ function initializeSelectorComponent(brokerData) {
 	onAddFileClickListener();
 	onRemoveFileClickListener();
 }
+
 function populateSelectorBox(brokerData) {
 
 	// TODO

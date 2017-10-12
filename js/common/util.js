@@ -103,8 +103,6 @@ var util = new function() {
 		return new Date(dateTime).getTime() + amount;
 	}
 
-	
-
 	this.convertMillisecondsTo = function(amount,unit) {
 
 		var newAmount = 0;
@@ -131,6 +129,7 @@ var util = new function() {
 
 		return newAmount;
 	}
+
 	this.convertToMilliseconds = function(amount,unit) {
 
 		var newAmount = 0;

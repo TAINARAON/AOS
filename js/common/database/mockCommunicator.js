@@ -1552,27 +1552,27 @@ var mockCommunicator = new function()
 // ########################### SYSTEM KEYS ###############################
 
 // LIMITS
-/*
-	Per InsuranceAgency, per District, per Crop, there is only a certain amount that the InsuranceAgency will 
-	cover that specific crop in that district. Once the pool is empty, you cannot take out a policy for that crop
-	in that district by that Insurace Agency anymore. 
-	If you are getting close to depleting the pool (orangeLimit), the user gets notified that a limit is almost reached. 
-	If the limit is exceeded (redLimit), a quote cannot be created for that specific crop in that district for that InsuranceAgency. 
-	Any existing quotes that has already been created for that crop and district may not be accepted.
-	
-	The InsurerAdmin may log in and change the redLimit, and add an 'additionalTariff' that any new quotes will have to increase
-	their tariff by. 
-*/
+	/*
+		Per InsuranceAgency, per District, per Crop, there is only a certain amount that the InsuranceAgency will 
+		cover that specific crop in that district. Once the pool is empty, you cannot take out a policy for that crop
+		in that district by that Insurace Agency anymore. 
+		If you are getting close to depleting the pool (orangeLimit), the user gets notified that a limit is almost reached. 
+		If the limit is exceeded (redLimit), a quote cannot be created for that specific crop in that district for that InsuranceAgency. 
+		Any existing quotes that has already been created for that crop and district may not be accepted.
+		
+		The InsurerAdmin may log in and change the redLimit, and add an 'additionalTariff' that any new quotes will have to increase
+		their tariff by. 
+	*/
 	this.limitTable = [
 		{
 			'id':'0',
-			'districtId',
-			'cropId',
-			'dateStart',
-			'dateEnd',
-			'orangeLimit',
-			'redLimit',
-			'runningValue',
+			'districtId':0,
+			'cropId':0,
+			'dateStart':0,
+			'dateEnd':0,
+			'orangeLimit':0,
+			'redLimit':0,
+			'runningValue':0,
 			'additionalTariff':0,
 			'insuranceAgencyId':0
 		}

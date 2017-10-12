@@ -105,7 +105,7 @@ var insurerAdminController = new function() {
 		};
 
 		var mockResponse = {
-			"brokerAdmin":{
+			"insurerAdmin":{
 				"brokerageId":0
 			}
 		}
@@ -115,7 +115,7 @@ var insurerAdminController = new function() {
 	// NEEDED
 	function onGetInsurerAdminSuccess(response) {
 
-		brokerAdmin = response["brokerAdmin"];
+		insurerAdmin = response["insurerAdmin"];
 	}
 	// NEEDED
 	function onGetInsurerAdminFail(response) {
