@@ -4,7 +4,7 @@ var insurerAdminController = new function() {
 	var insurerAdmin = null;
 	var insuranceAgency = null;
 
-	var EDIT_BROKERAGE_URL = "EDIT_BROKERAGE_URL";
+	var CREATE_INSURER_URL = "CREATE_INSURER_URL";
 	
 
 	// TODO
@@ -16,7 +16,35 @@ var insurerAdminController = new function() {
 	}
 
 	/*
-		brokerAdmin/editBrokerage
+		insurerAdmin/createInsurer
+
+		requestObject:{
+			data:{
+				insuranceAgencyId,
+				name,
+				surname,
+				email,
+				fspNumber
+			},
+			fileData:{
+			}
+		}
+
+		responseObject:{
+			id
+		}
+	*/
+	this.createInsurer = function (successCallback,failCallback,requestObject) {
+
+	    var mockResponse = {
+			"id":'test'
+		};
+
+	   ajaxPost(CREATE_INSURER_URL,successCallback,failCallback,requestObject,mockResponse);
+	};
+
+	/*
+		insurerAdmin/editBrokerage
 
 		requestObject:{
 			data:{
@@ -45,26 +73,26 @@ var insurerAdminController = new function() {
 	
 
 	/*
-		brokerAdmin/getBrokerage
+		insurerAdmin/getInsuranceAgency
 
 		requestObject:{
-			brokerageId
+			insuranceAgencyId
 		}
 
 		responseObject:{
-			brokerage:{whole brokerage}
+			insuranceAgency:{whole insuranceAgency}
 		}
 	*/
-	function ajaxGetInsuranceAgency(brokerageId) {
+	function ajaxGetInsuranceAgency(insuranceAgencyId) {
 
 		var requestObject = {
 			"brokerageId":brokerageId
 		};
 
 		var mockResponse = {
-			brokerage:{
+			insuranceAgency:{
 				'id':'0',
-				'name':'Breeker Brokerage',
+				'name':'Versekerings Ltd.',
 				'active':'1',
 				'dateCreated':'1990-08-25',
 				'email':'breeker.brokerage@gmail.com',
@@ -74,43 +102,43 @@ var insurerAdminController = new function() {
 			}
 		}
 
-		ajaxPost(GET_BROKERAGE_URL,onGetBrokerageSuccess,onGetBrokerageFail,requestObject,mockResponse);
+		ajaxPost(GET_BROKERAGE_URL,onGetInsuranceAgencySuccess,onGetInsuranceAgencyFail,requestObject,mockResponse);
 	}
 	// NEEDED
 	function onGetInsuranceAgencySuccess(response) {
 
-		brokerage = response["brokerage"];
+		insuranceAgency = response["insuranceAgency"];
 	}
 	// NEEDED
 	function onGetInsuranceAgencyFail(response) {
 
-		alert("ERROR! Could not initiate Brokerage");
+		alert("ERROR! Could not initiate insuranceAgency");
 	}
 
 	/*
-		brokerAdmin/getBrokerAdminByUserId
+		insurerAdmin/getBrokerAdminByUserId
 
 		requestObject:{
 			userId
 		}
 
 		responseObject:{
-			brokerAdmin:{whole brokerAdmin}
+			insurerAdmin:{whole insurerAdmin}
 		}
 	*/
-	function ajaxGetInsurerAdminByUserId(brokerageId) {
+	function ajaxGetInsurerAdminByUserId(userId) {
 
 		var requestObject = {
-			"brokerageId":brokerageId
+			"userId":userId
 		};
 
 		var mockResponse = {
 			"insurerAdmin":{
-				"brokerageId":0
+				'test':'test'
 			}
 		}
 
-		ajaxPost(GET_BROKERAGE_URL,onGetBrokerAdminSuccess,onGetBrokerAdminFail,requestObject,mockResponse);
+		ajaxPost(GET_BROKERAGE_URL,onGetInsurerAdminSuccess,onGetInsurerAdminFail,requestObject,mockResponse);
 	}
 	// NEEDED
 	function onGetInsurerAdminSuccess(response) {

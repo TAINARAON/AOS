@@ -4,28 +4,33 @@
  	[
  		
  		{
- 			'text':"",
+ 			'text':"Populated by JS",
  			'pageUrl':'html/insurer_admin/insurance_agency.html'
  		},
- 		/*{
- 			'text':'Quote',
- 			'pageUrl':'html/insurer_admin/quote/quote.html'
+ 		{
+ 			'text':"Brokers",
+ 			'pageUrl':'html/insurer_admin/insurance_agency.html'
  		},
  		{
- 			'pageUrl':'html/insurer_admin/quote/quote.html'
- 		}*/
+ 			'text':"Clients",
+ 			'pageUrl':'html/insurer_admin/insurance_agency.html'
+ 		},
+ 		{
+ 			'text':"Quotes",
+ 			'pageUrl':'html/insurer_admin/insurance_agency.html'
+ 		},
+ 		{
+ 			'text':"Policies",
+ 			'pageUrl':'html/insurer_admin/insurance_agency.html'
+ 		},
+ 		{
+ 			'text':"Damage Reports",
+ 			'pageUrl':'html/insurer_admin/insurance_agency.html'
+ 		},
  	];
 
  	var rightButtons = 
- 	[
- 		{
- 			'text':'Create Insurer',
- 			'pageUrl':'html/insurer_admin/create_insurer.html'
- 		},
- 		{
- 			'text':'System Keys',
- 			'pageUrl':'html/insurer_admin/systemkeys.html'
- 		},
+ 	[	
  		{
  			'text':'Logout',
  			'pageUrl':'html/common/logout.html'

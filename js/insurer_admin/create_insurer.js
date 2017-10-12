@@ -1,16 +1,14 @@
-var USERNAME = 0;
-var PASSWORD = 1;
-var PASSWORD2 = 2;
-var EMAIL = 3;
-var NAME = 4;
-var SURNAME = 5;
+var EMAIL_INDEX = 2;
+var NAME_INDEX = 0;
+var SURNAME_INDEX = 1;
+var FSP_NUMBER_INDEX = 3
 
-var inputArray = [null,null,null,null,null,null];
+var inputArray = [null,null,null,null];
 
 
 
 // Username Input Change
-$( document ).on( 'change', '#insurer_register_username_input', function( e ) {
+/*$( document ).on( 'change', '#insurer_register_username_input', function( e ) {
 	validateUsername($(this).val());
 });
 
@@ -22,6 +20,11 @@ $( document ).on( 'change', '#insurer_register_password_input', function( e ) {
 // Confirm Password Input Change
 $( document ).on( 'change', '#insurer_register_confirm_password_input', function( e ) {
 	validateConfirmPassword($(this).val());
+});*/
+
+// Confirm FSP Number Input Change
+$( document ).on( 'change', '#insurer_register_fsp_number_input', function( e ) {
+	validateFspNumber($(this).val());
 });
 
 // Email Input Change
@@ -58,81 +61,80 @@ function notifyUserOfInvalidField(invalidFieldIndex) {
 
 function saveInsurer() {
 
-	var userData = {
-		'username':inputArray[USERNAME],
+	var data = {
+		/*'username':inputArray[USERNAME],
 		'password':inputArray[PASSWORD],
-		'roleId':'1',
-		'name':inputArray[NAME],
-		'surname':inputArray[SURNAME],
-		'email':inputArray[EMAIL],
-		'active':'1'
+		'roleId':'1',*/
+		'name':inputArray[NAME_INDEX],
+		'surname':inputArray[SURNAME_INDEX],
+		'email':inputArray[EMAIL_INDEX],
+		'fspNumber':inputArray[FSP_NUMBER_INDEX]
 	};
 
-	var insurerData = {
-		'active':'1',
-		'isAdmin':'0',
-	}
-
-	var newInsurerId = insurerInvoker.create(userData,insurerData);
-
-	if(newInsurerId != null) {
-
-		util.createNotification("Insurer created");
-			// TODO
-		loader.loadPage('html/insurer_admin/insurance_agency.html');
-		// Redirect to some other page. 
-
-	} else {
-
-		util.createNotification('Failed to create Insurer.','error');
-	}
+	insurerAdminController.createInsurer(onSubmitInsurerDetailsSuccess,onSubmitInsurerDetailsFailure,data);
 }
 
-function validateUsername(input) {
+function onSubmitInsurerDetailsSuccess(response) {
+	loader.loadPage('html/insurer_admin/insurance_agency.html');
+}
+function onSubmitInsurerDetailsFailure(response) {
+	
+}
+
+/*function validateUsername(input) {
 
 	if(1) {
 		inputArray[USERNAME] = input;
 	} else {
 		inputArray[USERNAME] = null;
 	}	
+}*/
+
+function validateFspNumber(input) {
+
+	if(1) {
+		inputArray[FSP_NUMBER_INDEX] = input;
+	} else {
+		inputArray[FSP_NUMBER_INDEX] = null;
+	}	
 }
 
-function validatePassword(input) {
+/*function validatePassword(input) {
 	if(1) {
 		inputArray[PASSWORD] = input;
 	} else {
 		inputArray[PASSWORD] = null;
 	}
-}
+}*/
 
-function validateConfirmPassword(input) {
+/*function validateConfirmPassword(input) {
 	if(1) {
 		inputArray[PASSWORD2] = input;
 	} else {
 		inputArray[PASSWORD2] = null;
 	}
-}
+}*/
 
 function validateEmail(input) {
 	if(1) {
-		inputArray[EMAIL] = input;
+		inputArray[EMAIL_INDEX] = input;
 	} else {
-		inputArray[EMAIL] = null;
+		inputArray[EMAIL_INDEX] = null;
 	}
 }
 
 function validateName(input) {
 	if(1) {
-		inputArray[NAME] = input;
+		inputArray[NAME_INDEX] = input;
 	} else {
-		inputArray[NAME] = null;
+		inputArray[NAME_INDEX] = null;
 	}
 }
 
 function validateSurname(input) {
 	if(1) {
-		inputArray[SURNAME] = input;
+		inputArray[SURNAME_INDEX] = input;
 	} else {
-		inputArray[SURNAME] = null;
+		inputArray[SURNAME_INDEX] = null;
 	}
 }
