@@ -13,6 +13,7 @@ var brokerAdminController = new function() {
 	var GET_BROKER_FOR_EDIT_MODAL = "GET_BROKER_FOR_EDIT_MODAL";
 	var EDIT_BROKER_URL = "EDIT_BROKER_URL";
 	var GET_BROKERS_OF_BROKERAGE_URL = "GET_BROKERS_OF_BROKERAGE_URL";
+	var CREATE_CLIENT_URL = "CREATE_CLIENT_URL";
 
 	// TODO
 	this.revokeBroker = function(brokerId,callback) {
@@ -25,6 +26,7 @@ var brokerAdminController = new function() {
 		preloadData(userId);
 	}
 
+	// NEEDED
 	function preloadData(userId) {
 
 		// Starts a chain
@@ -84,6 +86,34 @@ var brokerAdminController = new function() {
 		};
 
 	   ajaxPost(CREATE_BROKER_URL,successCallback,failCallback,requestObject,mockResponse);
+	};
+
+	/*
+		brokerAdmin/createClient
+
+		requestObject:{
+			data:{
+				brokerageId,
+				idNumber,
+				email,
+				name,
+				surname
+			},
+			fileData:{
+			}
+		}
+
+		responseObject:{
+			id
+		}
+	*/
+	this.createClient = function (successCallback,failCallback,requestObject) {
+
+	    var mockResponse = {
+			"id":'test'
+		};
+
+	   ajaxPost(CREATE_CLIENT_URL,successCallback,failCallback,requestObject,mockResponse);
 	};
 
 	/*

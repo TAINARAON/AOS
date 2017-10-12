@@ -4,8 +4,8 @@
 
 var NAME_INDEX = 0;
 var SURNAME_INDEX = 1;
-var FSP_NUMBER_INDEX = 2;
-var EMAIL_INDEX = 3;
+var EMAIL_INDEX = 2;
+var ID_NUMBER_INDEX = 3;
 
 var requiredFields = [false,false,false,false];
 
@@ -94,7 +94,7 @@ function onRemoveEntryClickListener() {
 
 function initializeValidationOnChangeListeners() {
 
-	$('#create_broker_name_input').on('change',function() {
+	$('#create_client_name_input').on('change',function() {
 		var input = $(this).val();
 
 		requiredFields[NAME_INDEX] = (input != "");
@@ -102,7 +102,7 @@ function initializeValidationOnChangeListeners() {
 		showSubmitButtonIfAllFieldsAreCompleted();
 	});
 
-	$('#create_broker_surname_input').on('change',function() {
+	$('#create_client_surname_input').on('change',function() {
 		var input = $(this).val();
 
 		requiredFields[SURNAME_INDEX] = (input != "");
@@ -110,18 +110,18 @@ function initializeValidationOnChangeListeners() {
 		showSubmitButtonIfAllFieldsAreCompleted();
 	});
 
-	$('#create_broker_fsp_number_input').on('change',function() {
+	$('#create_client_email_input').on('change',function() {
 		var input = $(this).val();
 
-		requiredFields[FSP_NUMBER_INDEX] = (input != "");
+		requiredFields[EMAIL_INDEX] = (input != "");
 
 		showSubmitButtonIfAllFieldsAreCompleted();
 	});
 
-	$('#create_broker_email_input').on('change',function() {
+	$('#create_client_id_number_input').on('change',function() {
 		var input = $(this).val();
 
-		requiredFields[EMAIL_INDEX] = (input != "");
+		requiredFields[ID_NUMBER_INDEX] = (input != "");
 
 		showSubmitButtonIfAllFieldsAreCompleted();
 	});
@@ -131,31 +131,31 @@ function showSubmitButtonIfAllFieldsAreCompleted() {
 
 	for(var i = 0; i < requiredFields.length; i++) {
 		if(requiredFields[i] == false) {
-			$('#create_broker_submit_div').hide();
+			$('#create_client_submit_div').hide();
 			return;
 		}
 	}
 
-	$('#create_broker_submit_div').show();
+	$('#create_client_submit_div').show();
 }
 
 function setSubmitButtonClickListener() {
 
-	$('#create_broker_submit_button').on('click',function() {
-		onCreateBrokerClick();
+	$('#create_client_submit_button').on('click',function() {
+		onCreateClientClick();
 	});
 }
 
 // creates broker, by supplying Username and email
-function onCreateBrokerClick() {
+function onCreateClientClick() {
 
 	// TODO
-	var action = "something/createBroker/";
-
-	var email = $('#create_broker_email_input').val();
-	var name = $('#create_broker_name_input').val();
-	var surname = $('#create_broker_surname_input').val();
-	var creationRights = $('#create_broker_rights_checkbox').is(':checked')
+	var action = "something/createClient/";
+	
+	var name = $('#create_client_name_input').val();
+	var surname = $('#create_client_surname_input').val();
+	var email = $('#create_client_email_input').val();
+	var idNumber = $('#create_client_id_number_input').val();
 
 	var brokerageId = brokerAdminController.getBrokerage()['id'];
 
@@ -164,14 +164,14 @@ function onCreateBrokerClick() {
 		"name":name,
 		"surname":surname,
 		"email":email,
-		"creationRights":creationRights,
+		"idNumber":idNumber,
 		"brokerageId":brokerageId
 	};
 
-	util.displayUploadFileModal(action,data,onCreateBrokerDocumentsSubmittedCallback);
+	util.displayUploadFileModal(action,data,onCreateClientDocumentsSubmittedCallback);
 }
 
-function onCreateBrokerDocumentsSubmittedCallback(fileData,data) {
+function onCreateClientDocumentsSubmittedCallback(fileData,data) {
 
 	// TODO
 	if(fileData == "failed - not really a value") {
@@ -181,11 +181,11 @@ function onCreateBrokerDocumentsSubmittedCallback(fileData,data) {
 
 	} else {
 
-		ajaxCreateBroker(fileData,data);
+		ajaxCreateClient(fileData,data);
 	}
 }
 
-function ajaxCreateBroker(fileData,data) {
+function ajaxCreateClient(fileData,data) {
 
 	var requestData = 
 	{
@@ -193,15 +193,15 @@ function ajaxCreateBroker(fileData,data) {
 		'data':data
 	};
 
-	brokerAdminController.createBroker(onBrokerCreatedSuccess,onBrokerCreatedFailure,requestData);
+	brokerAdminController.createClient(onClientCreatedSuccess,onClientCreatedFailure,requestData);
 }
-function onBrokerCreatedSuccess(response) {
+function onClientCreatedSuccess(response) {
 
-	util.createNotification("Broker submitted. . .awaiting approval.");
+	util.createNotification("Client details submitted. . .awaiting approval.");
 	loader.loadPage('html/brokerAdmin/brokerage/brokerage.html');
 }
-function onBrokerCreatedFailure(result) {
+function onClientCreatedFailure(result) {
 
-	util.createNotification("Failed to create Broker - Please contact support if the problem persists.","error")
+	util.createNotification("Failed to create Client - Please contact support if the problem persists.","error")
 	loader.reload();
 }
