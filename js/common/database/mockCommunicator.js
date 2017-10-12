@@ -2034,27 +2034,27 @@ var mockCommunicator = new function()
 	this.damageReportTable = [
 		{
 			'id':'0',
+			'damageReportNumber':'00000',
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
-			'policyLandEntryId':'0'
 		},
 		{
 			'id':'1',
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
-			'policyLandEntryId':'0'
+			'damageReportNumber':'00001',
 		},
 		{
 			'id':'2',
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
-			'policyLandEntryId':'5'
+			'damageReportNumber':'00002',
 		},
 		{
 			'id':'3',
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
-			'policyLandEntryId':'7'
+			'damageReportNumber':'00003',
 		},
 	];
 	this.createDamageReport = function(data) {
@@ -2086,26 +2086,73 @@ var mockCommunicator = new function()
 		this.damageReportTable[id] = data;
 	}
 
-// DAMAGE REPORT DAMAGE TYPE - done
+// DAMAGE REPORT LAND ENTRY
+	this.damageReportLandEntryTable = [
+		{
+			'id':'0',
+			'damageReportId':0,
+			'policyLandEntryId':0
+		},
+		{
+			'id':'1',
+			'damageReportId':0,
+			'policyLandEntryId':1
+		},
+		{
+			'id':'2',
+			'damageReportId':0,
+			'policyLandEntryId':2
+		}
+	];
+	this.createDamageReportLandEntry = function(data) {
+
+		data.id = this.damageReportLandEntryTable.length;
+		this.damageReportLandEntryTable.push(data);
+
+		return data.id;
+	}
+	this.getDamageReportLandEntry = function(id) {
+		for(var i=0;i<this.damageReportLandEntryTable.length;i++) {
+			if(this.damageReportLandEntryTable[i].id==id) {
+				return this.damageReportLandEntryTable[i];
+			}
+		}
+	}
+	this.getDamageReportLandEntrys = function() {
+		return this.damageReportLandEntryTable;
+	}
+	this.deleteDamageReportLandEntry = function(id) {
+		for(var i=0;i<this.damageReportLandEntryTable.length;i++) {
+			if(this.damageReportLandEntryTable[i].id==id) {
+				this.damageReportLandEntryTable.splice(i,1);
+			}
+		}
+	}
+	this.updateDamageReportLandEntry = function(id, data) {
+		data.id = id;
+		this.damageReportLandEntryTable[id] = data;
+	}
+
+// DAMAGE REPORT LAND ENTRY DAMAGE TYPE
 	this.damageReportDamageTypeTable = [
 		{
 			'id':'0',
-			'damageReportId':'0',
+			'damageReportLandEntryId':'0',
 			'damageTypeId':'0',
 		},
 		{
 			'id':'1',
-			'damageReportId':'0',
+			'damageReportLandEntryId':'0',
 			'damageTypeId':'1',
 		},
 		{
 			'id':'2',
-			'damageReportId':'2',
+			'damageReportLandEntryId':'1',
 			'damageTypeId':'0',
 		},
 		{
 			'id':'3',
-			'damageReportId':'3',
+			'damageReportLandEntryId':'1',
 			'damageTypeId':'1',
 		},
 	];
