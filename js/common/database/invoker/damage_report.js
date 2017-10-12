@@ -3,13 +3,13 @@ var damageReportInvoker = new function()
 	this.getBusinessUnitByBrokerId = function(brokerId)
 	{
 		// get quiries which has this broker id
-		var quotes = mockCommunicator.getQuotesByBrokerId(brokerId);
+		var policies = mockCommunicator.getPolicyByBrokerId(brokerId);
 		// return business units of those quiries
 		var businessUnits = [];
 
-		for(var i = 0; i < quotes.length; i++)
+		for(var i = 0; i < policies.length; i++)
 		{
-			var businessUnit = mockCommunicator.getBusinessUnit(quotes[i].businessUnitId);
+			var businessUnit = mockCommunicator.getBusinessUnit(policies[i].businessUnitId);
 
 			if(!businessUnits.some(item => item === businessUnit))
 			{
@@ -22,14 +22,97 @@ var damageReportInvoker = new function()
 
 	this.getFarmByBusinessUnitId = function(brokerId, businessUnitId)
 	{
-		// TODO: create new mock method
-		var quotes = mockCommunicator.getQuotesByBrokerId(brokerId);
+		var tempFarms = [];
+		debugger;
+		var policies = mockCommunicator.getPolicyByBrokerId(brokerId);
 
-		for(var i = 0; i < quotes.length; i++)
+		for(var i = 0; i < policies.length; i++)
 		{
-			// Get the farm here
-		}	
+			if(policies[i].businessUnitId == businessUnitId)
+			{
+				var landEntries = mockCommunicator.getPolicyLandEntriesByPolicyId(policies[i].id);
+				for(var j = 0; j < landEntries.length; j++)
+				{
+					var farm = mockCommunicator.getFarm(landEntries[j].farmId);
+
+					/*if(tempFarms.length == 0)
+					{
+						tempFarms.push(farm);
+					}*/
+
+					/*if(farms.some(item => item.id != farm.id && item.name != farm.name))
+					{
+						farms.push(farm);
+					}*/
+					/*for(var k = 0; k < tempFarms.length; k++)
+					{
+						var tFarm = tempFarms[k];
+						if(tFarm.name != farm.name && tFarm.id != farm.id)
+						{
+							tempFarms.push(farm);
+						}
+					}*/
+					/*var alreadyIn = false;
+					for(var i = 0; i < tempFarms.length; i++)
+					{
+						var tFarm = tempFarms[i];
+						if(tFarm.name != farm.name && tFarm.id != farm.id)
+						{
+							alreadyIn = true;
+						}
+					}
+
+					if(!alreadyIn)
+					{
+						tempFarms.push(farm);
+					}*/
+
+					if(tempFarms.length == 0)
+					{
+						tempFarms.push(farm);
+					}
+
+					if(tempFarms.some(item => item.name === farm.name))
+					{
+					}
+					else
+					{
+						tempFarms.push(farm);
+					}
+				}
+			}
+		}
+
+		return tempFarms;
 	}
+
+	this.getLandByFarmId = function(brokerId, businessUnitId, farmId)
+	{
+		var tLandEntries = [];
+		
+		var policies = mockCommunicator.getPolicyByBrokerId(brokerId);
+
+		for(var i = 0; i < policies.length; i++)
+		{
+			if(policies[i].businessUnitId == businessUnitId)
+			{
+				var landEntries = mockCommunicator.getPolicyLandEntriesByPolicyId(policies[i].id);
+				for(var j = 0; j < landEntries.length; j++)
+				{
+					var farm = mockCommunicator.getFarm(landEntries[j].farmId);
+
+					if(farm.id == farmId)
+					{
+						tLandEntries.push(landEntries[j]);
+					}
+				}
+			}
+		}
+
+		return tLandEntries;
+	}
+
+	// ---------------------------
 
 	this.getDamageReport = function(brokerId, businessUnitName, farmName)
 	{

@@ -1251,6 +1251,20 @@ var mockCommunicator = new function()
 
 		return policies;
 	}
+	this.getPolicyByBrokerId = function(brokerId)
+    {
+        var policies = [];
+
+        for(var i = 0; i < this.policyTable.length; i++)
+        {
+            if(this.policyTable[i].brokerId == brokerId)
+            {
+                policies.push(this.policyTable[i]);
+            }
+        }
+
+        return policies;
+    }
 
 // POLICY LAND ENTRY - done
 	this.policyLandEntryTable = [

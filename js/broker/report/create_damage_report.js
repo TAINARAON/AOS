@@ -15,13 +15,27 @@ var modalDamageReport = new function()
 	var element_damage_types_container;
 	var element_damage_report_date_container;
 
+	var element_farm_container = document.getElementById("farm_container");
+	var element_land_container = document.getElementById("land_container");
+
 	function getBusinessUnitIdByName(name)
 	{
-		for(var BU in farmArr)
+		for(var i = 0; i < businessUnitArr.length; i++)
 		{
-			if(BU.name = name)
+			if(businessUnitArr[i].name == name)
 			{
-				return BU.id;
+				return businessUnitArr[i].id;
+			}
+		}
+	}
+
+	function getFarmIdByName(name)
+	{
+		for(var i =0; i < farmArr.length; i++)
+		{
+			if(farmArr[i].name == name)
+			{
+				return farmArr[i].id;
 			}
 		}
 	}
@@ -31,6 +45,10 @@ var modalDamageReport = new function()
 		initDamageTypeDateContainer();
 		initDamageTypeContainer();
 		initDropDowns();
+
+		element_farm_container.style.display = "none";
+		element_land_container.style.display = "none";
+		element_damage_types_container.style.display = "none";
 	})();
 
 	function initDamageTypeDateContainer()
@@ -47,7 +65,7 @@ var modalDamageReport = new function()
 	{
 		element_damage_types_container.innerHTML = "";
 
-
+		
 	}
 
 	function initDropDowns()
@@ -66,10 +84,36 @@ var modalDamageReport = new function()
 
 	function loadBusinessUnitDropdownChoisesForBroker()
 	{
-		// TODO: load this from session
-		businessUnitArr = damageReportInvoker.getBusinessUnitByBrokerId(0);
-
 		element_business_unit.innerHTML = "";
+
+		var response = damageReportInvoker.getBusinessUnitByBrokerId(sessionStorage.brokerId);
+		if(response != null)
+		{
+			ajaxPost("Some url", 
+				function(response){
+					businessUnitArr = response;
+
+					for(var i = 0; i < businessUnitArr.length; i++)
+					{
+						if(i == 0)
+						{
+							var option = createDropdownOption("", element_business_unit);
+							$(option).attr("disabled selected value");
+						}
+
+						createDropdownOption(businessUnitArr[i].name, element_business_unit);
+					}
+				}, 
+				function(){
+					alert("Failed to load businessUnits");
+				}, 
+				{"brokerId":sessionStorage.brokerId}, 
+				response
+			);
+		}
+
+		/*businessUnitArr = damageReportInvoker.getBusinessUnitByBrokerId(sessionStorage.brokerId);
+
 		for(var i = 0; i < businessUnitArr.length; i++)
 		{
 			if(i == 0)
@@ -79,7 +123,7 @@ var modalDamageReport = new function()
 			}
 
 			createDropdownOption(businessUnitArr[i].name, element_business_unit);
-		}
+		}*/
 	}
 
 	function initFarmDropdown()
@@ -90,9 +134,50 @@ var modalDamageReport = new function()
 
 	function loadFarmDropdownChoicesForBusinessUnit(val)
 	{
-		farmArr = damageReportInvoker.getFarmByBusinessUnitId(getBusinessUnitIdByName(val));
+		element_farm.innerHTML = "";
 
-		for(var i = 0; i < farmArr; i++)
+		var businessUnitId = getBusinessUnitIdByName(val);
+		var response = damageReportInvoker.getFarmByBusinessUnitId(sessionStorage.brokerId, businessUnitId);
+		
+		if(response != null)
+		{
+			ajaxPost("Some url", 
+				function(response){
+					farmArr = response;
+
+					for(var i = 0; i < farmArr.length; i++)
+					{
+						if(i == 0)
+						{
+							var option = createDropdownOption("", element_farm);
+							$(option).attr("disabled selected value");
+						}
+
+						createDropdownOption(farmArr[i].name, element_farm);
+					}
+
+					element_farm_container.style.display = "block";
+				}, 
+				function(){
+					alert("Failed to load farms");
+					element_farm_container.style.display = "none";
+				}, 
+				{
+					"brokerId":sessionStorage.brokerId,
+					"businessUnitId":businessUnitId
+				}, 
+				response
+			);
+		}
+		else
+		{
+			element_farm_container.style.display = "none";
+		}
+
+		/*var businessUnitId = getBusinessUnitIdByName(val);
+		farmArr = damageReportInvoker.getFarmByBusinessUnitId(sessionStorage.brokerId, businessUnitId);
+
+		for(var i = 0; i < farmArr.length; i++)
 		{
 			if(i == 0)
 			{
@@ -100,8 +185,8 @@ var modalDamageReport = new function()
 				$(option).attr("disabled selected value");
 			}
 
-			createDropdownOption(businessUnitArr[i].name, element_farm);
-		}
+			createDropdownOption(farmArr[i].name, element_farm);
+		}*/
 	}
 
 	function initLandDropdown()
@@ -112,7 +197,48 @@ var modalDamageReport = new function()
 
 	function loadLandDropdownChoicesForFarm(val)
 	{
+		element_land.innerHTML = "";
 
+		var businessUnitId = getBusinessUnitIdByName(element_business_unit.value);
+		var farmId = getFarmIdByName(element_farm.value);
+
+		var response = damageReportInvoker.getLandByFarmId(sessionStorage.brokerId, businessUnitId, farmId);
+
+		if(response != null)
+		{
+			ajaxPost("some url", 
+				function(response){
+					landArr = response;
+
+					for(var i = 0; i < landArr.length; i++)
+					{
+						if(i == 0)
+						{
+							var option = createDropdownOption("", element_land);
+							$(option).attr("disabled selected value");
+						}
+
+						createDropdownOption(landArr[i].landNumber, element_land);
+					}
+
+					element_land_container.style.display = "block";
+				}, 
+				function(){
+					alert("Failed to retrieve landEntries");
+					element_land_container.style.display = "none";
+				}, 
+				{
+					"brokerId": sessionStorage.brokerId,
+					"businessUnitId": businessUnitId,
+					"farmId": farmId
+				}, 
+				response
+			);
+		}
+		else
+		{
+			element_land_container.style.display = "none";
+		}
 	}
 
 	function createDropdownOption(val, container)
