@@ -2048,28 +2048,28 @@ var mockCommunicator = new function()
 	this.damageReportTable = [
 		{
 			'id':'0',
-			'damageTypeId':0
+			'damageTypeId':0,
 			'damageReportNumber':'00000',
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
 		},
 		{
 			'id':'1',
-			'damageTypeId':1
+			'damageTypeId':1,
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
 			'damageReportNumber':'00001',
 		},
 		{
 			'id':'2',
-			'damageTypeId':0
+			'damageTypeId':0,
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
 			'damageReportNumber':'00002',
 		},
 		{
 			'id':'3',
-			'damageTypeId':2
+			'damageTypeId':2,
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
 			'damageReportNumber':'00003',
@@ -2150,4 +2150,5 @@ var mockCommunicator = new function()
 		data.id = id;
 		this.damageReportLandEntryTable[id] = data;
 	}
+}
 
