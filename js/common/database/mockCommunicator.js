@@ -2048,24 +2048,28 @@ var mockCommunicator = new function()
 	this.damageReportTable = [
 		{
 			'id':'0',
+			'damageTypeId':0
 			'damageReportNumber':'00000',
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
 		},
 		{
 			'id':'1',
+			'damageTypeId':1
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
 			'damageReportNumber':'00001',
 		},
 		{
 			'id':'2',
+			'damageTypeId':0
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
 			'damageReportNumber':'00002',
 		},
 		{
 			'id':'3',
+			'damageTypeId':2
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
 			'damageReportNumber':'00003',
@@ -2132,7 +2136,7 @@ var mockCommunicator = new function()
 			}
 		}
 	}
-	this.getDamageReportLandEntrys = function() {
+	this.getDamageReportLandEntries = function() {
 		return this.damageReportLandEntryTable;
 	}
 	this.deleteDamageReportLandEntry = function(id) {
@@ -2147,69 +2151,3 @@ var mockCommunicator = new function()
 		this.damageReportLandEntryTable[id] = data;
 	}
 
-// DAMAGE REPORT LAND ENTRY DAMAGE TYPE
-	this.damageReportDamageTypeTable = [
-		{
-			'id':'0',
-			'damageReportLandEntryId':'0',
-			'damageTypeId':'0',
-		},
-		{
-			'id':'1',
-			'damageReportLandEntryId':'0',
-			'damageTypeId':'1',
-		},
-		{
-			'id':'2',
-			'damageReportLandEntryId':'1',
-			'damageTypeId':'0',
-		},
-		{
-			'id':'3',
-			'damageReportLandEntryId':'1',
-			'damageTypeId':'1',
-		},
-	];
-	this.createDamageReportDamageType = function(data) {
-
-		data.id = this.damageReportDamageTypeTable.length;
-		this.damageReportDamageTypeTable.push(data);
-
-		return data.id;
-	}
-	this.getDamageReportDamageType = function(id) {
-		for(var i=0;i<this.damageReportDamageTypeTable.length;i++) {
-			if(this.damageReportDamageTypeTable[i].id==id) {
-				return this.damageReportDamageTypeTable[i];
-			}
-		}
-	}
-	this.getDamageReportDamageTypes = function() {
-		return this.damageReportDamageTypeTable;
-	}
-	this.deleteDamageReportDamageType = function(id) {
-		for(var i=0;i<this.damageReportDamageTypeTable.length;i++) {
-			if(this.damageReportDamageTypeTable[i].id==id) {
-				this.damageReportDamageTypeTable.splice(i,1);
-			}
-		}
-	}
-	this.updateDamageReportDamageType = function(id, data) {
-		data.id = id;
-		this.damageReportDamageTypeTable[id] = data;
-	}
-	this.getDamageReportDamageTypesByDamageReportId = function(damageReportId)
-	{
-		var damageTypes = [];
-
-		for(var i = 0; i < this.damageReportDamageTypeTable.length; i++)
-		{
-			if(this.damageReportDamageTypeTable[i].damageReportId == damageReportId)
-			{
-				damageTypes.push(this.damageReportDamageTypeTable[i]);
-			}
-		}
-
-		return damageTypes;
-	}
-};
