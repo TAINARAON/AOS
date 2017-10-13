@@ -811,7 +811,7 @@ var mockCommunicator = new function()
 			}
 		}
 	}
-	this.getBrokersage = function() {
+	this.getBrokerages = function() {
 		return this.brokerageTable;
 	}
 	this.deleteBrokerage = function(id) {

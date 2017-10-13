@@ -128,6 +128,12 @@ var insurerAdminController = new function() {
 			"brokers":mockCommunicator.getBrokersForBrokerTableInBrokerageTab(brokerageId)
 		};
 
+		if(brokerageId == "ALL") {
+			mockResponse = {
+				"brokers":mockCommunicator.getBrokers(brokerageId)
+			};
+		}
+
 		ajaxPost(GET_BROKER_DETAILS_OF_BROKERAGE_URL,successCallback,failCallback,requestObject,mockResponse);
 	};	// USED
 	/*

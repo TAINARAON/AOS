@@ -32,6 +32,10 @@
  	var rightButtons = 
  	[	
  		{
+ 			'text':'System Keys',
+ 			'pageUrl':'html/insurer_admin/systemkeys.html'
+ 		},
+ 		{
  			'text':'Logout',
  			'pageUrl':'html/common/logout.html'
  		}

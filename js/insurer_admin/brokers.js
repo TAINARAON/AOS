@@ -42,9 +42,13 @@ function setBrokerageDropdownSelectionListener() {
 }
 
 function onBrokerageSelected(brokerageId) {
-	alert('selected brokerageId: ' + brokerageId);
 
+	clearBrokerTable();
 	populateBrokerTable(brokerageId);
+}
+
+function clearBrokerTable() {
+	$("#insurer_admin_broker_container").empty();
 }
 
 function populateBrokerTable(brokerageId) {
