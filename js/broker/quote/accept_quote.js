@@ -78,6 +78,8 @@ var quoteAcceptModal = new function()
 	{
 		setQuoteId(quoteId);
 
+		$(input_accept_time).val(util.getDateTimePretty());
+
 		modal.style.cssText = "display: block; padding-right: 17px;";
 		modal.className = "modal fade in";
 	}

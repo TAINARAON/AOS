@@ -6,7 +6,7 @@ var policyInvoker = new function() {
 
             timeSigned = util.getCurrentDateTime();
         }
-
+        debugger;
         // Get quote, create policy object from quote object. 
         var quote = quoteInvoker.getQuote(quoteId);
         mockCommunicator.deactivateQuote(quoteId);
@@ -16,7 +16,7 @@ var policyInvoker = new function() {
             'businessUnitId':quote['businessUnitId'],
             'brokerId':quote['brokerId'],
             'insurerId':quote['insurerId'],
-            'signedOn':timeSigned,
+            'acceptedOn':timeSigned,
             'linkedToPolicyId':null,
             'active':'1'
         };

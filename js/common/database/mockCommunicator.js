@@ -2223,5 +2223,19 @@ var mockCommunicator = new function()
 		data.id = id;
 		this.damageReportLandEntryTable[id] = data;
 	}
+	this.getDamageReportLandEntriesByDamageReportId = function(damageReportId)
+	{
+		var landEntries = [];
+
+		for(var i = 0; i < this.damageReportLandEntryTable.length; i++)
+		{
+			if(this.damageReportLandEntryTable[i].damageReportId == damageReportId)
+			{
+				landEntries.push(this.damageReportLandEntryTable[i]);
+			}
+		}
+
+		return landEntries;
+	}
 }
 
