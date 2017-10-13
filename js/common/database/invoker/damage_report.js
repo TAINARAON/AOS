@@ -229,7 +229,7 @@ var damageReportInvoker = new function()
 				finalDamageReport.push(damageReports[i]);
 			}
 		}
-		debugger;
+		
 		return finalDamageReport;
 
 		/*var tDamageReports = [];

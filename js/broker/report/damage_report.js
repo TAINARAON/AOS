@@ -223,7 +223,7 @@ var damageReport = new function()
 		createAccordionItemDetailDiv("Farm Name: " + damageReportLandEntry.policyLandEntry.farm.name, childTitle);
 		createAccordionItemDetailDiv("Crop Name: " + damageReportLandEntry.policyLandEntry.crop.name, childTitle);
 		createAccordionItemDetailDiv("Area: " + damageReportLandEntry.policyLandEntry.area, childTitle);
-		createAccordionItemDetailDiv("Taksasie TBA", childTitle);
+		createAccordionItemDetailDiv("Taxation Required: " + damageReportLandEntry.requiresTaxation, childTitle);
 
 		var childDetail = document.createElement("DIV");
 		childDetail.className = "inner";
