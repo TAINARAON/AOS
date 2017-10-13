@@ -62,6 +62,7 @@ var quoteAcceptModal = new function()
 		policyInvoker.createFromQuote(getQuoteId(), getAcceptTimeValue());
 		reset();
 		hide();
+		quoteViewer.refresh();
 	}
 
 	function addCancelClickListener()

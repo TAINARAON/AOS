@@ -140,10 +140,13 @@ var damageReportInvoker = new function()
 
 				landEntry["policy"] = mockCommunicator.getPolicy(landEntry.policyId);
 				landEntry.policy["businessUnit"] = mockCommunicator.getBusinessUnit(landEntry.policy.businessUnitId);
-
+				damageReports[i]["businessUnit"] = mockCommunicator.getBusinessUnit(landEntry.policy.businessUnitId);
+				
 				landEntry["crop"] = mockCommunicator.getCrop(landEntry.cropId);
 
 				landEntry["farm"] = mockCommunicator.getFarm(landEntry.farmId);
+				damageReports[i]["farm"] = mockCommunicator.getFarm(landEntry.farmId);
+				damageReports[i]["district"] = mockCommunicator.getDistrict(landEntry.farm.districtId);
 
 				landEntry["policyLandEntryDamageTypes"] = mockCommunicator.getPolicyLandEntryDamageTypesByPolicyLandEntryId(landEntry.id);
 
