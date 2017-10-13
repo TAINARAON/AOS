@@ -9,7 +9,7 @@
  		},
  		{
  			'text':"Brokers",
- 			'pageUrl':'html/insurer_admin/insurance_agency.html'
+ 			'pageUrl':'html/insurer_admin/brokers.html'
  		},
  		{
  			'text':"Clients",

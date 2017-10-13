@@ -124,6 +124,12 @@ function onBrokerLogin(userId) {
 	loader.loadRole('broker');
 }
 
+function onInsurerAdminLogin(userId) {
+
+	insurerAdminController.init(userId);
+	util.createNotification('Logged in as Insurer Admin');
+	loader.loadRole('insurerAdmin');
+}
 function onBrokerAdminLogin(userId) {
 
 	brokerAdminController.init(userId);
@@ -142,11 +148,7 @@ function onClientLogin(userId) {
 	loader.loadRole('client');
 }
 
-function onInsurerAdminLogin(userId) {
 
-	util.createNotification('Logged in as Insurer Admin');
-	loader.loadRole('insurerAdmin');
-}
 
 function onInsurerLogin(userId) {
 

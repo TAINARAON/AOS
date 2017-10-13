@@ -1,43 +1,60 @@
-$(function() {
-    init();
-  });
-
-var brokerage = {};
+(function() {
+	init();
+})();
 
 function init() {
+	populateBrokeragesDropdownValues();
+	setBrokerageDropdownSelectionListener();
+}
 
-	initializeModals();
-	setBrokerageDetails();
-	populateBrokerTable();
+function populateBrokeragesDropdownValues() {
 
-	$('#broker_admin_create_broker_button').on('click',function() {
-		loader.loadPage('html/brokerAdmin/createBroker.html');
+	insurerAdminController.getBrokerages(onGetBrokeragesSuccess,onGetBrokeragesFailure);
+}
+
+function onGetBrokeragesSuccess(response) {
+
+	var values = response['brokerages'];
+	var selectElement = $('#insurer_admin_brokers_brokerage_dropdown');
+
+	for(var i = 0; i < values.length; i++)
+	{
+		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']));	
+	}
+
+	/*selectElement
+		.on('change',function() {
+			onBrokerageSelected($(this).find(":selected").val());
+			//selectedValues['districtId'] = $(this).find(":selected").val();
+		});*/
+
+}
+function onGetBrokeragesFailure(response) {
+	
+	alert('failed');
+}
+
+
+function setBrokerageDropdownSelectionListener() {
+	$("#insurer_admin_brokers_brokerage_dropdown").on("change",function() {
+		onBrokerageSelected($(this).val());
 	});
 }
 
-function initializeModals() {
-	
-	loader.loadPartOfPage("html/brokerAdmin/brokerage/editBrokerage.html", 'edit_brokerage_modal_container');
+function onBrokerageSelected(brokerageId) {
+	alert('selected brokerageId: ' + brokerageId);
+
+	populateBrokerTable(brokerageId);
 }
 
-function setBrokerageDetails() {
+function populateBrokerTable(brokerageId) {
 
-	brokerage = brokerAdminController.getBrokerage();
-
-	$('#broker_admin_brokerage_name').text(brokerage['name']);
-	$('#broker_admin_brokerage_email').text(brokerage['email']);
-	$('#broker_admin_brokerage_fsp_number').text(brokerage['fspNumber']);
-	$('#broker_admin_brokerage_contact_number').text(brokerage['contactNumber']);
-}
-
-function populateBrokerTable() {
-
-	brokerAdminController.getBrokerDetailsOfBrokerage(getBrokerDetailsOfBrokerageSuccessCallback,getBrokerDetailsOfBrokerageFailCallback);
+	insurerAdminController.getBrokerDetailsOfBrokerage(getBrokerDetailsOfBrokerageSuccessCallback,getBrokerDetailsOfBrokerageFailCallback,brokerageId);
 }
 
 function getBrokerDetailsOfBrokerageSuccessCallback(response) {
 
-	var container = $('#broker_admin_broker_container');
+	var container = $('#insurer_admin_broker_container');
 
 	var brokers = response['brokers'];
 
@@ -47,7 +64,7 @@ function getBrokerDetailsOfBrokerageSuccessCallback(response) {
 }
 function getBrokerDetailsOfBrokerageFailCallback(response) {
 
-	alert("failed brokerAdmin/brokerage/brokerage.js getBrokerDetailsOfBrokerageFailCallback");
+	alert("failed insurerAdmin/brokers.js getBrokerDetailsOfBrokerageFailCallback");
 }
 
 function createBrokerEntry(broker,container) {
@@ -115,10 +132,8 @@ function toggleDataContainer(e) {
 
 function onEditBroker(id) {
 
-	brokerAdminController.getBrokerForEditModal(getBrokerForEditModalSuccessCallback,getBrokerForEditModalFailureCallback,id);
-	
+	insurerAdminController.getBrokerForEditModal(getBrokerForEditModalSuccessCallback,getBrokerForEditModalFailureCallback,id);
 }
-
 function getBrokerForEditModalSuccessCallback(result) {
 
 	var broker = result["broker"];
@@ -230,95 +245,4 @@ function editBrokerSuccessCallback(response) {
 function editBrokerFailureCallback(response) {
 	// TODO
 	util.createNotification('Request to update broker successful.',"error");
-}
-
-function onRevokeBrokerClick(brokerId) {
-
-	// Note: RevokeModal gets toggled automatically
-
-	alert("TODO: BrokerAdmin #1");
-
-}
-
-function revokeBroker(id) {
-	
-	brokerAdminController.revokeBroker(id,revokeBrokerCallback);
-}
-
-function revokeBrokerCallback(result) {
-	util.createNotification('Broker removed.','error');
-}
-
-
-function initializeSelectorComponent(brokerData) {
-	populateSelectorBox(brokerData);
-	onAddFileClickListener();
-	onRemoveFileClickListener();
-}
-
-function populateSelectorBox(brokerData) {
-
-	// TODO
-	var brokers = brokerData['brokerViewableBrokers'];
-	
-	var availableBrokersUl = $('#available_brokers_ul');
-
-	for(let i = 0; i < brokers.length; i++) {
-
-		var id = brokers[i]['id'];
-		var name = brokers[i]['name'];
-		var surname = brokers[i]['surname'];
-
-		var li = $('<li></li>').prop('id',id).text(name + " " + surname).on('click',function() {
-
-			toggleSelectedListItem($(this));
-		});
-		availableBrokersUl.append(li);
-	}
-}
-
-
-function onAddFileClickListener() {
-
-	$('#add_button').on('click',function() {
-
-		var listItems = $('#available_brokers_ul .selected');
-
-		for(var i=0;i<listItems.length;i++) {
-
-			var item = listItems.eq(i);
-			item.detach();
-
-			$('#selected_brokers_ul').append(item);
-			toggleSelectedListItem(item);
-		}
-	});
-}
-
-
-function onRemoveFileClickListener() {
-
-	$('#remove_button').on('click',function() {
-
-		var listItems = $('#selected_brokers_ul .selected');
-
-		for(var i=0;i<listItems.length;i++) {
-
-			var item = listItems.eq(i);
-			item.detach();
-
-			$('#available_brokers_ul').append(item);
-			toggleSelectedListItem(item);
-		}
-	});
-}
-
-function toggleSelectedListItem(li) {
-	if(li.hasClass('selected')) {
-		li.removeClass('selected');
-		li.css('background-color','white');
-	} else {
-		li.addClass('selected');
-		li.css('background-color','grey');
-	}
 }
