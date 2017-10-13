@@ -127,7 +127,8 @@ var damageReportInvoker = new function()
 
 		for(var i = 0; i < damageReports.length; i++)
 		{
-			debugger;
+			damageReports[i]["damageType"] = mockCommunicator.getDamageType(damageReports[i].damageTypeId);
+
 			damageReports[i]["damageReportLandEntries"] = mockCommunicator.getDamageReportLandEntriesByDamageReportId(damageReports[i].id);
 			
 			var damageReportLandEntries = damageReports[i].damageReportLandEntries;
@@ -139,6 +140,8 @@ var damageReportInvoker = new function()
 
 				landEntry["policy"] = mockCommunicator.getPolicy(landEntry.policyId);
 				landEntry.policy["businessUnit"] = mockCommunicator.getBusinessUnit(landEntry.policy.businessUnitId);
+
+				landEntry["crop"] = mockCommunicator.getCrop(landEntry.cropId);
 
 				landEntry["farm"] = mockCommunicator.getFarm(landEntry.farmId);
 
@@ -162,6 +165,8 @@ var damageReportInvoker = new function()
 		
 		for(var i = 0; i < damageReports.length; i++)
 		{
+			var acceptableLandEntries = [];
+
 			for(var j = 0; j < damageReports[i].damageReportLandEntries.length; j++)
 			{
 				var landEntry = damageReports[i].damageReportLandEntries[j].policyLandEntry;
@@ -170,33 +175,61 @@ var damageReportInvoker = new function()
 				{
 					if(businessUnitName == "" && farmName == "")
 					{
-						finalDamageReport.push(damageReports[i]);
+						//finalDamageReport.push(damageReports[i]);
+						acceptableLandEntries.push(damageReports[i].damageReportLandEntries[j]);
 					}
 					else if(businessUnitName != "" && farmName == "")
 					{
 						if(landEntry.policy.businessUnit.name == businessUnitName)
 						{
-							finalDamageReport.push(damageReports[i]);
+							//finalDamageReport.push(damageReports[i]);
+							acceptableLandEntries.push(damageReports[i].damageReportLandEntries[j]);
 						}
 					}
 					else if(businessUnitName == "" && farmName != "")
 					{
 						if(landEntry.farm.name == farmName)
 						{
-							finalDamageReport.push(damageReports[i]);
+							//finalDamageReport.push(damageReports[i]);
+							acceptableLandEntries.push(damageReports[i].damageReportLandEntries[j]);
 						}
 					}
 					else
 					{
 						if(landEntry.policy.businessUnit.name == businessUnitName && landEntry.farm.name == farmName)
 						{
-							finalDamageReport.push(damageReports[i]);
+							//finalDamageReport.push(damageReports[i]);
+							acceptableLandEntries.push(damageReports[i].damageReportLandEntries[j]);
 						}
 					}
 				}
+				/*else
+				{
+					debugger;
+					//delete damageReports[i].damageReportLandEntries[j];
+					var damageReportLandEntry = damageReports[i].damageReportLandEntries[j];
+					var splicedArr = damageReports[i].damageReportLandEntries.splice(damageReportLandEntry, 1);
+					if(splicedArr.length > 1)
+					{
+						damageReports[i].damageReportLandEntries = splicedArr;
+					}
+					else
+					{
+						damageReports[i].damageReportLandEntries = [];
+						damageReports[i].damageReportLandEntries.push(splicedArr);
+					}
+					//damageReports[i].damageReportLandEntries.splice(j, 1);
+				}*/
+			}
+
+			damageReports[i].damageReportLandEntries = acceptableLandEntries;
+
+			if(damageReports[i].damageReportLandEntries.length > 0)
+			{
+				finalDamageReport.push(damageReports[i]);
 			}
 		}
-
+		debugger;
 		return finalDamageReport;
 
 		/*var tDamageReports = [];

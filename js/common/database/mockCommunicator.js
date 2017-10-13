@@ -1204,6 +1204,27 @@ var mockCommunicator = new function()
 			'active':'1',
 			'linkedToPolicyId':null,	
 		}
+		,
+		{
+			'id':'4',
+			'policyNumber':'00002',
+			'businessUnitId':'0',
+			'brokerId':'1',
+			'insurerId':null,
+			'acceptedOn':'2017-08-30 19:01:05',
+			'active':'1',
+			'linkedToPolicyId':null,	
+		},
+		{
+			'id':'5',
+			'policyNumber':'00003',
+			'businessUnitId':'0',
+			'brokerId':'1',
+			'insurerId':null,
+			'acceptedOn':'2017-08-30 19:03:05',
+			'active':'1',
+			'linkedToPolicyId':null,	
+		}
 	];
 	this.createPolicy = function(data) {
 
@@ -2192,6 +2213,58 @@ var mockCommunicator = new function()
 			'id':'2',
 			'damageReportId':0,
 			'policyLandEntryId':2,
+			'requiresTaxation':true
+		},
+		{
+			'id':'3',
+			'damageReportId':1,
+			'policyLandEntryId':0,
+			'requiresTaxation':true
+		},
+		{
+			'id':'4',
+			'damageReportId':2,
+			'policyLandEntryId':1,
+			'requiresTaxation':true
+
+		},
+		{
+			'id':'5',
+			'damageReportId':3,
+			'policyLandEntryId':2,
+			'requiresTaxation':true
+		},
+		{
+			'id':'6',
+			'damageReportId':1,
+			'policyLandEntryId':3,
+			'requiresTaxation':true
+		},
+		{
+			'id':'7',
+			'damageReportId':2,
+			'policyLandEntryId':2,
+			'requiresTaxation':true
+
+		},
+		{
+			'id':'8',
+			'damageReportId':3,
+			'policyLandEntryId':1,
+			'requiresTaxation':true
+		}
+		,
+		{
+			'id':'9',
+			'damageReportId':2,
+			'policyLandEntryId':4,
+			'requiresTaxation':true
+
+		},
+		{
+			'id':'10',
+			'damageReportId':3,
+			'policyLandEntryId':5,
 			'requiresTaxation':true
 		}
 	];
