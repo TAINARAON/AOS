@@ -276,11 +276,18 @@ var modalDamageReport = new function()
 					
 					for(var i = 0; i < landArr.length; i++)
 					{
-						//$(element_available_land_entry_container).append("<li>"+landArr[i].landNumber+"</li>");
-						var li = $('<li></li>').text(landArr[i].landNumber).on('click',function() {
+						var checkboxDivContainer = $("<div class='requires_taxation_checkbox_container'></div>")
+						var checkboxLabel = $("<label></label>").text('Taxation');
+						var checkbox = $('<input type="checkbox">');
+						checkboxDivContainer.append(checkboxLabel).append(checkbox).hide();
 
-							toggleSelectedListItem($(this));
-						});
+						//$(element_available_land_entry_container).append("<li>"+landArr[i].landNumber+"</li>");
+						var li = $('<li></li>')
+							.text(landArr[i].landNumber)
+							.val(landArr[i].landNumber)
+							.on('click',function() {toggleSelectedListItem($(this));})
+							.append(checkboxDivContainer);
+
 						$(element_available_land_entry_container).append(li);
 					}
 
@@ -328,6 +335,9 @@ var modalDamageReport = new function()
 				item.detach();
 
 				$('#selectedLandEntry').append(item);
+
+				item.find('.requires_taxation_checkbox_container').show();
+
 				toggleSelectedListItem(item);
 			}
 		});
@@ -346,6 +356,9 @@ var modalDamageReport = new function()
 				item.detach();
 
 				$('#availableLandEntry').append(item);
+
+				item.find('.requires_taxation_checkbox_container').hide();
+
 				toggleSelectedListItem(item);
 			}
 		});
@@ -390,12 +403,24 @@ var modalDamageReport = new function()
 		{
 			var businessUnitId = getBusinessUnitIdByName(element_business_unit.value);
 			var farmId = getFarmIdByName(element_farm.value);
-			var landEntryIds = [];
+			var landEntries = [];
 			var totalSelectedLandEntries = $("#selectedLandEntry li");
 			for(var i = 0; i < totalSelectedLandEntries.length; i++)
 			{
 				var landEntry = totalSelectedLandEntries.eq(i);
-				landEntryIds.push(getLandEntryByLandEntryNumber(landEntry.text()).id);
+				//alert(landEntry.val());
+				var landEntryId = getLandEntryByLandEntryNumber(landEntry.val()).id;
+				var requiresTaxation = landEntry.find('input[type=checkbox]').prop('checked');
+				//alert(requiresTaxation);
+				var landEntryObject = 
+				{
+					'id':landEntryId,
+					'requiresTaxation':requiresTaxation
+				};
+
+				console.log(landEntryObject);
+
+				landEntries.push(landEntryObject);
 			}
 			var damageType = getDamageTypeByName($(":radio[name='optradio']:checked").val());
 
@@ -405,8 +430,8 @@ var modalDamageReport = new function()
 				"damageTypeId":damageType.id,
 				"damageReportNumber":generateReportNumber(),
 				"dateOfDamage":reportDate,
-				"damageReportLandEntryIds":landEntryIds
-			}
+				"damageReportLandEntries":landEntries
+			};
 
 			var response = damageReportInvoker.createDamageReport(damageReportObj);
 			if(response != null)

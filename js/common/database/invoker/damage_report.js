@@ -341,15 +341,17 @@ var damageReportInvoker = new function()
 			return;
 		}
 
-		for(var i = 0; i < damageReport.damageReportLandEntryIds.length; i++)
+		for(var i = 0; i < damageReport.damageReportLandEntries.length; i++)
 		{
 			var tObj = {
 				"damageReportId":damageReportId,
-				"policyLandEntryId":damageReport.damageReportLandEntryIds[i]
+				"policyLandEntryId":damageReport.damageReportLandEntries[i]["id"],
+				"requiresTaxation":damageReport.damageReportLandEntries[i]["requiresTaxation"],
 			};
 			mockCommunicator.createDamageReportLandEntry(tObj);
+			console.log(tObj);
 		}
-
+		
 		return damageReportId;
 	}
 }
