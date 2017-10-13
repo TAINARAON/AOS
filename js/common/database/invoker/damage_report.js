@@ -23,7 +23,7 @@ var damageReportInvoker = new function()
 	this.getFarmByBusinessUnitId = function(brokerId, businessUnitId)
 	{
 		var tempFarms = [];
-		debugger;
+		
 		var policies = mockCommunicator.getPolicyByBrokerId(brokerId);
 
 		for(var i = 0; i < policies.length; i++)
@@ -330,5 +330,26 @@ var damageReportInvoker = new function()
 		}		
 
 		return damageReport;*/
+	}
+
+	this.createDamageReport = function(damageReport)
+	{
+		var damageReportId = mockCommunicator.createDamageReport(damageReport);
+
+		if(damageReportId == null)
+		{
+			return;
+		}
+
+		for(var i = 0; i < damageReport.damageReportLandEntryIds.length; i++)
+		{
+			var tObj = {
+				"damageReportId":damageReportId,
+				"policyLandEntryId":damageReport.damageReportLandEntryIds[i]
+			};
+			mockCommunicator.createDamageReportLandEntry(tObj);
+		}
+
+		return damageReportId;
 	}
 }

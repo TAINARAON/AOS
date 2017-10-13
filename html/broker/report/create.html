@@ -40,6 +40,12 @@
             </ul>
           </div>
           <div class="col-md-4">
+            <div style="">
+              <div id="add_button" class="btn btn-success col-md-12">&gt;&gt;</div>
+              <div id="remove_button" class="btn btn-danger col-md-12">&lt;&lt;</div>
+            </div>
+          </div>
+          <div class="col-md-4">
             <!--<h6 class="text-left">Land:</h6>
             <select id="land_dropdown" name="land_dropdown" class="form-control">
               <option disabled selected value></option>
@@ -52,10 +58,10 @@
           </div>
         </div>
         <div id="damage_report_date_container" class="row">
-          <div class="col-md-4">
+          <!--<div class="col-md-4">
             <h6 class="text-left">Claim Date:</h6>
             <input id="claim_made" name="claim_made" class="form-control">
-          </div>
+          </div>-->
           <div class="col-md-4">
             <h6 class="text-left">Report Date:</h6>
             <input id="report_made" name="report_made" class="form-control">
@@ -64,6 +70,9 @@
       </div>
 
       <div class="modal-footer">
+        <div id="cancel" class="btn btn-danger col-md-offset-3 col-md-2">Kanselleer</div>
+        <div id="accept" class="btn btn-success col-md-offset-1 col-md-2">Skep</div>
+
         <button id="close_modal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>

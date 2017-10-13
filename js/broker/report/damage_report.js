@@ -299,4 +299,9 @@ var damageReport = new function()
 
 		container.appendChild(childLi);*/
 	}
+
+	this.reload = function()
+	{
+		search();
+	}
 }

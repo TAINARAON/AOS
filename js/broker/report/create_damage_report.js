@@ -2,11 +2,13 @@ var modalDamageReport = new function()
 {
 	var element_business_unit;
 	var businessUnitArr;
-	var businessUnitId
 
 	var element_farm;
-	var farmArr;
-	var farmId;
+	var farmArr
+
+	var landArr;
+
+	var damageTypes;
 
 	var element_damage_types_container = document.getElementById("damage_types_container");;
 	var element_damage_report_date_container = document.getElementById("damage_report_date_container");
@@ -16,6 +18,53 @@ var modalDamageReport = new function()
 
 	var element_available_land_entry_container = document.getElementById("availableLandEntry");
 	var element_selected_land_entry_container = document.getElementById("selectedLandEntry");
+
+	//var element_claim_date_container = document.getElementById("claim_made");
+	var element_report_date_container = document.getElementById("report_made");
+
+	/*function getBusinessUnitByName(name)
+	{
+		for(var i = 0; i < businessUnitArr.length; i++)
+		{
+			if(businessUnitArr[i].name == name)
+			{
+				return businessUnitArr[i];
+			}
+		}
+	}
+
+	function getFarmByName(name)
+	{
+		for(var i = 0; i < farmArr.length; i++)
+		{
+			if(farmArr[i].name == name)
+			{
+				return farmArr[i];
+			}
+		}
+	}*/
+
+	function getLandEntryByLandEntryNumber(number)
+	{
+		for(var i = 0; i < landArr.length; i++)
+		{
+			if(landArr[i].landNumber == number)
+			{
+				return landArr[i];
+			}
+		}
+	}
+
+	function getDamageTypeByName(name)
+	{
+		for(var i = 0; i < damageTypes.length; i++)
+		{
+			if(damageTypes[i].name == name)
+			{
+				return damageTypes[i];
+			}
+		}
+	}
 
 	function getBusinessUnitIdByName(name)
 	{
@@ -41,11 +90,18 @@ var modalDamageReport = new function()
 
 	(function init()
 	{
+		onAddFileClickListener();
+		onRemoveFileClickListener();
 		initDropDowns();
 
 		element_farm_container.style.display = "none";
 		element_land_container.style.display = "none";
 		element_damage_types_container.style.display = "none";
+
+		document.getElementById("cancel").onclick = function(){cancel();};
+		document.getElementById("accept").onclick = function(){save();};
+
+		$(element_report_date_container).val(util.getDateTimePretty());
 	})();
 
 	function initDropDowns()
@@ -64,9 +120,10 @@ var modalDamageReport = new function()
 		{
 			ajaxGet("Some url - get", 
 				function(response){
-					debugger;
+					
 					for(var i = 0; i < response.length; i++)
 					{
+						damageTypes = response;
 						var damageType = response[i];
 
 						var row;
@@ -82,7 +139,7 @@ var modalDamageReport = new function()
 						column.className = "col-md-4";
 						row.appendChild(column);
 
-						$(column).append('<div class="radio"><label><input type="radio" name="optradio">'+damageType.name+'</label></div>');
+						$(column).append('<div class="radio"><label><input type="radio" name="optradio" value="'+damageType.name+'">'+damageType.name+'</label></div>');
 					}
 
 					element_damage_types_container.style.display = "block";
@@ -110,8 +167,9 @@ var modalDamageReport = new function()
 	function loadBusinessUnitDropdownChoisesForBroker()
 	{
 		element_business_unit.innerHTML = "";
-
+		
 		var response = damageReportInvoker.getBusinessUnitByBrokerId(sessionStorage.brokerId);
+		console.log("response id: "+response);
 		if(response != null)
 		{
 			ajaxPost("Some url", 
@@ -215,14 +273,18 @@ var modalDamageReport = new function()
 			ajaxPost("some url", 
 				function(response){
 					landArr = response;
-
+					
 					for(var i = 0; i < landArr.length; i++)
 					{
-						$(element_available_land_entry_container).append("<li>"+landArr[i].landNumber+"</li>");
+						//$(element_available_land_entry_container).append("<li>"+landArr[i].landNumber+"</li>");
+						var li = $('<li></li>').text(landArr[i].landNumber).on('click',function() {
+
+							toggleSelectedListItem($(this));
+						});
+						$(element_available_land_entry_container).append(li);
 					}
 
 					element_land_container.style.display = "block";
-
 
 					loadDamageTypes();
 				}, 
@@ -244,6 +306,51 @@ var modalDamageReport = new function()
 		}
 	}
 
+	function toggleSelectedListItem(li) {
+		if(li.hasClass('selected')) {
+			li.removeClass('selected');
+			li.css('background-color','white');
+		} else {
+			li.addClass('selected');
+			li.css('background-color','grey');
+		}
+	}
+
+	function onAddFileClickListener() {
+
+		$('#add_button').on('click',function() {
+			
+			var listItems = $('#availableLandEntry .selected');
+
+			for(var i=0;i<listItems.length;i++) {
+
+				var item = listItems.eq(i);
+				item.detach();
+
+				$('#selectedLandEntry').append(item);
+				toggleSelectedListItem(item);
+			}
+		});
+	}
+
+
+	function onRemoveFileClickListener() {
+
+		$('#remove_button').on('click',function() {
+			
+			var listItems = $('#selectedLandEntry .selected');
+
+			for(var i=0;i<listItems.length;i++) {
+
+				var item = listItems.eq(i);
+				item.detach();
+
+				$('#availableLandEntry').append(item);
+				toggleSelectedListItem(item);
+			}
+		});
+	}
+
 	function createDropdownOption(val, container)
 	{
 		var option = document.createElement("OPTION");
@@ -253,5 +360,113 @@ var modalDamageReport = new function()
 		container.appendChild(option);
 
 		return option;
+	}
+
+	function reset()
+	{
+		element_farm_container.style.display = "none";
+		element_land_container.style.display = "none";
+		element_damage_types_container.style.display = "none";
+
+		damage_types_container.innerHTML = "";
+		availableLandEntry.innerHTML = "";
+		selectedLandEntry.innerHTML = "";
+
+		element_farm.innerHTML = "";
+
+		//element_report_date_container.innerHTML = "";
+
+		loadBusinessUnitDropdownChoisesForBroker();
+	}
+
+	function cancel()
+	{
+		reset();
+	}
+
+	function save()
+	{
+		if(validate())
+		{
+			var businessUnitId = getBusinessUnitIdByName(element_business_unit.value);
+			var farmId = getFarmIdByName(element_farm.value);
+			var landEntryIds = [];
+			var totalSelectedLandEntries = $("#selectedLandEntry li");
+			for(var i = 0; i < totalSelectedLandEntries.length; i++)
+			{
+				var landEntry = totalSelectedLandEntries.eq(i);
+				landEntryIds.push(getLandEntryByLandEntryNumber(landEntry.text()).id);
+			}
+			var damageType = getDamageTypeByName($(":radio[name='optradio']:checked").val());
+
+			var reportDate = element_report_date_container.value;
+
+			var damageReportObj = {
+				"damageTypeId":damageType.id,
+				"damageReportNumber":generateReportNumber(),
+				"dateOfDamage":reportDate,
+				"damageReportLandEntryIds":landEntryIds
+			}
+
+			var response = damageReportInvoker.createDamageReport(damageReportObj);
+			if(response != null)
+			{
+				ajaxPost("some url", 
+					function(response){
+						reset();
+						damageReport.reload();
+					}, 
+					function(){
+						alert("Failed to create damage report");
+					}, 
+					damageReportObj, 
+					response
+				);
+			}
+			else
+			{
+				alert("Error creating damage report");
+			}
+
+		}
+		else
+		{
+			alert("All required entries and selections has not yet been made");
+		}
+	}
+
+	function validate()
+	{
+		if(getBusinessUnitIdByName(element_business_unit.value) == null)
+		{
+			return false;
+		}
+
+		if(getFarmIdByName(element_farm.value) == null)
+		{
+			return false;
+		}
+
+		if($("#selectedLandEntry li").length == 0)
+		{
+			return false;
+		}
+
+		if($(":radio[name='optradio']:checked").length == 0)
+		{
+			return false;
+		}
+
+		if(element_report_date_container.value.trim() == "")
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	function generateReportNumber()
+	{
+		return Math.floor((Math.random() * 100000) + 1);
 	}
 }
