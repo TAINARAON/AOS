@@ -127,6 +127,7 @@ var quoteViewer = new function ()
 	function search()
 	{
 		landEntryMaps = [];
+		$(quoteAccordionButtonsContainer).hide();
 
 		var tBrokerName = $(brokerSelect).val().trim();
 		var brokerId = getIdOfSelectedBroker(tBrokerName);
