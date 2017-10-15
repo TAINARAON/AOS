@@ -195,7 +195,7 @@ var insurerAdminController = new function() {
 					'id':broker['id'],
 					'initials':userDetails['initials'],
 					'surname':userDetails['surname'],
-					'name':userDetails['surname'],
+					'name':userDetails['name'],
 				}
 
 				brokerageWithBrokers['brokers'].push(neededDetailsOfBroker);
@@ -203,9 +203,6 @@ var insurerAdminController = new function() {
 
 			mockResponse['brokeragesAndBrokers'].push(brokerageWithBrokers);
 		}
-
-		console.log(mockResponse);
-		
 
 		/*var mockResponse = {
 			"brokerages":[
