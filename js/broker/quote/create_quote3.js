@@ -1103,6 +1103,9 @@ var createQuote = new function()
 		//landEntry.crop["product"] = getProduct(dropdown_product.value);
 		landEntry["quoteLandEntryDamageTypes"] = [];
 
+		landEntry["cropId"] = getCrop(dropdown_crop.value).id;
+		landEntry["crop"] = getCrop(dropdown_crop.value);
+
 		var allDamageTypesWithState = createTariffOptionDamageTypeArr();
 		console.log("The all damage type thang");
 		console.log(allDamageTypesWithState);

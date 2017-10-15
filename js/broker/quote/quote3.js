@@ -1,7 +1,7 @@
 var quoteViewer = new function () 
 {
 	var quotes = [];
-	var viewableBrokers;
+	var viewableBrokers = [];
 
 	var landEntryMaps = [];
 	var mapScriptContainer = document.getElementById("mapScriptContainer");
@@ -37,7 +37,46 @@ var quoteViewer = new function ()
 	{	
 		var currentUserBrokerId = sessionStorage.brokerId;
 
-		viewableBrokers = brokerInvoker.getViewableBrokers(currentUserBrokerId);
+		var result = brokerInvoker.getViewableBrokers(currentUserBrokerId);
+
+		if(result != null)
+		{
+			ajaxPost("Some url", 
+				function(result){
+					// TODO: add another ajaxPost here
+					var tSelfObj = brokerInvoker.getBrokerDisplayable(currentUserBrokerId);
+					tSelfObj["brokerId"] = currentUserBrokerId;
+					viewableBrokers.push(tSelfObj);
+
+					// TODO: test
+					//Spread syntax allows an iterable such as an array expression to be expanded in places where zero or more arguments (for function calls) or elements (for array literals) are expected
+					viewableBrokers.push(...brokerInvoker.getViewableBrokers(currentUserBrokerId));
+
+					for(var i = 0; i < viewableBrokers.length; i++)
+					{
+						var option = document.createElement("OPTION");
+						option.innerHTML = viewableBrokers[i].name;
+
+						brokerSelect.appendChild(option);
+					}
+
+					// If only one broker is available then it will be onself, as it is the first option it will already be selected
+					// Hide the dropdown
+					if(viewableBrokers.length == 1)
+					{
+						document.getElementById("available_broker_container").style.display = "none";
+						document.getElementById("quote_number_container").className+=" col-md-offset-2";
+					}
+				}, 
+				function(){
+					alert("Failed to load available brokers");
+				},
+				{"brokerId":currentUserBrokerId},
+				result
+			);
+		}
+
+		/*viewableBrokers = brokerInvoker.getViewableBrokers(currentUserBrokerId);
 		
 		var tSelfObj = brokerInvoker.getBrokerDisplayable(currentUserBrokerId);
 		tSelfObj["brokerId"] = currentUserBrokerId;
@@ -49,7 +88,7 @@ var quoteViewer = new function ()
 			option.innerHTML = viewableBrokers[i].name;
 
 			brokerSelect.appendChild(option);
-		}
+		}*/
 	}
 
 	function setupAccordionClickHandler()
@@ -133,6 +172,8 @@ var quoteViewer = new function ()
 		{
 			var childContainer = createQuoteAccordionParentItem(quotes[i], quoteAccordion);
 
+			createChildHeaderAccordionItem(childContainer);
+
 			for(var j = 0; j < quotes[i].quoteLandEntries.length; j++)
 			{
 				if(j == 0)
@@ -179,6 +220,28 @@ var quoteViewer = new function ()
 		tDiv.innerHTML = val;
 		tDiv.style.cssText = "margin-right: 80px;";
 		container.appendChild(tDiv);
+
+		return tDiv;
+	}
+
+	function createChildHeaderAccordionItem(container)
+	{
+		var childLi = document.createElement("LI");
+
+		var childTitle = document.createElement("A");
+		childTitle.className = "toggle";
+		childTitle.style.cssText = "display: flex; background: #4287b5;";
+
+		createAccordionItemDetailDiv("Land Number: ", childTitle).className = "col-md-1";
+		createAccordionItemDetailDiv("Crop: ", childTitle).className = "col-md-1";
+		createAccordionItemDetailDiv("Cultivar: ", childTitle).className = "col-md-1";
+		createAccordionItemDetailDiv("Area: ", childTitle).className = "col-md-1";
+		createAccordionItemDetailDiv("Yield ", childTitle).className = "col-md-1";
+		createAccordionItemDetailDiv("Price: ", childTitle).className = "col-md-1";
+		createAccordionItemDetailDiv("Tariff Option: ", childTitle).className = "col-md-1";
+
+		childLi.appendChild(childTitle);
+		container.appendChild(childLi);
 	}
 
 	function createQuoteAccordionChildItem(landEntry, container)
@@ -189,13 +252,13 @@ var quoteViewer = new function ()
 		childTitle.className = "toggle";
 		childTitle.style.cssText = "display: flex;";
 
-		createAccordionItemDetailDiv("Land Number: " + landEntry.landNumber , childTitle);
-		createAccordionItemDetailDiv("Crop: " + landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.crop.name, childTitle);
-		createAccordionItemDetailDiv("Cultivar: " + landEntry.cultivar, childTitle);
-		createAccordionItemDetailDiv("Area: " + landEntry.area, childTitle);
-		createAccordionItemDetailDiv("Yield " + landEntry.yield, childTitle);
-		createAccordionItemDetailDiv("Price: " + landEntry.price, childTitle);
-		createAccordionItemDetailDiv("Tariff Option: " + landEntry.tariff, childTitle);
+		createAccordionItemDetailDiv(landEntry.landNumber , childTitle).className = "col-md-1";
+		createAccordionItemDetailDiv(landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.crop.name, childTitle).className = "col-md-1";
+		createAccordionItemDetailDiv(landEntry.cultivar, childTitle).className = "col-md-1";
+		createAccordionItemDetailDiv(landEntry.area, childTitle).className = "col-md-1";
+		createAccordionItemDetailDiv(landEntry.yield, childTitle).className = "col-md-1";
+		createAccordionItemDetailDiv(landEntry.price, childTitle).className = "col-md-1";
+		createAccordionItemDetailDiv(landEntry.tariff, childTitle).className = "col-md-1";
 
 		var childDetail = document.createElement("DIV");
 		childDetail.className = "inner";
@@ -229,20 +292,27 @@ var quoteViewer = new function ()
 	{
 		var childLi = document.createElement("LI");
 
-		createReQuoteBtn(container, quote);
-		createDeleteBtn(container, quote);
 		// TODO: do acceptable check here
-		createAcceptButton(container, quote);
-		createPrintQuoteBtn(container, quote);
-		createEmailQuoteBtn(container, quote);
+		if(quote.acceptable == 1)
+		{
+			createAcceptButton(container, quote);
+		}
 
+		createReQuoteBtn(container, quote);
+
+		// TODO: make this a share button
+		createShareQuoteBtn(container, quote);
+
+		// Delete quote temporarily removed
+		//createDeleteBtn(container, quote);
+		
 		container.appendChild(childLi);
 	}
 
 	function createSuccessButton(title, container)
 	{
 		var button = document.createElement("DIV");
-		button.className = "btn btn-success col-md-1";
+		button.className = "btn btn-success col-md-2";
 		button.innerHTML = title;
 
 		container.appendChild(button);
@@ -253,7 +323,7 @@ var quoteViewer = new function ()
 	function createDangerButton(title, container)
 	{
 		var button = document.createElement("DIV");
-		button.className = "btn btn-danger col-md-1";
+		button.className = "btn btn-danger col-md-2";
 		button.innerHTML = title;
 
 		container.appendChild(button);
@@ -263,7 +333,9 @@ var quoteViewer = new function ()
 
 	function createReQuoteBtn(container, quote)
 	{
-		createSuccessButton("Re-Quote", container).onclick = function(e) {reQuote(e, quote);};
+		var button = createSuccessButton("Re-Quote", container);
+		button.onclick = function(e) {reQuote(e, quote);};
+		button.style.cssText = "margin-right: 10px;";
 	}
 
 	function reQuote(event, quote)
@@ -287,7 +359,9 @@ var quoteViewer = new function ()
 
 	function createAcceptButton(container, quote)
 	{
-		createSuccessButton("Accept Quote", container).onclick = function(e) {acceptQuote(e, quote);};
+		var button = createSuccessButton("Accept Quote", container);
+		button.onclick = function(e) {acceptQuote(e, quote);};
+		button.style.cssText = "margin-right: 10px";
 	}
 
 	function acceptQuote(event, quote)
@@ -295,24 +369,16 @@ var quoteViewer = new function ()
 		quoteAcceptModal.show(quote.id);
 	}
 
-	function createPrintQuoteBtn(container, quote)
+	function createShareQuoteBtn(container, quote)
 	{
-		createSuccessButton("Print Quote", container).onclick = function(e) {printQuote(e, quote);};
+		var button = createSuccessButton("Share", container).onclick = function(e) {shareQuote(e, quote);};
 	}
 
-	function printQuote(event, quote)
+	function shareQuote(event, quote)
 	{
 		alert("To be added at a later stage");
-	}
-
-	function createEmailQuoteBtn(container, quote)
-	{
-		createSuccessButton("Email Quote", container).onclick = function(e) {emailQuote(e, quote);};
-	}
-
-	function emailQuote(event, quote)
-	{
-		alert("To be added at a later stage");
+		// TODO - create a preview modal to display pdf
+		// Give user option to email or print in there
 	}
 
 	function addMapScriptForUpdatingLandEntryMaps(container)

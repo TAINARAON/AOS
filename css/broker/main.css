@@ -84,3 +84,13 @@ ul li a.toggle:hover {
   /*background: rgba(0, 0, 0, 0.9);*/
   background: #96c1c3;
 }
+
+.accordion li ul li:nth-child(even) > a
+{
+    background-color: #718c8a;   
+}
+
+.accordion li ul li:nth-child(odd) > a
+{
+    background-color: #374a49;   
+}
