@@ -2,80 +2,119 @@
 	init();
 })();
 
+var brokeragesAndBrokers = [];
+
+var brokerElementsInBrokerTableByBrokerage = [];
+
 function init() {
-	populateBrokeragesDropdownValues();
-	setBrokerageDropdownSelectionListener();
+	getBrokeragesAndTheirBrokers();
+}
+
+function getBrokeragesAndTheirBrokers() {
+
+	insurerAdminController.getBrokeragesAndTheirBrokers(onGetBrokeragesAndTheirBrokersSuccess,onGetBrokeragesAndTheirBrokersFailure);
+}
+
+function onGetBrokeragesAndTheirBrokersSuccess(response) {
+
+	brokeragesAndBrokers = response['brokerages'];
+
+	console.log(brokeragesAndBrokers);
+	
+	/*for(var i = 0; i < brokeragesAndBrokers.length; i++) {
+
+		var brokerageAndItsBrokers = brokeragesAndBrokers[i];
+
+		console.log(brokerageAndItsBrokers);
+	}
+
+	populateBrokeragesDropdownValues();*/
+}
+
+function onGetBrokeragesAndTheirBrokersFailure() {
+
+	alert("failure");
 }
 
 function populateBrokeragesDropdownValues() {
 
-	insurerAdminController.getBrokerages(onGetBrokeragesSuccess,onGetBrokeragesFailure);
-}
-
-function onGetBrokeragesSuccess(response) {
-
-	var values = response['brokerages'];
 	var selectElement = $('#insurer_admin_brokers_brokerage_dropdown');
 
-	for(var i = 0; i < values.length; i++)
+	for(var i = 0; i < getBrokeragesAndBrokers().length; i++)
 	{
-		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']));	
+		alert(i);
+		var brokerage = getBrokeragesAndBrokers()[i];
+
+		selectElement.append($('<option></option>').text(brokerage['name']).val(brokerage['id']));	
 	}
 
-	/*selectElement
-		.on('change',function() {
-			onBrokerageSelected($(this).find(":selected").val());
-			//selectedValues['districtId'] = $(this).find(":selected").val();
-		});*/
-
-}
-function onGetBrokeragesFailure(response) {
-	
-	alert('failed');
+	setBrokerageDropdownSelectionListener(selectElement);
 }
 
-
-function setBrokerageDropdownSelectionListener() {
-	$("#insurer_admin_brokers_brokerage_dropdown").on("change",function() {
+function setBrokerageDropdownSelectionListener(selectElement) {
+	console.log("setBrokerageDropdownSelectionListener");
+	console.log(getBrokeragesAndBrokers());
+	selectElement.on("change",function() {
 		onBrokerageSelected($(this).val());
 	});
+
+	// Populate table
+	$("#insurer_admin_brokers_brokerage_dropdown").trigger('change');
 }
 
 function onBrokerageSelected(brokerageId) {
-
+	console.log("onBrokerageSelected");
+	console.log(getBrokeragesAndBrokers());
 	clearBrokerTable();
-	populateBrokerTable(brokerageId);
+
+	var brokers = getBrokersOfBrokerageSelected(brokerageId);
+	populateBrokerTable(brokers);
 }
 
 function clearBrokerTable() {
+
 	$("#insurer_admin_broker_container").empty();
 }
 
-function populateBrokerTable(brokerageId) {
+function getBrokersOfBrokerageSelected(brokerageId) {
 
-	insurerAdminController.getBrokerDetailsOfBrokerage(getBrokerDetailsOfBrokerageSuccessCallback,getBrokerDetailsOfBrokerageFailCallback,brokerageId);
+	var brokers = [];
+	console.log("getBrokersOfBrokerageSelected");
+	console.log(getBrokeragesAndBrokers());
+	if(brokerageId == "ALL") {
+
+		// Add all brokers to table
+		for(var i = 0; i < getBrokeragesAndBrokers().length;i++) {
+			var b = getBrokeragesAndBrokers()[i];
+			console.log(b);
+			brokers.push(getBrokeragesAndBrokers()[i]['brokers']);
+		}
+
+	} else {
+
+		brokers = getBrokeragesAndBrokers()[brokerageId]['brokers'];
+	}
+
+	console.log("getBrokersOfBrokerageSelected2");
+	console.log(getBrokeragesAndBrokers());
+	return brokers;
 }
 
-function getBrokerDetailsOfBrokerageSuccessCallback(response) {
-
-	var container = $('#insurer_admin_broker_container');
-
-	var brokers = response['brokers'];
+function populateBrokerTable(brokers) {
+	console.log("populateBrokerTable");
+	console.log(getBrokeragesAndBrokers());
+	var brokerTable = $('#insurer_admin_broker_container');
 
 	for(var i = 0;i<brokers.length;i++) {
-		createBrokerEntry(brokers[i],container);
+		createBrokerEntry(brokers[i],brokerTable);
 	}
-}
-function getBrokerDetailsOfBrokerageFailCallback(response) {
-
-	alert("failed insurerAdmin/brokers.js getBrokerDetailsOfBrokerageFailCallback");
 }
 
 function createBrokerEntry(broker,container) {
 
 	var header = $('<button></button>')
 		.addClass('accordion')
-		.text(broker.name + " " + broker.surname)
+		.text(broker['initials'] + " " + broker['surname'] + " (" + broker['preferredName'] + ")")
 		.on('click',function(e){
 			toggleDataContainer(e);
 		}
@@ -115,7 +154,7 @@ function createBrokerEntry(broker,container) {
 
 function createDetailsOfBrokerHtml(brokerDetails) {
 	var container = $('<div></div>')
-		.append($('<p>Name: '+ brokerDetails.name + '</p>'))
+		.append($('<p>Name: '+ 'TODO' + '</p>'))
 		.append($('<p>Surname: '+ brokerDetails.surname + '</p>'))
 
 	return container;

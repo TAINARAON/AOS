@@ -11,12 +11,8 @@
  	var rightButtons = 
  	[
  		{
- 			'text':'Create Client',
- 			'pageUrl':'html/brokerAdmin/createClient.html'
- 		},
- 		{
- 			'text':'Create Broker',
- 			'pageUrl':'html/brokerAdmin/createBroker.html'
+ 			'text':'Create Business Unit',
+ 			'pageUrl':'html/brokerAdmin/createBusinessUnit.html'
  		},
  		{
  			'text':'Logout',

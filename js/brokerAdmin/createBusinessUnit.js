@@ -2,12 +2,13 @@
 	init();
 })();
 
-var NAME_INDEX = 0;
-var SURNAME_INDEX = 1;
-var EMAIL_INDEX = 2;
-var ID_NUMBER_INDEX = 3;
+var BUSINESS_UNIT_NAME_INDEX = 0;
+var VAT_NUMBER_INDEX = 1;
+var INCOME_TAX_NUMBER_INDEX = 2;
+var CONTACT_NUMBER_INDEX = 3;
+var EMAIL_INDEX = 4;
 
-var requiredFields = [false,false,false,false];
+var requiredFields = [false,false,false,false,false];
 
 function init() {
 
@@ -94,34 +95,42 @@ function onRemoveEntryClickListener() {
 
 function initializeValidationOnChangeListeners() {
 
-	$('#create_client_name_input').on('change',function() {
+	$('#create_business_unit_name_input').on('change',function() {
 		var input = $(this).val();
 
-		requiredFields[NAME_INDEX] = (input != "");
+		requiredFields[BUSINESS_UNIT_NAME_INDEX] = (input != "");
 
 		showSubmitButtonIfAllFieldsAreCompleted();
 	});
 
-	$('#create_client_surname_input').on('change',function() {
+	$('#create_business_vat_number_input').on('change',function() {
 		var input = $(this).val();
 
-		requiredFields[SURNAME_INDEX] = (input != "");
+		requiredFields[VAT_NUMBER_INDEX] = (input != "");
 
 		showSubmitButtonIfAllFieldsAreCompleted();
 	});
 
-	$('#create_client_email_input').on('change',function() {
+	$('#create_business_income_tax_number_input').on('change',function() {
+		var input = $(this).val();
+
+		requiredFields[INCOME_TAX_NUMBER_INDEX] = (input != "");
+
+		showSubmitButtonIfAllFieldsAreCompleted();
+	});
+
+	$('#create_business_unit_contact_number_input').on('change',function() {
+		var input = $(this).val();
+
+		requiredFields[CONTACT_NUMBER_INDEX] = (input != "");
+
+		showSubmitButtonIfAllFieldsAreCompleted();
+	});
+
+	$('#create_business_unit_email_input').on('change',function() {
 		var input = $(this).val();
 
 		requiredFields[EMAIL_INDEX] = (input != "");
-
-		showSubmitButtonIfAllFieldsAreCompleted();
-	});
-
-	$('#create_client_id_number_input').on('change',function() {
-		var input = $(this).val();
-
-		requiredFields[ID_NUMBER_INDEX] = (input != "");
 
 		showSubmitButtonIfAllFieldsAreCompleted();
 	});
@@ -131,23 +140,22 @@ function showSubmitButtonIfAllFieldsAreCompleted() {
 
 	for(var i = 0; i < requiredFields.length; i++) {
 		if(requiredFields[i] == false) {
-			$('#create_client_submit_div').hide();
+			$('#create_business_unit_submit_div').hide();
 			return;
 		}
 	}
 
-	$('#create_client_submit_div').show();
+	$('#create_business_unit_submit_div').show();
 }
 
 function setSubmitButtonClickListener() {
 
-	$('#create_client_submit_button').on('click',function() {
-		onCreateClientClick();
+	$('#create_business_unit_submit_button').on('click',function() {
+		onCreateBusinessUnitClick();
 	});
 }
 
-// creates broker, by supplying Username and email
-function onCreateClientClick() {
+function onCreateBusinessUnitClick() {
 
 	// TODO
 	var action = "something/createClient/";
@@ -168,24 +176,23 @@ function onCreateClientClick() {
 		"brokerageId":brokerageId
 	};
 
-	util.displayUploadFileModal(action,data,onCreateClientDocumentsSubmittedCallback);
+	util.displayUploadFileModal(action,data,onCreateBusinessUnitDocumentsSubmittedCallback);
 }
 
-function onCreateClientDocumentsSubmittedCallback(fileData,data) {
+function onCreateBusinessUnitDocumentsSubmittedCallback(fileData,data) {
 
 	// TODO
 	if(fileData == "failed - not really a value") {
 
 		util.createNotification("Failed to upload documents","error");
-		onCreateBrokerClick();
 
 	} else {
 
-		ajaxCreateClient(fileData,data);
+		ajaxCreateBusinessUnit(fileData,data);
 	}
 }
 
-function ajaxCreateClient(fileData,data) {
+function ajaxCreateBusinessUnit(fileData,data) {
 
 	var requestData = 
 	{
@@ -193,14 +200,14 @@ function ajaxCreateClient(fileData,data) {
 		'data':data
 	};
 
-	brokerAdminController.createClient(onClientCreatedSuccess,onClientCreatedFailure,requestData);
+	brokerAdminController.createBusinessUnit(onBusinessUnitCreatedSuccess,onBusinessUnitCreatedFailure,requestData);
 }
-function onClientCreatedSuccess(response) {
+function onBusinessUnitCreatedSuccess(response) {
 
 	util.createNotification("Client details submitted. . .awaiting approval.");
 	loader.loadPage('html/brokerAdmin/brokerage/brokerage.html');
 }
-function onClientCreatedFailure(result) {
+function onBusinessUnitCreatedFailure(result) {
 
 	util.createNotification("Failed to create Client - Please contact support if the problem persists.","error")
 	loader.reload();

@@ -2,12 +2,14 @@
 	init();
 })();
 
-var NAME_INDEX = 0;
+var INITIALS_INDEX = 0;
 var SURNAME_INDEX = 1;
-var FSP_NUMBER_INDEX = 2;
-var EMAIL_INDEX = 3;
+var PREFERRED_NAME_INDEX = 2;
+var BRANCH_INDEX = 3;
+var EMAIL_INDEX = 4;
+var CONTACT_NUMBER_INDEX = 5;
 
-var requiredFields = [false,false,false,false];
+var requiredFields = [false,false,false,false,false,false];
 
 function init() {
 
@@ -90,14 +92,12 @@ function onRemoveEntryClickListener() {
 	});
 }
 
-
-
 function initializeValidationOnChangeListeners() {
 
-	$('#create_broker_name_input').on('change',function() {
+	$('#create_broker_initials_input').on('change',function() {
 		var input = $(this).val();
 
-		requiredFields[NAME_INDEX] = (input != "");
+		requiredFields[INITIALS_INDEX] = (input != "");
 
 		showSubmitButtonIfAllFieldsAreCompleted();
 	});
@@ -110,10 +110,18 @@ function initializeValidationOnChangeListeners() {
 		showSubmitButtonIfAllFieldsAreCompleted();
 	});
 
-	$('#create_broker_fsp_number_input').on('change',function() {
+	$('#create_broker_preferred_name_input').on('change',function() {
 		var input = $(this).val();
 
-		requiredFields[FSP_NUMBER_INDEX] = (input != "");
+		requiredFields[PREFERRED_NAME_INDEX] = (input != "");
+
+		showSubmitButtonIfAllFieldsAreCompleted();
+	});
+
+	$('#create_broker_branch_input').on('change',function() {
+		var input = $(this).val();
+
+		requiredFields[BRANCH_INDEX] = (input != "");
 
 		showSubmitButtonIfAllFieldsAreCompleted();
 	});
@@ -122,6 +130,14 @@ function initializeValidationOnChangeListeners() {
 		var input = $(this).val();
 
 		requiredFields[EMAIL_INDEX] = (input != "");
+
+		showSubmitButtonIfAllFieldsAreCompleted();
+	});
+
+	$('#create_broker_contact_number_input').on('change',function() {
+		var input = $(this).val();
+
+		requiredFields[CONTACT_NUMBER_INDEX] = (input != "");
 
 		showSubmitButtonIfAllFieldsAreCompleted();
 	});

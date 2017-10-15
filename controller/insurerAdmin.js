@@ -136,6 +136,126 @@ var insurerAdminController = new function() {
 
 		ajaxPost(GET_BROKER_DETAILS_OF_BROKERAGE_URL,successCallback,failCallback,requestObject,mockResponse);
 	};	// USED
+	/*	
+		insurerAdmin/getBrokeragesAndTheirBrokers
+
+		requestObject:{
+			insuranceAgencyId
+		}
+
+		responseObject: {
+			brokeragesAndBrokers:
+			[
+				{
+					id,  (brokerageId)
+					name,
+					brokers:
+					[
+						{
+							id, (brokerId)
+							initials,
+							surname,
+							name
+						}
+					]
+				}
+			]
+		}
+	*/
+	this.getBrokeragesAndTheirBrokers = function(successCallback,failCallback) {
+
+		var requestObject = 
+		{
+			"insuranceAgencyId":insuranceAgency['id']
+		};
+
+		var mockResponse = {
+			'brokeragesAndBrokers':[]
+		};
+
+		var brokerages = mockCommunicator.brokerageTable;
+
+		for(var i = 0; i < brokerages.length; i++) {
+
+			var brokerage = brokerages[i];
+			var brokers = mockCommunicator.getBrokersOfBrokerage(brokerage['id']);
+
+			var brokerageWithBrokers = {
+				'id':brokerage['id'],
+				'name':brokerage['name'],
+				'brokers':[]
+			}
+
+			for(var j = 0; j < brokers.length; j++) {
+
+				var broker = brokers[j];
+				var userDetails = mockCommunicator.getDetailsOfUser(broker['userId']);
+
+				var neededDetailsOfBroker = {
+					'id':broker['id'],
+					'initials':userDetails['initials'],
+					'surname':userDetails['surname'],
+					'name':userDetails['surname'],
+				}
+
+				brokerageWithBrokers['brokers'].push(neededDetailsOfBroker);
+			}
+
+			mockResponse['brokeragesAndBrokers'].push(brokerageWithBrokers);
+		}
+
+		console.log(mockResponse);
+		
+
+		/*var mockResponse = {
+			"brokerages":[
+				{
+					"id":0,
+					"name":"brokerage 0",
+					"brokers":
+					[
+						{
+							"id":0,
+							"initials":"A B",
+							"surname":"De Villiers",
+							"name":"Albert Boertjie"
+						},
+						{
+							"id":1,
+							"initials":"S",
+							"surname":"Wiggill",
+							"name":"Samantha"
+						}
+					]
+				},
+				{
+					"id":1,
+					"name":"brokerage 1",
+					"brokers":
+					[
+						{
+							"id":2,
+							"initials":"C D",
+							"surname":"De Villiers",
+							"name":"Calbert Doertjie"
+						},
+						{
+							"id":3,
+							"initials":"M",
+							"surname":"Giggill",
+							"name":"Mamantha"
+						}
+					]
+				},
+			]
+		};*/
+
+		ajaxPost(GET_BROKER_DETAILS_OF_BROKERAGE_URL,successCallback,failCallback,requestObject,mockResponse);
+	};	// USED
+
+
+
+
 	/*
 		insurerAdmin/getBrokerages
 
@@ -153,6 +273,7 @@ var insurerAdminController = new function() {
 			]
 		}
 	*/
+	// DO NOT THINK NEEDED ANYMORE
 	this.getBrokerages = function(successCallback,failCallback) {
 
 		var requestObject = 

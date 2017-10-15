@@ -109,6 +109,7 @@ var mockCommunicator = new function()
 			'password':'',
 			'roleId':'0',
 			'name':'Leeroy',
+			'initials':'L',
 			'surname':'Nnnjenkinsss',
 			'email':'ljenkins@gmail.com',
 			'active':'1',
@@ -119,6 +120,7 @@ var mockCommunicator = new function()
 			'password':'',
 			'roleId':'1',
 			'name':'Leeroy',
+			'initials':'L',
 			'surname':'Nnnjenkinsss',
 			'email':'ljenkins@gmail.com',
 			'active':'1',
@@ -130,6 +132,7 @@ var mockCommunicator = new function()
 			'password':'',
 			'roleId':'2',
 			'name':'Andre',
+			'initials':'A',
 			'surname':'Carstens',
 			'email':'acarstens@gmail.com',
 			'active':'1',
@@ -141,6 +144,7 @@ var mockCommunicator = new function()
 			'password':'',
 			'roleId':'3',
 			'name':'BAName',
+			'initials':'B A',
 			'surname':'BASurname',
 			'email':'cameo@gmail.com',
 			'active':'1',
@@ -152,6 +156,7 @@ var mockCommunicator = new function()
 			'password':'',
 			'roleId':'4',
 			'name':'BMName',
+			'initials':'B',
 			'surname':'BMSurname',
 			'email':'dracula@gmail.com',
 			'active':'1',
@@ -163,6 +168,7 @@ var mockCommunicator = new function()
 			'password':'',
 			'roleId':'5',
 			'name':'Dan',
+			'initials':'D',
 			'surname':'Wazoski',
 			'email':'danwaz@gmail.com',
 			'active':'1',
@@ -174,6 +180,7 @@ var mockCommunicator = new function()
 			'password':'',
 			'roleId':'5',
 			'name':'Simon',
+			'initials':'S',
 			'surname':'Says',
 			'email':'simonsays@gmail.com',
 			'active':'1',
@@ -185,6 +192,7 @@ var mockCommunicator = new function()
 			'password':'',
 			'roleId':'4',
 			'name':'Viewable Broker Name',
+			'initials':'V B N',
 			'surname':'Surname',
 			'email':'viewableBroker@gmail.com',
 			'active':'1',
@@ -196,12 +204,28 @@ var mockCommunicator = new function()
 			'password':'',
 			'roleId':'4',
 			'name':'Viewable2 Broker2 Name2',
+			'initials':'V2 B2',
 			'surname':'Surname2',
 			'email':'viewable2Broker2@gmail.com',
 			'active':'1',
 			'validated':'1'
 		}
 	];
+
+	this.getDetailsOfUser = function(userId) {
+
+		var user = this.userTable[userId];
+
+		var response = {
+			'initials':user['initials'],
+			'name':user['name'],
+			'surname':user['surname'],
+			'email':user['email'],
+		};
+
+		return response;
+	}
+
 	this.createUser = function(data) {
 
 		data.id = this.userTable.length;
@@ -657,6 +681,18 @@ var mockCommunicator = new function()
 		},
 	];
 
+	this.getBrokersOfBrokerage = function(brokerageId) {
+		var brokers = [];
+
+		for(var i=0;i<this.brokerTable.length;i++) {
+			if(this.brokerTable[i]['brokerageId']==brokerageId) {
+				brokers.push(this.brokerTable[i]);
+			}
+		}
+
+		return brokers;
+	}
+
 	// User by: brokerAdmin
 	this.getBrokersForBrokerTableInBrokerageTab = function(brokerageId) {
 		var brokers = [];
@@ -825,7 +861,6 @@ var mockCommunicator = new function()
 		data.id = id;
 		this.brokerageTable[id] = data;
 	}
-
 // ############################# QUOTES ################################
 // QUOTE - done
 	this.quoteTable = [
