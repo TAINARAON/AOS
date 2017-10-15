@@ -11,6 +11,7 @@ var quoteViewer = new function ()
 	var businessUnitInput = document.getElementById("business_unit_input");
 	var searchButton = document.getElementById("search_button");
 	var quoteAccordion = document.getElementById("quote_accordion");
+	var quoteAccordionButtonsContainer = document.getElementById("quote_button_container");
 
 	(function init(){
 		createModal("modal_container");
@@ -21,6 +22,7 @@ var quoteViewer = new function ()
 		addOnEnterKeyPressedListenerForSearchInput(quoteNumberInput);
 		addOnEnterKeyPressedListenerForSearchInput(businessUnitInput);
 		search();
+		$(quoteAccordionButtonsContainer).hide();
 	})();
 
 	function createModal(id)
@@ -167,6 +169,7 @@ var quoteViewer = new function ()
 	{
 		quoteAccordion.innerHTML = "";
 		mapScriptContainer.innerHTML = "";
+		quoteAccordionButtonsContainer.innerHTML = "";
 
 		for(var i = 0; i < quotes.length; i++)
 		{
@@ -176,10 +179,10 @@ var quoteViewer = new function ()
 
 			for(var j = 0; j < quotes[i].quoteLandEntries.length; j++)
 			{
-				if(j == 0)
+				/*if(j == 0)
 				{
 					createQuoteButtons(quotes[i], childContainer);
-				}
+				}*/
 				createQuoteAccordionChildItem(quotes[i].quoteLandEntries[j], childContainer);
 			}
 		}
@@ -197,11 +200,12 @@ var quoteViewer = new function ()
 		var parentTitle = document.createElement("A");
 		parentTitle.className = "toggle";
 		parentTitle.style.cssText = "display: flex;";
+		parentTitle.onclick = function(){toggleOtherQuotes(quote, parentLi, container);};
 
-		createAccordionItemDetailDiv("Quote Number: " + quote.quoteNumber, parentTitle);
-		createAccordionItemDetailDiv("Business Unit: " + quote.businessUnit.name, parentTitle);
-		createAccordionItemDetailDiv("Date Created: " + quote.dateCreated, parentTitle);
-		createAccordionItemDetailDiv("Premium: " + quote.premium, parentTitle);
+		createAccordionItemDetailDiv("Quote Number: " + quote.quoteNumber, parentTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Business Unit: " + quote.businessUnit.name, parentTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Date Created: " + quote.dateCreated, parentTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Premium: " + quote.premium, parentTitle).className = "col-md-2";
 
 		var childContainer = document.createElement("UL");
 		childContainer.className = "inner";
@@ -214,11 +218,29 @@ var quoteViewer = new function ()
 		return childContainer;
 	}
 
+	function toggleOtherQuotes(quote, theCurrentItem, itemContainer)
+	{
+		var listOfItems = itemContainer.childNodes;
+
+		for(var i = 0; i < listOfItems.length; i++)
+		{
+			if(listOfItems[i] != theCurrentItem)
+			{
+				$(listOfItems[i]).toggle();
+			}
+		}
+
+		// Replace the quote buttons
+		quoteAccordionButtonsContainer.innerHTML = "";
+		createQuoteButtons(quote, quoteAccordionButtonsContainer);
+		$(quoteAccordionButtonsContainer).toggle();
+	}
+
 	function createAccordionItemDetailDiv(val, container)
 	{
 		var tDiv = document.createElement("DIV");
 		tDiv.innerHTML = val;
-		tDiv.style.cssText = "margin-right: 80px;";
+		//tDiv.style.cssText = "margin-right: 80px;";
 		container.appendChild(tDiv);
 
 		return tDiv;
@@ -232,13 +254,13 @@ var quoteViewer = new function ()
 		childTitle.className = "toggle";
 		childTitle.style.cssText = "display: flex; background: #4287b5;";
 
-		createAccordionItemDetailDiv("Land Number: ", childTitle).className = "col-md-1";
-		createAccordionItemDetailDiv("Crop: ", childTitle).className = "col-md-1";
-		createAccordionItemDetailDiv("Cultivar: ", childTitle).className = "col-md-1";
-		createAccordionItemDetailDiv("Area: ", childTitle).className = "col-md-1";
-		createAccordionItemDetailDiv("Yield ", childTitle).className = "col-md-1";
-		createAccordionItemDetailDiv("Price: ", childTitle).className = "col-md-1";
-		createAccordionItemDetailDiv("Tariff Option: ", childTitle).className = "col-md-1";
+		createAccordionItemDetailDiv("Land Number: ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Crop: ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Cultivar: ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Area: ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Yield ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Price: ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Tariff Option: ", childTitle).className = "col-md-2";
 
 		childLi.appendChild(childTitle);
 		container.appendChild(childLi);
@@ -252,13 +274,13 @@ var quoteViewer = new function ()
 		childTitle.className = "toggle";
 		childTitle.style.cssText = "display: flex;";
 
-		createAccordionItemDetailDiv(landEntry.landNumber , childTitle).className = "col-md-1";
-		createAccordionItemDetailDiv(landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.crop.name, childTitle).className = "col-md-1";
-		createAccordionItemDetailDiv(landEntry.cultivar, childTitle).className = "col-md-1";
-		createAccordionItemDetailDiv(landEntry.area, childTitle).className = "col-md-1";
-		createAccordionItemDetailDiv(landEntry.yield, childTitle).className = "col-md-1";
-		createAccordionItemDetailDiv(landEntry.price, childTitle).className = "col-md-1";
-		createAccordionItemDetailDiv(landEntry.tariff, childTitle).className = "col-md-1";
+		createAccordionItemDetailDiv(landEntry.landNumber , childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv(landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.crop.name, childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv(landEntry.cultivar, childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv(landEntry.area, childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv(landEntry.yield, childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv(landEntry.price, childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv(landEntry.tariff, childTitle).className = "col-md-2";
 
 		var childDetail = document.createElement("DIV");
 		childDetail.className = "inner";
@@ -290,7 +312,7 @@ var quoteViewer = new function ()
 
 	function createQuoteButtons(quote, container)
 	{
-		var childLi = document.createElement("LI");
+		//var childLi = document.createElement("LI");
 
 		// TODO: do acceptable check here
 		if(quote.acceptable == 1)
@@ -306,7 +328,7 @@ var quoteViewer = new function ()
 		// Delete quote temporarily removed
 		//createDeleteBtn(container, quote);
 		
-		container.appendChild(childLi);
+		//container.appendChild(childLi);
 	}
 
 	function createSuccessButton(title, container)
