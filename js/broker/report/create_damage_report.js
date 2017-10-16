@@ -415,7 +415,8 @@ var modalDamageReport = new function()
 				//alert(requiresTaxation);
 				var landEntryObject = 
 				{
-					'id':landEntryId
+					'id':landEntryId,
+					'inspected':false
 				};
 				//'requiresTaxation':requiresTaxation
 
