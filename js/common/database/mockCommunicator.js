@@ -2296,6 +2296,7 @@ var mockCommunicator = new function()
 			'damageReportNumber':'00000',
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
+			'requiresTaxation':true
 		},
 		{
 			'id':'1',
@@ -2303,6 +2304,7 @@ var mockCommunicator = new function()
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
 			'damageReportNumber':'00001',
+			'requiresTaxation':true
 		},
 		{
 			'id':'2',
@@ -2310,6 +2312,7 @@ var mockCommunicator = new function()
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
 			'damageReportNumber':'00002',
+			'requiresTaxation':false
 		},
 		{
 			'id':'3',
@@ -2317,6 +2320,7 @@ var mockCommunicator = new function()
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
 			'damageReportNumber':'00003',
+			'requiresTaxation':true
 		},
 	];
 	this.createDamageReport = function(data) {
@@ -2353,73 +2357,62 @@ var mockCommunicator = new function()
 		{
 			'id':'0',
 			'damageReportId':0,
-			'policyLandEntryId':0,
-			'requiresTaxation':true
+			'policyLandEntryId':0
 		},
 		{
 			'id':'1',
 			'damageReportId':0,
-			'policyLandEntryId':1,
-			'requiresTaxation':true
+			'policyLandEntryId':1
 
 		},
 		{
 			'id':'2',
 			'damageReportId':0,
-			'policyLandEntryId':2,
-			'requiresTaxation':true
+			'policyLandEntryId':2
 		},
 		{
 			'id':'3',
 			'damageReportId':1,
-			'policyLandEntryId':0,
-			'requiresTaxation':true
+			'policyLandEntryId':0
 		},
 		{
 			'id':'4',
 			'damageReportId':2,
-			'policyLandEntryId':1,
-			'requiresTaxation':true
+			'policyLandEntryId':1
 
 		},
 		{
 			'id':'5',
 			'damageReportId':3,
-			'policyLandEntryId':2,
-			'requiresTaxation':true
+			'policyLandEntryId':2
 		},
 		{
 			'id':'6',
 			'damageReportId':1,
-			'policyLandEntryId':3,
-			'requiresTaxation':true
+			'policyLandEntryId':3
 		},
 		{
 			'id':'7',
 			'damageReportId':2,
-			'policyLandEntryId':2,
-			'requiresTaxation':true
+			'policyLandEntryId':2
 
 		},
 		{
 			'id':'8',
 			'damageReportId':3,
-			'policyLandEntryId':1,
-			'requiresTaxation':true
+			'policyLandEntryId':1
 		}
 		,
 		{
 			'id':'9',
 			'damageReportId':2,
-			'policyLandEntryId':4,
-			'requiresTaxation':true
+			'policyLandEntryId':4
 
 		},
 		{
 			'id':'10',
 			'damageReportId':3,
-			'policyLandEntryId':5,
-			'requiresTaxation':true
+			'policyLandEntryId':5
 		}
 	];
 	this.createDamageReportLandEntry = function(data) {

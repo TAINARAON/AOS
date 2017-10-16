@@ -276,17 +276,17 @@ var modalDamageReport = new function()
 					
 					for(var i = 0; i < landArr.length; i++)
 					{
-						var checkboxDivContainer = $("<div class='requires_taxation_checkbox_container'></div>")
+						/*var checkboxDivContainer = $("<div class='requires_taxation_checkbox_container'></div>")
 						var checkboxLabel = $("<label></label>").text('Taxation');
 						var checkbox = $('<input type="checkbox">');
-						checkboxDivContainer.append(checkboxLabel).append(checkbox).hide();
+						checkboxDivContainer.append(checkboxLabel).append(checkbox).hide();*/
 
 						//$(element_available_land_entry_container).append("<li>"+landArr[i].landNumber+"</li>");
 						var li = $('<li></li>')
 							.text(landArr[i].landNumber)
 							.val(landArr[i].landNumber)
-							.on('click',function() {toggleSelectedListItem($(this));})
-							.append(checkboxDivContainer);
+							.on('click',function() {toggleSelectedListItem($(this));});
+							//.append(checkboxDivContainer);
 
 						$(element_available_land_entry_container).append(li);
 					}
@@ -336,7 +336,7 @@ var modalDamageReport = new function()
 
 				$('#selectedLandEntry').append(item);
 
-				item.find('.requires_taxation_checkbox_container').show();
+				//item.find('.requires_taxation_checkbox_container').show();
 
 				toggleSelectedListItem(item);
 			}
@@ -357,7 +357,7 @@ var modalDamageReport = new function()
 
 				$('#availableLandEntry').append(item);
 
-				item.find('.requires_taxation_checkbox_container').hide();
+				//item.find('.requires_taxation_checkbox_container').hide();
 
 				toggleSelectedListItem(item);
 			}
@@ -410,9 +410,10 @@ var modalDamageReport = new function()
 				var landEntry = totalSelectedLandEntries.eq(i);
 				//alert(landEntry.val());
 				var landEntryId = getLandEntryByLandEntryNumber(landEntry.val()).id;
-				var requiresTaxation = landEntry.find('input[type=checkbox]').prop('checked');
+				
+				//var requiresTaxation = landEntry.find('input[type=checkbox]').prop('checked');
 				//alert(requiresTaxation);
-				var landEntryObject = 
+				/*var landEntryObject = 
 				{
 					'id':landEntryId,
 					'requiresTaxation':requiresTaxation
@@ -420,7 +421,7 @@ var modalDamageReport = new function()
 
 				console.log(landEntryObject);
 
-				landEntries.push(landEntryObject);
+				landEntries.push(landEntryObject);*/
 			}
 			var damageType = getDamageTypeByName($(":radio[name='optradio']:checked").val());
 

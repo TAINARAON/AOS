@@ -164,6 +164,8 @@ var damageReport = new function()
 		createAccordionItemDetailDiv("Damage Type: " + damageReport.damageType.name, parentTitle);
 		createAccordionItemDetailDiv("Damage Date: " + damageReport.dateOfDamage, parentTitle);
 		createAccordionItemDetailDiv("Damage Report Number: " + damageReport.damageReportNumber, parentTitle);
+		var requiresTaxation = damageReport.requiresTaxation ? "Yes" : "No";
+		createAccordionItemDetailDiv("Taxation Required: " + requiresTaxation, parentTitle);
 
 		var childContainer = document.createElement("UL");
 		childContainer.className = "inner";
@@ -242,8 +244,6 @@ var damageReport = new function()
 		//createAccordionItemDetailDiv("Farm Name: " + damageReportLandEntry.policyLandEntry.farm.name, childTitle);
 		createAccordionItemDetailDiv("Crop Name: " + damageReportLandEntry.policyLandEntry.crop.name, childTitle);
 		createAccordionItemDetailDiv("Area: " + damageReportLandEntry.policyLandEntry.area, childTitle);
-		var requiresTaxation = damageReportLandEntry.requiresTaxation ? "Yes" : "No";
-		createAccordionItemDetailDiv("Taxation Required: " + requiresTaxation, childTitle);
 
 		var childDetail = document.createElement("DIV");
 		childDetail.className = "inner";

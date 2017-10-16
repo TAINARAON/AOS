@@ -11,6 +11,7 @@ var policyViewer = new function ()
 	var businessUnitInput = document.getElementById("business_unit_input");
 	var searchButton = document.getElementById("search_button");
 	var policyAccordion = document.getElementById("policy_accordion");
+	var policyAccordionButtonsContainer = document.getElementById("policy_button_container");
 
 	(function init(){
 		setAvailableBrokers();
@@ -18,6 +19,7 @@ var policyViewer = new function ()
 		addOnEnterKeyPressedListenerForSearchInput(policyNumberInput);
 		addOnEnterKeyPressedListenerForSearchInput(businessUnitInput);
 		search();
+		$(policyAccordionButtonsContainer).hide();
 	})();
 
 	function setAvailableBrokers()
@@ -73,6 +75,7 @@ var policyViewer = new function ()
 	function search()
 	{
 		landEntryMaps = [];
+		$(policyAccordionButtonsContainer).hide();
 
 		var tBrokerName = $(brokerSelect).val().trim();
 		var brokerId = getIdOfSelectedBroker(tBrokerName);
@@ -115,10 +118,13 @@ var policyViewer = new function ()
 	{
 		policyAccordion.innerHTML = "";
 		mapScriptContainer.innerHTML = "";
+		policyAccordionButtonsContainer.innerHTML = "";
 
 		for(var i = 0; i < policies.length; i++)
 		{
 			var childContainer = createPolicyAccordionParentItem(policies[i], policyAccordion);
+
+			createChildHeaderAccordionItem(childContainer);
 
 			for(var j = 0; j < policies[i].policyLandEntries.length; j++)
 			{
@@ -136,11 +142,12 @@ var policyViewer = new function ()
 		var parentTitle = document.createElement("A");
 		parentTitle.className = "toggle";
 		parentTitle.style.cssText = "display: flex;";
+		parentTitle.onclick = function(){toggleOtherPolicies(policy, parentLi, container);};
 
-		createAccordionItemDetailDiv("Policy Number: " + policy.policyNumber, parentTitle);
-		createAccordionItemDetailDiv("Business Unit: " + policy.businessUnit.name, parentTitle);
-		createAccordionItemDetailDiv("Policy Start: " + policy.acceptedOn, parentTitle);
-		createAccordionItemDetailDiv("Premium: " + policy.premium, parentTitle);
+		createAccordionItemDetailDiv("Policy Number: " + policy.policyNumber, parentTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Business Unit: " + policy.businessUnit.name, parentTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Policy Start: " + policy.acceptedOn, parentTitle).className = "col-md-3";
+		createAccordionItemDetailDiv("Premium: " + policy.premium, parentTitle).className = "col-md-2";
 
 		var childContainer = document.createElement("UL");
 		childContainer.className = "inner";
@@ -153,12 +160,52 @@ var policyViewer = new function ()
 		return childContainer;
 	}
 
+	function toggleOtherPolicies(policy, theCurrentItem, itemContainer)
+	{
+		var listOfItems = itemContainer.childNodes;
+
+		for(var i = 0; i < listOfItems.length; i++)
+		{
+			if(listOfItems[i] != theCurrentItem)
+			{
+				$(listOfItems[i]).toggle();
+			}
+		}
+
+		// Replace the quote buttons
+		policyAccordionButtonsContainer.innerHTML = "";
+		createPolicyButtons(policy, policyAccordionButtonsContainer);
+		$(policyAccordionButtonsContainer).toggle();
+	}
+
 	function createAccordionItemDetailDiv(val, container)
 	{
 		var tDiv = document.createElement("DIV");
 		tDiv.innerHTML = val;
-		tDiv.style.cssText = "margin-right: 80px;";
+		//tDiv.style.cssText = "margin-right: 80px;";
 		container.appendChild(tDiv);
+		return tDiv;
+	}
+
+	function createChildHeaderAccordionItem(container)
+	{
+		var childLi = document.createElement("LI");
+
+		var childTitle = document.createElement("A");
+		childTitle.className = "toggle";
+		childTitle.style.cssText = "display: flex; background: #4287b5;";
+
+		createAccordionItemDetailDiv("Land Number: ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Crop: ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Cultivar: ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Area: ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Yield ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Price: ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Tariff Option: ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Covered Perils: ", childTitle).className = "col-md-2";
+
+		childLi.appendChild(childTitle);
+		container.appendChild(childLi);
 	}
 
 	function createPolicyAccordionChildItem(landEntry, container)
@@ -169,13 +216,27 @@ var policyViewer = new function ()
 		childTitle.className = "toggle";
 		childTitle.style.cssText = "display: flex;";
 
-		createAccordionItemDetailDiv("Land Number: " + landEntry.landNumber , childTitle);
-		createAccordionItemDetailDiv("Crop: " + landEntry.crop.name, childTitle);
-		createAccordionItemDetailDiv("Cultivar: " + landEntry.cultivar, childTitle);
-		createAccordionItemDetailDiv("Area: " + landEntry.area, childTitle);
-		createAccordionItemDetailDiv("Yield " + landEntry.yield, childTitle);
-		createAccordionItemDetailDiv("Price: " + landEntry.price, childTitle);
-		createAccordionItemDetailDiv("Tariff Option: " + landEntry.tariff, childTitle);
+		createAccordionItemDetailDiv(landEntry.landNumber , childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv(landEntry.crop.name, childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv(landEntry.cultivar, childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv(landEntry.area, childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv(landEntry.yield, childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv(landEntry.price, childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv(landEntry.tariff, childTitle).className = "col-md-2";
+		var perils="";
+		for(var i = 0; i < landEntry.policyLandEntryDamageTypes.length; i++)
+		{
+			var damageType = landEntry.policyLandEntryDamageTypes[i].tariffOptionDamageType.damageType.name;
+			if(i == 0)
+			{
+				perils += damageType;
+			}
+			else
+			{
+				perils += ", "+damageType;
+			}
+		}
+		createAccordionItemDetailDiv(perils, childTitle).className = "col-md-2";
 
 		var childDetail = document.createElement("DIV");
 		childDetail.className = "inner";
@@ -212,6 +273,45 @@ var policyViewer = new function ()
 		mapScript.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAv9T_ISeUi2Jf9FcFpXO24VkRUByr5_ek&callback=policyViewer.initMap";
 
 		container.appendChild(mapScript);
+	}
+
+	function createPolicyButtons(policy, container)
+	{
+		createIncreaseBtn(container, policy);
+	}
+
+	function createIncreaseBtn(container, policy)
+	{
+		var button = createSuccessButton("Increase Quote", container);
+		button.onclick = function(e) {increaseQuote(e, policy);};
+		button.style.cssText = "margin-right: 10px;";
+	}
+
+	function increaseQuote(e, policy)
+	{
+		alert("Increase Quote");
+	}
+
+	function createSuccessButton(title, container)
+	{
+		var button = document.createElement("DIV");
+		button.className = "btn btn-success col-md-2";
+		button.innerHTML = title;
+
+		container.appendChild(button);
+
+		return button;
+	}
+
+	function createDangerButton(title, container)
+	{
+		var button = document.createElement("DIV");
+		button.className = "btn btn-danger col-md-2";
+		button.innerHTML = title;
+
+		container.appendChild(button);
+
+		return button;
 	}
 
 	this.initMap = function() {
