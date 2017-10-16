@@ -8,7 +8,7 @@
  		},
  		{
  			'text':'Policy',
- 			'pageUrl':'html/broker/policy.html'
+ 			'pageUrl':'html/broker/policy/policy.html'
  		},
  		{
  			'text':'Quote',
