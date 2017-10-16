@@ -1,96 +1,156 @@
 var selectedValues = {
 	"districtId":'ALL',
-	"optionTypeId":'ALL',
 	"cropId":'ALL'
 };
 
+var tableRowEntries = [];
+
+var crops = [];
+var districts = [];
+var limits = [];
+
 (function init() {
-	populateDistrictDropdownValues();
-	populateOptionTypeDropdownValues();
-	populateCropDropdownValues();
-	repopulateTariffTable();
+
+	getAllNeededData();	
 })();
+
+function getAllNeededData() {
+
+	insurerAdminController.getDataForPoolLimitSystemkeyView(getDataSuccessCallback,getDataFailureCallback);
+}
+
+function getDataSuccessCallback(response) {
+
+	crops = response['crops'];
+	districts = response['districts'];
+	limits = response['limits'];
+
+	populateDistrictDropdownValues();
+	populateCropDropdownValues();
+
+	populateTable();
+}
+function getDataFailureCallback(response) {
+
+	alert("fail getDataFailureCallback");
+}
 
 function populateDistrictDropdownValues() {
 
-	var selectElement = $('#systemkey_tariff_view_district_dropdown');
-
-	var values = insurerInvoker.getDistricts();
+	var selectElement = $('#systemkey_pool_limit_view_district_dropdown');
 	
-	for(var i = 0; i < values.length; i++)
+	for(var i = 0; i < districts.length; i++)
 	{
-		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']));	
+		selectElement.append($('<option></option>').text(districts[i]['name']).val(districts[i]['id']));	
 	}
 
-	selectElement
-		.on('change',function() {
+	// on Click listener
+	selectElement.on('change', function() {
 			selectedValues['districtId'] = $(this).find(":selected").val();
-			repopulateTariffTable();
-		});
-}
-
-function populateOptionTypeDropdownValues() {
-
-	var selectElement = $('#systemkey_tariff_view_option_type_dropdown');
-
-	var values = insurerInvoker.getOptionTypes();
-	
-	for(var i = 0; i < values.length; i++)
-	{
-		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']));
-			
-	}
-
-	selectElement
-		.on('change',function() {
-			selectedValues['optionTypeId'] = $(this).find(":selected").val();
-			repopulateTariffTable();
+			filterPoolLimitTable();
 		});
 }
 
 function populateCropDropdownValues() {
 
-	var selectElement = $('#systemkey_tariff_view_crop_dropdown');
+	var selectElement = $('#systemkey_pool_limit_view_crop_dropdown');
 
-	var values = insurerInvoker.getCrops();
+	var values = crops;
 	
 	for(var i = 0; i < values.length; i++)
 	{
 		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']));
 	}
 
-	selectElement
-		.on('change',function() {
+	selectElement.on('change',function() {
 			selectedValues['cropId'] = $(this).find(":selected").val();
-			repopulateTariffTable();
+			filterPoolLimitTable();
 		});
 }
 
-function repopulateTariffTable() {
+function populateTable() {
 
-	var tableBody = $('#systemkey_tariff_view_tariff_table_body');
-	tableBody.empty();
+	var tableBody = $('#systemkey_pool_limit_view_pool_limit_table_body');
 
-	var cropId = selectedValues['cropId'];
-	var districtId = selectedValues['districtId'];
-	var optionTypeId = selectedValues['optionTypeId'];
+	for(var i = 0; i < limits.length; i++) {
 
-	var tariffs = insurerInvoker.getTariffsByCropDistrictOptionType(cropId,districtId,optionTypeId);
-
-	var detailsOfTariffs = insurerInvoker.getDetailsOfTariffs(tariffs);
-
-	for ( var i = 0; i < detailsOfTariffs.length; i++ ) {
-
-		var detailedTariff = detailsOfTariffs[i];
+		var limit = limits[i];
 
 		var tr = $('<tr></tr>')
-			.append($('<td></td>').text(detailedTariff['tariffOptionTypeName']))
-			.append($('<td></td>').text(detailedTariff['districtName']))
-			.append($('<td></td>').text(detailedTariff['cropName']))
-			.append($('<td></td>').text(detailedTariff['coverage']))
-			.append($('<td></td>').text(detailedTariff['coverageStart']))
-			.append($('<td></td>').text(detailedTariff['coverageEnd']));
+			.append($('<td></td>').text(getCropNameByCropId(limit['cropId'])))
+			.append($('<td></td>').text(getDistrictNameByDistrictId(limit['districtId'])))
+			.append($('<td></td>').text(limit['maximum']))
+			.append($('<td></td>').text(limit['runningValue']))
+			.append($('<td></td>').text( getPercentageFilled(limit['runningValue'],limit['maximum']) ))
+			.append($('<td></td>').text(limit['additionalTariff']));
+
+		// Keep track of table entries, so that I can just hide them as needed
+		var entry = {
+			'cropId':limit['cropId'],
+			'districtId':limit['districtId'],
+			'element':tr
+		}
+		tableRowEntries.push(entry);
 
 		tableBody.append(tr);
 	}
+}
+function getPercentageFilled(current, max) {
+
+	return (current / max) + "";
+}
+function getCropNameByCropId(cropId) {
+
+	for(var i = 0; i < crops.length; i++) {
+		if(crops[i]['id'] == cropId) {
+			return crops[i]['name'];
+		}
+	}
+}
+function getDistrictNameByDistrictId(districtId) {
+
+	for(var i = 0; i < districts.length; i++) {
+		if(districts[i]['id'] == districtId) {
+			return districts[i]['name'];
+		}
+	}
+}
+
+function filterPoolLimitTable() {
+
+	hideAllTableEntries();
+
+	var cropId = selectedValues['cropId'];
+	var districtId = selectedValues['districtId'];
+
+	var elements = findElementsByCropDistrict(cropId,districtId);
+
+	for(var i = 0; i < elements.length; i++) {
+		elements[i]['element'].show();
+	}
+}
+
+function hideAllTableEntries() {
+
+	for(var i = 0; i < tableRowEntries.length; i++) {
+		tableRowEntries[i]['element'].hide();
+	}
+}
+
+function findElementsByCropDistrict(cropId,districtId) {
+
+	var elements = [];
+
+	for(var i = 0; i < tableRowEntries.length; i++) {
+		var tableRowEntry = tableRowEntries[i];
+
+		var matchingCrop = (tableRowEntry['cropId'] == cropId || cropId == 'ALL');
+		var matchingDistrict = (tableRowEntry['districtId'] == districtId || districtId == 'ALL');
+
+		if( matchingCrop && matchingDistrict) {
+			elements.push(tableRowEntry);
+		}
+	}
+
+	return elements;
 }

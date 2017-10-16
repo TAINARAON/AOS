@@ -1727,7 +1727,17 @@ var mockCommunicator = new function()
 
 // ########################### SYSTEM KEYS ###############################
 
-// LIMITS
+// SEASON
+	this.seasonTable = [
+		{
+			'id':0,
+			'timeStart':'sometimestamp',
+			'timeEnd':'sometimestamp',
+			'name':'2017/01'
+		}
+	];
+
+// LIMIT
 	/*
 		Per InsuranceAgency, per District, per Crop, there is only a certain amount that the InsuranceAgency will 
 		cover that specific crop in that district. Once the pool is empty, you cannot take out a policy for that crop
@@ -1744,8 +1754,7 @@ var mockCommunicator = new function()
 			'id':'0',
 			'districtId':0,
 			'cropId':0,
-			'dateStart':0,
-			'dateEnd':0,
+			'seasonId':0,
 			'maximum':0,
 			'runningValue':0,
 			'additionalTariff':0,
@@ -2357,62 +2366,73 @@ var mockCommunicator = new function()
 		{
 			'id':'0',
 			'damageReportId':0,
-			'policyLandEntryId':0
+			'policyLandEntryId':0,
+			'inspected':true
 		},
 		{
 			'id':'1',
 			'damageReportId':0,
-			'policyLandEntryId':1
+			'policyLandEntryId':1,
+			'inspected':true
 
 		},
 		{
 			'id':'2',
 			'damageReportId':0,
-			'policyLandEntryId':2
+			'policyLandEntryId':2,
+			'inspected':true
 		},
 		{
 			'id':'3',
 			'damageReportId':1,
-			'policyLandEntryId':0
+			'policyLandEntryId':0,
+			'inspected':true
 		},
 		{
 			'id':'4',
 			'damageReportId':2,
-			'policyLandEntryId':1
+			'policyLandEntryId':1,
+			'inspected':true
 
 		},
 		{
 			'id':'5',
 			'damageReportId':3,
-			'policyLandEntryId':2
+			'policyLandEntryId':2,
+			'inspected':true
 		},
 		{
 			'id':'6',
 			'damageReportId':1,
-			'policyLandEntryId':3
+			'policyLandEntryId':3,
+			'inspected':false
 		},
 		{
 			'id':'7',
 			'damageReportId':2,
-			'policyLandEntryId':2
+			'policyLandEntryId':2,
+			'inspected':false
 
 		},
 		{
 			'id':'8',
 			'damageReportId':3,
-			'policyLandEntryId':1
+			'policyLandEntryId':1,
+			'inspected':false
 		}
 		,
 		{
 			'id':'9',
 			'damageReportId':2,
-			'policyLandEntryId':4
+			'policyLandEntryId':4,
+			'inspected':false
 
 		},
 		{
 			'id':'10',
 			'damageReportId':3,
-			'policyLandEntryId':5
+			'policyLandEntryId':5,
+			'inspected':false
 		}
 	];
 	this.createDamageReportLandEntry = function(data) {

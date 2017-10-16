@@ -9,6 +9,7 @@ var insurerAdminController = new function() {
 	var GET_BROKERAGES_URL = "GET_BROKERAGES_URL";
 	var GET_INSURER_ADMIN_BY_USER_ID_URL = "GET_INSURER_ADMIN_BY_USER_ID_URL";
 	var GET_INSURANCE_AGENCY_URL = "GET_INSURANCE_AGENCY_URL";
+	var GET_DATA_FOR_POOL_LIMIT_SYSTEMKEY_VIEW_URL = 'GET_DATA_FOR_POOL_LIMIT_SYSTEMKEY_VIEW_URL';
 
 	this.init = function(userId) {
 
@@ -20,6 +21,115 @@ var insurerAdminController = new function() {
 		// Starts a chain
 		ajaxGetInsurerAdminByUserId(userId);
 	}
+
+
+	// NEW STUFF 2017/10/16.
+	/*  
+		insurerAdmin/getDataForPoolLimitSystemkeyView
+
+		requestObject:{
+			insuranceAgencyId
+		}
+
+		responseObject:{
+			crops:
+			[
+				{
+					id,name
+				}
+			],
+			districts:
+			[
+				{
+					id,name
+				}
+			],
+			limits:
+			[
+				{
+					whole limit object
+				}
+			]
+		}
+	*/
+	this.getDataForPoolLimitSystemkeyView = function(successCallback,failureCallback) {
+
+		var insuranceAgencyId = 1;	//insuranceAgency['id'];
+
+		var requestObject = {
+			'insuranceAgencyId':insuranceAgencyId
+		};
+
+		var mockResponse = {
+			'crops':
+			[
+				{
+					id:0,name:"Apple"
+				},
+				{
+					id:1,name:"Banana"
+				},
+			],
+			'districts':
+			[
+				{
+					id:0,name:"Alberton"
+				},
+				{
+					id:1,name:"Bellville"
+				},
+			],
+			'limits':
+			[
+				{
+					'id':'0',
+					'districtId':0,
+					'cropId':0,
+					'seasonId':0,
+					'maximum':10000,
+					'runningValue':2000,
+					'additionalTariff':5,
+					'insuranceAgencyId':0
+				},
+				{
+					'id':'1',
+					'districtId':0,
+					'cropId':1,
+					'seasonId':0,
+					'maximum':11000,
+					'runningValue':2000,
+					'additionalTariff':6,
+					'insuranceAgencyId':0
+				},
+				{
+					'id':'2',
+					'districtId':1,
+					'cropId':0,
+					'seasonId':0,
+					'maximum':11110,
+					'runningValue':1110,
+					'additionalTariff':10,
+					'insuranceAgencyId':0
+				},
+				{
+					'id':'3',
+					'districtId':1,
+					'cropId':1,
+					'seasonId':0,
+					'maximum':20100,
+					'runningValue':2000,
+					'additionalTariff':4,
+					'insuranceAgencyId':0
+				},
+			]
+		}
+
+		ajaxPost(GET_DATA_FOR_POOL_LIMIT_SYSTEMKEY_VIEW_URL,successCallback,failureCallback,requestObject,mockResponse);
+	}
+	// END OF NEW STUFF 2017/10/16
+
+
+
 	/*   SENT TO WIKUS
 		insurerAdmin/getInsurerAdminByUserId
 
