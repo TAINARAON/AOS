@@ -460,6 +460,7 @@ var damageReportInvoker = new function()
 			var tObj = {
 				"damageReportId":damageReportId,
 				"policyLandEntryId":damageReport.damageReportLandEntries[i]["id"],
+				"inspected":damageReport.damageReportLandEntries[i]["inspected"]
 				//"requiresTaxation":damageReport.damageReportLandEntries[i]["requiresTaxation"],
 			};
 			mockCommunicator.createDamageReportLandEntry(tObj);

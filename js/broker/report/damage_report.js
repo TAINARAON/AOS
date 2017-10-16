@@ -167,6 +167,7 @@ var damageReport = new function()
 		createAccordionItemDetailDiv("Damage Report Number: " + damageReport.damageReportNumber, parentTitle);
 		var requiresTaxation = damageReport.requiresTaxation ? "Yes" : "No";
 		createAccordionItemDetailDiv("Taxation Required: " + requiresTaxation, parentTitle);
+		calculateDamageStatus(damageReport, createAccordionItemDetailDiv("Status: ", parentTitle));
 
 		var childContainer = document.createElement("UL");
 		childContainer.className = "inner";
@@ -195,23 +196,36 @@ var damageReport = new function()
 	function calculateDamageStatus(damageReport, parentTitle)
 	{
 		var damageDiv = document.createElement("DIV");
-		damageDiv.style.cssText = "height: 20px; width: 20px; float: right;";
+		damageDiv.style.cssText = "height: 20px; width: 20px; float: right; border-radius:20px;";
 
-		var count = damageReport.damageReportDamageTypes.length;
-		//var count = damageReport.policyLandEntry.policyLandEntryDamageTypes.length;
-
-		// TODO: discuss this
-		if(count <= 1)
+		var count = 0;
+		var allTrue = true;
+		if(damageReport.requiresTaxation)
 		{
-			damageDiv.style.cssText += "background-color: cadetblue;";
+			for(var i = 0; i < damageReport.damageReportLandEntries.length; i++)
+			{
+				if(!damageReport.damageReportLandEntries.inspected)
+				{
+					allTrue = false;
+				}
+				else
+				{
+					count++;
+				}
+			}
 		}
-		else if(count <= 2)
+		// TODO: test this
+		if(!allTrue && count == 0)
 		{
-			damageDiv.style.cssText += "background-color: darkkhaki;";
+			damageDiv.style.cssText += "background-color: tomato;";
+		}
+		else if(!allTrue && count >= 1)
+		{
+			damageDiv.style.cssText += "background-color: #d0c017;";
 		}
 		else
 		{
-			damageDiv.style.cssText += "background-color: tomato;";
+			damageDiv.style.cssText += "background-color: #17d09a;";
 		}
 
 		parentTitle.appendChild(damageDiv);
