@@ -16,6 +16,7 @@ var quoteViewer = new function ()
 	(function init(){
 		createModal("modal_container");
 		createAcceptQuoteModal("modal_confirm_accept_quote");
+		createShareQuoteModal("modal_share_quote");
 
 		setAvailableBrokers();
 		setSearchButtonClickListener();
@@ -33,6 +34,11 @@ var quoteViewer = new function ()
 	function createAcceptQuoteModal(id)
 	{
 		loader.loadPartOfPage("html/broker/quote/accept.html", id);
+	}
+
+	function createShareQuoteModal(id)
+	{
+		loader.loadPartOfPage("html/broker/quote/share.html", id);
 	}
 
 	function setAvailableBrokers()
@@ -205,7 +211,7 @@ var quoteViewer = new function ()
 
 		createAccordionItemDetailDiv("Quote Number: " + quote.quoteNumber, parentTitle).className = "col-md-2";
 		createAccordionItemDetailDiv("Business Unit: " + quote.businessUnit.name, parentTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Date Created: " + quote.dateCreated, parentTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Date Created: " + quote.dateCreated, parentTitle).className = "col-md-3";
 		createAccordionItemDetailDiv("Premium: " + quote.premium, parentTitle).className = "col-md-2";
 
 		var childContainer = document.createElement("UL");
@@ -262,6 +268,7 @@ var quoteViewer = new function ()
 		createAccordionItemDetailDiv("Yield ", childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv("Price: ", childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv("Tariff Option: ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Covered Perils: ", childTitle).className = "col-md-2";
 
 		childLi.appendChild(childTitle);
 		container.appendChild(childLi);
@@ -282,6 +289,20 @@ var quoteViewer = new function ()
 		createAccordionItemDetailDiv(landEntry.yield, childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv(landEntry.price, childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv(landEntry.tariff, childTitle).className = "col-md-2";
+		var perils="";
+		for(var i = 0; i < landEntry.quoteLandEntryDamageTypes.length; i++)
+		{
+			var damageType = landEntry.quoteLandEntryDamageTypes[i].tariffOptionDamageType.damageType.name;
+			if(i == 0)
+			{
+				perils += damageType;
+			}
+			else
+			{
+				perils += ", "+damageType;
+			}
+		}
+		createAccordionItemDetailDiv(perils, childTitle).className = "col-md-2";
 
 		var childDetail = document.createElement("DIV");
 		childDetail.className = "inner";
@@ -399,9 +420,9 @@ var quoteViewer = new function ()
 
 	function shareQuote(event, quote)
 	{
-		alert("To be added at a later stage");
 		// TODO - create a preview modal to display pdf
 		// Give user option to email or print in there
+		shareModal.show(quote.id);
 	}
 
 	function addMapScriptForUpdatingLandEntryMaps(container)
