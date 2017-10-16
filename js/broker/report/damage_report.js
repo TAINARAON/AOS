@@ -151,6 +151,7 @@ var damageReport = new function()
 		var parentTitle = document.createElement("A");
 		parentTitle.className = "toggle";
 		parentTitle.style.cssText = "display: flex; overflow-x: auto;";
+		parentTitle.onclick = function(){toggleOtherPolicy(damageReport, parentLi, container);};
 
 		/*createAccordionItemDetailDiv("Damage Report Number: " + damageReport.id, parentTitle);
 		//createAccordionItemDetailDiv("Policy Number: " + damageReport.policyLandEntry.policy.policyNumber, parentTitle);
@@ -176,6 +177,19 @@ var damageReport = new function()
 		container.appendChild(parentLi);
 
 		return childContainer;
+	}
+
+	function toggleOtherPolicy(damageReport, theCurrentItem, itemContainer)
+	{
+		var listOfItems = itemContainer.childNodes;
+
+		for(var i = 0; i < listOfItems.length; i++)
+		{
+			if(listOfItems[i] != theCurrentItem)
+			{
+				$(listOfItems[i]).toggle();
+			}
+		}
 	}
 
 	function calculateDamageStatus(damageReport, parentTitle)
@@ -236,7 +250,8 @@ var damageReport = new function()
 
 		var childTitle = document.createElement("A");
 		childTitle.className = "toggle";
-		childTitle.style.cssText = "display: flex; background: cadetblue;";
+		childTitle.style.cssText = "display: flex;";
+		//childTitle.style.cssText = "display: flex; background: cadetblue;";
 
 		//createAccordionItemDetailDiv("Contact Person: " + damageReportLandEntry.policyLandEntry.policy.businessUnit.contactPerson, childTitle);
 		//createAccordionItemDetailDiv("Contact Number: " +damageReportLandEntry.policyLandEntry.policy.businessUnit.contactNumber, childTitle);

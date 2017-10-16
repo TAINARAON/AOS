@@ -1108,7 +1108,8 @@ var mockCommunicator = new function()
 			'cultivar':'Red Dwarf',
 			'area':'7.4',
 			'yield':'14.22',
-			'price':'5.48'
+			'price':'5.48',
+			'additionalTariff':0
 		},
 		{
 			'id':'1',
@@ -1120,7 +1121,8 @@ var mockCommunicator = new function()
 			'cultivar':'Octopussy',
 			'area':'6.8',
 			'yield':'11.22',
-			'price':'4.78'
+			'price':'4.78',
+			'additionalTariff':0
 		},
 		{
 			'id':'2',
@@ -1132,7 +1134,8 @@ var mockCommunicator = new function()
 			'cultivar':'Red Dwarf',
 			'area':'7.4',
 			'yield':'15.22',
-			'price':'4.48'
+			'price':'4.48',
+			'additionalTariff':0
 		},
 		{
 			'id':'3',
@@ -1144,7 +1147,8 @@ var mockCommunicator = new function()
 			'cultivar':'Octopussy',
 			'area':'6.7',
 			'yield':'12.22',
-			'price':'4.98'
+			'price':'4.98',
+			'additionalTariff':0
 		},
 		{
 			'id':'4',
@@ -1156,7 +1160,8 @@ var mockCommunicator = new function()
 			'cultivar':'Red Dwarf',
 			'area':'7.4',
 			'yield':'15.22',
-			'price':'4.48'
+			'price':'4.48',
+			'additionalTariff':0
 		},
 		{
 			'id':'5',
@@ -1168,7 +1173,8 @@ var mockCommunicator = new function()
 			'cultivar':'Octopussy',
 			'area':'6.7',
 			'yield':'12.22',
-			'price':'4.98'
+			'price':'4.98',
+			'additionalTariff':0
 		}
 	];
 	this.createQuoteLandEntry = function(data) {
