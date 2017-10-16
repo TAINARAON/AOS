@@ -155,8 +155,8 @@ var insurerAdminController = new function() {
 		};
 
 		responseObject:{
-			'crops',
-			'districts'
+			'crops':[],
+			'districts':[]
 		}
 	*/
 	this.getCreatePoolLimitData = function() {
@@ -389,9 +389,6 @@ var insurerAdminController = new function() {
 
 		ajaxPost(GET_BROKER_DETAILS_OF_BROKERAGE_URL,successCallback,failCallback,requestObject,mockResponse);
 	};	// USED
-
-
-
 
 	/*
 		insurerAdmin/getBrokerages
