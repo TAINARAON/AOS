@@ -10,6 +10,8 @@ var insurerAdminController = new function() {
 	var GET_INSURER_ADMIN_BY_USER_ID_URL = "GET_INSURER_ADMIN_BY_USER_ID_URL";
 	var GET_INSURANCE_AGENCY_URL = "GET_INSURANCE_AGENCY_URL";
 	var GET_DATA_FOR_POOL_LIMIT_SYSTEMKEY_VIEW_URL = 'GET_DATA_FOR_POOL_LIMIT_SYSTEMKEY_VIEW_URL';
+	var GET_CREATE_POOL_LIMIT_DATA_URL = 'GET_CREATE_POOL_LIMIT_DATA_URL';
+	var CREATE_POOL_LIMIT_URL = 'CREATE_POOL_LIMIT_URL';
 
 	this.init = function(userId) {
 
@@ -125,6 +127,40 @@ var insurerAdminController = new function() {
 		}
 
 		ajaxPost(GET_DATA_FOR_POOL_LIMIT_SYSTEMKEY_VIEW_URL,successCallback,failureCallback,requestObject,mockResponse);
+	}
+	/*  
+		insurerAdmin/createPoolLimit
+
+		requestObject:{
+			'cropId':cropId,
+			'districtId':districtId,
+			'maximum':maximum,
+			'additionalTariff':additionalTariff
+		};
+
+		responseObject:{
+			'status'
+		}
+	*/
+	this.createPoolLimit = function(successCallback,failureCallback,requestObject) {
+
+		ajaxPost(CREATE_POOL_LIMIT_URL,successCallback,failureCallback,requestObject);
+	}
+
+	/*  
+		insurerAdmin/getCreatePoolLimitData
+
+		requestObject:{
+			insuranceAgencyId
+		};
+
+		responseObject:{
+			'crops',
+			'districts'
+		}
+	*/
+	this.getCreatePoolLimitData = function() {
+
 	}
 	// END OF NEW STUFF 2017/10/16
 

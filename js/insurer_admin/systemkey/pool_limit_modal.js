@@ -1,13 +1,33 @@
-// Keeps track of peril elements, so that it can be shown or hidden.
-var perilEntryElements = [];
+var crops = [];
+var districts = [];
+
+var requiredFields = [false,false];
+var CROP_INDEX = 0;
+var DISTRICT_INDEX = 1;
 
 (function init() {
 
-	populateProductDropdownValues();
-	populateDistrictDropdownValues();
+	getCreatePoolLimitData();
 
 	setOnSaveListener();
 })();
+
+function getCreatePoolLimitData() {
+
+	insurerAdminController.getCreatePoolLimitData(getCreatePoolLimitDataSuccess,getCreatePoolLimitDataFailure);
+}
+
+function getCreatePoolLimitDataSuccess(response) {
+
+	crops = response['crops'];
+	districts = response['districts'];
+
+	populateCropDropdownValues();
+}
+function getCreatePoolLimitDataFailure(response) {
+
+	alert("failed getCreatePoolLimitDataFailure");
+}
 
 function setOnSaveListener() {
 	$('#systemkey_pool_limit_save_button').on('click',function() {
@@ -15,18 +35,18 @@ function setOnSaveListener() {
 	});
 }
 
-function populateProductDropdownValues() {
-	var selectElement = $('#systemkey_pool_limit_product_dropdown');
+function populateCropDropdownValues() {
 
-	var values = insurerInvoker.getProducts();
+	var selectElement = $('#systemkey_pool_limit_crop_dropdown');
+
+	var values = crops;
 	
 	for(var i = 0; i < values.length; i++)
 	{
 		selectElement
 			.append($('<option></option>').text(values[i]['name']).val(values[i]['id']))
 			.on('change',function() {
-				$('#systemkey_tariff_crop_dropdown_container').show();
-				repopulateCropDropdownValues($(this).find(":selected").val());
+				filterTable($(this).find(":selected").val());
 			});
 	}
 }
@@ -42,93 +62,84 @@ function repopulateCropDropdownValues(productId)
 	{
 		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']));
 	}
+
+	selectElement.on('change',function() {
+		requiredFields[CROP_INDEX] = true;
+	})
 }
-function populateDistrictDropdownValues()
-{
+function populateDistrictDropdownValues() {
+
 	var selectElement = $('#systemkey_tariff_district_dropdown');
 
-	var values = insurerInvoker.getDistricts();
+	var values = districts;
 	
 	for(var i = 0; i < values.length; i++)
 	{
 		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']));
 	}
+
+	selectElement.on('change',function() {
+		requiredFields[DISTRICT_INDEX] = true;
+	})
 }
 
+function savePoolLimit() {
 
-function saveTariff() {
+	if(allFieldsAreCompleted()) {
 
-	var tariffOptionDamageTypeArray = [];
+		var cropId = $('#systemkey_pool_limit_crop_dropdown').find(":selected").val();
+		var districtId = $('#systemkey_pool_limit_district_dropdown').find(":selected").val();
+		var maximum = $('#systemkey_pool_limit_pool_size_input').val();
+		var additionalTariff = $('#systemkey_pool_limit_additional_tariff_input').val();
 
-	var tariffOptionTypeId = $('#systemkey_tariff_option_type_dropdown').find(":selected").val();
-	var cropId = $('#systemkey_tariff_crop_dropdown').find(":selected").val();
-	var districtId = $('#systemkey_tariff_district_dropdown').find(":selected").val();
-	var coverage = $('#systemkey_tariff_coverage_input').val();
-
-	for ( var i = 0; i < perilEntryElements.length; i++) {
-		var perilEntry = perilEntryElements[i];
-
-		if(perilEntry.is(":visible")) {
-
-			var perilTypeId = perilEntry.prop('id');
-
-			var	 tariffElement = perilEntry.find( '.tariff_amount_element' );
-
-			var tariffAmount = tariffElement.val();
-			var isDefault = perilEntry.find( '.tariff_default_checkbox' ).is(":checked");
-
-			var tariffOptionDamageTypeObject = {
-				'damageTypeId':perilTypeId,
-				'tariff':tariffAmount,
-				'isDefault':isDefault
-			};
-
-			tariffOptionDamageTypeArray.push(tariffOptionDamageTypeObject);
+		var requestObject = 
+		{
+			'cropId':cropId,
+			'districtId':districtId,
+			'maximum':maximum,
+			'additionalTariff':additionalTariff
 		};
-	};
-	
-	// tariffOptionDamageTypeArray needs to be passed with this object, since the array needs the ID of the newly created tariff option
-	var tariffOptionObject = {
-		'tariffOptionTypeId':tariffOptionTypeId,
-		'cropId':cropId,
-		'districtId':districtId,
-		'coverage':coverage,
-	}
 
-	console.log(tariffOptionObject);
-	console.log(tariffOptionDamageTypeArray);
+		insurerAdminController.createPoolLimit(createPoolLimitSuccess,createPoolLimitFailure,requestObject);
 
-	if(validateValues(coverage,tariffOptionDamageTypeArray)) {
-
-		var newTariffOptionId = insurerInvoker.createTariffOption(tariffOptionObject,tariffOptionDamageTypeArray);
-
-		if(newTariffOptionId != null) {
-
-			// reload tariff table in tariff view
-			$('#systemkey_tariff_view_district_dropdown').trigger('change');
-
-			displaySuccessNotification();
-			resetModal();
-
-		} else {
-
-			displayFailureNotification("Error with creating tariff");
-		}
 	} else {
-
-		displayFailureNotification("fill stuff in please");
+		util.createNotification('Please complete all fields','error');
 	}
+}
+
+function createPoolLimitSuccess() {
+	util.createNotification('Created Pool Limit');
+	resetModal();
+	
+	// Reload page - TODO: currently the whole systemkeys page is reloaded. Only the limit pool needs to be refreshed
+	loader.loadPage('html/insurer_admin/systemkeys.html');
+
+}
+function createPoolLimitFailure() {
+
+	alert("failed to create pool limit");
+}
+
+function allFieldsAreCompleted() {
+	for(var i = 0; i < requiredFields.length; i++) {
+		if(requiredFields[i] == false) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 function resetModal() {
-	// clear coverage
-	$('#systemkey_tariff_coverage_input').val('');
 
-	// untick all perils
-	$('#systemkey_tariff_peril_container input:checkbox:checked').trigger('click');
+	$('#systemkey_pool_limit_crop_dropdown').find('option:eq(0)').prop('selected', true);
+	$('#systemkey_pool_limit_district_dropdown').find('option:eq(0)').prop('selected', true);
+	$('#systemkey_pool_limit_pool_size_input').val('');
+	$('#systemkey_pool_limit_additional_tariff_input').val('');
 
-	// untick all defaults
-	$('#peril_tariff_entries_main_container input:checkbox:checked').trigger('click');	
+	for(var i = 0; i < requiredFields.length; i++) {
+		requiredFields[i] = false;
+	}
 }
 
 function displayFailureNotification(message) {
