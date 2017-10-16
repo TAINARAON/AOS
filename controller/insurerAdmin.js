@@ -20,11 +20,11 @@ var insurerAdminController = new function() {
 		// Starts a chain
 		ajaxGetInsurerAdminByUserId(userId);
 	}
-	/*
+	/*   SENT TO WIKUS
 		insurerAdmin/getInsurerAdminByUserId
 
 		requestObject:{
-			userId
+			userUuid
 		}
 
 		responseObject:{
@@ -34,16 +34,10 @@ var insurerAdminController = new function() {
 	function ajaxGetInsurerAdminByUserId(userId) {
 
 		var requestObject = {
-			"userId":userId
+			"userUuid":userId
 		};
 
-		var mockResponse = {
-			"insurerAdmin":{
-				"id":0
-			}
-		}
-
-		ajaxPost(GET_INSURER_ADMIN_BY_USER_ID_URL,onGetInsurerAdminSuccess,onGetInsurerAdminFail,requestObject,mockResponse);
+		ajaxPost(GET_INSURER_ADMIN_BY_USER_ID_URL,onGetInsurerAdminSuccess,onGetInsurerAdminFail,requestObject);
 	}
 	// NEEDED
 	function onGetInsurerAdminSuccess(response) {
@@ -57,8 +51,8 @@ var insurerAdminController = new function() {
 
 		alert("ERROR! Could not initiate Brokerage");
 	}
-	/*
-		insurerAdmin/ajaxGetInsuranceAgency
+	/*  SENT TO WIKUS
+		insurerAdmin/getInsuranceAgency
 
 		requestObject:{
 			insuranceAgencyId
@@ -71,12 +65,12 @@ var insurerAdminController = new function() {
 	function ajaxGetInsuranceAgency(insuranceAgencyId) {
 
 		var requestObject = {
-			"insuranceAgencyId":insuranceAgencyId
+			"insuranceAgencyUuid":insuranceAgencyId
 		};
 
-		var mockResponse = {
+		/*var mockResponse = {
 			insuranceAgency:{
-				'id':'0',
+				'uuid':'0',
 				'name':'Versekerings Ltd.',
 				'active':'1',
 				'dateCreated':'1990-08-25',
@@ -85,9 +79,9 @@ var insurerAdminController = new function() {
 				'fspNumber':'FSP000',
 				'verified':'1'
 			}
-		}
+		}*/
 
-		ajaxPost(GET_INSURANCE_AGENCY_URL,onGetInsuranceAgencySuccess,onGetInsuranceAgencyFail,requestObject,mockResponse);
+		ajaxPost(GET_INSURANCE_AGENCY_URL,onGetInsuranceAgencySuccess,onGetInsuranceAgencyFail,requestObject);
 	}
 	// NEEDED
 	function onGetInsuranceAgencySuccess(response) {
@@ -99,7 +93,7 @@ var insurerAdminController = new function() {
 
 		alert("ERROR! Could not initiate insuranceAgency");
 	}
-	/*
+	/*   NOT SENT YET
 		insurerAdmin/getBrokerDetailsOfBrokerage
 
 		requestObject:{
@@ -117,7 +111,7 @@ var insurerAdminController = new function() {
 			]
 		}
 	*/
-	this.getBrokerDetailsOfBrokerage = function(successCallback,failCallback,brokerageId) {
+	this.aagetBrokerDetailsOfBrokerage = function(successCallback,failCallback,brokerageId) {
 
 		var requestObject = 
 		{
@@ -135,7 +129,7 @@ var insurerAdminController = new function() {
 		}
 
 		ajaxPost(GET_BROKER_DETAILS_OF_BROKERAGE_URL,successCallback,failCallback,requestObject,mockResponse);
-	};	// USED
+	};	// USED ???
 	/*	
 		insurerAdmin/getBrokeragesAndTheirBrokers
 

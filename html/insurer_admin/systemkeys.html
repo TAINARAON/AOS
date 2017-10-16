@@ -11,6 +11,7 @@
 	<li><a id="systemkey_menu_item_perils">Perils</a></li>
 	<li><a id="systemkey_menu_item_tax">Tax</a></li>
 	<li><a id="systemkey_menu_item_inception_date">Inception Date</a></li>
+	<li><a id="systemkey_menu_item_pool_limit">Pool Limit</a></li>
   </ul>
 </div>
 <div class="container">
@@ -277,6 +278,49 @@
 	  </div>
 	</div>
 </div>
+<!-- Pool Limit Modal -->
+<div id="pool_limit_modal_container">
+	<div id="poolLimitModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Create Pool Limit</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	          <div class="col-md-4">
+	            <h6 class="text-left">District</h6>
+	            <select id="systemkey_pool_limit_district_dropdown" class="form-control">
+	              <option disabled selected value></option>
+	            </select>
+	          </div>
+	          <div class="col-md-4">
+	            <h6 class="text-left">Product</h6>
+	            <select id="systemkey_pool_limit_product_dropdown" class="form-control">
+	              <option disabled selected value></option>
+	            </select>
+	          </div>
+	          <div hidden id="systemkey_pool_limit_crop_dropdown_container" class="col-md-4">
+	            <h6 class="text-left">Crop Type</h6>
+	            <select id="systemkey_pool_limit_crop_dropdown" class="form-control">
+	              <option disabled selected value></option>
+	            </select>
+	          </div>
+	          <div class="col-md-4">
+	            <h6 class="text-left">Pool Size</h6>
+	            <input id="systemkey_pool_limit_pool_size_input" class="form-control">
+	          </div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <div id="systemkey_pool_limit_save_button" class="btn btn-success" data-dismiss="modal">Save</div>
+	        <button id="systemkey_pool_limit_cancel_button" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
 
 <script type="text/javascript" src="js/insurer_admin/systemkey/systemkeys.js"></script>
 
@@ -288,3 +332,4 @@
 <script type="text/javascript" src="js/insurer_admin/systemkey/peril_modal.js"></script>
 <script type="text/javascript" src="js/insurer_admin/systemkey/inception_date_modal.js"></script>
 <script type="text/javascript" src="js/insurer_admin/systemkey/tax_modal.js"></script>
+<script type="text/javascript" src="js/insurer_admin/systemkey/pool_limit_modal.js"></script>

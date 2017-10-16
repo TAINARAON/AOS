@@ -13,6 +13,35 @@ var util = new function() {
 
 		// Remove onClickListener of Upload button and add onClick that does callback sent in
 		$("#upload_file_modal_upload_button").off();
+
+		// not working
+		/*$( '#upload_file_modal_upload_button' ).click( function () {
+			if ( ! window.FileReader ) {
+				return alert( 'FileReader API is not supported by your browser.' );
+			}
+
+			var $i = $( '#uploadFileInput' ), // Put file input ID here
+				input = $i[0]; // Getting the element from jQuery
+			if ( input.files && input.files[0] ) {
+				file = input.files[0]; // The file
+				fr = new FileReader(); // FileReader instance
+				fr.onload = function () {
+					// Do stuff on onload, use fr.result for contents of file
+					$( '#file-content' ).append( $( '<div/>' ).html( fr.result ) )
+				};
+				//fr.readAsText( file );
+				var x = fr.readAsDataURL( file );
+
+				console.log(x);
+				console.log(file);
+			} else {
+				// Handle errors here
+				alert( "File not selected or browser incompatible." )
+			}
+		} );*/
+
+
+
 		$("#upload_file_modal_upload_button").on('click',function() {
 
 			// TODO: I think the result needs to be sent back through the callback

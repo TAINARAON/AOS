@@ -34,17 +34,18 @@ var brokerAdminController = new function() {
 	}
 
 	/*
+		Note: updates a brokerage 
+
 		brokerAdmin/editBrokerage
 
 		requestObject:{
 			data:{
-				id,
-				contactNumber,
+				id, (brokerage)
+				name,
 				email,
-				name
+				contactNumber		
 			},
-			fileData:{
-			}
+			fileData:[]
 		}
 
 		responseObject:{

@@ -34,4 +34,10 @@ function initOnClickListeners(TARGET_CONTAINER) {
 	$('#systemkey_menu_item_inception_date').on('click',function() {
 		loader.loadPartOfPage("html/insurer_admin/systemkey/inception_date.html",TARGET_CONTAINER);
 	});
+	$('#systemkey_menu_item_inception_date').on('click',function() {
+		loader.loadPartOfPage("html/insurer_admin/systemkey/inception_date.html",TARGET_CONTAINER);
+	});
+	$('#systemkey_menu_item_pool_limit').on('click',function() {
+		loader.loadPartOfPage("html/insurer_admin/systemkey/pool_limit.html",TARGET_CONTAINER);
+	});
 }
