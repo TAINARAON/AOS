@@ -25,7 +25,7 @@ var increasePolicy = new function(){
 		
 	}
 
-	function setValuesToEdit(policy)
+	function setLandToEdit(policy)
 	{
 		policy.policyLandEntries
 	}
@@ -38,7 +38,7 @@ var increasePolicy = new function(){
 	this.show = function(policy)
 	{
 		mainPolicy = policy;
-		setValuesToEdit(policy);
+		setLandToEdit(policy);
 
 		modal.style.cssText = "display: block; padding-right: 17px;";
 		modal.className = "modal fade in";
