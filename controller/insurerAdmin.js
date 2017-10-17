@@ -90,9 +90,16 @@ var insurerAdminController = new function() {
 
 		alert('something messed up');
 	}
+	/*	20171017
+		insurerAdmin/getInsurersOfInsuranceAgencyWithUserData
 
-	/*
-		
+		request {
+			insuranceAgencyId
+		}
+
+		response {
+			insurers:[{name,surname,initials}]
+		}
 	*/
 	this.getInsurersOfInsuranceAgencyWithUserData = function(successCallback,failureCallback) {
 
@@ -100,7 +107,7 @@ var insurerAdminController = new function() {
 
 		var requestObject = 
 		{
-
+			'insuranceAgencyId':insuranceAgencyId
 		};
 
 		var mockResponse = 
@@ -121,6 +128,80 @@ var insurerAdminController = new function() {
 
 		ajaxPost(GET_INSURERS_OF_INSURANCE_AGENCY_WITH_USER_DATA_URL,successCallback,failureCallback,requestObject,mockResponse);
 	}
+	/*	20171017
+		insurerAdmin/getBrokeragesAndTheirBrokers
+
+		requestObject:{
+			insuranceAgencyId
+		}
+
+		responseObject: {
+			brokeragesAndBrokers:
+			[
+				{
+					id,  (brokerageId)
+					name,
+					brokers:
+					[
+						{
+							id, (brokerId)
+							initials,
+							surname,
+							name
+						}
+					]
+				}
+			]
+		}
+	*/
+	this.getBrokeragesAndTheirBrokers = function(successCallback,failCallback) {
+
+		var requestObject = 
+		{
+			"insuranceAgencyId":insuranceAgency['id']
+		};
+
+		var mockResponse = {
+			'brokeragesAndBrokers':[]
+		};
+
+		var brokerages = mockCommunicator.brokerageTable;
+
+		for(var i = 0; i < brokerages.length; i++) {
+
+			var brokerage = brokerages[i];
+			var brokers = mockCommunicator.getBrokersOfBrokerage(brokerage['id']);
+
+			var brokerageWithBrokers = {
+				'id':brokerage['id'],
+				'name':brokerage['name'],
+				'brokers':[]
+			}
+
+			for(var j = 0; j < brokers.length; j++) {
+
+				var broker = brokers[j];
+				var userDetails = mockCommunicator.getDetailsOfUser(broker['userId']);
+
+				var neededDetailsOfBroker = {
+					'id':broker['id'],
+					'initials':userDetails['initials'],
+					'surname':userDetails['surname'],
+					'name':userDetails['name'],
+				}
+
+				brokerageWithBrokers['brokers'].push(neededDetailsOfBroker);
+			}
+
+			mockResponse['brokeragesAndBrokers'].push(brokerageWithBrokers);
+		}
+
+		ajaxPost(GET_BROKER_DETAILS_OF_BROKERAGE_URL,successCallback,failCallback,requestObject,mockResponse);
+	};
+
+
+
+
 
 
 
@@ -375,119 +456,8 @@ var insurerAdminController = new function() {
 
 		ajaxPost(GET_BROKER_DETAILS_OF_BROKERAGE_URL,successCallback,failCallback,requestObject,mockResponse);
 	};	// USED ???
-	/*	
-		insurerAdmin/getBrokeragesAndTheirBrokers
-
-		requestObject:{
-			insuranceAgencyId
-		}
-
-		responseObject: {
-			brokeragesAndBrokers:
-			[
-				{
-					id,  (brokerageId)
-					name,
-					brokers:
-					[
-						{
-							id, (brokerId)
-							initials,
-							surname,
-							name
-						}
-					]
-				}
-			]
-		}
-	*/
-	this.getBrokeragesAndTheirBrokers = function(successCallback,failCallback) {
-
-		var requestObject = 
-		{
-			"insuranceAgencyId":insuranceAgency['id']
-		};
-
-		var mockResponse = {
-			'brokeragesAndBrokers':[]
-		};
-
-		var brokerages = mockCommunicator.brokerageTable;
-
-		for(var i = 0; i < brokerages.length; i++) {
-
-			var brokerage = brokerages[i];
-			var brokers = mockCommunicator.getBrokersOfBrokerage(brokerage['id']);
-
-			var brokerageWithBrokers = {
-				'id':brokerage['id'],
-				'name':brokerage['name'],
-				'brokers':[]
-			}
-
-			for(var j = 0; j < brokers.length; j++) {
-
-				var broker = brokers[j];
-				var userDetails = mockCommunicator.getDetailsOfUser(broker['userId']);
-
-				var neededDetailsOfBroker = {
-					'id':broker['id'],
-					'initials':userDetails['initials'],
-					'surname':userDetails['surname'],
-					'name':userDetails['name'],
-				}
-
-				brokerageWithBrokers['brokers'].push(neededDetailsOfBroker);
-			}
-
-			mockResponse['brokeragesAndBrokers'].push(brokerageWithBrokers);
-		}
-
-		/*var mockResponse = {
-			"brokerages":[
-				{
-					"id":0,
-					"name":"brokerage 0",
-					"brokers":
-					[
-						{
-							"id":0,
-							"initials":"A B",
-							"surname":"De Villiers",
-							"name":"Albert Boertjie"
-						},
-						{
-							"id":1,
-							"initials":"S",
-							"surname":"Wiggill",
-							"name":"Samantha"
-						}
-					]
-				},
-				{
-					"id":1,
-					"name":"brokerage 1",
-					"brokers":
-					[
-						{
-							"id":2,
-							"initials":"C D",
-							"surname":"De Villiers",
-							"name":"Calbert Doertjie"
-						},
-						{
-							"id":3,
-							"initials":"M",
-							"surname":"Giggill",
-							"name":"Mamantha"
-						}
-					]
-				},
-			]
-		};*/
-
-		ajaxPost(GET_BROKER_DETAILS_OF_BROKERAGE_URL,successCallback,failCallback,requestObject,mockResponse);
-	};	// USED
+	
+		
 
 	/*
 		insurerAdmin/getBrokerages

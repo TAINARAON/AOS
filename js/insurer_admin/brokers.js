@@ -1,11 +1,17 @@
-(function() {
-	var brokeragesAndBrokers = [];
-	init();
-})();
-
+// [{brokerageId,element}]
 var brokerElementsInBrokerTableByBrokerage = [];
 
+(function() {
+
+	var brokeragesAndBrokers = [];
+	
+	init();
+	
+})();
+
+
 function init() {
+
 	getBrokeragesAndTheirBrokers();
 }
 
@@ -35,29 +41,76 @@ function populateBrokeragesDropdownValues() {
 		var brokerage = brokeragesAndBrokers[i];
 
 		selectElement.append($('<option></option>').text(brokerage['name']).val(brokerage['id']));	
+
+		// Add Broker entries in table
+		var brokers = brokerage['brokers'];
+
+		addBrokerEntriesToTable(brokerage['id'],brokers);
 	}
-
-	setBrokerageDropdownSelectionListener(selectElement);
-
-	// Populate table
-	$("#insurer_admin_brokers_brokerage_dropdown").trigger('change');
-}
-
-function setBrokerageDropdownSelectionListener(selectElement) {
 
 	selectElement.on('change',function() {
 
 		onBrokerageSelected($(this).val());
 	});
+
+	// Populate table
+	$("#insurer_admin_brokers_brokerage_dropdown").trigger('change');
+
+	// set toggle. ugly but whatever
+	setOnAccordionClicked();
 }
 
 function onBrokerageSelected(brokerageId) {
 
-	clearBrokerTable();
+	hideAllBrokerEntries();
 
-	var brokers = getBrokersOfBrokerageSelected(brokerageId);
+	showValidBrokers(brokerageId);
+}
 
-	populateBrokerTable(brokers);
+function addBrokerEntriesToTable(brokerageId,brokers) {
+	// brokers = [{id (brokerId),initials,surname,name}]
+
+	for( var i = 0; i < brokers.length; i++) {
+
+		var element = createBrokerEntryElement(brokers[i]);
+
+		var brokerElementObject = 
+		{
+			'brokerageId':brokerageId,
+			'element':element
+		};
+
+		// Keep track of element
+		brokerElementsInBrokerTableByBrokerage.push(brokerElementObject);
+
+		// Add element to table
+		$('#insurance_admin_broker_brokers_table_body').append(element);
+	}
+}
+
+function setOnAccordionClicked() {
+
+	$('.toggle').click(function(e) {
+
+	  	e.preventDefault();
+
+	    if ($(this).next().hasClass('show')) {
+	        $(this).next().removeClass('show');
+	        //$(this).next().slideUp(350);
+	    } else {
+	        $(this).parent().parent().find('li .inner').removeClass('show');
+	        //$(this).parent().parent().find('li .inner').slideUp(350);
+	        $(this).next().toggleClass('show');
+	        //$(this).next().slideToggle(350);
+	    }
+	});
+}
+function hideAllBrokerEntries() {
+	for(var i = 0; i < brokerElementsInBrokerTableByBrokerage.length; i++) {
+
+		var brokerElementObject = brokerElementsInBrokerTableByBrokerage[i];
+		brokerElementObject['element'].hide();
+	}
 }
 
 function getBrokerageById(brokerageId) {
@@ -67,50 +120,59 @@ function getBrokerageById(brokerageId) {
 			return brokeragesAndBrokers[i];
 		}
 	}
-
+	
 	alert('didnt find a thing');
 }
 
-function clearBrokerTable() {
+function showValidBrokers(brokerageId) {
 
-	$("#insurer_admin_broker_container").empty();
-}
+	for(var i = 0; i < brokerElementsInBrokerTableByBrokerage.length; i++) {
 
-function getBrokersOfBrokerageSelected(brokerageId) {
+		// entry = {brokerageId,element}
+		var entry = brokerElementsInBrokerTableByBrokerage[i];
 
-	var brokers = [];
+		if(entry['brokerageId'] == brokerageId || brokerageId == 'ALL') {
 
-	if(brokerageId == "ALL") {
-
-		// Add all brokers to table
-		for(var i = 0; i < brokeragesAndBrokers.length;i++) {
-
-			brokerageId = brokeragesAndBrokers[i]['id'];
-			var thisBrokeragesBrokers = getBrokersOfBrokerageSelected(brokerageId);
-			for(var j = 0; j < thisBrokeragesBrokers.length; j++) {
-				brokers.push(thisBrokeragesBrokers[j]);
-			}
+			entry['element'].show();
 		}
-
-	} else {
-
-		var brokerage = getBrokerageById(brokerageId);
-		brokers = brokerage['brokers'];
-	}
-
-	return brokers;
-}
-
-function populateBrokerTable(brokers) {
-
-	var brokerTable = $('#insurer_admin_broker_container');
-
-	for(var i = 0; i < brokers.length; i++) {
-		createBrokerEntry(brokers[i],brokerTable);
 	}
 }
 
-function createBrokerEntry(broker,container) {
+function createBrokerEntryElement(broker) {
+
+	// Test
+	var tr = $('<li></li>');
+
+	var aToggle = $('<a></a>').addClass('toggle').prop('href',"javascript:void(0);");
+	aToggle.append($('<td></td>')).text(broker['initials'] + " " + broker['surname'] + " ( " + broker['name'] + ' )');
+	tr.append(aToggle);
+
+	var ulInner = $('<ul></ul').addClass('inner');
+	tr.append(ulInner);
+
+	ulInner.append($('<li>Hello Text</li>'));
+
+	var editButton = $('<button></button>')
+		.text('Edit')
+		.attr('data-toggle','modal')
+		.attr('data-target','#editBrokerModal')
+		.on('click',function() {
+			onEditBroker(broker.id);
+		}
+	);
+
+	var revokeButton = $('<button></button>')
+		.text('Revoke')
+		.attr('data-toggle','modal')
+		.attr('data-target','#revokeBrokerModal')
+		.on('click',function() {
+			onRevokeBrokerClick(broker.id);
+		}
+	);
+
+
+	return tr;
+	// End of Test
 
 	var header = $('<button></button>')
 		.addClass('accordion')
@@ -148,8 +210,11 @@ function createBrokerEntry(broker,container) {
 	detailContainer.append(revokeButton);
 	detailContainer.append(details);
 
-	container.append(header);
-	container.append(detailContainer);
+	var entry = $('<div></div>')
+		.append(header)
+		.append(detailContainer);
+	
+	return entry;
 }
 
 function createDetailsOfBrokerHtml(brokerDetails) {
