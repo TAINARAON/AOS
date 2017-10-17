@@ -3,15 +3,19 @@ var increasePolicy = new function(){
 	var mainPolicy = {};
 
 	var modal = document.getElementById("increaseModal");
-	var cancelPolicyIncrease = document.getElementById("cancelPolicyIncrease");
-	var savePolicyIncrease = document.getElementById("acceptPolicyIncrease");
 
-	var yieldInput = document.getElementById("yield_input");
-	var priceInput = document.getElementById("price_input");
+	var yield_input = document.getElementById("yield_input");
+	var price_input = document.getElementById("price_input");
+
+	var cancel_policy_increase_button = document.getElementById("cancelPolicyIncrease");
+	var save_policy_increase_button = document.getElementById("acceptPolicyIncrease");
+
+	var unedited_policy_land_entry_container = document.getElementById("unchanged_policy_land_entry_container");
+	var edited_policy_land_entry_container = document.getElementById("changed_policy_land_entry_container");
 
 	(function init(){
-		cancelPolicyIncrease.onclick = function(){cancel();};
-		savePolicyIncrease.onclick = function(){save();};
+		cancel_policy_increase_button.onclick = function(){cancel();};
+		save_policy_increase_button.onclick = function(){save();};
 	})();
 
 	function cancel()
@@ -27,12 +31,46 @@ var increasePolicy = new function(){
 
 	function setLandToEdit(policy)
 	{
-		policy.policyLandEntries
+		unedited_policy_land_entry_container.innerHTML = "";
+		edited_policy_land_entry_container.innerHTML = "";
+
+		for(var i = 0; i < policy.policyLandEntries.length; i++)
+		{
+			createLandEntry(policy.policyLandEntries[i], unedited_policy_land_entry_container);
+		}
+	}
+
+	function createLandEntry(landEntry, container)
+	{
+		var tr = document.createElement("TR");
+
+		createColumn(landEntry.farm.name, tr);
+		createColumn(landEntry.landNumber, tr);
+		createColumn(landEntry.crop.name, tr);
+		createColumn(landEntry.cultivar, tr);
+		createColumn(landEntry.area, tr);
+		createColumn(landEntry.yield, tr);
+		createColumn(landEntry.price, tr);
+		createColumn("", tr);
+		createColumn("", tr);
+		createColumn("", tr);
+
+		container.appendChild(tr);
+	}
+
+	function createColumn(val, container)
+	{
+		var column = document.createElement("TD");
+		column.innerHTML = val;
+		container.appendChild(column);
 	}
 
 	function reset()
 	{
 		mainPolicy = {};
+
+		unedited_policy_land_entry_container.innerHTML = "";
+		edited_policy_land_entry_container.innerHTML = "";
 	}
 
 	this.show = function(policy)

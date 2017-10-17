@@ -14,6 +14,8 @@ var policyViewer = new function ()
 	var policyAccordionButtonsContainer = document.getElementById("policy_button_container");
 
 	(function init(){
+		loadIncreaseModal("increase_modal_container");
+		
 		setAvailableBrokers();
 		setSearchButtonClickListener();
 		addOnEnterKeyPressedListenerForSearchInput(policyNumberInput);
@@ -21,6 +23,11 @@ var policyViewer = new function ()
 		search();
 		$(policyAccordionButtonsContainer).hide();
 	})();
+
+	function loadIncreaseModal(id)
+	{
+		loader.loadPartOfPage("html/broker/policy/create.html", id);
+	}
 
 	function setAvailableBrokers()
 	{	
@@ -323,7 +330,8 @@ var policyViewer = new function ()
 
 	function increaseQuote(e, policy)
 	{
-		alert("Increase Quote");
+		//alert("Increase Quote");
+		increasePolicy.show(policy);
 	}
 
 	function createSuccessButton(title, container)
