@@ -136,8 +136,17 @@ var damageReport = new function()
 				"farmName":farmName,
 				"businessUnitName":businessUnitName
 			};
-			//ajaxPost("Something", setPolicies, function(){alert("Issue getting policy data");}, tObj, policyInvoker.searchForPolicy(brokerId, policyNumber, businessUnitName));
-			ajaxPost("Some url", setDamageReports, function(){alert("Issue getting damage report data");}, tObj, damageReportInvoker.getDamageReport(brokerId, businessUnitName, farmName));
+			// Perhaps get a range later on
+
+			brokerController.getDamageReports(
+				setDamageReports, 
+				function(response){
+					util.createNotification("Issue getting damage report data");
+				},
+				tObj
+			);
+			
+			//ajaxPost("Some url", setDamageReports, function(){alert("Issue getting damage report data");}, tObj, damageReportInvoker.getDamageReport(brokerId, businessUnitName, farmName));
 		}
 	}
 
@@ -187,20 +196,12 @@ var damageReport = new function()
 		parentTitle.style.cssText = "display: flex; overflow-x: auto;";
 		parentTitle.onclick = function(){toggleOtherPolicy(damageReport, parentLi, container);};
 
-		/*createAccordionItemDetailDiv("Damage Report Number: " + damageReport.id, parentTitle);
-		//createAccordionItemDetailDiv("Policy Number: " + damageReport.policyLandEntry.policy.policyNumber, parentTitle);
-		createAccordionItemDetailDiv("Business Unit: " + damageReport.policyLandEntry.policy.businessUnit.name, parentTitle);
-		createAccordionItemDetailDiv("Farm name: " + damageReport.policyLandEntry.farm.name, parentTitle);
-		createAccordionItemDetailDiv("Land Number: " + damageReport.policyLandEntry.landNumber, parentTitle);
-		createAccordionItemDetailDiv("Date of damage: " + damageReport.dateOfDamage, parentTitle);
-		createAccordionItemDetailDiv("Date of reporting: " + damageReport.dateOfReporting, parentTitle);
-		calculateDamageStatus(damageReport, createAccordionItemDetailDiv("Status: ", parentTitle));*/
-
 		createAccordionItemDetailDiv("Damage Type: " + damageReport.damageType.name, parentTitle);
 		createAccordionItemDetailDiv("Damage Date: " + damageReport.dateOfDamage, parentTitle);
 		createAccordionItemDetailDiv("Damage Report Number: " + damageReport.damageReportNumber, parentTitle);
 		var requiresTaxation = damageReport.requiresTaxation ? "Yes" : "No";
 		createAccordionItemDetailDiv("Taxation Required: " + requiresTaxation, parentTitle);
+		//calculateDamageStatus(damageReport, createAccordionItemDetailDiv("Status: ", parentTitle));
 		calculateDamageStatus(damageReport, createAccordionItemDetailDiv("Status: ", parentTitle));
 
 		var childContainer = document.createElement("UL");
@@ -228,6 +229,31 @@ var damageReport = new function()
 	}
 
 	function calculateDamageStatus(damageReport, parentTitle)
+	{
+		var NOTSTARTED = 0;
+		var INPROGRESS = 1;
+		var DONE = 2;
+
+		var damageDiv = document.createElement("DIV");
+		damageDiv.style.cssText = "height: 20px; width: 20px; float: right; border-radius:20px;";
+
+		if(damageReport.taxationProgress == NOTSTARTED)
+		{
+			damageDiv.style.cssText += "background-color: tomato;";
+		}
+		else if(damageReport.taxationProgress == INPROGRESS)
+		{
+			damageDiv.style.cssText += "background-color: #d0c017;";
+		}
+		else
+		{
+			damageDiv.style.cssText += "background-color: #17d09a;";
+		}
+
+		parentTitle.appendChild(damageDiv);
+	}
+
+	/*function calculateDamageStatus(damageReport, parentTitle)
 	{
 		var damageDiv = document.createElement("DIV");
 		damageDiv.style.cssText = "height: 20px; width: 20px; float: right; border-radius:20px;";
@@ -263,7 +289,7 @@ var damageReport = new function()
 		}
 
 		parentTitle.appendChild(damageDiv);
-	}
+	}*/
 
 	function createAccordionItemDetailDiv(val, container)
 	{
@@ -282,10 +308,14 @@ var damageReport = new function()
 		childTitle.className = "toggle";
 		childTitle.style.cssText = "display: flex; background: #4287b5;";
 
-		createAccordionItemDetailDiv("Business Unit: " + damageReport.businessUnit.name, childTitle);
-		createAccordionItemDetailDiv("Contact Person: " + damageReport.businessUnit.contactPerson, childTitle);
-		createAccordionItemDetailDiv("Contact Number: " + damageReport.businessUnit.contactNumber, childTitle);
-		createAccordionItemDetailDiv("District: " + damageReport.district.name, childTitle);
+		//createAccordionItemDetailDiv("Business Unit: " + damageReport.businessUnit.name, childTitle);
+		createAccordionItemDetailDiv("Business Unit: " + damageReport.farm.businessUnit.name, childTitle);
+		//createAccordionItemDetailDiv("Contact Person: " + damageReport.businessUnit.contactPerson, childTitle);
+		createAccordionItemDetailDiv("Contact Person: " + damageReport.farm.businessUnit.contactPerson, childTitle);
+		//createAccordionItemDetailDiv("Contact Number: " + damageReport.businessUnit.contactNumber, childTitle);
+		createAccordionItemDetailDiv("Contact Number: " + damageReport.farm.businessUnit.contactNumber, childTitle);
+		//createAccordionItemDetailDiv("District: " + damageReport.district.name, childTitle);
+		createAccordionItemDetailDiv("District: " + damageReport.farm.district.name, childTitle);
 		createAccordionItemDetailDiv("Farm: " + damageReport.farm.name, childTitle);
 
 		childLi.appendChild(childTitle);
@@ -299,12 +329,8 @@ var damageReport = new function()
 		var childTitle = document.createElement("A");
 		childTitle.className = "toggle";
 		childTitle.style.cssText = "display: flex;";
-		//childTitle.style.cssText = "display: flex; background: cadetblue;";
-
-		//createAccordionItemDetailDiv("Contact Person: " + damageReportLandEntry.policyLandEntry.policy.businessUnit.contactPerson, childTitle);
-		//createAccordionItemDetailDiv("Contact Number: " +damageReportLandEntry.policyLandEntry.policy.businessUnit.contactNumber, childTitle);
+		
 		createAccordionItemDetailDiv("Land Number: " + damageReportLandEntry.policyLandEntry.landNumber, childTitle);
-		//createAccordionItemDetailDiv("Farm Name: " + damageReportLandEntry.policyLandEntry.farm.name, childTitle);
 		createAccordionItemDetailDiv("Crop Name: " + damageReportLandEntry.policyLandEntry.crop.name, childTitle);
 		createAccordionItemDetailDiv("Area: " + damageReportLandEntry.policyLandEntry.area, childTitle);
 
@@ -315,72 +341,6 @@ var damageReport = new function()
 		childLi.appendChild(childDetail);
 
 		container.appendChild(childLi);
-
-		/*var childDetail = document.createElement("DIV");
-		//childDetail.className = "inner";
-
-		var coveredDamageTypesContainer = document.createElement("DIV");
-		coveredDamageTypesContainer.style.cssText = "float: left; margin-right: 30px;";
-
-		var coveredDamageTypeHeader = document.createElement("h4");
-		coveredDamageTypeHeader.innerHTML = "Covered Damage Types:";
-		coveredDamageTypesContainer.appendChild(coveredDamageTypeHeader);
-		
-		var coveredDamageTypes = document.createElement("UL");
-		for(var i = 0; i < damageReport.policyLandEntry.policyLandEntryDamageTypes.length; i++)
-		{
-			var policyLandEntryDamageType = damageReport.policyLandEntry.policyLandEntryDamageTypes[i];
-
-			var damageTypeElement = document.createElement("LI");
-			damageTypeElement.innerHTML = policyLandEntryDamageType.tariffOptionDamageType.damageType.name;
-			coveredDamageTypes.appendChild(damageTypeElement);
-		}
-		coveredDamageTypesContainer.appendChild(coveredDamageTypes);
-		childDetail.appendChild(coveredDamageTypesContainer);
-
-
-		var sufferedDamageTypesContainer = document.createElement("DIV");
-		sufferedDamageTypesContainer.style.cssText = "float: left;";
-
-		var sufferedDamageTypeHeader = document.createElement("h4");
-		sufferedDamageTypeHeader.innerHTML = "Suffered Damage Types:";
-		sufferedDamageTypesContainer.appendChild(sufferedDamageTypeHeader);
-
-		var sufferedDamageTypes = document.createElement("UL");
-		for(var i = 0; i < damageReport.damageReportDamageTypes.length; i++)
-		{
-			var damageTypeElement = document.createElement("LI");
-			damageTypeElement.innerHTML = damageReport.damageReportDamageTypes[i].damageType.name;
-			sufferedDamageTypes.appendChild(damageTypeElement);
-		}
-		sufferedDamageTypesContainer.appendChild(sufferedDamageTypes);
-		childDetail.appendChild(sufferedDamageTypesContainer);
-
-		container.appendChild(childDetail);*/
-
-		/*var childLi = document.createElement("LI");
-
-		var childTitle = document.createElement("A");
-		childTitle.className = "toggle";
-		childTitle.style.cssText = "display: flex;";
-
-		createAccordionItemDetailDiv("Land Number: " + landEntry.landNumber , childTitle);
-		createAccordionItemDetailDiv("Crop: " + landEntry.crop.name, childTitle);
-		createAccordionItemDetailDiv("Cultivar: " + landEntry.cultivar, childTitle);
-		createAccordionItemDetailDiv("Area: " + landEntry.area, childTitle);
-		createAccordionItemDetailDiv("Yield " + landEntry.yield, childTitle);
-		createAccordionItemDetailDiv("Price: " + landEntry.price, childTitle);
-		createAccordionItemDetailDiv("Tariff Option: " + landEntry.tariff, childTitle);
-
-		var childDetail = document.createElement("DIV");
-		childDetail.className = "inner";
-
-
-
-		childLi.appendChild(childTitle);
-		childLi.appendChild(childDetail);
-
-		container.appendChild(childLi);*/
 	}
 
 	this.reload = function()

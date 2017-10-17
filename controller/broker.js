@@ -152,10 +152,200 @@ var brokerController = new function() {
 	}
 
 	// Damage Report
-	this.getBusinessUnitsTheBrokerHasPoliciesOn = function(successCallback,failCallback,requestObject)
-	{
-		var mockResponse = [
-			{
+		// Create
+		this.getBusinessUnitsTheBrokerHasPoliciesOn = function(successCallback,failCallback,requestObject)
+		{
+			var mockResponse = [
+				{
+					'id':'0',
+					'name':'BU0',   //'Anro Boerdery Co (ABC)',
+					'contactNumber':'063-887-9635',
+					'contactPerson':'Anro Swart',
+					'email':'anro.swart@bing.com',
+					'vatNumber':'00625-4811',
+					'incomeTaxNumber':'5651484166',
+					'active':'1',
+					'verified':'1'
+				}
+			];
+
+			ajaxPost("Some url", successCallback,failCallback,requestObject,mockResponse);
+		}
+		this.getFarmsForBusinessUnitTheBrokerHasPoliciesOn = function(successCallback,failCallback,requestObject)
+		{
+			var mockResponse = [
+				{
+					'id':'0',
+					'name':'P0',
+					'businessUnitId':'0',
+					'latitude':'1.22644',
+					'longitude':'-0.35428',
+					'active':'1',
+					'districtId':'0'
+				}
+			];
+
+			ajaxPost("Some url", successCallback,failCallback,requestObject,mockResponse);
+		}
+		this.getDamageTypes = function(successCallback,failCallback)
+		{
+			var mockResponse = [
+				{
+					'id':'0',
+					'name':'Fire',
+				},
+				{
+					'id':'1',
+					'name':'Flood',
+				},
+				{
+					'id':'2',
+					'name':'Dew',
+				},
+				{
+					'id':'3',
+					'name':'Bugs',
+				},
+				{
+					'id':'4',
+					'name':'Godzilla',
+				}
+			];
+
+			ajaxGet("Some url", successCallback, failCallback, mockResponse);
+		}
+		this.getLandEntryForFarmAndBusinessUnitTheBrokerHasPoliciesOn = function(successCallback,failCallback,requestObject)
+		{
+			var mockResponse = [
+				{
+					'id':'4',
+					'policyId':'2',
+					'farmId':'0',
+					'landNumber':'00003',
+					'landLongitude':'131.044',
+					'landLatitude':'-25.363',
+					'cropId':'1',
+					'cultivar':'Red Dwarf',
+					'area':'7.4',
+					'yield':'14.22',
+					'price':'5.48',
+					'tariffOptionId':'0',
+					'additionalTariff':0
+				},
+				{
+					'id':'6',
+					'policyId':'3',
+					'farmId':'0',
+					'landNumber':'00005',
+					'landLongitude':'131.044',
+					'landLatitude':'-25.363',
+					'cropId':'1',
+					'cultivar':'Red Dwarf',
+					'area':'7.4',
+					'yield':'14.22',
+					'price':'5.48',
+					'tariffOptionId':'0',
+					'additionalTariff':0
+				}
+			];
+
+			ajaxPost("Some url", successCallback,failCallback,requestObject,mockResponse);
+		}
+		this.saveDamageReport = function(successCallback,failCallback,requestObject)
+		{
+			var mockResponse = {
+				"message":"Saved"
+			};
+
+			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
+		}
+		// ^ Create ^
+		// View
+		this.getDamageReports = function(successCallback,failCallback,requestObject)
+		{
+			var NOTSTARTED = 0;
+			var INPROGRESS = 1;
+			var DONE = 2;
+			var mockResponse = [
+				{
+					'id':'2',
+					'damageTypeId':0,
+					'damageType':{
+						'id':'0',
+						'name':'Fire'
+					},
+					'dateOfDamage':'2017/05/11',
+					'dateOfReporting':'2017/05/11',
+					'damageReportNumber':'00002',
+					'requiresTaxation':false,
+					'taxationProgress':DONE,
+					'damageReportLandEntries':[
+						{
+							'id':'4',
+							'damageReportId':2,
+							'policyLandEntryId':1,
+							'inspected':true,
+							'policyLandEntry':{
+								'id':'1',
+								'policyId':'0',
+								'farmId':'1',
+								'landNumber':'00002',
+								'landLongitude':'131.044',
+								'landLatitude':'-25.363',
+								'cropId':'1',
+								'crop':{'id':'1',
+									'name':'Banana',
+									'productId':'0',
+									'active':'1',
+									'priceUomId':'0',
+									'areaUomId':'0'
+								},
+								'cultivar':'Something',
+								'area':'8.4',
+								'yield':'16.11',
+								'price':'9.48',
+								'tariffOptionId':'0',
+								'additionalTariff':0
+							}
+						}
+					],
+					"farm":{
+						'id':'1',
+						'name':'P1',
+						'businessUnitId':'0',
+						'latitude':'1.325642',
+						'longitude':'-0.35243',
+						'active':'1',
+						'districtId':'0',
+						'district':{
+							'id':'0',
+							'name':'Bellville',
+							'active':'1'
+						},
+						"businessUnit":{
+							'id':'0',
+							'name':'BU0',   //'Anro Boerdery Co (ABC)',
+							'contactNumber':'063-887-9635',
+							'contactPerson':'Anro Swart',
+							'email':'anro.swart@bing.com',
+							'vatNumber':'00625-4811',
+							'incomeTaxNumber':'5651484166',
+							'active':'1',
+							'verified':'1'
+						}
+					}
+				}
+			];
+
+			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
+		}
+		// ^ View ^
+	// ^ Damage Report ^
+	// Quote
+		// Create
+		this.validateBusinessUnit = function(successCallback,failCallback,requestObject)
+		{
+			var mockResponse = {
 				'id':'0',
 				'name':'BU0',   //'Anro Boerdery Co (ABC)',
 				'contactNumber':'063-887-9635',
@@ -165,15 +355,13 @@ var brokerController = new function() {
 				'incomeTaxNumber':'5651484166',
 				'active':'1',
 				'verified':'1'
-			}
-		];
+			};
 
-		ajaxPost("Some url", successCallback,failCallback,requestObject,mockResponse);
-	}
-	this.getFarmsForBusinessUnitTheBrokerHasPoliciesOn = function(successCallback,failCallback,requestObject)
-	{
-		var mockResponse = [
-			{
+			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
+		}
+		this.validateFarm = function(successCallback,failCallback,requestObject)
+		{
+			var mockResponse = {
 				'id':'0',
 				'name':'P0',
 				'businessUnitId':'0',
@@ -181,82 +369,101 @@ var brokerController = new function() {
 				'longitude':'-0.35428',
 				'active':'1',
 				'districtId':'0'
+			};
+
+			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
+		}
+		this.getProducts = function(successCallback,failCallback)
+		{
+			var mockResponse = [
+				{
+					'id':'0',
+					'name':'Winter',
+				}
+			];
+
+			ajaxGet("Some url",successCallback,failCallback,mockResponse);
+		}
+		this.getTariffOptionTypes = function(successCallback,failCallback)
+		{
+			var mockResponse = [
+				{
+					'id':'0',
+					'name':'Franchise',
+				}
+			];
+
+			ajaxGet("Some url",successCallback,failCallback,mockResponse);
+		}
+		this.getCropsOfProduct = function(successCallback,failCallback,requestObject)
+		{
+			var mockResponse = [
+				{
+					'id':'1',
+					'name':'Banana',
+					'productId':'0',
+					'active':'1',
+					'priceUomId':'0',
+					'areaUomId':'0'
+				}
+			];
+
+			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
+		}
+		this.getTariffOptions = function(successCallback,failCallback,requestObject)
+		{
+			var mockResponse = [
+				{
+					'id':'0',
+					'tariffOptionTypeId':'0',
+					'cropId':'0',
+					'districtId':'0',
+					'coverage':'5',
+					'coverageStart':'2017-05-01 00:00:00',
+					'coverageEnd':'2018-05-01 00:00:00',
+				}
+			];
+
+			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
+		}
+		this.getTariffOptionDamageTypeOfTariffOption = function(successCallback,failCallback,requestObject)
+		{
+			var mockResponse = [
+				{
+					'id':'0',
+					'tariffOptionId':'0',
+					'damageTypeId':'0',
+					'tariff':'0.175',
+					'isDefault':'1',
+					'damageType':{
+						'id':'0',
+						'name':'Fire',
+					}
+				},
+				{
+					'id':'1',
+					'tariffOptionId':'0',
+					'damageTypeId':'1',
+					'tariff':'0.235',
+					'isDefault':'0',
+					'damageType':{
+						'id':'1',
+						'name':'Flood',
+					}
+				}
+			];
+
+			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
+		}
+		this.saveQuote = function(successCallback,failCallback,requestObject)
+		{
+			var mockResponse = {
+				"message":"saved"
 			}
-		];
-
-		ajaxPost("Some url", successCallback,failCallback,requestObject,mockResponse);
-	}
-	this.getDamageTypes = function(successCallback,failCallback)
-	{
-		var mockResponse = [
-			{
-				'id':'0',
-				'name':'Fire',
-			},
-			{
-				'id':'1',
-				'name':'Flood',
-			},
-			{
-				'id':'2',
-				'name':'Dew',
-			},
-			{
-				'id':'3',
-				'name':'Bugs',
-			},
-			{
-				'id':'4',
-				'name':'Godzilla',
-			}
-		];
-
-		ajaxGet("Some url", successCallback, failCallback, mockResponse);
-	}
-	this.getLandEntryForFarmAndBusinessUnitTheBrokerHasPoliciesOn = function(successCallback,failCallback,requestObject)
-	{
-		var mockResponse = [
-			{
-				'id':'4',
-				'policyId':'2',
-				'farmId':'0',
-				'landNumber':'00003',
-				'landLongitude':'131.044',
-				'landLatitude':'-25.363',
-				'cropId':'1',
-				'cultivar':'Red Dwarf',
-				'area':'7.4',
-				'yield':'14.22',
-				'price':'5.48',
-				'tariffOptionId':'0',
-				'additionalTariff':0
-			},
-			{
-				'id':'6',
-				'policyId':'3',
-				'farmId':'0',
-				'landNumber':'00005',
-				'landLongitude':'131.044',
-				'landLatitude':'-25.363',
-				'cropId':'1',
-				'cultivar':'Red Dwarf',
-				'area':'7.4',
-				'yield':'14.22',
-				'price':'5.48',
-				'tariffOptionId':'0',
-				'additionalTariff':0
-			}
-		];
-
-		ajaxPost("Some url", successCallback,failCallback,requestObject,mockResponse);
-	}
-	this.saveDamageReport = function(successCallback,failCallback,requestObject)
-	{
-		var mockResponse = {
-			"message":"Saved"
-		};
-
-		ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
-	}
-	// ^ Damage Report ^
+			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
+		}
+		// ^ Create ^
+		// View
+		// ^ View ^
+	// ^ Quote ^
 }
