@@ -63,12 +63,48 @@ var brokerController = new function() {
 				{
 					'id':'2',
 					'mainBrokerId':'1',
-					'viewableBrokerId':'1',
+					'viewableBrokerId':'3',
+					'broker':{
+								'id':'3',
+								'userId':'6',
+								'brokerageId':'0',
+								'creationRights':true,
+								'user':{
+											'id':'6',
+											'username':'C',
+											'password':'',
+											'roleId':'5',
+											'name':'Carla',
+											'initials':'C',
+											'surname':'Says',
+											'email':'carla@gmail.com',
+											'active':'1',
+											'validated':'1'
+										}
+							}
 				},
 				{
 					'id':'3',
 					'mainBrokerId':'1',
 					'viewableBrokerId':'2',
+					'broker':{
+							'id':'2',
+							'userId':'8',
+							'brokerageId':'0',
+							'creationRights':true,
+							'user':{
+								'id':'8',
+								'username':'B2',
+								'password':'',
+								'roleId':'4',
+								'name':'Benjamin',
+								'initials':'B T',
+								'surname':'Twosey',
+								'email':'benjamin@gmail.com',
+								'active':'1',
+								'validated':'1'
+							}
+						}
 				}
 			]
 		};

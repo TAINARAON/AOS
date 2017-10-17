@@ -43,52 +43,23 @@ var quoteViewer = new function ()
 
 	function setAvailableBrokers()
 	{	
-		var currentUserBrokerId = sessionStorage.brokerId;
-
-		var result = brokerInvoker.getViewableBrokers(currentUserBrokerId);
-
-		if(result != null)
-		{
-			ajaxPost("Some url", 
-				function(result){
-					// TODO: add another ajaxPost here
-					var tSelfObj = brokerInvoker.getBrokerDisplayable(currentUserBrokerId);
-					tSelfObj["brokerId"] = currentUserBrokerId;
-					viewableBrokers.push(tSelfObj);
-
-					// TODO: test
-					//Spread syntax allows an iterable such as an array expression to be expanded in places where zero or more arguments (for function calls) or elements (for array literals) are expected
-					viewableBrokers.push(...brokerInvoker.getViewableBrokers(currentUserBrokerId));
-
-					for(var i = 0; i < viewableBrokers.length; i++)
-					{
-						var option = document.createElement("OPTION");
-						option.innerHTML = viewableBrokers[i].name;
-
-						brokerSelect.appendChild(option);
-					}
-
-					// If only one broker is available then it will be onself, as it is the first option it will already be selected
-					// Hide the dropdown
-					if(viewableBrokers.length == 1)
-					{
-						document.getElementById("available_broker_container").style.display = "none";
-						document.getElementById("quote_number_container").className+=" col-md-offset-2";
-					}
-				}, 
-				function(){
-					alert("Failed to load available brokers");
-				},
-				{"brokerId":currentUserBrokerId},
-				result
-			);
+		viewableBrokers = [];
+		var currentBroker = brokerController.getBroker();
+		var tSelfObj = {
+			"brokerId":currentBroker.id,
+			"name":brokerController.getUser().name
 		}
-
-		/*viewableBrokers = brokerInvoker.getViewableBrokers(currentUserBrokerId);
-		
-		var tSelfObj = brokerInvoker.getBrokerDisplayable(currentUserBrokerId);
-		tSelfObj["brokerId"] = currentUserBrokerId;
 		viewableBrokers.push(tSelfObj);
+		
+		var viewable = brokerController.getViewableBrokers();
+		for(var i = 0; i < viewable.length; i++)
+		{
+			var tObj = {
+				"brokerId":viewable[i].broker.id,
+				"name":viewable[i].broker.user.name
+			}
+			viewableBrokers.push(tObj);
+		}
 
 		for(var i = 0; i < viewableBrokers.length; i++)
 		{
@@ -96,7 +67,15 @@ var quoteViewer = new function ()
 			option.innerHTML = viewableBrokers[i].name;
 
 			brokerSelect.appendChild(option);
-		}*/
+		}
+
+		// If only one broker is available then it will be onself, as it is the first option it will already be selected
+		// Hide the dropdown
+		if(viewableBrokers.length == 1)
+		{
+			document.getElementById("available_broker_container").style.display = "none";
+			document.getElementById("quote_number_container").className+=" col-md-offset-2";
+		}
 	}
 
 	function setupAccordionClickHandler()

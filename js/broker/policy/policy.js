@@ -24,7 +24,41 @@ var policyViewer = new function ()
 
 	function setAvailableBrokers()
 	{	
-		var currentUserBrokerId = sessionStorage.brokerId;
+		viewableBrokers = [];
+		var currentBroker = brokerController.getBroker();
+		var tSelfObj = {
+			"brokerId":currentBroker.id,
+			"name":brokerController.getUser().name
+		}
+		viewableBrokers.push(tSelfObj);
+		
+		var viewable = brokerController.getViewableBrokers();
+		for(var i = 0; i < viewable.length; i++)
+		{
+			var tObj = {
+				"brokerId":viewable[i].broker.id,
+				"name":viewable[i].broker.user.name
+			}
+			viewableBrokers.push(tObj);
+		}
+
+		for(var i = 0; i < viewableBrokers.length; i++)
+		{
+			var option = document.createElement("OPTION");
+			option.innerHTML = viewableBrokers[i].name;
+
+			brokerSelect.appendChild(option);
+		}
+
+		// If only one broker is available then it will be onself, as it is the first option it will already be selected
+		// Hide the dropdown
+		if(viewableBrokers.length == 1)
+		{
+			document.getElementById("available_broker_container").style.display = "none";
+			document.getElementById("policy_number_container").className+=" col-md-offset-2";
+		}
+
+		/*var currentUserBrokerId = sessionStorage.brokerId;
 
 		viewableBrokers = brokerInvoker.getViewableBrokers(currentUserBrokerId);
 		
@@ -38,7 +72,7 @@ var policyViewer = new function ()
 			option.innerHTML = viewableBrokers[i].name;
 
 			brokerSelect.appendChild(option);
-		}
+		}*/
 	}
 
 	function setupAccordionClickHandler()
