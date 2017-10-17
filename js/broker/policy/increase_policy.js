@@ -1,5 +1,4 @@
 var increasePolicy = new function(){
-	alert("O yay");
 	var mainPolicy = {};
 
 	var modal = document.getElementById("increaseModal");

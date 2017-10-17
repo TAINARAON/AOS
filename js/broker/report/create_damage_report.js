@@ -1,5 +1,7 @@
 var modalDamageReport = new function()
 {
+	var brokerId;
+
 	var element_business_unit;
 	var businessUnitArr;
 
@@ -90,6 +92,8 @@ var modalDamageReport = new function()
 
 	(function init()
 	{
+		brokerId = brokerController.getBroker().id;
+
 		onAddFileClickListener();
 		onRemoveFileClickListener();
 		initDropDowns();
@@ -115,12 +119,12 @@ var modalDamageReport = new function()
 		element_damage_types_container.innerHTML = "";
 		
 		var response = damageReportInvoker.getDamageTypes();
-
+		
 		if(response != null)
 		{
 			ajaxGet("Some url - get", 
 				function(response){
-					
+					//debugger;
 					for(var i = 0; i < response.length; i++)
 					{
 						damageTypes = response;
@@ -168,7 +172,7 @@ var modalDamageReport = new function()
 	{
 		element_business_unit.innerHTML = "";
 		
-		var response = damageReportInvoker.getBusinessUnitByBrokerId(sessionStorage.brokerId);
+		var response = damageReportInvoker.getBusinessUnitByBrokerId(brokerId);
 		console.log("response id: "+response);
 		if(response != null)
 		{
@@ -190,7 +194,7 @@ var modalDamageReport = new function()
 				function(){
 					alert("Failed to load businessUnits");
 				}, 
-				{"brokerId":sessionStorage.brokerId}, 
+				{"brokerId":brokerId}, 
 				response
 			);
 		}
@@ -220,7 +224,7 @@ var modalDamageReport = new function()
 		element_farm.innerHTML = "";
 
 		var businessUnitId = getBusinessUnitIdByName(val);
-		var response = damageReportInvoker.getFarmByBusinessUnitId(sessionStorage.brokerId, businessUnitId);
+		var response = damageReportInvoker.getFarmByBusinessUnitId(brokerId, businessUnitId);
 		
 		if(response != null)
 		{
@@ -246,7 +250,7 @@ var modalDamageReport = new function()
 					element_farm_container.style.display = "none";
 				}, 
 				{
-					"brokerId":sessionStorage.brokerId,
+					"brokerId":brokerId,
 					"businessUnitId":businessUnitId
 				}, 
 				response
@@ -266,7 +270,7 @@ var modalDamageReport = new function()
 		var businessUnitId = getBusinessUnitIdByName(element_business_unit.value);
 		var farmId = getFarmIdByName(element_farm.value);
 
-		var response = damageReportInvoker.getLandByFarmId(sessionStorage.brokerId, businessUnitId, farmId);
+		var response = damageReportInvoker.getLandByFarmId(brokerId, businessUnitId, farmId);
 
 		if(response != null)
 		{
@@ -300,7 +304,7 @@ var modalDamageReport = new function()
 					element_land_container.style.display = "none";
 				}, 
 				{
-					"brokerId": sessionStorage.brokerId,
+					"brokerId": brokerId,
 					"businessUnitId": businessUnitId,
 					"farmId": farmId
 				}, 
