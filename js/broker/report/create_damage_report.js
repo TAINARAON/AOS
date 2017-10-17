@@ -333,7 +333,37 @@ var modalDamageReport = new function()
 		element_available_land_entry_container.innerHTML = "";
 		element_selected_land_entry_container.innerHTML = "";
 
-		var businessUnitId = getBusinessUnitIdByName(element_business_unit.value);
+		var requestObj = {
+			"brokerId":brokerId,
+			"businessUnitId":getBusinessUnitIdByName(element_business_unit.value),
+			"farmId":getFarmIdByName(element_farm.value)
+		};
+
+		brokerController.getLandEntryForFarmAndBusinessUnitTheBrokerHasPoliciesOn(
+			function(response){
+				landArr = response;
+					
+				for(var i = 0; i < landArr.length; i++)
+				{
+					var li = $('<li></li>')
+						.text(landArr[i].landNumber)
+						.val(landArr[i].landNumber)
+						.on('click',function() {toggleSelectedListItem($(this));});
+
+					$(element_available_land_entry_container).append(li);
+				}
+
+				element_land_container.style.display = "block";
+
+				loadDamageTypes();
+			},
+			function(response){
+				element_land_container.style.display = "none";
+				alert("Failed to retrieve landEntries");
+			},
+			requestObj
+		);
+		/*var businessUnitId = getBusinessUnitIdByName(element_business_unit.value);
 		var farmId = getFarmIdByName(element_farm.value);
 
 		var response = damageReportInvoker.getLandByFarmId(brokerId, businessUnitId, farmId);
@@ -346,10 +376,10 @@ var modalDamageReport = new function()
 					
 					for(var i = 0; i < landArr.length; i++)
 					{
-						/*var checkboxDivContainer = $("<div class='requires_taxation_checkbox_container'></div>")
-						var checkboxLabel = $("<label></label>").text('Taxation');
-						var checkbox = $('<input type="checkbox">');
-						checkboxDivContainer.append(checkboxLabel).append(checkbox).hide();*/
+						//var checkboxDivContainer = $("<div class='requires_taxation_checkbox_container'></div>")
+						//var checkboxLabel = $("<label></label>").text('Taxation');
+						//var checkbox = $('<input type="checkbox">');
+						//checkboxDivContainer.append(checkboxLabel).append(checkbox).hide();
 
 						//$(element_available_land_entry_container).append("<li>"+landArr[i].landNumber+"</li>");
 						var li = $('<li></li>')
@@ -380,7 +410,7 @@ var modalDamageReport = new function()
 		else
 		{
 			element_land_container.style.display = "none";
-		}
+		}*/
 	}
 
 	function toggleSelectedListItem(li) {
@@ -478,20 +508,15 @@ var modalDamageReport = new function()
 			for(var i = 0; i < totalSelectedLandEntries.length; i++)
 			{
 				var landEntry = totalSelectedLandEntries.eq(i);
-				//alert(landEntry.val());
 				var landEntryId = getLandEntryByLandEntryNumber(landEntry.val()).id;
 				
 				//var requiresTaxation = landEntry.find('input[type=checkbox]').prop('checked');
-				//alert(requiresTaxation);
 				var landEntryObject = 
 				{
 					'id':landEntryId,
 					'inspected':false
 				};
 				//'requiresTaxation':requiresTaxation
-
-				console.log(landEntryObject);
-
 				landEntries.push(landEntryObject);
 			}
 			var damageType = getDamageTypeByName($(":radio[name='optradio']:checked").val());
@@ -505,8 +530,19 @@ var modalDamageReport = new function()
 				"damageReportLandEntries":landEntries,
 				"requiresTaxation":$(":checkbox[name='requires_taxation']:checked").val()
 			};
+
+			brokerController.saveDamageReport(
+				function(response){
+					reset();
+					damageReport.reload();
+				}, 
+				function(response){
+					alert("Failed to save damage report");
+				}, 
+				damageReportObj
+			);
 			
-			var response = damageReportInvoker.createDamageReport(damageReportObj);
+			/*var response = damageReportInvoker.createDamageReport(damageReportObj);
 			if(response != null)
 			{
 				ajaxPost("some url", 
@@ -524,8 +560,7 @@ var modalDamageReport = new function()
 			else
 			{
 				alert("Error creating damage report");
-			}
-
+			}*/
 		}
 		else
 		{

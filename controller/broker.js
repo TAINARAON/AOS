@@ -181,15 +181,6 @@ var brokerController = new function() {
 				'longitude':'-0.35428',
 				'active':'1',
 				'districtId':'0'
-			},
-			{
-				'id':'1',
-				'name':'P1',
-				'businessUnitId':'0',
-				'latitude':'1.325642',
-				'longitude':'-0.35243',
-				'active':'1',
-				'districtId':'0'
 			}
 		];
 
@@ -224,7 +215,48 @@ var brokerController = new function() {
 	}
 	this.getLandEntryForFarmAndBusinessUnitTheBrokerHasPoliciesOn = function(successCallback,failCallback,requestObject)
 	{
-		
+		var mockResponse = [
+			{
+				'id':'4',
+				'policyId':'2',
+				'farmId':'0',
+				'landNumber':'00003',
+				'landLongitude':'131.044',
+				'landLatitude':'-25.363',
+				'cropId':'1',
+				'cultivar':'Red Dwarf',
+				'area':'7.4',
+				'yield':'14.22',
+				'price':'5.48',
+				'tariffOptionId':'0',
+				'additionalTariff':0
+			},
+			{
+				'id':'6',
+				'policyId':'3',
+				'farmId':'0',
+				'landNumber':'00005',
+				'landLongitude':'131.044',
+				'landLatitude':'-25.363',
+				'cropId':'1',
+				'cultivar':'Red Dwarf',
+				'area':'7.4',
+				'yield':'14.22',
+				'price':'5.48',
+				'tariffOptionId':'0',
+				'additionalTariff':0
+			}
+		];
+
+		ajaxPost("Some url", successCallback,failCallback,requestObject,mockResponse);
+	}
+	this.saveDamageReport = function(successCallback,failCallback,requestObject)
+	{
+		var mockResponse = {
+			"message":"Saved"
+		};
+
+		ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
 	}
 	// ^ Damage Report ^
 }
