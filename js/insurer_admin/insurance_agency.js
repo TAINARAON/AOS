@@ -7,7 +7,7 @@ $().ready(function(){
 
 function populateBrokerageDetails() {
 
-	var agency = insurerInvoker.getInsuranceAgency();
+	var agency = insurerAdminController.getInsuranceAgency();
 
  	$('#insurance_agency_name').text(agency['name']);
 
@@ -15,21 +15,26 @@ function populateBrokerageDetails() {
 
  	$('#insurance_agency_email').text(agency['email']);
 }
-
-
 function populateInsurerTable() {
+
+	insurerAdminController.getInsurersOfInsuranceAgencyWithUserData(onGetInsurersOfInsuranceAgencyWithUserDataSuccess,onGetInsurersOfInsuranceAgencyWithUserDataFailure);
+}
+function onGetInsurersOfInsuranceAgencyWithUserDataSuccess(response) {
 
 	var ulAccordian = $('#insurance_agency_insurer_table_body');
 	ulAccordian.empty();
 
-	var insurers = insurerInvoker.getAllInsurersClean();
+	var insurers = response['insurers'];
+
 	for ( var i = 0; i < insurers.length; i++ ) {
+
+		var insurer = insurers[i];
 
 		var tr = $('<li></li>');
 		ulAccordian.append(tr);
 
 		var aToggle = $('<a></a>').addClass('toggle').prop('href',"javascript:void(0);");
-		aToggle.append($('<td></td>')).text(insurers[i]['name'] + " " + insurers[i]['surname']);
+		aToggle.append($('<td></td>')).text(insurer['initials'] + " " + insurer['surname'] + " ( " + insurer['name'] + ' )');
 		tr.append(aToggle);
 
 		var ulInner = $('<ul></ul').addClass('inner');
@@ -40,7 +45,10 @@ function populateInsurerTable() {
 
 	setOnAccordionClicked();
 }
+function onGetInsurersOfInsuranceAgencyWithUserDataFailure(response) {
 
+	alert("failed onGetInsurersOfInsuranceAgencyWithUserDataFailure");
+}
 function setOnAccordionClicked() {
 	$('.toggle').click(function(e) {
 

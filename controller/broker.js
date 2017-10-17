@@ -4,6 +4,19 @@ var brokerController = new function() {
 	var broker = null;
 	var brokerage = null;
 	var viewableBrokers = null;
+	var user = null;
+	this.getBroker = function() {
+		return broker;
+	}
+	this.getBrokerage = function() {
+		return brokerage;
+	}
+	this.getViewableBrokers = function() {
+		return viewableBrokers;
+	}
+	this.getUser = function() {
+		return user;
+	}
 
 	var GET_DEFAULT_BROKER_DATA_URL = 'GET_DEFAULT_BROKER_DATA_URL';
 	var TEST_URL = "TEST_URL";

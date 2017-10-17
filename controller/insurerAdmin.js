@@ -3,6 +3,16 @@ var insurerAdminController = new function() {
 	// PRIVATE VARIABLES
 	var insurerAdmin = null;
 	var insuranceAgency = null;
+	var user = null;
+	this.getInsurerAdmin = function() {
+		return insurerAdmin;
+	}
+	this.getInsuranceAgency = function() {
+		return insuranceAgency;
+	}
+	this.getUser = function() {
+		return user;
+	}
 
 	var CREATE_INSURER_URL = "CREATE_INSURER_URL";
 	var GET_BROKER_DETAILS_OF_BROKERAGE_URL = "GET_BROKER_DETAILS_OF_BROKERAGE_URL";
@@ -15,12 +25,26 @@ var insurerAdminController = new function() {
 	
 
 	var GET_DEFAULT_INSURER_ADMIN_DATA_URL = 'GET_DEFAULT_INSURER_ADMIN_DATA_URL';
+	var GET_INSURERS_OF_INSURANCE_AGENCY_WITH_USER_DATA_URL = 'GET_INSURERS_OF_INSURANCE_AGENCY_WITH_USER_DATA_URL';
 
 	this.init = function(userId) {
 		
 		getDefaultInsurerAdminData(userId);
 	}
 
+	/*  20171017
+		insurerAdmin/getDefaultInsurerAdminData
+
+		request {
+			userId
+		}
+
+		response {
+			user:{whole},
+			insurerAdmin:{whole},
+			insuranceAgency:{whole},
+		}
+	*/
 	function getDefaultInsurerAdminData(userId) {
 
 		var requestObject = {
@@ -29,6 +53,12 @@ var insurerAdminController = new function() {
 
 		var mockResponse = 
 		{
+			'user':{
+				'initials':'S',
+				'name':'Samantha',
+				'surname':'Wiggill',
+				'email':'samantha@gmail.com',
+			},
 			'insurerAdmin':
 			{
 				'id':'0',
@@ -41,12 +71,12 @@ var insurerAdminController = new function() {
 				'name':'Versekerings Ltd.',
 				'email':'versekerings.ltd@gmail.com',
 				'contactNumber':'062 352 1341',
+				'fspNumber':'fsp_0050'
 			}
 		};
 
 		ajaxPost(GET_DEFAULT_INSURER_ADMIN_DATA_URL,onGetDefaultInsurerAdminSuccess,onGetDefaultInsurerAdminFailure,requestObject,mockResponse);
 	}
-
 	function onGetDefaultInsurerAdminSuccess(response) {
 
 		util.createNotification('Logged in as Insurer Admin');
@@ -56,11 +86,42 @@ var insurerAdminController = new function() {
 		
 		loader.loadRole('insurerAdmin');
 	}
-
 	function onGetDefaultInsurerAdminFailure(response) {
 
 		alert('something messed up');
 	}
+
+	/*
+		
+	*/
+	this.getInsurersOfInsuranceAgencyWithUserData = function(successCallback,failureCallback) {
+
+		var insuranceAgencyId = insuranceAgency['id'];
+
+		var requestObject = 
+		{
+
+		};
+
+		var mockResponse = 
+		{	
+			'insurers':[
+				{
+					'name':'Tiaan',
+					'surname':'Gerber',
+					'initials':'T J'
+				},
+				{
+					'name':'Sally',
+					'surname':'Williams',
+					'initials':'S'
+				}
+			]
+		};
+
+		ajaxPost(GET_INSURERS_OF_INSURANCE_AGENCY_WITH_USER_DATA_URL,successCallback,failureCallback,requestObject,mockResponse);
+	}
+
 
 
 	// NEW STUFF 2017/10/16.

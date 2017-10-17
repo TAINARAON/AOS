@@ -730,6 +730,7 @@ var mockCommunicator = new function()
 			'name':'Versekerings Ltd.',
 			'email':'versekerings.ltd@gmail.com',
 			'contactNumber':'062 352 1341',
+			'fspNumber':'fsp_0050'
 		}
 	];
 		

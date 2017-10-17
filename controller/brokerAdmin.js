@@ -5,6 +5,18 @@ var brokerAdminController = new function() {
 	var brokerAdmin = null;
 	var brokersOfBrokerage = null;
 	var user = null;
+	this.getBrokerAdmin = function() {
+		return brokerAdmin;
+	}
+	this.getBrokerage = function() {
+		return brokerage;
+	}
+	this.getBrokersOfBrokerage = function() {
+		return brokersOfBrokerage;
+	}
+	this.getUser = function() {
+		return user;
+	}
 
 	var EDIT_BROKERAGE_URL = "EDIT_BROKERAGE_URL";
 	var CREATE_BROKER_URL = "CREATE_BROKER_URL";
