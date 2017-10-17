@@ -2,10 +2,10 @@ var modalDamageReport = new function()
 {
 	var brokerId;
 
-	var element_business_unit;
+	var element_business_unit = document.getElementById("business_unit_dropdown");
 	var businessUnitArr;
 
-	var element_farm;
+	var element_farm = document.getElementById("farm_dropdown");
 	var farmArr
 
 	var landArr;
@@ -110,15 +110,105 @@ var modalDamageReport = new function()
 
 	function initDropDowns()
 	{
-		initFarmDropdown();
 		initBusinessUnitDropdown();
+		initFarmDropdown();
+	}
+
+	function initBusinessUnitDropdown()
+	{
+		loadBusinessUnitDropdownChoisesForBroker();
+		element_business_unit.onchange = function(){loadFarmDropdownChoicesForBusinessUnit(element_business_unit.value);};
+	}
+
+	function loadBusinessUnitDropdownChoisesForBroker()
+	{
+		element_business_unit.innerHTML = "";
+
+		var requestObj = {"brokerId":brokerId};
+		brokerController.getBusinessUnitsTheBrokerHasPoliciesOn(
+			function(response){
+				businessUnitArr = response;
+
+				for(var i = 0; i < businessUnitArr.length; i++)
+				{
+					if(i == 0)
+					{
+						var option = createDropdownOption("", element_business_unit);
+						$(option).attr("disabled selected value");
+					}
+
+					createDropdownOption(businessUnitArr[i].name, element_business_unit);
+				}
+			}, 
+			function(response){
+				alert("Issue retrieving business units");
+			},requestObj
+		);
+		
+		/*var response = damageReportInvoker.getBusinessUnitByBrokerId(brokerId);
+		console.log("response id: "+response);
+		if(response != null)
+		{
+			ajaxPost("Some url", 
+				function(response){
+					businessUnitArr = response;
+
+					for(var i = 0; i < businessUnitArr.length; i++)
+					{
+						if(i == 0)
+						{
+							var option = createDropdownOption("", element_business_unit);
+							$(option).attr("disabled selected value");
+						}
+
+						createDropdownOption(businessUnitArr[i].name, element_business_unit);
+					}
+				}, 
+				function(){
+					alert("Failed to load businessUnits");
+				}, 
+				{"brokerId":brokerId}, 
+				response
+			);
+		}*/
 	}
 
 	function loadDamageTypes()
 	{
 		element_damage_types_container.innerHTML = "";
+
+		brokerController.getDamageTypes(
+			function(response){
+				damageTypes = response;
+				for(var i = 0; i < response.length; i++)
+				{
+					var damageType = response[i];
+
+					var row;
+					if(i%3 == 0)
+					{
+						row = document.createElement("DIV");
+						row.className = "row";
+
+						element_damage_types_container.appendChild(row);
+					}
+
+					var column = document.createElement("DIV");
+					column.className = "col-md-4";
+					row.appendChild(column);
+
+					$(column).append('<div class="radio"><label><input type="radio" name="optradio" value="'+damageType.name+'">'+damageType.name+'</label></div>');
+				}
+
+				element_damage_types_container.style.display = "block";
+			},
+			function(response){
+				element_damage_types_container.style.display = "none";
+				alert("Failed to load damageTypes");
+			}
+		);
 		
-		var response = damageReportInvoker.getDamageTypes();
+		/*var response = damageReportInvoker.getDamageTypes();
 		
 		if(response != null)
 		{
@@ -158,64 +248,11 @@ var modalDamageReport = new function()
 		else
 		{
 			element_damage_types_container.style.display = "none";
-		}
-	}
-
-	function initBusinessUnitDropdown()
-	{
-		element_business_unit = document.getElementById("business_unit_dropdown");
-		loadBusinessUnitDropdownChoisesForBroker();
-		element_business_unit.onchange = function(){loadFarmDropdownChoicesForBusinessUnit(element_business_unit.value);};
-	}
-
-	function loadBusinessUnitDropdownChoisesForBroker()
-	{
-		element_business_unit.innerHTML = "";
-		
-		var response = damageReportInvoker.getBusinessUnitByBrokerId(brokerId);
-		console.log("response id: "+response);
-		if(response != null)
-		{
-			ajaxPost("Some url", 
-				function(response){
-					businessUnitArr = response;
-
-					for(var i = 0; i < businessUnitArr.length; i++)
-					{
-						if(i == 0)
-						{
-							var option = createDropdownOption("", element_business_unit);
-							$(option).attr("disabled selected value");
-						}
-
-						createDropdownOption(businessUnitArr[i].name, element_business_unit);
-					}
-				}, 
-				function(){
-					alert("Failed to load businessUnits");
-				}, 
-				{"brokerId":brokerId}, 
-				response
-			);
-		}
-
-		/*businessUnitArr = damageReportInvoker.getBusinessUnitByBrokerId(sessionStorage.brokerId);
-
-		for(var i = 0; i < businessUnitArr.length; i++)
-		{
-			if(i == 0)
-			{
-				var option = createDropdownOption("", element_business_unit);
-				$(option).attr("disabled selected value");
-			}
-
-			createDropdownOption(businessUnitArr[i].name, element_business_unit);
 		}*/
 	}
 
 	function initFarmDropdown()
 	{
-		element_farm = document.getElementById("farm_dropdown");
 		element_farm.onchange = function(){loadLandDropdownChoicesForFarm(element_farm.value);};
 	}
 
@@ -223,7 +260,36 @@ var modalDamageReport = new function()
 	{
 		element_farm.innerHTML = "";
 
-		var businessUnitId = getBusinessUnitIdByName(val);
+		var requestObj = {
+			"brokerId":brokerId,
+			"businessUnitId":getBusinessUnitIdByName(val)
+		};
+
+		brokerController.getFarmsForBusinessUnitTheBrokerHasPoliciesOn(
+			function(response){
+				farmArr = response;
+
+				for(var i = 0; i < farmArr.length; i++)
+				{
+					if(i == 0)
+					{
+						var option = createDropdownOption("", element_farm);
+						$(option).attr("disabled selected value");
+					}
+
+					createDropdownOption(farmArr[i].name, element_farm);
+
+					element_farm_container.style.display = "block";
+				}
+			},
+			function(response){
+				element_farm_container.style.display = "none";
+				alert("Failed to load farms");
+			},
+			requestObj
+		);
+
+		/*var businessUnitId = getBusinessUnitIdByName(val);
 		var response = damageReportInvoker.getFarmByBusinessUnitId(brokerId, businessUnitId);
 		
 		if(response != null)
@@ -259,7 +325,7 @@ var modalDamageReport = new function()
 		else
 		{
 			element_farm_container.style.display = "none";
-		}
+		}*/
 	}
 
 	function loadLandDropdownChoicesForFarm(val)

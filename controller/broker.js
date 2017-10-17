@@ -150,4 +150,81 @@ var brokerController = new function() {
 
 		ajaxPost(TEST_URL,successCallback,failCallback,requestObject,mockResponse);
 	}
+
+	// Damage Report
+	this.getBusinessUnitsTheBrokerHasPoliciesOn = function(successCallback,failCallback,requestObject)
+	{
+		var mockResponse = [
+			{
+				'id':'0',
+				'name':'BU0',   //'Anro Boerdery Co (ABC)',
+				'contactNumber':'063-887-9635',
+				'contactPerson':'Anro Swart',
+				'email':'anro.swart@bing.com',
+				'vatNumber':'00625-4811',
+				'incomeTaxNumber':'5651484166',
+				'active':'1',
+				'verified':'1'
+			}
+		];
+
+		ajaxPost("Some url", successCallback,failCallback,requestObject,mockResponse);
+	}
+	this.getFarmsForBusinessUnitTheBrokerHasPoliciesOn = function(successCallback,failCallback,requestObject)
+	{
+		var mockResponse = [
+			{
+				'id':'0',
+				'name':'P0',
+				'businessUnitId':'0',
+				'latitude':'1.22644',
+				'longitude':'-0.35428',
+				'active':'1',
+				'districtId':'0'
+			},
+			{
+				'id':'1',
+				'name':'P1',
+				'businessUnitId':'0',
+				'latitude':'1.325642',
+				'longitude':'-0.35243',
+				'active':'1',
+				'districtId':'0'
+			}
+		];
+
+		ajaxPost("Some url", successCallback,failCallback,requestObject,mockResponse);
+	}
+	this.getDamageTypes = function(successCallback,failCallback)
+	{
+		var mockResponse = [
+			{
+				'id':'0',
+				'name':'Fire',
+			},
+			{
+				'id':'1',
+				'name':'Flood',
+			},
+			{
+				'id':'2',
+				'name':'Dew',
+			},
+			{
+				'id':'3',
+				'name':'Bugs',
+			},
+			{
+				'id':'4',
+				'name':'Godzilla',
+			}
+		];
+
+		ajaxGet("Some url", successCallback, failCallback, mockResponse);
+	}
+	this.getLandEntryForFarmAndBusinessUnitTheBrokerHasPoliciesOn = function(successCallback,failCallback,requestObject)
+	{
+		
+	}
+	// ^ Damage Report ^
 }
