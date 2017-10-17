@@ -1,6 +1,5 @@
 function ajaxGet(url,successCallback,failureCallback,mockResponse) {
-
-	successCallback(mockResponse);
+	
 	if(mockResponse != null) {
 		//console.warn("NOT REAL RESPONSE");
 		successCallback(mockResponse);
