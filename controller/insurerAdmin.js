@@ -12,16 +12,54 @@ var insurerAdminController = new function() {
 	var GET_DATA_FOR_POOL_LIMIT_SYSTEMKEY_VIEW_URL = 'GET_DATA_FOR_POOL_LIMIT_SYSTEMKEY_VIEW_URL';
 	var GET_CREATE_POOL_LIMIT_DATA_URL = 'GET_CREATE_POOL_LIMIT_DATA_URL';
 	var CREATE_POOL_LIMIT_URL = 'CREATE_POOL_LIMIT_URL';
+	
+
+	var GET_DEFAULT_INSURER_ADMIN_DATA_URL = 'GET_DEFAULT_INSURER_ADMIN_DATA_URL';
 
 	this.init = function(userId) {
-
-		preloadData(userId);
+		
+		getDefaultInsurerAdminData(userId);
 	}
-	// NEEDED
-	function preloadData(userId) {
 
-		// Starts a chain
-		ajaxGetInsurerAdminByUserId(userId);
+	function getDefaultInsurerAdminData(userId) {
+
+		var requestObject = {
+			'id':userId
+		};
+
+		var mockResponse = 
+		{
+			'insurerAdmin':
+			{
+				'id':'0',
+				'insuranceAgencyId':0,
+				'userId':'1',
+				'active':'1',
+			},
+			'insuranceAgency':
+			{
+				'name':'Versekerings Ltd.',
+				'email':'versekerings.ltd@gmail.com',
+				'contactNumber':'062 352 1341',
+			}
+		};
+
+		ajaxPost(GET_DEFAULT_INSURER_ADMIN_DATA_URL,onGetDefaultInsurerAdminSuccess,onGetDefaultInsurerAdminFailure,requestObject,mockResponse);
+	}
+
+	function onGetDefaultInsurerAdminSuccess(response) {
+
+		util.createNotification('Logged in as Insurer Admin');
+
+		insurerAdmin = response['insurerAdmin'];
+		insuranceAgency = response['insuranceAgency'];
+		
+		loader.loadRole('insurerAdmin');
+	}
+
+	function onGetDefaultInsurerAdminFailure(response) {
+
+		alert('something messed up');
 	}
 
 
@@ -177,26 +215,26 @@ var insurerAdminController = new function() {
 			insurerAdmin:{whole insurerAdmin}
 		}
 	*/
-	function ajaxGetInsurerAdminByUserId(userId) {
+	/*function ajaxGetInsurerAdminByUserId(userId) {
 
 		var requestObject = {
 			"userUuid":userId
 		};
 
 		ajaxPost(GET_INSURER_ADMIN_BY_USER_ID_URL,onGetInsurerAdminSuccess,onGetInsurerAdminFail,requestObject);
-	}
+	}*/
 	// NEEDED
-	function onGetInsurerAdminSuccess(response) {
+	/*function onGetInsurerAdminSuccess(response) {
 
 		insurerAdmin = response["insurerAdmin"];
 
 		ajaxGetInsuranceAgency(insurerAdmin['id']);
-	}
+	}*/
 	// NEEDED
-	function onGetInsurerAdminFail(response) {
+	/*function onGetInsurerAdminFail(response) {
 
 		alert("ERROR! Could not initiate Brokerage");
-	}
+	}*/
 	/*  SENT TO WIKUS
 		insurerAdmin/getInsuranceAgency
 
@@ -208,12 +246,12 @@ var insurerAdminController = new function() {
 			insuranceAgency:{whole insuranceAgency}
 		}
 	*/
-	function ajaxGetInsuranceAgency(insuranceAgencyId) {
+	/*function ajaxGetInsuranceAgency(insuranceAgencyId) {
 
 		var requestObject = {
 			"insuranceAgencyUuid":insuranceAgencyId
 		};
-
+*/
 		/*var mockResponse = {
 			insuranceAgency:{
 				'uuid':'0',
@@ -227,18 +265,18 @@ var insurerAdminController = new function() {
 			}
 		}*/
 
-		ajaxPost(GET_INSURANCE_AGENCY_URL,onGetInsuranceAgencySuccess,onGetInsuranceAgencyFail,requestObject);
-	}
+		/*ajaxPost(GET_INSURANCE_AGENCY_URL,onGetInsuranceAgencySuccess,onGetInsuranceAgencyFail,requestObject);
+	}*/
 	// NEEDED
-	function onGetInsuranceAgencySuccess(response) {
+	/*function onGetInsuranceAgencySuccess(response) {
 
 		insuranceAgency = response["insuranceAgency"];
-	}
+	}*/
 	// NEEDED
-	function onGetInsuranceAgencyFail(response) {
+	/*function onGetInsuranceAgencyFail(response) {
 
 		alert("ERROR! Could not initiate insuranceAgency");
-	}
+	}*/
 	/*   NOT SENT YET
 		insurerAdmin/getBrokerDetailsOfBrokerage
 

@@ -22,16 +22,17 @@ function loadRegisterPage() {
 
 function attemptLogin() {
 
-	var username = document.getElementById("username").value;
-	var password = document.getElementById("password").value;
+	var username = $('#login_username').val();
+	var password =  $('#login_password').val();
 
 	session.login(username,password);
 }
 
 function initiateCredentialRetrieval() {
+	
 	alert("Herstel wagwoord");
 
-	// Redirect to new page here
+	// TODO
 }
 
 function setDefaultOnEnterButton() {

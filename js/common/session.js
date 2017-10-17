@@ -1,3 +1,7 @@
+var LOGIN_URL = '/login';
+
+
+
 var USER_ID = 'userId';
 var NAME_OF_USER = 'nameOfUser';
 var SURNAME_OF_USER = 'nameOfUser';
@@ -25,6 +29,7 @@ var testBrokerId = 2;
 var testInsurerId = 1;
 var testClientId = 4;
 
+// delete me
 function getUser(username,password) {
 
 	return mockCommunicator.getUserByUsernamePassword(username,password);
@@ -37,67 +42,44 @@ var session = new function() {
 
 	this.login = function(username,password) {
 
-		var user = getUser(username,password);
-		
-		if(user == null) {
+		var requestObject = 
+		{
+			'username':username,
+			'password':password
+		};
 
-			onLoginFailed();
-			return;
+		var mockResponse;
+		if(username=="B") {
+			mockResponse = 
+			{
+				'token':'abcdefghijklmnop',
+				'userId':'7',
+				'roleName':BROKER_NAME
+			};
+		} else if(username=="IA") {
+			mockResponse = 
+			{
+				'token':'abcdefghijklmnop',
+				'userId':'1',
+				'roleName':INSURER_ADMIN_NAME
+			};
+		} else if(username=="BA") {
+			mockResponse = 
+			{
+				'token':'abcdefghijklmnop',
+				'userId':'3',
+				'roleName':BROKER_ADMIN_NAME
+			};
 		}
 
-		name = user['name'];
-		surname = user['surname'];
+		ajaxPost(LOGIN_URL,onLoginSuccess,onLoginFailure,requestObject,mockResponse);
 
-		var userId =  user['id'];
-		var roleName = userInvoker.getRole(user['roleId'])['name'];
-
-		switch(roleName) {
-		    case CLIENT_NAME:
-		        onClientLogin(userId);
-		        break;
-		    case BROKER_NAME:
-		        onBrokerLogin(userId);
-		        break;
-		    case BROKER_ADMIN_NAME:
-		        onBrokerAdminLogin(userId);
-		        break;
-		    case INSURER_NAME:
-		        onInsurerLogin(userId);
-		        break;
-		    case INSURER_ADMIN_NAME:
-		        onInsurerAdminLogin(userId);
-		        break;
-		    default:
-		        alert("role log in error");
-		        this.logout();
-		}
 	};
 
 	this.logout = function() {
 
-		sessionStorage.clear();
-
-		name = null;
-		surname = null;
-
-		loader.load();
-		util.createNotification('Logged out','info');
+		// TODO
 	}
-
-	this.getName = function() {
-
-		return name;
-	}
-	this.getSurname = function() {
-
-		return surname;
-	}
-}
-
-function onLoginFailed() {
-
-	alert('login credentials failed.');
-	alert('Valid usernames: IA, I, BA, B, CA, C.  Password = not needed');
 }
 
 function encodePassword(password) {
@@ -105,7 +87,7 @@ function encodePassword(password) {
 	return password;
 }
 
-function onBrokerLogin(userId) {
+/*function onBrokerLogin(userId) {
 
 	var broker = brokerInvoker.getBrokerByUserId(userId);
 	var brokerage = brokerInvoker.getBrokerage(broker['brokerageId']);
@@ -122,7 +104,7 @@ function onBrokerLogin(userId) {
 
 	util.createNotification('Logged in as Broker');
 	loader.loadRole('broker');
-}
+}*/
 
 function onInsurerAdminLogin(userId) {
 
@@ -148,13 +130,56 @@ function onClientLogin(userId) {
 	loader.loadRole('client');
 }
 
-
-
 function onInsurerLogin(userId) {
 
 	util.createNotification('Logged in as Insurer');
 	loader.loadRole('insurer');
 }
+
+// ################## NEW STUFF 2017/10/16 #
+
+function onLoginSuccess(response) {
+
+	var roleName = response['roleName'];
+	var userId = response['userId'];
+
+	switch(roleName) {
+	    case CLIENT_NAME:
+	        clientController.init(userId);
+	        break;
+	    case BROKER_NAME:
+	        brokerController.init(userId);
+	        break;
+	    case BROKER_ADMIN_NAME:
+	        brokerAdminController.init(userId);
+	        break;
+	    case INSURER_NAME:
+	        insurerController.init(userId);
+	        break;
+	    case INSURER_ADMIN_NAME:
+	         insurerAdminController.init(userId);
+	        break;
+	    default:
+	        alert("role log in error");
+	        this.logout();
+	}
+}
+
+function onLoginFailure(response) {
+
+	// Reset username / password inputs
+	$('#login_username').val('');
+	$('#login_password').val('');
+
+	// Notify user
+	util.createNotification('Username and password combination is not correct','error');
+
+	// Display forgot credentials?
+	$('#retrieve_lost_credentials_button').show();
+}
+
+
+// #########################################
 
 
 

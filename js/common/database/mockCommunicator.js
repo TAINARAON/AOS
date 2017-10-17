@@ -886,6 +886,16 @@ var mockCommunicator = new function()
 			'mainBrokerId':'0',
 			'viewableBrokerId':'2',
 		},
+		{
+			'id':'2',
+			'mainBrokerId':'1',
+			'viewableBrokerId':'1',
+		},
+		{
+			'id':'3',
+			'mainBrokerId':'1',
+			'viewableBrokerId':'2',
+		},
 	];
 	this.createBrokerViewableBroker = function(data) {
 

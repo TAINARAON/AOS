@@ -21,16 +21,66 @@ var brokerAdminController = new function() {
 		callback();
 	}
 
-	this.init = function(userId) {
+	var GET_DEFAULT_BROKER_ADMIN_DATA_URL = 'GET_DEFAULT_BROKER_ADMIN_DATA_URL';
 
-		preloadData(userId);
+	this.init = function(userId) {
+		
+		getDefaultBrokerAdminData(userId);
 	}
 
-	// NEEDED
-	function preloadData(userId) {
+	function getDefaultBrokerAdminData(userId) {
 
-		// Starts a chain
-		ajaxGetBrokerAdminByUserId(userId);
+		var requestObject = {
+			'id':userId
+		};
+
+		var mockResponse = 
+		{
+			'brokerAdmin':
+			{
+				'id':'0',
+				'brokerageId':0,
+				'userId':'1',
+				'active':'1',
+			},
+			'brokerage':
+			{
+				'name':'Versekerings Ltd.',
+				'email':'versekerings.ltd@gmail.com',
+				'contactNumber':'062 352 1341',
+			},
+			'brokersOfBrokerage':
+			[
+				{	
+					'id':'0',
+					'name':'Pieter',
+					'surname':'Vosloo'
+				},
+				{
+					'id':'1',
+					'name':'Janne',
+					'surname':'Man'
+				}
+			]
+		};
+
+		ajaxPost(GET_DEFAULT_BROKER_ADMIN_DATA_URL,onGetDefaultBrokerAdminSuccess,onGetDefaultBrokerAdminFailure,requestObject,mockResponse);
+	}
+
+	function onGetDefaultBrokerAdminSuccess(response) {
+
+		util.createNotification('Logged in as Broker Admin');
+
+		brokerAdmin = response['brokerAdmin'];
+		brokerage = response['brokerage'];
+		brokersOfBrokerage = ['brokersOfBrokerage'];
+		
+		loader.loadRole('brokerAdmin');
+	}
+
+	function onGetDefaultBrokerAdminFailure(response) {
+
+		alert('something messed up');
 	}
 
 	/*
@@ -284,7 +334,7 @@ var brokerAdminController = new function() {
 			brokerage:{whole brokerage}
 		}
 	*/
-	function ajaxGetBrokerage(brokerageId) {
+	/*function ajaxGetBrokerage(brokerageId) {
 
 		var requestObject = {
 			"brokerageId":brokerageId
@@ -316,7 +366,7 @@ var brokerAdminController = new function() {
 	function onGetBrokerageFail(response) {
 
 		alert("ERROR! Could not initiate Brokerage");
-	}
+	}*/
 
 	/*
 		brokerAdmin/getBrokersOfBrokerage
