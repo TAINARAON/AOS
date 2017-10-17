@@ -15,7 +15,7 @@ function init() {
 
 function getBusinessUnitsAndTheirFarms() {
 
-	insurerAdminController.getBusinessUnitsAndTheirFarms(onGetBusinessUnitsAndTheirBrokersSuccess,onGetBusinessUnitsAndTheirBrokersFailure);
+	clientController.getBusinessUnitsAndTheirFarms(onGetBusinessUnitsAndTheirBrokersSuccess,onGetBusinessUnitsAndTheirBrokersFailure);
 }
 
 function onGetBusinessUnitsAndTheirBrokersSuccess(response) {
