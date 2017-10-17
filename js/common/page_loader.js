@@ -22,8 +22,8 @@ var pageLoader = function()
 		},
 		{
 			"role":"client",
-			"cssFiles":["c1.css","c2.css","c3.css"],
-			"jsFiles":["c1.js","c2.js"],
+			"cssFiles":[],	//"c1.css","c2.css","c3.css"
+			"jsFiles":["js/client/nav.js"],
 			"htmlFiles":{
 				"navbar":"html/common/nav.html",
 				"landing_page":"html/common/home.html"
@@ -65,7 +65,6 @@ var pageLoader = function()
 				"landing_page":"html/insurer_admin/insurance_agency.html"
 			}
 		}
-		
 	];
 
 	var navigationBackStack = [];
