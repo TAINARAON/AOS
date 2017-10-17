@@ -1,10 +1,8 @@
-$().ready(function(){
+$().ready(function() {
 
 	populateBrokerageDetails();
  	populateInsurerTable();
-
 });
-
 function populateBrokerageDetails() {
 
 	var agency = insurerAdminController.getInsuranceAgency();

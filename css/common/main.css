@@ -48,3 +48,61 @@ ul {
 .selectionBox li {
     cursor: pointer;
 }
+
+/*
+    REMOVE FROM AFTER HERE IF THINGS LOOKS MESSY. Please inform me though. Need to add this style to the specific pages then
+*/
+.accordion > li 
+{
+    box-sizing: border-box;
+    font-family: 'Open Sans',sans-serif;
+    font-weight: 300;
+}
+
+.accordion > li > ul
+{
+    box-sizing: border-box;
+    font-family: 'Open Sans',sans-serif;
+    font-weight: 300;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul .inner {
+  padding-left: 1em;
+  overflow: hidden;
+  display: none;
+}
+
+ul .inner.show {
+  /*display: block;*/
+}
+ul li {
+  margin: .5em 0;
+}
+ul li a.toggle {
+  width: 100%;
+  display: block;
+  /*background: rgba(0, 0, 0, 0.78);*/
+  background: #436c6f;
+  color: #fefefe;
+  padding: .75em;
+  border-radius: 0.15em;
+  transition: background .3s ease;
+}
+ul li a.toggle:hover {
+  /*background: rgba(0, 0, 0, 0.9);*/
+  background: #96c1c3;
+}
+/*
+    END OF REMOVE
+*/
+
