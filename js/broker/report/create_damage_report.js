@@ -141,7 +141,7 @@ var modalDamageReport = new function()
 				}
 			}, 
 			function(response){
-				alert("Issue retrieving business units");
+				util.createNotification("Issue retrieving business units");
 			},requestObj
 		);
 		
@@ -284,7 +284,7 @@ var modalDamageReport = new function()
 			},
 			function(response){
 				element_farm_container.style.display = "none";
-				alert("Failed to load farms");
+				util.createNotification("Failed to load farms");
 			},
 			requestObj
 		);
@@ -359,7 +359,7 @@ var modalDamageReport = new function()
 			},
 			function(response){
 				element_land_container.style.display = "none";
-				alert("Failed to retrieve landEntries");
+				util.createNotification("Failed to retrieve landEntries");
 			},
 			requestObj
 		);
@@ -535,9 +535,10 @@ var modalDamageReport = new function()
 				function(response){
 					reset();
 					damageReport.reload();
+					util.createNotification(response.message);
 				}, 
 				function(response){
-					alert("Failed to save damage report");
+					util.createNotification("Failed to save damage report");
 				}, 
 				damageReportObj
 			);
