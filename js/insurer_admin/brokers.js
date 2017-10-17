@@ -54,7 +54,7 @@ function populateBrokeragesDropdownValues() {
 	});
 
 	// Populate table
-	$("#insurer_admin_brokers_brokerage_dropdown").trigger('change');
+	selectElement.trigger('change');
 
 	// set toggle. ugly but whatever
 	setOnAccordionClicked();

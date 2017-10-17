@@ -26,6 +26,8 @@ var insurerAdminController = new function() {
 
 	var GET_DEFAULT_INSURER_ADMIN_DATA_URL = 'GET_DEFAULT_INSURER_ADMIN_DATA_URL';
 	var GET_INSURERS_OF_INSURANCE_AGENCY_WITH_USER_DATA_URL = 'GET_INSURERS_OF_INSURANCE_AGENCY_WITH_USER_DATA_URL';
+	var GET_BROKERAGES_AND_THEIR_BROKERS = 'GET_BROKERAGES_AND_THEIR_BROKERS';
+	var GET_BUSINESS_UNITS_AND_THEIR_FARMS = 'GET_BUSINESS_UNITS_AND_THEIR_FARMS';
 
 	this.init = function(userId) {
 		
@@ -196,8 +198,79 @@ var insurerAdminController = new function() {
 			mockResponse['brokeragesAndBrokers'].push(brokerageWithBrokers);
 		}
 
-		ajaxPost(GET_BROKER_DETAILS_OF_BROKERAGE_URL,successCallback,failCallback,requestObject,mockResponse);
+		ajaxPost(GET_BROKERAGES_AND_THEIR_BROKERS,successCallback,failCallback,requestObject,mockResponse);
 	};
+	/*	20171017
+		insurerAdmin/getBusinessUnitsAndTheirFarms
+
+		requestObject:{
+			insuranceAgencyId
+		}
+
+		responseObject: {
+			businessUnitsAndFarms:
+			[
+				{
+					id,  (businessUnitId)
+					name,
+					farms:
+					[
+						{
+							id, (farmId)
+							name
+						}
+					]
+				}
+			]
+		}
+	*/
+	this.getBusinessUnitsAndTheirFarms = function(successCallback,failCallback) {
+
+		var requestObject = 
+		{
+			"insuranceAgencyId":insuranceAgency['id']
+		};
+
+		var mockResponse = {
+			businessUnitsAndFarms:
+			[
+				{
+					id:0, 
+					name:'Business Unit 0',
+					farms:
+					[
+						{
+							id:0, 
+							name:'Farm 0'
+						},
+						{
+							id:1, 
+							name:'Farm 1'
+						}
+					]
+				},
+				{
+					id:1, 
+					name:'Business Unit 1',
+					farms:
+					[
+						{
+							id:2, 
+							name:'Farm 2'
+						},
+						{
+							id:3, 
+							name:'Farm 3'
+						}
+					]
+				}
+			]
+		}
+
+		ajaxPost(GET_BUSINESS_UNITS_AND_THEIR_FARMS,successCallback,failCallback,requestObject,mockResponse);
+	};
+
+	
 
 
 

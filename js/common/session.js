@@ -49,6 +49,7 @@ var session = new function() {
 		};
 
 		var mockResponse;
+
 		if(username=="B") {
 			mockResponse = 
 			{
@@ -69,6 +70,13 @@ var session = new function() {
 				'token':'abcdefghijklmnop',
 				'userId':'3',
 				'roleName':BROKER_ADMIN_NAME
+			};
+		} else if(username=="C") {
+			mockResponse = 
+			{
+				'token':'abcdefghijklmnop',
+				'userId':'4',
+				'roleName':CLIENT_NAME
 			};
 		}
 
