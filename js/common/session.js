@@ -30,10 +30,10 @@ var testInsurerId = 1;
 var testClientId = 4;
 
 // delete me
-function getUser(username,password) {
+/*function getUser(username,password) {
 
 	return mockCommunicator.getUserByUsernamePassword(username,password);
-}
+}*/
 
 var session = new function() {
 

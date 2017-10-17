@@ -21,6 +21,12 @@ var brokerController = new function() {
 
 		var mockResponse = 
 		{
+			'user':{
+				'initials':'S',
+				'name':'Samantha',
+				'surname':'Wiggill',
+				'email':'samantha@gmail.com',
+			},
 			'broker':
 			{
 				'id':'1',
@@ -64,6 +70,7 @@ var brokerController = new function() {
 		broker = response['broker'];
 		brokerage = response['brokerage'];
 		viewableBrokers = response['viewableBrokers'];
+		user = response['user'];
 
 		loader.loadRole('broker');
 	}
@@ -86,7 +93,7 @@ var brokerController = new function() {
 			'someObject':{}
 		}
 	*/
-	this.editBrokerage = function(successCallback,failCallback,requestObject) {
+	this.testMethod = function(successCallback,failCallback,requestObject) {
 
 		var mockResponse = {
 			"result":"fake response"

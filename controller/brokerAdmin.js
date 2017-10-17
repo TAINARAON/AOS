@@ -4,6 +4,7 @@ var brokerAdminController = new function() {
 	var brokerage = null;
 	var brokerAdmin = null;
 	var brokersOfBrokerage = null;
+	var user = null;
 
 	var EDIT_BROKERAGE_URL = "EDIT_BROKERAGE_URL";
 	var CREATE_BROKER_URL = "CREATE_BROKER_URL";
@@ -35,12 +36,18 @@ var brokerAdminController = new function() {
 		};
 
 		var mockResponse = 
-		{
+		{	
+			'user':{
+				'initials':'B A',
+				'name':'Bernard Andre',
+				'surname':'Bandeer',
+				'email':'bernardandre@gmail.com',
+			},
 			'brokerAdmin':
 			{
 				'id':'0',
 				'brokerageId':0,
-				'userId':'1',
+				'userId':'3',
 				'active':'1',
 			},
 			'brokerage':
@@ -73,7 +80,8 @@ var brokerAdminController = new function() {
 
 		brokerAdmin = response['brokerAdmin'];
 		brokerage = response['brokerage'];
-		brokersOfBrokerage = ['brokersOfBrokerage'];
+		brokersOfBrokerage = response['brokersOfBrokerage'];
+		user = response['user'];
 		
 		loader.loadRole('brokerAdmin');
 	}
