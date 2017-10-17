@@ -94,18 +94,4 @@ var brokerController = new function() {
 
 		ajaxPost(TEST_URL,successCallback,failCallback,requestObject,mockResponse);
 	}
-
-	
-	// NEEDED
-	function onGetBrokerAdminSuccess(response) {
-
-		brokerAdmin = response["brokerAdmin"];
-
-		ajaxGetBrokerage(brokerAdmin['brokerageId']);
-	}
-	// NEEDED
-	function onGetBrokerAdminFail(response) {
-
-		alert("ERROR! Could not initiate Brokerage");
-	}
 }
