@@ -126,7 +126,17 @@ var quoteViewer = new function ()
 				"quoteNumber":quoteNumber,
 				"businessUnitName":businessUnitName
 			};
-			ajaxPost("Something", setupQuotes, function(){alert("Issue getting quote data");}, tObj, quoteInvoker.searchForQuote(brokerId, quoteNumber, businessUnitName));
+			brokerController.getQuotes(
+				setupQuotes,
+				function(response){
+					util.createNotification("Failed to load quotes");
+				},
+				tObj
+			);
+
+			//ajaxPost("Something", setupQuotes, function(){alert("Issue getting quote data");}, tObj, quoteInvoker.searchForQuote(brokerId, quoteNumber, businessUnitName));
+			
+
 			//setupQuotes(quoteInvoker.searchForQuote(brokerId, quoteNumber, businessUnitName));
 		}
 	}
@@ -191,6 +201,7 @@ var quoteViewer = new function ()
 		createAccordionItemDetailDiv("Quote Number: " + quote.quoteNumber, parentTitle).className = "col-md-2";
 		createAccordionItemDetailDiv("Business Unit: " + quote.businessUnit.name, parentTitle).className = "col-md-2";
 		createAccordionItemDetailDiv("Date Created: " + quote.dateCreated, parentTitle).className = "col-md-3";
+		createAccordionItemDetailDiv("Total Insured Value: " + quote.totalInsuredValue, parentTitle).className = "col-md-2";
 		createAccordionItemDetailDiv("Premium: " + quote.premium, parentTitle).className = "col-md-2";
 
 		var childContainer = document.createElement("UL");
@@ -256,19 +267,21 @@ var quoteViewer = new function ()
 	function createQuoteAccordionChildItem(landEntry, container)
 	{
 		var childLi = document.createElement("LI");
-
+		
 		var childTitle = document.createElement("A");
 		childTitle.className = "toggle";
 		childTitle.style.cssText = "display: flex;";
 
 		createAccordionItemDetailDiv(landEntry.landNumber , childTitle).className = "col-md-2";
-		createAccordionItemDetailDiv(landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.crop.name, childTitle).className = "col-md-2";
+		//createAccordionItemDetailDiv(landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.crop.name, childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv(landEntry.crop.name, childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv(landEntry.cultivar, childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv(landEntry.area, childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv(landEntry.yield, childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv(landEntry.price, childTitle).className = "col-md-2";
-		createAccordionItemDetailDiv(landEntry.tariff, childTitle).className = "col-md-2";
+		//createAccordionItemDetailDiv(landEntry.tariff, childTitle).className = "col-md-2";
 		var perils="";
+		//var tariff=0;
 		for(var i = 0; i < landEntry.quoteLandEntryDamageTypes.length; i++)
 		{
 			var damageType = landEntry.quoteLandEntryDamageTypes[i].tariffOptionDamageType.damageType.name;
@@ -280,7 +293,12 @@ var quoteViewer = new function ()
 			{
 				perils += ", "+damageType;
 			}
+
+			//tariff+=(landEntry.quoteLandEntryDamageTypes[i].tariffOptionDamageType.tariff*1);
 		}
+		//tariff+=landEntry.additionalTariff;
+		var additionTariff = landEntry.additionalTariff > 0 ? " (+"+landEntry.additionalTariff+")": "";
+		createAccordionItemDetailDiv(landEntry.tariff.toFixed(2) + "" + additionTariff, childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv(perils, childTitle).className = "col-md-2";
 
 		var childDetail = document.createElement("DIV");

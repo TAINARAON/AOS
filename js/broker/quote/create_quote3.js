@@ -282,7 +282,8 @@ var createQuote = new function()
 		console.log(landEntry);
 		createColumn(landEntry.farm.name, container);
 		createColumn(landEntry.landNumber, container);
-		createColumn(landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.crop.name, container);
+		//createColumn(landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.crop.name, container);
+		createColumn(landEntry.crop.name, container);
 		createColumn(landEntry.cultivar, container);
 		createColumn(landEntry.area, container);
 		createColumn(landEntry.yield, container);
@@ -292,7 +293,10 @@ var createQuote = new function()
 		// Will be the same tariff option for all damage types in array
 		console.log(landEntry.quoteLandEntryDamageTypes[0]);
 		//console.log(landEntry.quoteLandEntryDamageTypes[0].tariffOption);
-		createColumn(calculatePremiumContribution(landEntry.area, landEntry.yield, landEntry.price, landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariff), container);
+		
+		//createColumn(calculatePremiumContribution(landEntry.area, landEntry.yield, landEntry.price, landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariff), container);
+		createColumn((landEntry.area * landEntry.yield * landEntry.price).toFixed(2), container);
+		
 		console.log(landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType);
 		createColumn(landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.tariffOptionType.name, container);
 		createColumn(landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.coverage, container);
@@ -1367,6 +1371,7 @@ var createQuote = new function()
 
 		landEntry["cropId"] = getCrop(dropdown_crop.value).id;
 		landEntry["crop"] = getCrop(dropdown_crop.value);
+		landEntry.crop["product"] = getProduct(dropdown_product.value);
 
 		var allDamageTypesWithState = getSelectedDamageTypes();
 		console.log("The all damage type thang");
@@ -1382,7 +1387,7 @@ var createQuote = new function()
 
 			var tempTariffOption = getOptionsByFarmCropType(dropdown_coverage.value);
 			var tempDamageType = allDamageTypesWithState[i];
-			debugger;
+			
 			var tariffOptionDamageTypes = getTariffOptionDamageTypeByOptionAndDamageTypeId(tempTariffOption.id, tempDamageType.id);
 			//var tempTariffOptionDamageType = quoteInvoker.getTariffOptionDamageTypeByTariffOptionIdAndDamageTypeID(tempTariffOption.id, tempDamageType.id);
 			quoteLandEntryDamageType["tariffOptionDamageType"] = tariffOptionDamageTypes;
@@ -1400,6 +1405,13 @@ var createQuote = new function()
 
 			landEntry.quoteLandEntryDamageTypes.push(quoteLandEntryDamageType);
 		}
+		
+		var tariff = 0;
+		for(var j = 0; j < landEntry.quoteLandEntryDamageTypes.length; j++)
+		{
+			tariff+=(landEntry.quoteLandEntryDamageTypes[j].tariffOptionDamageType.tariff*1);
+		}
+		landEntry["tariff"] = tariff;
 
 		console.log("Self made object");
 		console.log(landEntry);
@@ -1521,8 +1533,9 @@ var createQuote = new function()
 		input_yield.value = landEntry.yield;
 		input_price.value = landEntry.price;
 
-		$(dropdown_product).val(landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.crop.product.name).change();
-		$(dropdown_crop).val(landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.crop.name).change();
+		//$(dropdown_product).val(landEntry.quoteLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.crop.product.name).change();
+		$(dropdown_product).val(landEntry.crop.product.name).change();
+		$(dropdown_crop).val(landEntry.crop.name).change();
 
 		// TODO: does quoteLandEntryDamageType need to be an array
 		// Will be the same tariff option for all damage types selected

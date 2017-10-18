@@ -464,6 +464,228 @@ var brokerController = new function() {
 		}
 		// ^ Create ^
 		// View
+		this.getQuotes = function(successCallback,failCallback,requestObject)
+		{
+			var mockResponse = [
+				{
+					'id':'0',
+					'quoteNumber':'00001',
+					'businessUnitId':'0',
+					'businessUnit':{
+						'id':'0',
+						'name':'BU0',   //'Anro Boerdery Co (ABC)',
+						'contactNumber':'063-887-9635',
+						'contactPerson':'Anro Swart',
+						'email':'anro.swart@bing.com',
+						'vatNumber':'00625-4811',
+						'incomeTaxNumber':'5651484166',
+						'active':'1',
+						'verified':'1'
+					},
+					'brokerId':'0',
+					'insurerId':'0',
+					'active':'1',
+					'dateCreated':'2017-05-18 19:01:05',
+					'linkedToQuoteId':null,
+					'acceptable':'1',
+					'totalInsuredValue':'R200 000',
+					'premium':20000,
+					'quoteLandEntries':[
+						{
+							'id':'0',
+							'quoteId':'0',
+							'farmId':'0',
+							'farm':{
+								'id':'0',
+								'name':'P0',
+								'businessUnitId':'0',
+								'latitude':'1.22644',
+								'longitude':'-0.35428',
+								'active':'1',
+								'districtId':'0'
+							},
+							'cropId':'0',
+							'crop':{
+								'id':'0',
+								'name':'Apple',
+								'productId':'0',
+								'product':{
+									'id':'0',
+									'name':'Winter',
+								},
+								'active':'1',
+								'priceUomId':'0',
+								'areaUomId':'0',
+							},
+							'landNumber':'00001',
+							'landLongitude':'1.3361',
+							'landLatitude':'-0.1215',
+							'cultivar':'Red Dwarf',
+							'area':'7.4',
+							'yield':'14.22',
+							'price':'5.48',
+							'additionalTariff':0.25,
+							'tariff':0.66666666666,
+							'quoteLandEntryDamageTypes':[
+								{
+									'id':'0',
+									'quoteLandEntryId':'0',
+									'tariffOptionDamageTypeId':'0',
+									'tariffOptionDamageType':{
+										'id':'0',
+										'tariffOptionId':'0',
+										'tariffOption':{
+											'id':'0',
+											'tariffOptionTypeId':'0',
+											'tariffOptionType':{
+												'id':'0',
+												'name':'Franchise',
+											},
+											'cropId':'0',
+											'districtId':'0',
+											'coverage':'5',
+											'coverageStart':'2017-05-01 00:00:00',
+											'coverageEnd':'2018-05-01 00:00:00',
+										},
+										'damageTypeId':'0',
+										'damageType':{
+											'id':'0',
+											'name':'Fire',
+										},
+										'tariff':'0.175',
+										'isDefault':'1'
+									}
+								},
+								{
+									'id':'1',
+									'quoteLandEntryId':'0',
+									'tariffOptionDamageTypeId':'1',
+									'tariffOptionDamageType':{
+										'id':'1',
+										'tariffOptionId':'0',
+										'tariffOption':{
+											'id':'0',
+											'tariffOptionTypeId':'0',
+											'tariffOptionType':{
+												'id':'0',
+												'name':'Franchise',
+											},
+											'cropId':'0',
+											'districtId':'0',
+											'coverage':'5',
+											'coverageStart':'2017-05-01 00:00:00',
+											'coverageEnd':'2018-05-01 00:00:00',
+										},
+										'damageTypeId':'1',
+										'damageType':{
+											'id':'1',
+											'name':'Flood',
+										},
+										'tariff':'0.235',
+										'isDefault':'0'
+									}
+								}
+							]
+						}
+					]	
+				},
+				{
+					'id':'1',
+					'quoteNumber':'00002',
+					'businessUnitId':'0',
+					'businessUnit':{
+						'id':'0',
+						'name':'BU0',   //'Anro Boerdery Co (ABC)',
+						'contactNumber':'063-887-9635',
+						'contactPerson':'Anro Swart',
+						'email':'anro.swart@bing.com',
+						'vatNumber':'00625-4811',
+						'incomeTaxNumber':'5651484166',
+						'active':'1',
+						'verified':'1'
+					},
+					'brokerId':'0',
+					'insurerId':'0',
+					'active':'1',
+					'dateCreated':'2017-05-18 19:02:05',
+					'linkedToQuoteId':'0',
+					'acceptable':'1',
+					'totalInsuredValue':'R200 000',
+					'premium':18000,
+					'quoteLandEntries':[
+						{
+							'id':'2',
+							'quoteId':'1',
+							'farmId':'0',
+							'farm':{
+								'id':'0',
+								'name':'P0',
+								'businessUnitId':'0',
+								'latitude':'1.22644',
+								'longitude':'-0.35428',
+								'active':'1',
+								'districtId':'0'
+							},
+							'cropId':'1',
+							'crop':{
+								'id':'1',
+								'name':'Banana',
+								'productId':'0',
+								'product':{
+									'id':'0',
+									'name':'Winter',
+								},
+								'active':'1',
+								'priceUomId':'0',
+								'areaUomId':'0'
+							},
+							'landNumber':'00003',
+							'landLongitude':'1.3361',
+							'landLatitude':'-0.1215',
+							'cultivar':'Red Dwarf',
+							'area':'7.4',
+							'yield':'15.22',
+							'price':'4.48',
+							'additionalTariff':0,
+							'tariff':0.23,
+							'quoteLandEntryDamageTypes':[
+								{
+									'id':'5',
+									'quoteLandEntryId':'2',
+									'tariffOptionDamageTypeId':'1',
+									'tariffOptionDamageType':{
+										'id':'1',
+										'tariffOptionId':'0',
+										'tariffOption':{
+											'id':'0',
+											'tariffOptionTypeId':'0',
+											'tariffOptionType':{
+												'id':'0',
+												'name':'Franchise',
+											},
+											'cropId':'0',
+											'districtId':'0',
+											'coverage':'5',
+											'coverageStart':'2017-05-01 00:00:00',
+											'coverageEnd':'2018-05-01 00:00:00',
+										},
+										'damageTypeId':'1',
+										'damageType':{
+											'id':'1',
+											'name':'Flood',
+										},
+										'tariff':'0.235',
+										'isDefault':'0'
+									}
+								}
+							]
+						}
+					]
+				}
+			];
+
+			ajaxPost("",successCallback,failCallback,requestObject,mockResponse);
+		}
 		// ^ View ^
 	// ^ Quote ^
 }
