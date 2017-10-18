@@ -878,8 +878,10 @@ var createQuote = new function()
 	{
 		dropdown_crop.innerHTML = "";
 
-		var requestObj = {
+		var productId = getProduct(name) != null ? getProduct(name).id : -1;
 
+		var requestObj = {
+			'productId':productId
 		};
 		brokerController.getCropsOfProduct(
 			function(response){
@@ -1243,7 +1245,35 @@ var createQuote = new function()
 
 	function acceptQuote()
 	{
-		if(persistQuoteData(quote))
+		quote["businessUnit"] = businessUnit;
+		quote["businessUnitId"] = businessUnit.id;
+		quote["brokerId"] = brokerId;
+		quote["quoteNumber"] = generateQuoteNumber();
+		quote["insurerId"] = null;
+		quote["active"] = "1";
+		quote["dateCreated"] = util.getCurrentDateTime();
+		if(!quote.hasOwnProperty("linkedToQuoteId"))
+		{
+			// If this isn't a requote, add the property
+			quote["linkedToQuoteId"] = null;
+		}
+		quote["acceptable"] = "1";
+
+		brokerController.saveQuote(
+			function(response){
+				util.createNotification(response.message);
+				accept_quote_button.style.display = "none";
+				resetQuoteModal();
+				resetLandEntryTable();
+				quoteViewer.refresh();
+			},
+			function(response){
+				util.createNotification("Quote save failed!");
+			},
+			quote
+		);
+
+		/*if(persistQuoteData(quote))
 		{
 			// hide the button
 			accept_quote_button.style.display = "none";
@@ -1254,7 +1284,7 @@ var createQuote = new function()
 		else
 		{
 			alert("Could not create quote");
-		}
+		}*/
 	}
 
 	function addLandEntryToQuote()
@@ -1383,8 +1413,8 @@ var createQuote = new function()
 			"farmId": farm.id,
 			"farm": farm,
 			"landNumber": input_land_number.value,
-			"landLongitude": "",
-			"landLatitude": "",
+			"landLongitude": "1.3361",
+			"landLatitude": "-0.1215",
 			"cultivar": input_cultivar.value,
 			"area": input_area.value,
 			"yield": input_yield.value,
