@@ -1,12 +1,10 @@
 var policyViewer = new function ()
 {
 	var policies = [];
-	var viewableBrokers;
-
+	
 	var landEntryMaps = [];
 	var mapScriptContainer = document.getElementById("mapScriptContainer");
 
-	var brokerSelect = document.getElementById("available_broker_dropdown");
 	var policyNumberInput = document.getElementById("policy_number_input");
 	var businessUnitInput = document.getElementById("business_unit_input");
 	var searchButton = document.getElementById("search_button");
@@ -16,7 +14,6 @@ var policyViewer = new function ()
 	(function init(){
 		loadIncreaseModal("increase_modal_container");
 		
-		setAvailableBrokers();
 		setSearchButtonClickListener();
 		addOnEnterKeyPressedListenerForSearchInput(policyNumberInput);
 		addOnEnterKeyPressedListenerForSearchInput(businessUnitInput);
@@ -28,60 +25,7 @@ var policyViewer = new function ()
 	{
 		loader.loadPartOfPage("html/broker/policy/create.html", id);
 	}
-
-	function setAvailableBrokers()
-	{	
-		viewableBrokers = [];
-		var currentBroker = brokerController.getBroker();
-		var tSelfObj = {
-			"brokerId":currentBroker.id,
-			"name":brokerController.getUser().name
-		}
-		viewableBrokers.push(tSelfObj);
-		
-		var viewable = brokerController.getViewableBrokers();
-		for(var i = 0; i < viewable.length; i++)
-		{
-			var tObj = {
-				"brokerId":viewable[i].broker.id,
-				"name":viewable[i].broker.user.name
-			}
-			viewableBrokers.push(tObj);
-		}
-
-		for(var i = 0; i < viewableBrokers.length; i++)
-		{
-			var option = document.createElement("OPTION");
-			option.innerHTML = viewableBrokers[i].name;
-
-			brokerSelect.appendChild(option);
-		}
-
-		// If only one broker is available then it will be onself, as it is the first option it will already be selected
-		// Hide the dropdown
-		if(viewableBrokers.length == 1)
-		{
-			document.getElementById("available_broker_container").style.display = "none";
-			document.getElementById("policy_number_container").className+=" col-md-offset-2";
-		}
-
-		/*var currentUserBrokerId = sessionStorage.brokerId;
-
-		viewableBrokers = brokerInvoker.getViewableBrokers(currentUserBrokerId);
-		
-		var tSelfObj = brokerInvoker.getBrokerDisplayable(currentUserBrokerId);
-		tSelfObj["brokerId"] = currentUserBrokerId;
-		viewableBrokers.push(tSelfObj);
-
-		for(var i = 0; i < viewableBrokers.length; i++)
-		{
-			var option = document.createElement("OPTION");
-			option.innerHTML = viewableBrokers[i].name;
-
-			brokerSelect.appendChild(option);
-		}*/
-	}
-
+	
 	function setupAccordionClickHandler()
 	{
 		$('.toggle').click(function(e) {
@@ -118,43 +62,25 @@ var policyViewer = new function ()
 		landEntryMaps = [];
 		$(policyAccordionButtonsContainer).hide();
 
-		var tBrokerName = $(brokerSelect).val().trim();
-		var brokerId = getIdOfSelectedBroker(tBrokerName);
+		var clientId = clientController.getClient().id;
 		var policyNumber = $(policyNumberInput).val().trim();
 		var businessUnitName = $(businessUnitInput).val().trim();
 
-		if(brokerId != -1)
+		if(clientId != -1)
 		{
 			var tObj = {
-				"brokerId":brokerId,
+				"clientId":clientId,
 				"policyNumber":policyNumber,
 				"businessUnitName":businessUnitName
 			};
-			brokerController.getPolicies(
+			clientController.getPolicies(
 				setPolicies, 
 				function(){
 					util.createNotification("Failed to load policies");
 				}, 
 				tObj
 			);
-
-			//ajaxPost("Something", setPolicies, function(){alert("Issue getting policy data");}, tObj, policyInvoker.searchForPolicy(brokerId, policyNumber, businessUnitName));
-			
-			//setPolicies(policyInvoker.searchForPolicy(brokerId, policyNumber, businessUnitName));
 		}
-	}
-
-	function getIdOfSelectedBroker(name)
-	{
-		for(var i = 0; i < viewableBrokers.length; i++)
-		{
-			if(viewableBrokers[i].name == name)
-			{
-				return viewableBrokers[i].brokerId;
-			}
-		}
-
-		return -1;
 	}
 
 	function setPolicies(pol)
