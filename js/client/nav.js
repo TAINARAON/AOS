@@ -5,6 +5,14 @@
  		{
  			'text':"Business Unit",
  			'pageUrl':'html/client/businessUnit.html'
+ 		},
+ 		{
+ 			'text':"Damage Report",
+ 			'pageUrl':'html/client/report/damage_report.html'
+ 		},
+ 		{
+ 			'text':"Policy",
+ 			'pageUrl':'html/client/policy/policy.html'
  		}
  	];
 
