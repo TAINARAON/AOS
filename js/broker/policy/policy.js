@@ -130,7 +130,16 @@ var policyViewer = new function ()
 				"policyNumber":policyNumber,
 				"businessUnitName":businessUnitName
 			};
-			ajaxPost("Something", setPolicies, function(){alert("Issue getting policy data");}, tObj, policyInvoker.searchForPolicy(brokerId, policyNumber, businessUnitName));
+			brokerController.getPolicies(
+				setPolicies, 
+				function(){
+					util.createNotification("Failed to load policies");
+				}, 
+				tObj
+			);
+
+			//ajaxPost("Something", setPolicies, function(){alert("Issue getting policy data");}, tObj, policyInvoker.searchForPolicy(brokerId, policyNumber, businessUnitName));
+			
 			//setPolicies(policyInvoker.searchForPolicy(brokerId, policyNumber, businessUnitName));
 		}
 	}
@@ -263,7 +272,8 @@ var policyViewer = new function ()
 		createAccordionItemDetailDiv(landEntry.area, childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv(landEntry.yield, childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv(landEntry.price, childTitle).className = "col-md-2";
-		createAccordionItemDetailDiv(landEntry.tariff, childTitle).className = "col-md-2";
+		var additionTariff = landEntry.additionalTariff > 0 ? " (+"+landEntry.additionalTariff.toFixed(2)+")": "";
+		createAccordionItemDetailDiv(landEntry.tariff.toFixed(2) + "" + additionTariff, childTitle).className = "col-md-2";
 		var perils="";
 		for(var i = 0; i < landEntry.policyLandEntryDamageTypes.length; i++)
 		{
@@ -395,5 +405,10 @@ var policyViewer = new function ()
 			var currCenter = map.getCenter();
 			map.setCenter(currCenter);
 		}
+	}
+
+	this.refresh = function()
+	{
+		search();
 	}
 }

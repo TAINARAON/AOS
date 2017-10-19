@@ -297,7 +297,7 @@ var quoteViewer = new function ()
 			//tariff+=(landEntry.quoteLandEntryDamageTypes[i].tariffOptionDamageType.tariff*1);
 		}
 		//tariff+=landEntry.additionalTariff;
-		var additionTariff = landEntry.additionalTariff > 0 ? " (+"+landEntry.additionalTariff+")": "";
+		var additionTariff = landEntry.additionalTariff > 0 ? " (+"+landEntry.additionalTariff.toFixed(2)+")": "";
 		createAccordionItemDetailDiv(landEntry.tariff.toFixed(2) + "" + additionTariff, childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv(perils, childTitle).className = "col-md-2";
 
