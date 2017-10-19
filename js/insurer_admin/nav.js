@@ -21,11 +21,11 @@
  		},
  		{
  			'text':"Policies",
- 			'pageUrl':'html/insurer_admin/insurance_agency.html'
+ 			'pageUrl':'html/insurer_admin/policy/policy.html'
  		},
  		{
  			'text':"Damage Reports",
- 			'pageUrl':'html/insurer_admin/insurance_agency.html'
+ 			'pageUrl':'html/insurer_admin/report/damage_report.html'
  		},
  	];
 
