@@ -68,7 +68,7 @@ var increasePolicy = new function(){
 	function createLandEntry(landEntry, container)
 	{
 		var tr = document.createElement("TR");
-
+		
 		createColumn(landEntry.farm.name, tr);
 		createColumn(landEntry.landNumber, tr);
 		createColumn(landEntry.crop.name, tr);
@@ -77,8 +77,8 @@ var increasePolicy = new function(){
 		createColumn(landEntry.yield, tr);
 		createColumn(landEntry.price, tr);
 		createColumn((landEntry.area*landEntry.yield*landEntry.price).toFixed(2), tr);
-		createColumn("", tr);
-		createColumn("", tr);
+		createColumn(landEntry.policyLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.tariffOptionType.name, tr);
+		createColumn(landEntry.policyLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.coverage, tr);
 
 		createLandEntryButtons(landEntry,createColumn("", tr), tr);
 

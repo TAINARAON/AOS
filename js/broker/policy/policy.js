@@ -197,6 +197,7 @@ var policyViewer = new function ()
 		createAccordionItemDetailDiv("Policy Number: " + policy.policyNumber, parentTitle).className = "col-md-2";
 		createAccordionItemDetailDiv("Business Unit: " + policy.businessUnit.name, parentTitle).className = "col-md-2";
 		createAccordionItemDetailDiv("Policy Start: " + policy.acceptedOn, parentTitle).className = "col-md-3";
+		createAccordionItemDetailDiv("Total Insured Value: " + policy.totalInsuredValue, parentTitle).className = "col-md-2";
 		createAccordionItemDetailDiv("Premium: " + policy.premium, parentTitle).className = "col-md-2";
 
 		var childContainer = document.createElement("UL");
