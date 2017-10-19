@@ -1,4 +1,4 @@
-console.log('common/register.js working');
+/*console.log('common/register.js working');
 
 var registerClientHtmlIsLoaded = false;
 var registerBrokerHtmlIsLoaded = false;
@@ -25,5 +25,5 @@ document.getElementById("register_broker_button").onclick = function() {
         loader.loadPartOfPage("html/brokerAdmin/brokerage/registerBrokerage.html","registerBrokerContent");
         registerBrokerHtmlIsLoaded = true;
     }
-};
+};*/
 

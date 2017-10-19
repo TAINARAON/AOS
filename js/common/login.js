@@ -6,19 +6,18 @@ $().ready(function(){
  		attemptLogin();
  	});
 
- 	$('#register_button').on('click',function(){
- 		loadRegisterPage();
+ 	$('#register_as_client_button').on('click',function(){
+ 		loader.loadPage("html/client/register.html");
+ 	});
+
+ 	$('#register_brokerage_button').on('click',function(){
+ 		loader.loadPage("html/brokerAdmin/brokerage/registerBrokerage.html");
  	});
 
  	$('#retrieve_lost_credentials_button').on('click',function(){
  		initiateCredentialRetrieval()
  	});
 });
-
-function loadRegisterPage() {
-
-	loader.loadPage("html/common/register.html");
-}
 
 function attemptLogin() {
 

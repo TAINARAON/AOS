@@ -14,6 +14,8 @@ var clientController = new function() {
 		return user;
 	}
 
+	var GET_BUSINESS_UNITS_AND_THEIR_FARMS = 'GET_BUSINESS_UNITS_AND_THEIR_FARMS';
+	var CREATE_CLIENT_URL = 'CREATE_CLIENT_URL';
 	var GET_DEFAULT_CLIENT_DATA_URL = 'GET_DEFAULT_CLIENT_DATA_URL';
 	var TEST_URL = "TEST_URL";
 	
@@ -191,7 +193,41 @@ var clientController = new function() {
 	};
 
 
+	/*
+		client/createClient
 
+		requestObject:{
+			clientDetails:{
+				'preferredName',
+				'surname',
+				'initials',
+				'email',
+				'idNumber',
+				'contactNumber',
+				'userame',
+				'password'
+			},
+			files:[
+				{not sure how the objects look like}
+			]
+		}
+
+		responseObject: {
+			message
+		}
+	*/
+	this.createClient = function(successCallback,failureCallback,clientDetails) {
+
+		var requestObject = {
+			'clientDetails':clientDetails
+		};
+
+		var mockResponse = {
+			'message':true
+		};
+
+		ajaxPost(CREATE_CLIENT_URL,successCallback,failureCallback,requestObject,mockResponse);
+	}
 
 	// --------------------------------------- Anro methods
 
