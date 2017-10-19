@@ -37,10 +37,9 @@ var increasePolicy = new function(){
 
 	function save()
 	{
-		mainPolicy.brokerId = brokerController.getBroker().id;
 		mainPolicy.linkedToPolicyId = mainPolicy.id;
 		console.log(mainPolicy);
-		brokerController.savePolicy(
+		clientController.savePolicy(
 			function(response){
 				util.createNotification(response.message);
 				policyViewer.refresh();

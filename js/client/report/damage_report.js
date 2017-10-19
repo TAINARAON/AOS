@@ -5,7 +5,6 @@ var damageReport = new function()
 	var businessUnits = [];
 	var farms = [];
 
-	var brokerSelect = document.getElementById("available_broker_dropdown");
 	var businessUnitInput = document.getElementById("business_unit_input");
 	var farmInput = document.getElementById("farm_input");
 	var searchButton = document.getElementById("search_button");
@@ -19,14 +18,13 @@ var damageReport = new function()
 		initModalButtonContainer();
 		createReportModalButton();
 
-		setAvailableBrokers();
 		setSearchButtonClickListener();	
 		search();
 	})();
 
 	function createDamageReportModal(id)
 	{
-		loader.loadPartOfPage("html/broker/report/create.html", id);
+		loader.loadPartOfPage("html/client/report/create.html", id);
 	}
 
 	function initModalButtonContainer()
@@ -44,59 +42,6 @@ var damageReport = new function()
 		button.innerHTML = "Create Damage Report";
 
 		modalButtonContainer.appendChild(button);
-	}
-
-	function setAvailableBrokers()
-	{	
-		viewableBrokers = [];
-		var currentBroker = brokerController.getBroker();
-		var tSelfObj = {
-			"brokerId":currentBroker.id,
-			"name":brokerController.getUser().name
-		}
-		viewableBrokers.push(tSelfObj);
-		
-		var viewable = brokerController.getViewableBrokers();
-		for(var i = 0; i < viewable.length; i++)
-		{
-			var tObj = {
-				"brokerId":viewable[i].broker.id,
-				"name":viewable[i].broker.user.name
-			}
-			viewableBrokers.push(tObj);
-		}
-
-		for(var i = 0; i < viewableBrokers.length; i++)
-		{
-			var option = document.createElement("OPTION");
-			option.innerHTML = viewableBrokers[i].name;
-
-			brokerSelect.appendChild(option);
-		}
-
-		// If only one broker is available then it will be onself, as it is the first option it will already be selected
-		// Hide the dropdown
-		if(viewableBrokers.length == 1)
-		{
-			document.getElementById("available_broker_container").style.display = "none";
-			document.getElementById("damage_report_number_container").className+=" col-md-offset-2";
-		}
-
-		/*var currentUserBrokerId = sessionStorage.brokerId;
-
-		viewableBrokers = brokerInvoker.getViewableBrokers(currentUserBrokerId);
-		debugger;
-		var tSelfObj = brokerInvoker.getBrokerDisplayable(currentUserBrokerId);
-		tSelfObj["brokerId"] = currentUserBrokerId;
-		viewableBrokers.push(tSelfObj);
-
-		for(var i = 0; i < viewableBrokers.length; i++)
-		{
-			var option = document.createElement("OPTION");
-			option.innerHTML = viewableBrokers[i].name;
-
-			brokerSelect.appendChild(option);
-		}*/
 	}
 
 	function setupAccordionClickHandler()
@@ -124,21 +69,20 @@ var damageReport = new function()
 
 	function search()
 	{
-		var tBrokerName = $(brokerSelect).val().trim();
-		var brokerId = getIdOfSelectedBroker(tBrokerName);
+		var clientId = clientController.getClient().id;
 		var businessUnitName = $(businessUnitInput).val().trim();
 		var farmName = $(farmInput).val().trim();
 
-		if(brokerId != -1)
+		if(clientId != -1)
 		{
 			var tObj = {
-				"brokerId":brokerId,
+				"clientId":clientId,
 				"farmName":farmName,
 				"businessUnitName":businessUnitName
 			};
 			// Perhaps get a range later on
 
-			brokerController.getDamageReports(
+			clientController.getDamageReports(
 				setDamageReports, 
 				function(response){
 					util.createNotification("Issue getting damage report data");

@@ -1,6 +1,6 @@
 var modalDamageReport = new function()
 {
-	var brokerId;
+	var clientId;
 
 	var element_business_unit = document.getElementById("business_unit_dropdown");
 	var businessUnitArr;
@@ -21,30 +21,7 @@ var modalDamageReport = new function()
 	var element_available_land_entry_container = document.getElementById("availableLandEntry");
 	var element_selected_land_entry_container = document.getElementById("selectedLandEntry");
 
-	//var element_claim_date_container = document.getElementById("claim_made");
 	var element_report_date_container = document.getElementById("report_made");
-
-	/*function getBusinessUnitByName(name)
-	{
-		for(var i = 0; i < businessUnitArr.length; i++)
-		{
-			if(businessUnitArr[i].name == name)
-			{
-				return businessUnitArr[i];
-			}
-		}
-	}
-
-	function getFarmByName(name)
-	{
-		for(var i = 0; i < farmArr.length; i++)
-		{
-			if(farmArr[i].name == name)
-			{
-				return farmArr[i];
-			}
-		}
-	}*/
 
 	function getLandEntryByLandEntryNumber(number)
 	{
@@ -92,7 +69,7 @@ var modalDamageReport = new function()
 
 	(function init()
 	{
-		brokerId = brokerController.getBroker().id;
+		clientId = clientController.getClient().id;
 
 		onAddFileClickListener();
 		onRemoveFileClickListener();
@@ -124,8 +101,8 @@ var modalDamageReport = new function()
 	{
 		element_business_unit.innerHTML = "";
 
-		var requestObj = {"brokerId":brokerId};
-		brokerController.getBusinessUnitsTheBrokerHasPoliciesOn(
+		var requestObj = {"clientId":clientId};
+		clientController.getBusinessUnitsTheClientBelongsTo(
 			function(response){
 				businessUnitArr = response;
 
@@ -144,33 +121,6 @@ var modalDamageReport = new function()
 				util.createNotification("Issue retrieving business units");
 			},requestObj
 		);
-		
-		/*var response = damageReportInvoker.getBusinessUnitByBrokerId(brokerId);
-		console.log("response id: "+response);
-		if(response != null)
-		{
-			ajaxPost("Some url", 
-				function(response){
-					businessUnitArr = response;
-
-					for(var i = 0; i < businessUnitArr.length; i++)
-					{
-						if(i == 0)
-						{
-							var option = createDropdownOption("", element_business_unit);
-							$(option).attr("disabled selected value");
-						}
-
-						createDropdownOption(businessUnitArr[i].name, element_business_unit);
-					}
-				}, 
-				function(){
-					alert("Failed to load businessUnits");
-				}, 
-				{"brokerId":brokerId}, 
-				response
-			);
-		}*/
 	}
 
 	function loadDamageTypes()
@@ -207,48 +157,6 @@ var modalDamageReport = new function()
 				alert("Failed to load damageTypes");
 			}
 		);
-		
-		/*var response = damageReportInvoker.getDamageTypes();
-		
-		if(response != null)
-		{
-			ajaxGet("Some url - get", 
-				function(response){
-					//debugger;
-					for(var i = 0; i < response.length; i++)
-					{
-						damageTypes = response;
-						var damageType = response[i];
-
-						var row;
-						if(i%3 == 0)
-						{
-							row = document.createElement("DIV");
-							row.className = "row";
-
-							element_damage_types_container.appendChild(row);
-						}
-
-						var column = document.createElement("DIV");
-						column.className = "col-md-4";
-						row.appendChild(column);
-
-						$(column).append('<div class="radio"><label><input type="radio" name="optradio" value="'+damageType.name+'">'+damageType.name+'</label></div>');
-					}
-
-					element_damage_types_container.style.display = "block";
-				}, 
-				function(){
-					alert("Failed to retreive damage types");
-					element_damage_types_container.style.display = "none";
-				}, 
-				response
-			);
-		}
-		else
-		{
-			element_damage_types_container.style.display = "none";
-		}*/
 	}
 
 	function initFarmDropdown()
@@ -261,11 +169,11 @@ var modalDamageReport = new function()
 		element_farm.innerHTML = "";
 
 		var requestObj = {
-			"brokerId":brokerId,
+			"clientId":clientId,
 			"businessUnitId":getBusinessUnitIdByName(val)
 		};
 
-		brokerController.getFarmsForBusinessUnitTheBrokerHasPoliciesOn(
+		clientController.getFarmsForBusinessUnitTheClientBelongsTo(
 			function(response){
 				farmArr = response;
 
@@ -288,44 +196,6 @@ var modalDamageReport = new function()
 			},
 			requestObj
 		);
-
-		/*var businessUnitId = getBusinessUnitIdByName(val);
-		var response = damageReportInvoker.getFarmByBusinessUnitId(brokerId, businessUnitId);
-		
-		if(response != null)
-		{
-			ajaxPost("Some url", 
-				function(response){
-					farmArr = response;
-
-					for(var i = 0; i < farmArr.length; i++)
-					{
-						if(i == 0)
-						{
-							var option = createDropdownOption("", element_farm);
-							$(option).attr("disabled selected value");
-						}
-
-						createDropdownOption(farmArr[i].name, element_farm);
-					}
-
-					element_farm_container.style.display = "block";
-				}, 
-				function(){
-					alert("Failed to load farms");
-					element_farm_container.style.display = "none";
-				}, 
-				{
-					"brokerId":brokerId,
-					"businessUnitId":businessUnitId
-				}, 
-				response
-			);
-		}
-		else
-		{
-			element_farm_container.style.display = "none";
-		}*/
 	}
 
 	function loadLandDropdownChoicesForFarm(val)
@@ -334,12 +204,12 @@ var modalDamageReport = new function()
 		element_selected_land_entry_container.innerHTML = "";
 
 		var requestObj = {
-			"brokerId":brokerId,
+			"clientId":clientId,
 			"businessUnitId":getBusinessUnitIdByName(element_business_unit.value),
 			"farmId":getFarmIdByName(element_farm.value)
 		};
 
-		brokerController.getLandEntryForFarmAndBusinessUnitTheBrokerHasPoliciesOn(
+		clientController.getLandEntryForFarmAndBusinessUnitTheClientBelongsTo(
 			function(response){
 				landArr = response;
 					
@@ -363,54 +233,6 @@ var modalDamageReport = new function()
 			},
 			requestObj
 		);
-		/*var businessUnitId = getBusinessUnitIdByName(element_business_unit.value);
-		var farmId = getFarmIdByName(element_farm.value);
-
-		var response = damageReportInvoker.getLandByFarmId(brokerId, businessUnitId, farmId);
-
-		if(response != null)
-		{
-			ajaxPost("some url", 
-				function(response){
-					landArr = response;
-					
-					for(var i = 0; i < landArr.length; i++)
-					{
-						//var checkboxDivContainer = $("<div class='requires_taxation_checkbox_container'></div>")
-						//var checkboxLabel = $("<label></label>").text('Taxation');
-						//var checkbox = $('<input type="checkbox">');
-						//checkboxDivContainer.append(checkboxLabel).append(checkbox).hide();
-
-						//$(element_available_land_entry_container).append("<li>"+landArr[i].landNumber+"</li>");
-						var li = $('<li></li>')
-							.text(landArr[i].landNumber)
-							.val(landArr[i].landNumber)
-							.on('click',function() {toggleSelectedListItem($(this));});
-							//.append(checkboxDivContainer);
-
-						$(element_available_land_entry_container).append(li);
-					}
-
-					element_land_container.style.display = "block";
-
-					loadDamageTypes();
-				}, 
-				function(){
-					alert("Failed to retrieve landEntries");
-					element_land_container.style.display = "none";
-				}, 
-				{
-					"brokerId": brokerId,
-					"businessUnitId": businessUnitId,
-					"farmId": farmId
-				}, 
-				response
-			);
-		}
-		else
-		{
-			element_land_container.style.display = "none";
-		}*/
 	}
 
 	function toggleSelectedListItem(li) {
@@ -436,8 +258,6 @@ var modalDamageReport = new function()
 
 				$('#selectedLandEntry').append(item);
 
-				//item.find('.requires_taxation_checkbox_container').show();
-
 				toggleSelectedListItem(item);
 			}
 		});
@@ -456,8 +276,6 @@ var modalDamageReport = new function()
 				item.detach();
 
 				$('#availableLandEntry').append(item);
-
-				//item.find('.requires_taxation_checkbox_container').hide();
 
 				toggleSelectedListItem(item);
 			}
@@ -542,26 +360,6 @@ var modalDamageReport = new function()
 				}, 
 				damageReportObj
 			);
-			
-			/*var response = damageReportInvoker.createDamageReport(damageReportObj);
-			if(response != null)
-			{
-				ajaxPost("some url", 
-					function(response){
-						reset();
-						damageReport.reload();
-					}, 
-					function(){
-						alert("Failed to create damage report");
-					}, 
-					damageReportObj, 
-					response
-				);
-			}
-			else
-			{
-				alert("Error creating damage report");
-			}*/
 		}
 		else
 		{

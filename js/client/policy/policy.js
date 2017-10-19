@@ -23,7 +23,7 @@ var policyViewer = new function ()
 
 	function loadIncreaseModal(id)
 	{
-		loader.loadPartOfPage("html/broker/policy/create.html", id);
+		loader.loadPartOfPage("html/client/policy/create.html", id);
 	}
 	
 	function setupAccordionClickHandler()
