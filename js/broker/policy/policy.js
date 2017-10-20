@@ -252,7 +252,8 @@ var policyViewer = new function ()
 		createAccordionItemDetailDiv("Area: ", childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv("Yield ", childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv("Price: ", childTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Tariff Option: ", childTitle).className = "col-md-2";
+		//createAccordionItemDetailDiv("Tariff Option: ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Excess %: ", childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv("Covered Perils: ", childTitle).className = "col-md-2";
 
 		childLi.appendChild(childTitle);
@@ -273,8 +274,9 @@ var policyViewer = new function ()
 		createAccordionItemDetailDiv(landEntry.area, childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv(landEntry.yield, childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv(landEntry.price, childTitle).className = "col-md-2";
-		var additionTariff = landEntry.additionalTariff > 0 ? " (+"+landEntry.additionalTariff.toFixed(2)+")": "";
-		createAccordionItemDetailDiv(landEntry.tariff.toFixed(2) + "" + additionTariff, childTitle).className = "col-md-2";
+		/*var additionTariff = landEntry.additionalTariff > 0 ? " (+"+landEntry.additionalTariff.toFixed(2)+")": "";
+		createAccordionItemDetailDiv(landEntry.tariff.toFixed(2) + "" + additionTariff, childTitle).className = "col-md-2";*/
+		createAccordionItemDetailDiv(landEntry.policyLandEntryDamageTypes[0].tariffOptionDamageType.tariffOption.coverage, childTitle).className = "col-md-2";
 		var perils="";
 		for(var i = 0; i < landEntry.policyLandEntryDamageTypes.length; i++)
 		{

@@ -1247,10 +1247,22 @@ var createQuote = new function()
 
 	function cancelQuote()
 	{
-		resetQuoteModal();
-		resetLandEntryTable();
-		temporary_button_container.innerHTML = "";
-		accept_quote_button.style.display = "none";
+		if(confirmCancel())
+		{
+			resetQuoteModal();
+			resetLandEntryTable();
+			temporary_button_container.innerHTML = "";
+			accept_quote_button.style.display = "none";
+		}
+	}
+
+	function confirmCancel() {
+		if(confirm("Are you sure you want to clear the quote?")){
+	        return true;
+	    }
+	    else{
+	        return false;
+	    }
 	}
 
 	function resetQuoteModal()
