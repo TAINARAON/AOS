@@ -15,6 +15,7 @@ var damageReport = new function()
 	(function init()
 	{
 		createDamageReportModal("report_modal_container");
+		createShareDamageReportModal("share_report_modal");
 		initModalButtonContainer();
 		createReportModalButton();
 
@@ -25,6 +26,10 @@ var damageReport = new function()
 	function createDamageReportModal(id)
 	{
 		loader.loadPartOfPage("html/client/report/create.html", id);
+	}
+
+	function createShareDamageReportModal(id) {
+		loader.loadPartOfPage("html/client/report/share.html", id);
 	}
 
 	function initModalButtonContainer()

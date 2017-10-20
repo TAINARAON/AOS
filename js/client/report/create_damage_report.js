@@ -349,12 +349,13 @@ var modalDamageReport = new function()
 				"requiresTaxation":$(":checkbox[name='requires_taxation']:checked").val()
 			};
 
-			brokerController.saveDamageReport(
+			clientController.saveDamageReport(
 				function(response){
 					reset();
 					damageReport.reload();
 					document.getElementById("close_modal").click();
 					util.createNotification(response.message);
+					shareModal.show(response.id);
 				}, 
 				function(response){
 					util.createNotification("Failed to save damage report");
