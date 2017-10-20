@@ -46,6 +46,7 @@ var increasePolicy = new function(){
 				policyViewer.refresh();
 				hide();
 				reset();
+				shareModal.show(response.id);
 			}, 
 			function(response){
 				util.createNotification(response.message);

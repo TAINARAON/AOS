@@ -15,6 +15,7 @@ var policyViewer = new function ()
 
 	(function init(){
 		loadIncreaseModal("increase_modal_container");
+		loadShareModal("share_modal_container");
 		
 		setAvailableBrokers();
 		setSearchButtonClickListener();
@@ -27,6 +28,10 @@ var policyViewer = new function ()
 	function loadIncreaseModal(id)
 	{
 		loader.loadPartOfPage("html/broker/policy/create.html", id);
+	}
+
+	function loadShareModal(id) {
+		loader.loadPartOfPage("html/broker/policy/share.html", id);
 	}
 
 	function setAvailableBrokers()
@@ -332,6 +337,7 @@ var policyViewer = new function ()
 	function createPolicyButtons(policy, container)
 	{
 		createIncreaseBtn(container, policy);
+		createShareBtn(container, policy);
 	}
 
 	function createIncreaseBtn(container, policy)
@@ -345,6 +351,17 @@ var policyViewer = new function ()
 	{
 		//alert("Increase Quote");
 		increasePolicy.show(policy);
+	}
+
+	function createShareBtn(container, policy)
+	{
+		var button = createSuccessButton("Share", container);
+		button.onclick = function(e) {share(e, policy);};
+		button.style.cssText = "margin-right: 10px;";
+	}
+
+	function share(e, policy) {
+		shareModal.show(policy.id);
 	}
 
 	function createSuccessButton(title, container)
