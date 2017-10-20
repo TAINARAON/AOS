@@ -487,6 +487,7 @@ var clientController = new function() {
 		this.savePolicy = function(successCallback,failCallback,requestObject)
 		{
 			var mockResponse = {
+				'id':0,
 				'message':'saved'
 			};
 			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
