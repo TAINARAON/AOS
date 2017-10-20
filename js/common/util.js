@@ -1,5 +1,10 @@
 var util = new function() {
 
+	var count = 0;
+	var myFiles = [];
+	var callback;
+	var myExtraData;
+
 	this.displayUploadFileModal = function(extraData,onSubmitCallback) {
 
 		// TODO: Is action needed? It should just return the files to the callback
@@ -42,20 +47,85 @@ var util = new function() {
 			}
 		} );*/
 
+		$( '#upload_file_modal_upload_button' ).click( function () {
+			// Check for the various File API support.
+			if (window.File && window.FileReader && window.FileList && window.Blob) {
+			  // Great success! All the File APIs are supported.
+			  var files = document.getElementById("uploadFileInput").files;
+			  
+			  callback = onSubmitCallback;
+			  myExtraData = extraData;
 
+			  for (var i = 0, f; f = files[i]; i++)
+			  {
+			  	myFiles.push(f);
+			  }
 
-		$("#upload_file_modal_upload_button").on('click',function() {
+			  processFiles();
+			} 
+			else {
+			  alert('The File APIs are not fully supported in this browser.');
+			}
+		} );
+
+		/*document.getElementById("uploadFileInput").addEventListener('change', function() {
+			debugger;
+		  var reader = new FileReader();
+		  reader.onload = function() {
+
+		    var arrayBuffer = this.result,
+		      array = new Uint8Array(arrayBuffer),
+		      binaryString = String.fromCharCode.apply(null, array);
+
+		    console.log(binaryString);
+
+		  }
+		  reader.readAsArrayBuffer(this.files[0]);
+
+		}, false);*/
+
+		/*$("#upload_file_modal_upload_button").on('click',function() {
 
 			// TODO: I think the result needs to be sent back through the callback
-			var result = 
-			[
-				{
-					'result':'placeholder text'
-				}
-			];
+			//var result = 
+			//[
+			//	{
+			//		'result':'placeholder text'
+			//	}
+			//];
 
-			onSubmitCallback(result,extraData);
-		});
+			//onSubmitCallback(result,extraData);
+
+			onSubmitCallback(filesChosen,extraData);
+		});*/
+	}
+
+	function processFiles()
+	{
+		var reader = new FileReader();
+	  	reader.onload = function () {
+			setFileData(myFiles[count], reader.result);
+	  		count++;
+			processFiles();
+	  	};
+
+	  	if(myFiles.length != count)
+	  	{
+	  		reader.readAsBinaryString(myFiles[count]);
+	  	}
+	  	else
+	  	{
+	  		// Done
+  			callback(myFiles, myExtraData);
+  			myFiles = [];
+			callback = undefined;
+			extraData = undefined;
+			count = 0;
+	  	}
+	}
+
+	function setFileData(file, data) {
+		file["fileData"] = data;
 	}
 
 	// success, error, info, warn
