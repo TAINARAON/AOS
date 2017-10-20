@@ -136,7 +136,19 @@ function onSubmitClientDetails() {
 		'password':inputArray[PASSWORD]
 	};
 
-	clientController.createClient(onCreateClientSuccess,onCreateClientFailure,clientDetails);
+	util.displayUploadFileModal(clientDetails,submitClientDetailsWithFiles);
+
+	
+}
+
+function submitClientDetailsWithFiles(result, clientDetails) {
+
+	var requestObject = {
+		'clientDetails':clientDetails,
+		'files':result
+	};
+
+	clientController.createClient(onCreateClientSuccess,onCreateClientFailure,requestObject);
 }
 
 function onCreateClientSuccess(response) {

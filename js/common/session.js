@@ -78,6 +78,15 @@ var session = new function() {
 				'userId':'4',
 				'roleName':CLIENT_NAME
 			};
+		} else if(username=="I") {
+			mockResponse = 
+			{
+				'token':'abcdefghijklmnop',
+				'userId':'4',
+				'roleName':INSURER_NAME
+			};
+		} else {
+			alert('nope');
 		}
 
 		ajaxPost(LOGIN_URL,onLoginSuccess,onLoginFailure,requestObject,mockResponse);

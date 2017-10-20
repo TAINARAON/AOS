@@ -1,0 +1,63 @@
+<div class="col-md-4 col-md-offset-4">
+  <div class="row">
+    <h3 class="text-center">Create Broker</h3>
+    <div class="col-md-12">
+      <label>Initials</label>
+      <input id="create_broker_initials_input" class="form-control">
+    </div>
+    <div class="col-md-12">
+      <label>Surname</label>
+      <input id="create_broker_surname_input" class="form-control">
+    </div>
+    <div class="col-md-12">
+      <label>Preferred Name</label>
+      <input id="create_broker_preferred_name_input" class="form-control">
+    </div>
+    <div class="col-md-12">
+      <label>Branch</label>
+      <input id="create_broker_branch_input" class="form-control">
+    </div>
+    <div class="col-md-12">
+      <label>Email</label>
+      <input id="create_broker_email_input" class="form-control">
+    </div>
+    <div class="col-md-12">
+      <label>Contact Number</label>
+      <input id="create_broker_contact_number_input" class="form-control">
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-12"><label>Creation Rights</label></div>
+        <div class="col-md-2">
+          <input id="create_broker_creation_rights_checkbox" type="checkbox" class="form-control">
+        </div>      
+      </div>
+    </div>
+    <div class="col-md-12">
+      <label>Viewable Brokers</label>
+        <div id="viewable_brokers">
+          <div class="col-md-5">
+            <label>Available</label>
+            <ul id="available_brokers_ul" class="selectionBox"></ul>
+          </div>
+
+          <div class="col-md-2">
+            <div class="row center-block"><div id="add_button" class="btn btn-success center-block">&gt;&gt;</div></div>
+            <div class="row center-block"><div id="remove_button" class="btn btn-danger center-block">&lt;&lt;</div></div>
+          </div>
+
+          <div class="col-md-5">
+            <label>Selected</label>
+            <ul id="selected_brokers_ul" class="selectionBox"></ul>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div hidden id="create_broker_submit_div" >
+    <div id="create_broker_submit_button" class="btn btn-primary btn-block">Submit</div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/brokerAdmin/createBroker.js"></script>
+
+        

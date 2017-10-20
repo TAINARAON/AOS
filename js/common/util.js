@@ -1,10 +1,10 @@
 var util = new function() {
 
-	this.displayUploadFileModal = function(action,extraData,onSubmitCallback) {
+	this.displayUploadFileModal = function(extraData,onSubmitCallback) {
 
 		// TODO: Is action needed? It should just return the files to the callback
 		// Set Action
-		$('#upload_file_modal_form').prop('action',action);
+		//$('#upload_file_modal_form').prop('action',action);
 
 		// Clear all files loaded
 		$("#uploadFileInput").val('');
@@ -30,9 +30,11 @@ var util = new function() {
 					$( '#file-content' ).append( $( '<div/>' ).html( fr.result ) )
 				};
 				//fr.readAsText( file );
-				var x = fr.readAsDataURL( file );
+				//var x = fr.readAsDataURL( file );
+				var y = fr.readAsText( file );
 
-				console.log(x);
+				//console.log(x);
+				console.log(y);
 				console.log(file);
 			} else {
 				// Handle errors here

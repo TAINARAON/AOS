@@ -85,6 +85,7 @@ var insurerAdminController = new function() {
 
 		insurerAdmin = response['insurerAdmin'];
 		insuranceAgency = response['insuranceAgency'];
+		user = response['user'];
 		
 		loader.loadRole('insurerAdmin');
 	}
