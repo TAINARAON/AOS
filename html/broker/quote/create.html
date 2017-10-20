@@ -9,21 +9,21 @@
       <div id="quote_input_container" class="modal-body">
         <div class="row">
           <div class="col-md-4">
-            <h6 id="boerderyLabel" class="text-left">Boerdery:</h6>
+            <h6 id="boerderyLabel" class="text-left">Client:</h6>
             <input id="business_unit" name="client_id" class="form-control quote_criteria">
           </div>
           <div id="farmContainer" class="col-md-4">
-            <h6  id="plaasLabel"class="text-left">Plaas:</h6>
+            <h6  id="plaasLabel"class="text-left">Farm:</h6>
             <input id="farm" name="client_id" class="form-control quote_criteria">
           </div>
           <div id="landNumberContainer" class="col-md-4">
-            <h6 id="landNumberLabel" class="text-left">Land Nommer:</h6>
+            <h6 id="landNumberLabel" class="text-left">Land Number:</h6>
             <input id="land_nommer" name="client_id" class="form-control quote_criteria">
           </div>
         </div>
         <div id="row1Container" class="row">
           <div class="col-md-4">
-            <h6 class="text-left">Produk:</h6>
+            <h6 class="text-left">Product:</h6>
             <!--<input id="produk" name="client_id" class="form-control">-->
             <select id="produk_dropdown" name="produk_dropdown" class="form-control">
               <option disabled selected value></option>
@@ -31,7 +31,7 @@
             </select>
           </div>
           <div class="col-md-4">
-            <h6 class="text-left">Gewas:</h6>
+            <h6 class="text-left">Crop Type:</h6>
             <!--<input id="gewas" name="client_id" class="form-control">-->
             <select id="gewas_dropdown" name="gewas_dropdown" class="form-control">
               <option disabled selected value></option>
@@ -39,13 +39,13 @@
             </select>
           </div>
           <div class="col-md-4">
-            <h6 class="text-left">Kultivar:</h6>
+            <h6 class="text-left">Cultivar:</h6>
             <input id="kultivar" name="client_id" class="form-control quote_criteria">
           </div>
         </div>
         <div id="row2Container" class="row">
           <div class="col-md-4">
-            <h6 class="text-left">Opsie tiepe:</h6>
+            <h6 class="text-left">Excess Type:</h6>
             <!--<input id="opsie_tiepe" name="client_id" class="form-control">-->
             <select id="opsie_tiepe_dropdown" name="opsie_tiepe_dropdown" class="form-control">
               <option disabled selected value></option>
@@ -53,7 +53,7 @@
             </select>
           </div>
           <div class="col-md-4">
-            <h6 class="text-left">Dekking:</h6>
+            <h6 class="text-left">Excess %:</h6>
             <!--<input id="persentasie" name="client_id" class="form-control">-->
             <select id="dekking_dropdown" name="dekking_dropdown" class="form-control">
               <option disabled selected value></option>
@@ -66,11 +66,11 @@
         </div>
         <div id="row3Container" class="row">
           <div class="col-md-4">
-            <h6 class="text-left">Oppervlakte:</h6>
+            <h6 class="text-left">Area:</h6>
             <input id="oppervlakte" name="client_id" class="form-control quote_criteria">
           </div>
           <div class="col-md-4">
-            <h6 class="text-left">Gewas opbrengs:</h6>
+            <h6 class="text-left">Yield:</h6>
             <input id="gewas_opbrengs" name="client_id" class="form-control quote_criteria">
             <div class="checkbox">
               <label>
@@ -80,7 +80,7 @@
             </div>
           </div>
           <div class="col-md-4">
-            <h6 class="text-left">Rand per eenheid:</h6>
+            <h6 class="text-left">Price:</h6>
             <input id="rand_per_eenheid" name="client_id" class="form-control quote_criteria">
             <div class="checkbox">
               <label>
@@ -103,16 +103,16 @@
           <table class="table table-striped table-bordered table-hover table-condensed">
             <thead>
               <tr>
-                <th>Plaas</th>
-                <th>Land nommer</th>
-                <th>Gewas</th>
-                <th>Kultivar</th>
-                <th>Oppervlakte</th>
-                <th>Opbrengs</th>
-                <th>Rand per eenheid</th>
+                <th>Farm</th>
+                <th>Land Number</th>
+                <th>Crop Type</th>
+                <th>Cultivar</th>
+                <th>Area</th>
+                <th>Yield</th>
+                <th>Price</th>
                 <th>Insured Value</th>
-                <th>Tiepe Opsie</th>
-                <th>Opsie %</th>
+                <th>Excess Type</th>
+                <th>Excess %</th>
               </tr>
             </thead>
             <tbody id="create_quote_table_body" >
@@ -122,7 +122,7 @@
         </div>
 
         <div class="row">
-          <div id="cancelQuote" class="btn btn-danger col-md-offset-3 col-md-2">Kanselleer</div>
+          <div id="cancelQuote" class="btn btn-danger col-md-offset-3 col-md-2">Clear</div>
           <div id="acceptQuote" class="btn btn-success col-md-offset-1 col-md-2">Quote</div>
           <div hidden id="create_quote_farm_option_checkbox_div" class="col-md-offset-1 col-md-2">
             <label>Versoek plaas-opsie</label>
