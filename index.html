@@ -89,10 +89,16 @@
 
 
 <script>
-	ajaxPost('/Insurer/Admin/getDefaultInsurerAdminData',success,failure,'{"userId": 14}');
 
-function success() {
-	alert('success');
+	var request = {
+		"userId": 14
+	}
+
+	ajaxPost('/Insurer/Admin/getDefaultInsurerAdminData',success,failure,request);
+
+function success(response) {
+	console.log('RESPONSE');
+	console.log(response);
 };
 function failure() {
 	alert('success');
