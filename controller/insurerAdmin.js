@@ -25,7 +25,7 @@ var insurerAdminController = new function() {
 	var GET_BROKERS_OF_BROKERAGES_URL = 'GET_BROKERS_OF_BROKERAGES_URL';
 	var CREATE_BROKER_URL = 'CREATE_BROKER_URL';
 	
-	var GET_DEFAULT_INSURER_ADMIN_DATA_URL = 'GET_DEFAULT_INSURER_ADMIN_DATA_URL';
+	var GET_DEFAULT_INSURER_ADMIN_DATA_URL = '/Insurer/Admin/getDefaultInsurerAdminData';
 	var GET_INSURERS_OF_INSURANCE_AGENCY_WITH_USER_DATA_URL = 'GET_INSURERS_OF_INSURANCE_AGENCY_WITH_USER_DATA_URL';
 	var GET_BROKERAGES_AND_THEIR_BROKERS = 'GET_BROKERAGES_AND_THEIR_BROKERS';
 	var GET_BUSINESS_UNITS_AND_THEIR_FARMS = 'GET_BUSINESS_UNITS_AND_THEIR_FARMS';
@@ -51,10 +51,10 @@ var insurerAdminController = new function() {
 	function getDefaultInsurerAdminData(userId) {
 
 		var requestObject = {
-			'id':userId
+			'userId':userId
 		};
 
-		var mockResponse = 
+		/*var mockResponse = 
 		{
 			'user':{
 				'initials':'S',
@@ -76,9 +76,9 @@ var insurerAdminController = new function() {
 				'contactNumber':'062 352 1341',
 				'fspNumber':'fsp_0050'
 			}
-		};
+		};*/
 
-		ajaxPost(GET_DEFAULT_INSURER_ADMIN_DATA_URL,onGetDefaultInsurerAdminSuccess,onGetDefaultInsurerAdminFailure,requestObject,mockResponse);
+		ajaxPost(GET_DEFAULT_INSURER_ADMIN_DATA_URL,onGetDefaultInsurerAdminSuccess,onGetDefaultInsurerAdminFailure,requestObject);
 	}
 	function onGetDefaultInsurerAdminSuccess(response) {
 
@@ -87,6 +87,10 @@ var insurerAdminController = new function() {
 		insurerAdmin = response['insurerAdmin'];
 		insuranceAgency = response['insuranceAgency'];
 		user = response['user'];
+
+		console.log(insurerAdmin);
+		console.log(insuranceAgency);
+		console.log(user);
 		
 		loader.loadRole('insurerAdmin');
 	}
