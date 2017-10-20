@@ -3,21 +3,33 @@
 	var leftButtons = 
  	[
  		{
- 			'text':'Damage Report',
- 			'pageUrl':'html/broker/report/damage_report.html'
+ 			'text':'Client',
+ 			'pageUrl':'html/broker/quote/quote2.html'
+ 		},
+ 		{
+ 			'text':'Quote',
+ 			'pageUrl':'html/broker/quote/quote2.html'
  		},
  		{
  			'text':'Policy',
  			'pageUrl':'html/broker/policy/policy.html'
  		},
  		{
- 			'text':'Quote',
- 			'pageUrl':'html/broker/quote/quote2.html'
+ 			'text':'Damage Report',
+ 			'pageUrl':'html/broker/report/damage_report.html'
  		},
+ 		{
+ 			'text':'Reporting',
+ 			'pageUrl':''
+ 		}
  	];
 
  	var rightButtons = 
  	[
+ 		{
+ 			'text':'Create Client',
+ 			'pageUrl':'html/common/logout.html'
+ 		},
  		{
  			'text':'Logout',
  			'pageUrl':'html/common/logout.html'

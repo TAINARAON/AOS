@@ -3,16 +3,20 @@
 	var leftButtons = 
  	[
  		{
- 			'text':"Business Unit",
- 			'pageUrl':'html/client/businessUnit.html'
+ 			'text':"Client",
+ 			'pageUrl':'html/client/businessUnit/businessUnit.html'
  		},
  		{
- 			'text':"Damage Report",
- 			'pageUrl':'html/client/report/damage_report.html'
+ 			'text':"Quote",
+ 			'pageUrl':'html/client/quote/quote.html'
  		},
  		{
  			'text':"Policy",
  			'pageUrl':'html/client/policy/policy.html'
+ 		},
+ 		{
+ 			'text':"Damage Report",
+ 			'pageUrl':'html/client/report/damage_report.html'
  		}
  	];
 

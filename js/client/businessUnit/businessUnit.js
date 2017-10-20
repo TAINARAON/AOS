@@ -17,20 +17,17 @@ function getBusinessUnitsAndTheirFarms() {
 
 	clientController.getBusinessUnitsAndTheirFarms(onGetBusinessUnitsAndTheirBrokersSuccess,onGetBusinessUnitsAndTheirBrokersFailure);
 }
-
 function onGetBusinessUnitsAndTheirBrokersSuccess(response) {
 
 	populateBusinessUnitsDropdownValues(response['businessUnitsAndFarms']);
 }
-
 function onGetBusinessUnitsAndTheirBrokersFailure() {
 
 	alert("failure");
 }
-
 function populateBusinessUnitsDropdownValues(businessUnitsAndFarms) {
 
-	var selectElement = $('#insurer_admin_clients_business_units_dropdown');
+	var selectElement = $('#client_business_unit_business_unit_dropdown');
 
 	for(var i = 0; i < businessUnitsAndFarms.length; i++)
 	{
@@ -57,7 +54,7 @@ function populateBusinessUnitsDropdownValues(businessUnitsAndFarms) {
 }
 
 function addFarmEntriesToTable(businessUnitId,farms) {
-	
+
 	for( var i = 0; i < farms.length; i++) {
 
 		var element = createFarmEntryElement(farms[i]);
@@ -72,7 +69,7 @@ function addFarmEntriesToTable(businessUnitId,farms) {
 		businessUnitFarmElements.push(farmElementObject);
 
 		// Add element to table
-		$('#insurance_admin_client_farms_table_body').append(element);
+		$('#client_farms_table_body').append(element);
 	}
 }
 
@@ -108,7 +105,6 @@ function showValidFarms(businessUnitId) {
 function createFarmEntryElement(farm) {
 
 	var tr = $('<li></li>');
-
 	var aToggle = $('<a></a>').addClass('toggle').prop('href',"javascript:void(0);");
 	aToggle.append($('<td></td>')).text(farm['name']);
 	tr.append(aToggle);

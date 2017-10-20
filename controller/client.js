@@ -154,7 +154,7 @@ var clientController = new function() {
 		};
 
 		var mockResponse = {
-			businessUnitsAndFarms:
+			'businessUnitsAndFarms':
 			[
 				{
 					id:0, 

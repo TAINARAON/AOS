@@ -20,5 +20,9 @@
 .navbar-fixed-left .navbar-nav > li > .dropdown-menu {
   margin-top: -50px;
   margin-left: 140px;
-  padding-top: 5px;
+}
+
+.navbar-nav>li>a {
+  padding-top:10px;
+  padding-bottom:10px;
 }

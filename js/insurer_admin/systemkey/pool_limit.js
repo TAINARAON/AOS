@@ -74,7 +74,7 @@ function populateTable() {
 
 	for(var i = 0; i < limits.length; i++) {
 
-		var limit = limits[i];
+		var limit = limits[i];	
 
 		var tr = $('<tr></tr>')
 			.append($('<td></td>').text(getCropNameByCropId(limit['cropId'])))
@@ -97,7 +97,7 @@ function populateTable() {
 }
 function getPercentageFilled(current, max) {
 
-	return (current / max) + "";
+	return (current / max * 100).toFixed(2) + "";
 }
 function getCropNameByCropId(cropId) {
 

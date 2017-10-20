@@ -88,9 +88,9 @@ function repopulateTariffTable() {
 			.append($('<td></td>').text(detailedTariff['districtName']))
 			.append($('<td></td>').text(detailedTariff['cropName']))
 			.append($('<td></td>').text(detailedTariff['coverage']))
-			.append($('<td></td>').text(detailedTariff['coverageStart']))
-			.append($('<td></td>').text(detailedTariff['coverageEnd']));
-
+			//.append($('<td></td>').text(detailedTariff['coverageStart']))
+			//.append($('<td></td>').text(detailedTariff['coverageEnd']));
+			;
 		tableBody.append(tr);
 	}
 }

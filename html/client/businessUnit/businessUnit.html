@@ -1,13 +1,19 @@
 <div class="col-md-12">
 	<div class="row">
 		<div class="col-md-3">
-		    <label class="text-left">Business Unit</label>
+		    <label class="text-left">Client</label>
 		    <select id="client_business_unit_business_unit_dropdown" class="form-control">
 		      <option selected disabled value=""></option>
 		    </select>
 		</div>
+		<div class="pull-right col-md-2">
+			<div id="client_create_business_unit_button" class="btn btn-primary form-control">
+				Create Client
+			</div>
+		</div>
 	</div>
-	<div hidden id="client_business_unit_data_container">
+
+	<!--<div hidden id="client_business_unit_data_container">
 		<div class="row">
 		  <div class="col-md-10">
 		  	<label>Income Tax Number</label>
@@ -31,22 +37,20 @@
 		  	<label>Contact Number</label>
 		  	<p id="client_business_contact_number"></p>
 		  </div>
-		</div>
-	</div>
+		</div></div>-->
+	<br>
+
 	<div class="row">
-		<div class="col-md-12">
-			<div id="insurer_admin_create_broker_button" class="btn btn-primary pull-right">
-				Create Broker
-			</div> 
-			<div class="row">
-			  	<div class="col-md-12">
-				  	<h3>Brokers</h3>
-				  	<ul class="accordion" id="insurance_admin_broker_brokers_table_body">
-			  		</ul>
-			  	</div>
-			</div>                     
+		<div class="pull-right col-md-2">
+			<div id="insurer_admin_create_broker_button" class="btn btn-primary form-control">
+				Create Farm
+			</div>
 		</div>
+	  	<div class="col-md-12">
+		  	<label>Farms</label>
+		  	<ul class="accordion" id="client_farms_table_body"></ul>
+	  	</div>  
 	</div>
 </div>
 
-<script type="text/javascript" src="js/client/businessUnit.js"></script>
+<script type="text/javascript" src="js/client/businessUnit/businessUnit.js"></script>

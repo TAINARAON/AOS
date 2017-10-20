@@ -949,6 +949,7 @@ var mockCommunicator = new function()
 			'active':'1',
 			'dateCreated':'1990-08-25',
 			'email':'breeker.brokerage@gmail.com',
+			'contactPerson':'Sarah Bezuidenhoudt',
 			'contactNumber':'0623521574',
 			'fspNumber':'FSP000',
 			'verified':'1'
@@ -959,6 +960,7 @@ var mockCommunicator = new function()
 			'active':'1',
 			'dateCreated':'1990-09-21',
 			'email':'makelaar.brokerage@gmail.com',
+			'contactPerson':'Pieter Vermeulen',
 			'contactNumber':'0623521348',
 			'fspNumber':'FSP001',
 			'verified':'1'
@@ -1819,6 +1821,10 @@ var mockCommunicator = new function()
 			'id':'1',
 			'name':'Summer',
 		},
+		{
+			'id':'2',
+			'name':'Fruit',
+		},
 	];
 	this.createProduct = function(data) {
 
@@ -1966,7 +1972,7 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'1',
-			'name':'Tree',
+			'name':'Trees/block',
 		},
 	];
 	this.createAreaUom = function(data) {
@@ -2302,7 +2308,7 @@ var mockCommunicator = new function()
 	this.taxTable = [
 		{
 			'id':'0',
-			'percentage': 0.14
+			'percentage': 14.00
 		},
 	];
 
