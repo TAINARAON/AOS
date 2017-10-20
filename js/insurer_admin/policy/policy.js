@@ -14,15 +14,24 @@ var policyViewer = new function ()
 	var searchButton = document.getElementById("search_button");
 	var policyAccordion = document.getElementById("policy_accordion");
 
+	var policyAccordionButtonsContainer = document.getElementById("policy_button_container");
+
 	(function init(){
 		insurerAdminId = insurerAdminController.getInsurerAdmin().id;
+
+		loadShareModal("share_modal_container");
 
 		setAvailableBrokerages();
 		setSearchButtonClickListener();
 		addOnEnterKeyPressedListenerForSearchInput(policyNumberInput);
 		addOnEnterKeyPressedListenerForSearchInput(businessUnitInput);
 		search();
+		$(policyAccordionButtonsContainer).hide();
 	})();
+
+	function loadShareModal(id) {
+		loader.loadPartOfPage("html/insurer_admin/policy/share.html", id);
+	}
 	
 	function setAvailableBrokerages()
 	{	
@@ -194,6 +203,10 @@ var policyViewer = new function ()
 			}
 		}
 
+		// Replace the quote buttons
+		policyAccordionButtonsContainer.innerHTML = "";
+		createPolicyButtons(policy, policyAccordionButtonsContainer);
+		$(policyAccordionButtonsContainer).toggle();
 	}
 
 	function createAccordionItemDetailDiv(val, container)
@@ -294,6 +307,22 @@ var policyViewer = new function ()
 		mapScript.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAv9T_ISeUi2Jf9FcFpXO24VkRUByr5_ek&callback=policyViewer.initMap";
 
 		container.appendChild(mapScript);
+	}
+
+	function createPolicyButtons(policy, container)
+	{
+		createShareBtn(container, policy);
+	}
+
+	function createShareBtn(container, policy)
+	{
+		var button = createSuccessButton("Share", container);
+		button.onclick = function(e) {share(e, policy);};
+		button.style.cssText = "margin-right: 10px;";
+	}
+
+	function share(e, policy) {
+		shareModal.show(policy.id);
 	}
 
 	function createSuccessButton(title, container)
