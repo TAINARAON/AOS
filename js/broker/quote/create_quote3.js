@@ -1269,6 +1269,8 @@ var createQuote = new function()
 				resetQuoteModal();
 				resetLandEntryTable();
 				quoteViewer.refresh();
+				document.getElementById("close_modal").click(); // Will close the modal
+				shareModal.show(response.id);
 			},
 			function(response){
 				util.createNotification("Quote save failed!");
@@ -1564,7 +1566,7 @@ var createQuote = new function()
 		loadLandEntryTable(quote);
 	}
 
-	function persistQuoteData(quote)
+	/*function persistQuoteData(quote)
 	{
 		// Set the current logged on broker's id as the one that created the quote
 		quote["businessUnit"] = businessUnit;
@@ -1601,7 +1603,7 @@ var createQuote = new function()
 		{
 			return false;
 		}
-	}
+	}*/
 
 	function getCleanBusinessUnitObject(quote)
 	{
