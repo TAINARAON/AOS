@@ -278,7 +278,6 @@ var createQuote = new function()
 
 	function createColumnsForLandEntryRow(landEntry, container)
 	{
-		debugger;
 		console.log(landEntry);
 		createColumn(landEntry.farm.name, container);
 		createColumn(landEntry.landNumber, container);
@@ -1507,7 +1506,6 @@ var createQuote = new function()
 
 	function saveEditOfLandEntry(landEntry)
 	{
-		//debugger;
 		updateLandEntryInQuote(landEntry, getLandEntryFromCriteriaValues());
 		resetModalForFurtherLandEntryEdit();
 		hideFields();
@@ -1568,7 +1566,6 @@ var createQuote = new function()
 
 	function persistQuoteData(quote)
 	{
-		//debugger;
 		// Set the current logged on broker's id as the one that created the quote
 		quote["businessUnit"] = businessUnit;
 		quote["businessUnitId"] = businessUnit.id;
@@ -1588,7 +1585,7 @@ var createQuote = new function()
 		var landEntries = quote.quoteLandEntries;
 
 		debugTool.print(landEntries, FILTER_LEVEL_HIGH, FILTER_TYPE_LOG);
-		debugger;
+		
 		// TODO: send damage type array
 		var resultId = quoteInvoker.create(getCleanBusinessUnitObject(quote), landEntries);
 
@@ -1625,7 +1622,6 @@ var createQuote = new function()
 
 	this.reQuote = function(otherQuote)
 	{
-		//debugger;
 		console.log(otherQuote);
 		quote = otherQuote;
 		// The new requote will be linked to the original quote through this id
