@@ -535,6 +535,7 @@ var modalDamageReport = new function()
 				function(response){
 					reset();
 					damageReport.reload();
+					document.getElementById("close_modal").click();
 					util.createNotification(response.message);
 				}, 
 				function(response){
