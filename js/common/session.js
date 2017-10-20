@@ -1,7 +1,5 @@
 var LOGIN_URL = '/login';
 
-
-
 var USER_ID = 'userId';
 var NAME_OF_USER = 'nameOfUser';
 var SURNAME_OF_USER = 'nameOfUser';
@@ -94,8 +92,8 @@ var session = new function() {
 	};
 
 	this.logout = function() {
-
-		// TODO
+		util.createNotification('Logged out','info');
+		loader.load();
 	}
 }
 

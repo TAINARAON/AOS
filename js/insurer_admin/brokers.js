@@ -13,6 +13,22 @@ var brokerElementsInBrokerTableByBrokerage = [];
 function init() {
 
 	getBrokeragesAndTheirBrokers();
+	setOnCreateBrokerageListener();
+	setOnCreateBrokerListener();
+}
+
+function setOnCreateBrokerListener() {
+
+	$('#insurer_admin_create_broker_button').on('click',function() {
+		loader.loadPage('html/insurer_admin/broker/createBroker.html');
+	});
+}
+
+function setOnCreateBrokerageListener() {
+
+	$('#insurer_admin_create_brokerage_button').on('click',function() {
+		loader.loadPage('html/insurer_admin/broker/createBrokerage.html');
+	});
 }
 
 function getBrokeragesAndTheirBrokers() {
