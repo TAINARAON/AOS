@@ -201,7 +201,8 @@ var policyViewer = new function ()
 
 		createAccordionItemDetailDiv("Policy Number: " + policy.policyNumber, parentTitle).className = "col-md-2";
 		createAccordionItemDetailDiv("Business Unit: " + policy.businessUnit.name, parentTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Policy Start: " + policy.acceptedOn, parentTitle).className = "col-md-3";
+		createAccordionItemDetailDiv("Accept Date: " + util.getDateTimePretty(policy.acceptedOn*1), parentTitle).className = "col-md-3";
+		createAccordionItemDetailDiv("Commencement Date: " + util.getDateTimePretty(util.addTimeToDateTime(policy.acceptedOn*1,sessionStorage.COMMENCEMENT_DELAY*1,"miliseconds")), parentTitle).className = "col-md-3";
 		createAccordionItemDetailDiv("Total Insured Value: " + policy.totalInsuredValue, parentTitle).className = "col-md-2";
 		createAccordionItemDetailDiv("Premium: " + policy.premium, parentTitle).className = "col-md-2";
 
