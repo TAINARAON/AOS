@@ -40,8 +40,9 @@ var session = new function() {
 
 	this.login = function(username,password) {
 
-		// PUT THIS SOMEWHERE ELSE
+		// TODO - request from server
 		sessionStorage.setItem('CURRENCY', 'R');
+		sessionStorage.setItem('COMMENCEMENT_DELAY', 604800000);
 
 		var requestObject = 
 		{

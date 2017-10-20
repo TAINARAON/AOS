@@ -18,6 +18,7 @@ var brokerController = new function() {
 		return user;
 	}
 
+	var GET_BUSINESS_UNITS_AND_THEIR_FARMS = 'GET_BUSINESS_UNITS_AND_THEIR_FARMS';
 	var GET_DEFAULT_BROKER_DATA_URL = 'GET_DEFAULT_BROKER_DATA_URL';
 	var TEST_URL = "TEST_URL";
 	
@@ -150,6 +151,76 @@ var brokerController = new function() {
 
 		ajaxPost(TEST_URL,successCallback,failCallback,requestObject,mockResponse);
 	}
+
+	/*	
+		broker/getBusinessUnitsAndTheirFarms
+
+		requestObject:{
+			brokerId
+		}
+
+		responseObject: {
+			businessUnitsAndFarms:
+			[
+				{
+					id,  (businessUnitId)
+					name,
+					farms:
+					[
+						{
+							id, (farmId)
+							name
+						}
+					]
+				}
+			]
+		}
+	*/
+	this.getBusinessUnitsAndTheirFarms = function(successCallback,failCallback) {
+
+		var requestObject = 
+		{
+			"brokerId":broker['id']
+		};
+
+		var mockResponse = {
+			'businessUnitsAndFarms':
+			[
+				{
+					id:0, 
+					name:'Business Unit 0',
+					farms:
+					[
+						{
+							id:0, 
+							name:'Farm 0'
+						},
+						{
+							id:1, 
+							name:'Farm 1'
+						}
+					]
+				},
+				{
+					id:1, 
+					name:'Business Unit 1',
+					farms:
+					[
+						{
+							id:2, 
+							name:'Farm 2'
+						},
+						{
+							id:3, 
+							name:'Farm 3'
+						}
+					]
+				}
+			]
+		}
+
+		ajaxPost(GET_BUSINESS_UNITS_AND_THEIR_FARMS,successCallback,failCallback,requestObject,mockResponse);
+	};
 
 	// Damage Report
 		// Create

@@ -11,6 +11,14 @@ var businessUnitFarmElements = [];
 function init() {
 
 	getBusinessUnitsAndTheirFarms();
+	setOnCreateBusinessUnitListener();
+}
+
+function setOnCreateBusinessUnitListener() {
+
+	$('#business_unit_create_business_unit_button').on('click',function() {
+		loader.loadPage('html/client/businessUnit/createBusinessUnit.html');
+	});
 }
 
 function getBusinessUnitsAndTheirFarms() {
@@ -27,7 +35,7 @@ function onGetBusinessUnitsAndTheirBrokersFailure() {
 }
 function populateBusinessUnitsDropdownValues(businessUnitsAndFarms) {
 
-	var selectElement = $('#client_business_unit_business_unit_dropdown');
+	var selectElement = $('#business_unit_business_unit_dropdown');
 
 	for(var i = 0; i < businessUnitsAndFarms.length; i++)
 	{
@@ -69,7 +77,7 @@ function addFarmEntriesToTable(businessUnitId,farms) {
 		businessUnitFarmElements.push(farmElementObject);
 
 		// Add element to table
-		$('#client_farms_table_body').append(element);
+		$('#business_unit_farms_table_body').append(element);
 	}
 }
 

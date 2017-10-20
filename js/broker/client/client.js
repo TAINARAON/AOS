@@ -15,7 +15,7 @@ function init() {
 
 function getBusinessUnitsAndTheirFarms() {
 
-	clientController.getBusinessUnitsAndTheirFarms(onGetBusinessUnitsAndTheirBrokersSuccess,onGetBusinessUnitsAndTheirBrokersFailure);
+	brokerController.getBusinessUnitsAndTheirFarms(onGetBusinessUnitsAndTheirBrokersSuccess,onGetBusinessUnitsAndTheirBrokersFailure);
 }
 
 function onGetBusinessUnitsAndTheirBrokersSuccess(response) {
