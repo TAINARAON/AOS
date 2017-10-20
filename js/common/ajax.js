@@ -38,18 +38,18 @@ function ajaxPost(url,successCallback,failureCallback,requestData,mockResponse) 
 		//console.warn("NOT REAL RESPONSE");
 		successCallback(mockResponse);
 	} else {
-
+		
 		var async = true;
 
 		var request = new XMLHttpRequest();
 
 		request.onreadystatechange  = function() {
-
+			console.log(request);
 			if (request.readyState === 4)
 			{
 				var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
-				var data = JSON.parse(request.responseText); // Returned data, e.g., an HTML document.
-
+				var data = '';//JSON.parse(request.responseText); // Returned data, e.g., an HTML document.
+				
 				if(status == 200)
 				{
 					successCallback(data);
