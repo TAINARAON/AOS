@@ -146,7 +146,7 @@ var increasePolicy = new function(){
 	{
 		if(criteriaFieldValueIsNumerical($(yield_input).val()) && criteriaFieldValueIsNumerical($(price_input).val()))
 		{
-			if(landEntry.yield != $(yield_input).val() || landEntry.price != $(price_input).val())
+			if(landEntry.yield < $(yield_input).val() || landEntry.price < $(price_input).val())
 			{
 				landEntry.yield = $(yield_input).val();
 				landEntry.price = $(price_input).val();
