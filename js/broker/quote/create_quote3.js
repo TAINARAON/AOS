@@ -409,7 +409,8 @@ var createQuote = new function()
 		//input_farm.onblur = function(){loadCoverage(); toggleLandNumberVisible(validateFarm());};
 		input_farm.onblur = function(){validateFarm();};
 		//input_land_number.onblur = function(){toggleFieldsVisible(true);};
-		input_land_number.onblur = function(){toggleFieldsVisible(input_land_number.value.trim() != "" ? true : false);};
+		//input_land_number.onblur = function(){toggleFieldsVisible(input_land_number.value.trim() != "" ? true : false);};
+		input_land_number.onblur = function(){toggleFieldsVisible(validateLandEntry(input_land_number.value.trim()));};
 
 		// Select fields
 		dropdown_product.onchange = function(){loadProductSpecificCrops(dropdown_product.value)};
@@ -759,6 +760,31 @@ var createQuote = new function()
 		}
 		notifyUserOfIncorrectFarm();
 		return false;*/
+	}
+
+	function validateLandEntry(val) {
+		if(val != "" && !isForDuplicateLandEntries(val))
+			return true;
+		else
+			alert("Land entry value incorrect");
+			return false;
+	}
+
+	function isForDuplicateLandEntries(val) {
+		if(!quote.hasOwnProperty("quoteLandEntries"))
+		{
+			return false;
+		}
+
+		for(var i = 0; i < quote.quoteLandEntries.length; i++)
+		{
+			if(quote.quoteLandEntries[i].landNumber == val)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	function toggleFieldsVisible(state)
