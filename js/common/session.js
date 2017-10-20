@@ -43,7 +43,6 @@ var session = new function() {
 		// PUT THIS SOMEWHERE ELSE
 		sessionStorage.setItem('CURRENCY', 'R');
 
-		alert(sessionStorage.getItem('CURRENCY'));
 		var requestObject = 
 		{
 			'username':username,

@@ -99,7 +99,7 @@ function notifyTotalOfChange() {
 		}
 	}
 
-	$('#systemkey_tarif_total').val(total);
+	$('#systemkey_tarif_total').val(total.toFixed(2));
 }
 
 function populateOptionTypeDropdownValues()
