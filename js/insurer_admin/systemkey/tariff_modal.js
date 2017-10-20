@@ -6,7 +6,13 @@ var perilEntryElements = [];
 	populateOptionTypeDropdownValues();
 	populateProductDropdownValues();
 	populateDistrictDropdownValues();
+
+	setOnExcessPercentageEnteredChangeListener();
 })();
+
+function setOnExcessPercentageEnteredChangeListener() {
+	$('#systemkey_tariff_coverage_input').val($('#systemkey_tariff_coverage_input').val().toFixed(2)); 
+}
 
 var checkedCounter = 0;
 function populatePerilCheckboxes() {
