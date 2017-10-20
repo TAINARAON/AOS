@@ -2,16 +2,16 @@ $().ready(function() {
 
 	populateBrokerageDetails();
  	populateInsurerTable();
- 	setCreateBrokerButtonOnClick();
+ 	//setCreateBrokerButtonOnClick();
 
 });
 
-function setCreateBrokerButtonOnClick() {
-	alert('cick on createBrokerButton');
+/*function setCreateBrokerButtonOnClick() {
+
 	$('#insurer_admin_create_broker_button').on('click',function() {
 		loader.loadPage('html/insurer_admin/broker/createBroker.html');
 	})
-}
+}*/
 function populateBrokerageDetails() {
 
 	var agency = insurerAdminController.getInsuranceAgency();

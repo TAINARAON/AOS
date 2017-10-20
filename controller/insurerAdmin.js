@@ -22,8 +22,9 @@ var insurerAdminController = new function() {
 	var GET_DATA_FOR_POOL_LIMIT_SYSTEMKEY_VIEW_URL = 'GET_DATA_FOR_POOL_LIMIT_SYSTEMKEY_VIEW_URL';
 	var GET_CREATE_POOL_LIMIT_DATA_URL = 'GET_CREATE_POOL_LIMIT_DATA_URL';
 	var CREATE_POOL_LIMIT_URL = 'CREATE_POOL_LIMIT_URL';
+	var GET_BROKERS_OF_BROKERAGES_URL = 'GET_BROKERS_OF_BROKERAGES_URL';
+	var CREATE_BROKER_URL = 'CREATE_BROKER_URL';
 	
-
 	var GET_DEFAULT_INSURER_ADMIN_DATA_URL = 'GET_DEFAULT_INSURER_ADMIN_DATA_URL';
 	var GET_INSURERS_OF_INSURANCE_AGENCY_WITH_USER_DATA_URL = 'GET_INSURERS_OF_INSURANCE_AGENCY_WITH_USER_DATA_URL';
 	var GET_BROKERAGES_AND_THEIR_BROKERS = 'GET_BROKERAGES_AND_THEIR_BROKERS';
@@ -418,6 +419,62 @@ var insurerAdminController = new function() {
 	}
 	// END OF NEW STUFF 2017/10/16
 
+	/*  
+		insurerAdmin/getBrokersOfBrokerage
+
+		requestObject:{
+			brokerageId
+		}
+
+		responseObject:{
+			brokers:[{whole broker}]
+		}
+	*/
+	this.getBrokersOfBrokerage = function(successCallback,failureCallback,brokerageId) {
+
+		var requestObject = {
+			'brokerageId':brokerageId
+		};
+
+		var mockResponse = {
+			'brokers':[
+				{'name':'Tiaan','id':0,'surname':'Gerber','initials':'T J'},
+				{'name':'Anro','id':1,'surname':'Swart','initials':'A'}
+			]
+		};
+
+		ajaxPost(GET_BROKERS_OF_BROKERAGES_URL,successCallback,failureCallback,requestObject,mockResponse);
+	}
+
+	/*
+		insurerAdmin/createBroker
+
+		requestObject:{
+			data:{
+				brokerageId,
+				creationRights,
+				email,
+				name,
+				surname,
+				initials,
+				contactNumber
+			},
+			fileData:[]
+		}
+
+		responseObject:{
+			message
+		}
+	*/
+	this.createBroker = function (successCallback,failCallback,requestObject) {
+
+	    var mockResponse = {
+			'message':'fake response'
+		};
+
+	   ajaxPost(CREATE_BROKER_URL,successCallback,failCallback,requestObject,mockResponse);
+	};
+
 
 
 	/*   SENT TO WIKUS
@@ -550,7 +607,6 @@ var insurerAdminController = new function() {
 			]
 		}
 	*/
-	// DO NOT THINK NEEDED ANYMORE
 	this.getBrokerages = function(successCallback,failCallback) {
 
 		var requestObject = 
