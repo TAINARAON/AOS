@@ -137,24 +137,27 @@ var brokerAdminController = new function() {
 
 		requestObject:{
 			data:{
-				brokerageId,
-				createRights,
-				email,
 				name,
-				surname
-			},
-			fileData:{
+				surname,
+				initials,
+				branch,
+				email,
+				contactNumber,
+				creationRights,
+				brokerageId
 			}
 		}
 
 		responseObject:{
-			id
+			message,
+			status
 		}
 	*/
 	this.createBroker = function (successCallback,failCallback,requestObject) {
 
 	    var mockResponse = {
-			"id":'test'
+			'message':'',
+			'status':true
 		};
 
 	   ajaxPost(CREATE_BROKER_URL,successCallback,failCallback,requestObject,mockResponse);

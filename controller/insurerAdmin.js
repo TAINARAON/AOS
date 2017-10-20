@@ -34,8 +34,14 @@ var insurerAdminController = new function() {
 		
 		getDefaultInsurerAdminData(userId);
 	}
+	// ################################ DONE #################################
 
-	/*  20171017
+
+
+
+	// ################################ NEEDS FIX ############################
+
+	/*  Works. Needs proper data returned
 		insurerAdmin/getDefaultInsurerAdminData
 
 		request {
@@ -98,6 +104,12 @@ var insurerAdminController = new function() {
 
 		alert('something messed up');
 	}
+
+
+
+	// #################################  TO BE WRITTEN  ######################
+
+	
 	/*	20171017
 		insurerAdmin/getInsurersOfInsuranceAgencyWithUserData
 

@@ -159,8 +159,8 @@ function onBrokerageRegistrationCallback(files,data) {
 }
 
 function onSuccessfulBrokerageRegistration() {
-	util.createNotification('Registration request successfull!');
-	util.createNotification('Support will send a verification email shortly.');
+	util.createNotification('Registration request successfull. \n Support will send a verification email shortly.');
+	loader.load();
 }
 function onUnsuccessfulBrokerageRegistration() {
 	util.createNotification('Failure to create Brokerage. Please contact Support.','error');

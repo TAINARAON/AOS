@@ -170,6 +170,9 @@ function onCreateBrokerClick() {
 
 	var email = $('#create_broker_email_input').val();
 	var name = $('#create_broker_name_input').val();
+	var initials = $('#create_broker_initials_input').val();
+	var branch = $('#create_broker_branch_input').val();
+	var contactNumber = $('#create_broker_contact_number_input').val();
 	var surname = $('#create_broker_surname_input').val();
 	var creationRights = $('#create_broker_rights_checkbox').is(':checked')
 
@@ -179,41 +182,22 @@ function onCreateBrokerClick() {
 	{
 		"name":name,
 		"surname":surname,
+		"initials":initials,
+		"branch":branch,
 		"email":email,
+		"contactNumber":contactNumber,
 		"creationRights":creationRights,
 		"brokerageId":brokerageId
 	};
 
-	util.displayUploadFileModal(action,data,onCreateBrokerDocumentsSubmittedCallback);
+	brokerAdminController.createBroker(onBrokerCreatedSuccess,onBrokerCreatedFailure,data);
 }
 
-function onCreateBrokerDocumentsSubmittedCallback(fileData,data) {
 
-	// TODO
-	if(fileData == "failed - not really a value") {
 
-		util.createNotification("Failed to upload documents","error");
-		onCreateBrokerClick();
-
-	} else {
-
-		ajaxCreateBroker(fileData,data);
-	}
-}
-
-function ajaxCreateBroker(fileData,data) {
-
-	var requestData = 
-	{
-		'fileData':fileData,
-		'data':data
-	};
-
-	brokerAdminController.createBroker(onBrokerCreatedSuccess,onBrokerCreatedFailure,requestData);
-}
 function onBrokerCreatedSuccess(response) {
 
-	util.createNotification("Broker submitted. . .awaiting approval.");
+	util.createNotification("Broker created");
 	loader.loadPage('html/brokerAdmin/brokerage/brokerage.html');
 }
 function onBrokerCreatedFailure(result) {
