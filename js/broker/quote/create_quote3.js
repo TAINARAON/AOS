@@ -1323,8 +1323,9 @@ var createQuote = new function()
 			return false;
 		if(input_land_number.value.trim() == "")
 			return false;
-		if(input_cultivar.value.trim() == "")
-			return false;
+		// Cultivar may be empty
+		/*if(input_cultivar.value.trim() == "")
+			return false;*/
 		if(input_area.value.trim() == "")
 			return false;
 		if(!criteriaFieldValueIsNumerical(input_area.value.trim()))

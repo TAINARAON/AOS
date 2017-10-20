@@ -58,11 +58,33 @@ var quoteAcceptModal = new function()
 	function accept()
 	{
 		event.preventDefault();
-		console.log("The business unit id: " + getQuoteId());
-		policyInvoker.createFromQuote(getQuoteId(), getAcceptTimeValue());
-		reset();
-		hide();
-		quoteViewer.refresh();
+		//console.log("The business unit id: " + getQuoteId());
+
+		var requestObj = {
+			'quoteId':getQuoteId(),
+			'acceptedTime':getAcceptTimeValue()
+		};
+
+		util.displayUploadFileModal(
+			requestObj, 
+			function(result, extradata){
+				extradata["supportingDocs"] = result;
+				
+				brokerController.acceptQuote(
+					function(response){
+						util.createNotification(response.message);
+						//policyInvoker.createFromQuote(getQuoteId(), getAcceptTimeValue());
+						reset();
+						hide();
+						quoteViewer.refresh();
+					},
+					function(){
+						util.createNotification("Failed to accept quote");
+					},
+					extradata
+				);
+			}
+		);
 	}
 
 	function addCancelClickListener()

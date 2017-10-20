@@ -686,6 +686,14 @@ var brokerController = new function() {
 
 			ajaxPost("",successCallback,failCallback,requestObject,mockResponse);
 		}
+		this.acceptQuote = function(successCallback,failCallback,requestObject)
+		{
+			var mockResponse = {
+				'message':'Accepted'
+			}
+
+			ajaxPost("",successCallback,failCallback,requestObject,mockResponse);
+		}
 		// ^ View ^
 	// ^ Quote ^
 	// Policy
