@@ -11,7 +11,13 @@ var perilEntryElements = [];
 })();
 
 function setOnExcessPercentageEnteredChangeListener() {
-	$('#systemkey_tariff_coverage_input').val($('#systemkey_tariff_coverage_input').val().toFixed(2)); 
+	
+	$('#systemkey_tariff_coverage_input').on('change',function() {
+
+		var currentVal = $('#systemkey_tariff_coverage_input').val() * 1;
+
+		$('#systemkey_tariff_coverage_input').val(currentVal.toFixed(2));
+	});
 }
 
 var checkedCounter = 0;

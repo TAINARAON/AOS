@@ -4,7 +4,7 @@
  	[
  		{
  			'text':"Client",
- 			'pageUrl':'html/client/businessUnit/businessUnit.html'
+ 			'pageUrl':'html/client/client/client.html'
  		},
  		{
  			'text':"Quote",
