@@ -254,6 +254,7 @@ var brokerController = new function() {
 		this.saveDamageReport = function(successCallback,failCallback,requestObject)
 		{
 			var mockResponse = {
+				"id":0,
 				"message":"Saved"
 			};
 
