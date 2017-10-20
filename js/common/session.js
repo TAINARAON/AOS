@@ -40,6 +40,10 @@ var session = new function() {
 
 	this.login = function(username,password) {
 
+		// PUT THIS SOMEWHERE ELSE
+		sessionStorage.setItem('CURRENCY', 'R');
+
+		alert(sessionStorage.getItem('CURRENCY'));
 		var requestObject = 
 		{
 			'username':username,
