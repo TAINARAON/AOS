@@ -13,7 +13,7 @@
  		},
  		{
  			'text':"Clients",
- 			'pageUrl':'html/insurer_admin/clients.html'
+ 			'pageUrl':'html/insuFrer_admin/clients.html'
  		},
  		{
  			'text':"Quotes",
