@@ -37,10 +37,13 @@ var insurerAdminController = new function() {
 	var GET_CROPS = '/Insurer/Admin/getCrops';
 	var GET_CROP_OF_PRODUCT = '/Insurer/Admin/getCropsOfProduct';
 	var GET_PRICE_UOMS = '/Insurer/Admin/getPriceUoms';
+	var CREATE_PRICE_UOM = '/Insurer/Admin/createPriceUom';
 	var CREATE_CROP = '/Insurer/Admin/createCrop';
 	var GET_DISTRICTS = '/Insurer/Admin/getDistrics';
 	var CREATE_DISTRICT = '/Insurer/Admin/createDistrict';
 	var UPDATE_INCEPTION_DELAY = '/Insurer/Admin/updateInceptionDelay';
+	var GET_PERILS = '/Insurer/Admin/getPerils';
+	var CREATE_PERIL = '/Insurer/Admin/createPeril';
 	// ^ System key urls ^
 
 	this.init = function(userId) {
@@ -1160,6 +1163,13 @@ var insurerAdminController = new function() {
 
 		ajaxGet(GET_PRICE_UOMS,successCallback,failCallback,mockResponse);
 	}
+	this.createPriceUom = function(successCallback,failCallback,requestObject)
+	{
+		var mockResponse = {
+			'message':'Saved'
+		};
+		ajaxPost(CREATE_PRICE_UOM,successCallback,failCallback,requestObject,mockResponse);
+	}
 	this.createCrop = function(successCallback,failCallback,requestObject)
 	{
 		var mockResponse = {
@@ -1200,5 +1210,38 @@ var insurerAdminController = new function() {
 		}
 
 		ajaxPost(UPDATE_INCEPTION_DELAY,successCallback,failCallback,requestObject,mockResponse);
+	}
+	this.getPerils = function(successCallback,failCallback)
+	{
+		var mockResponse = [
+			{
+				'id':'0',
+				'name':'Fire',
+			},
+			{
+				'id':'1',
+				'name':'Flood',
+			},
+			{
+				'id':'2',
+				'name':'Dew',
+			},
+			{
+				'id':'3',
+				'name':'Bugs',
+			},
+			{
+				'id':'4',
+				'name':'Godzilla',
+			}
+		];
+		ajaxGet(GET_PERILS,successCallback,failCallback,mockResponse);
+	}
+	this.createPeril = function(successCallback,failCallback,requestObject)
+	{
+		var mockResponse = {
+			'message':'Saved'
+		};
+		ajaxPost(CREATE_PERIL,successCallback,failCallback,requestObject,mockResponse);
 	}
 }

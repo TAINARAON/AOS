@@ -11,22 +11,20 @@ function initiateOnClicks() {
 			'name':name
 		}
 
-		var newPriceUomId = insurerInvoker.createPriceUom(priceUomObject);
-
-		if(newPriceUomId != null) {
-
-			util.createNotification('Created Price Measurement Unit!');
-			repopulatePriceUomTable();
-		
-		} else {
-
-			util.createNotification('Error creating Price Unit of Measurement.','error');
-		}	
-
+		insurerAdminController.createPriceUom(
+			function(response){
+				util.createNotification(response.message);
+				repopulatePriceUomTable();
+			},
+			function(response){
+				util.createNotification(response.message,'error');
+			},
+			priceUomObject
+		);	
 	});
 }
 
-function repopulatePriceUomTable() {
+/*function repopulatePriceUomTable() {
 
 	var priceUoms = insurerInvoker.getPriceUoms();
 
@@ -41,4 +39,4 @@ function repopulatePriceUomTable() {
 
 		tableBody.append(tr);
 	}
-}
+}*/
