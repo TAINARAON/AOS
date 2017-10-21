@@ -1284,4 +1284,34 @@ var insurerAdminController = new function() {
 		};
 		ajaxPost(CREATE_TARIFF_OPTION,successCallback,failCallback,requestObject,mockResponse);
 	}
+	this.getTariffs = function(successCallback,failCallback)
+	{
+		var mockResponse = [
+			{
+				'id':'0',
+				'tariffOptionTypeId':'0',
+				'cropId':'0',
+				'cropName':'Apple',
+				'districtId':'0',
+				'districtName':'Bellville',
+				'coverage':'5',
+				'coverageStart':'2017-05-01 00:00:00',
+				'coverageEnd':'2018-05-01 00:00:00',
+				'tariffOptionTypeName':'Franchise',
+			},
+			{
+				'id':'1',
+				'tariffOptionTypeId':'1',
+				'cropId':'1',
+				'cropName':'Banana',
+				'districtId':'1',
+				'districtName':'Kraaifontein',
+				'coverage':'7.5',
+				'coverageStart':'2017-06-01 00:00:00',
+				'coverageEnd':'2018-06-01 00:00:00',
+				'tariffOptionTypeName':'Excess',
+			}
+		];
+		ajaxGet(CREATE_TARIFF_OPTION,successCallback,failCallback,mockResponse);
+	}
 }
