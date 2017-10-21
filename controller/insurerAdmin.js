@@ -1262,4 +1262,18 @@ var insurerAdminController = new function() {
 		};
 		ajaxPost(CREATE_TAX,successCallback,failCallback,requestObject,mockResponse);
 	}
+	this.getOptionTypes = function(successCallback,failCallback)
+	{
+		var mockResponse = [
+			{
+				'id':'0',
+				'name':'Franchise',
+			},
+			{
+				'id':'1',
+				'name':'Excess',
+			}
+		];
+		ajaxGet(GET_TAX,successCallback,failCallback,mockResponse);
+	}
 }

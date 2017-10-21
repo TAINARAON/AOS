@@ -38,37 +38,47 @@ function populateOptionTypeDropdownValues() {
 
 	var selectElement = $('#systemkey_tariff_view_option_type_dropdown');
 
-	var values = insurerInvoker.getOptionTypes();
-	
-	for(var i = 0; i < values.length; i++)
-	{
-		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']));
-			
-	}
+	insurerAdminController.getOptionTypes(
+		function(response){
+			for(var i = 0; i < response.length; i++)
+			{
+				selectElement.append($('<option></option>').text(response[i]['name']).val(response[i]['id']));
+					
+			}
 
-	selectElement
-		.on('change',function() {
-			selectedValues['optionTypeId'] = $(this).find(":selected").val();
-			repopulateTariffTable();
-		});
+			selectElement
+				.on('change',function() {
+					selectedValues['optionTypeId'] = $(this).find(":selected").val();
+					repopulateTariffTable();
+				});
+		},
+		function(response){
+			util.createNotification(response.message,'error');
+		}
+	);
 }
 
 function populateCropDropdownValues() {
 
 	var selectElement = $('#systemkey_tariff_view_crop_dropdown');
 
-	var values = insurerInvoker.getCrops();
-	
-	for(var i = 0; i < values.length; i++)
-	{
-		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']));
-	}
+	insurerAdminController.getCrops(
+		function(response){
+			for(var i = 0; i < response.length; i++)
+			{
+				selectElement.append($('<option></option>').text(response[i]['name']).val(response[i]['id']));
+			}
 
-	selectElement
-		.on('change',function() {
-			selectedValues['cropId'] = $(this).find(":selected").val();
-			repopulateTariffTable();
-		});
+			selectElement
+				.on('change',function() {
+					selectedValues['cropId'] = $(this).find(":selected").val();
+					repopulateTariffTable();
+				});
+		},
+		function(response){
+			util.createNotification(response.message,'error');
+		}
+	);
 }
 
 function repopulateTariffTable() {
