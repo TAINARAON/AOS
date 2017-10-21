@@ -19,6 +19,7 @@ var brokerAdminController = new function() {
 		return user;
 	}
 
+	var CREATE_BUSINESS_UNIT_URL = 'CREATE_BUSINESS_UNIT_URL';
 	var CREATE_BROKERAGE_URL = 'CREATE_BROKERAGE_URL';
 	var EDIT_BROKERAGE_URL = "EDIT_BROKERAGE_URL";
 	var CREATE_BROKER_URL = "CREATE_BROKER_URL";
@@ -194,6 +195,31 @@ var brokerAdminController = new function() {
 		};
 
 	   ajaxPost(CREATE_BROKER_URL,successCallback,failCallback,requestObject,mockResponse);
+	};
+
+
+	/*	
+		brokerAdmin/createBusinessUnit
+
+		requestObject:{
+			businessUnitData,
+			files
+		}
+
+		responseObject: {
+			message,
+			status
+		}
+	*/
+	this.createBusinessUnit = function(successCallback,failCallback,requestObject) {
+
+		var mockResponse = 
+		{
+			'message':'',
+			'status':true
+		};
+
+		ajaxPost(CREATE_BUSINESS_UNIT_URL,successCallback,failCallback,requestObject,mockResponse);
 	};
 
 	

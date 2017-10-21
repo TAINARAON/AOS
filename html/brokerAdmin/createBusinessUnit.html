@@ -1,32 +1,92 @@
 <div class="row">
-  <div id="register_client_form" class="col-md-4 col-md-offset-4">
+  <div class="col-md-10 col-md-offset-1">
     <h3 class="text-center">Create Client</h3>
-    <div class="form-group">
-      <label>Client Name</label>
-      <input id="create_business_unit_name_input" class="required form-control" placeholder="Client Name">
+    <div class="row">
+      <div class="col-md-6">
+      <div class="form-group">
+            <label>Name</label>
+            <input id="business_unit_register_name_input" class="required form-control" placeholder="Name">
+        </div>
+      </div>
+      <div class="col-md-6">
+      <div class="form-group">
+          <label>Email</label>
+            <input id="business_unit_register_email_input" type="email" class="required form-control" placeholder="Email">
+        </div>  
+      </div>
     </div>
-    <div class="form-group">
-      <label>VAT Number</label>
-      <input id="create_business_vat_number_input" class="required form-control" placeholder="VAT Number">
+    <div class="row">
+      <div class="col-md-6">
+      <div class="form-group">
+          <label>VAT Number</label>
+          <input id="business_unit_register_vat_number_input" class="required form-control" placeholder="VAT Number">
+        </div>
+      </div>
+      <div class="col-md-6">
+      <div class="form-group">
+          <label>Income Tax Number</label>
+          <input id="business_unit_register_income_tax_number_input" class="required form-control" placeholder="Income Tax Number">
+        </div>
+      </div>
     </div>
+    <hr>
     <div class="form-group">
-      <label>Income Tax Number</label>
-      <input id="create_business_income_tax_number_input" type="email" class="required form-control" placeholder="Income Tax Number">
+      <label>Members</label>
+      <div class="row">
+        <div class="col-md-1">
+          <h6>Initials</h6>
+          <input id="business_unit_register_member_name_input" class="required form-control">
+        </div>
+        <div class="col-md-2">
+          <h6>Surname</h6>
+          <input id="business_unit_register_member_surname_input" class="required form-control">
+        </div>
+        <div class="col-md-2">
+          <h6>Preferred Name</h6>
+          <input id="business_unit_register_member_preferred_name_input" class="required form-control">
+        </div>
+        <div class="col-md-2">
+          <h6>ID Number</h6>
+          <input id="business_unit_register_member_id_number_input" class="required form-control">
+        </div>
+        <div class="col-md-2">
+          <h6>Contact Number</h6>
+          <input id="business_unit_register_member_contact_number_input" class="required form-control">
+        </div>
+        <div class="col-md-2">
+          <h6>Email</h6>
+          <input id="business_unit_register_member_email_input" class="required form-control">
+        </div>
+        <div class="col-md-1">
+          <h6>Main</h6>
+          <input type="checkbox" id="business_unit_register_member_is_main_checkbox" class="required form-control">
+        </div>
+      </div>
+      <div class="row">
+         <div class="col-md-2 center-block">
+          <label style="color:transparent;">Add</label>
+          <div id="business_unit_register_add_member_button" class="btn btn-primary required form-control">Add</div>
+        </div>
+      </div>
+      <hr>
     </div>
-    <div class="form-group">
-      <label>Contact Person</label>
-      <input id="create_business_unit_contact_person_input" class="required form-control" placeholder="Contact Person">
-    </div>  
-    <div class="form-group">
-      <label>Contact Number</label>
-      <input id="create_business_unit_contact_number_input" class="required form-control" placeholder="Contact Number">
-    </div>  
-    <div class="form-group">
-      <label>Email</label>
-      <input id="create_business_unit_email_input" class="required form-control" placeholder="Email">
-    </div>     
-    <div hidden id="create_business_unit_submit_div">
-      <div id="create_business_unit_submit_button" class="btn btn-primary btn-block">Submit</div>
+    <div>
+      <table class="table table-striped table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Full Name</th>
+          <th>ID Number</th>
+          <th>Contact Number</th>
+          <th>Email</th>
+          <th>Is Main</th>
+        </tr>
+      </thead>
+      <tbody id="business_unit_register_member_table_body"></tbody>
+    </table>
+    </div>
+    <div class="col-md-6 col-md-offset-3">
+      <div class="col-md-6"><div id="business_unit_register_submit_button" class="btn btn-success btn-block">Submit</div></div>
+        <div class="col-md-6"><div id="business_unit_register_cancel_button" class="btn btn-danger btn-block">Cancel</div></div>
     </div>
   </div>
 </div>

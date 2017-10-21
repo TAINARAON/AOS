@@ -17,17 +17,17 @@
  		{
  			'text':'Damage Report',
  			'pageUrl':'html/broker/report/damage_report.html'
- 		},
- 		{
- 			'text':'Reporting',
- 			'pageUrl':''
  		}
  	];
 
  	var rightButtons = 
  	[
  		{
- 			'text':'Reporting',
+ 			'text':'Reports',
+ 			'pageUrl':'html/common/logout.html'
+ 		},
+ 		{
+ 			'text':'Documents',
  			'pageUrl':'html/common/logout.html'
  		},
  		{

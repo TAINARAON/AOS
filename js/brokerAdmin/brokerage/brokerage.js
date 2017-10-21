@@ -54,8 +54,7 @@ function getBrokerDetailsOfBrokerageFailCallback(response) {
 
 //function onEditBroker(id) {
 function onEditBroker(broker) {
-	//brokerAdminController.getBrokerForEditModal(getBrokerForEditModalSuccessCallback,getBrokerForEditModalFailureCallback,id);
-	
+
 	$('#editBrokerModal').modal('toggle')
 
 	populateEditBrokerModalText(broker);

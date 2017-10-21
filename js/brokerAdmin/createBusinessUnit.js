@@ -2,213 +2,107 @@
 	init();
 })();
 
-var BUSINESS_UNIT_NAME_INDEX = 0;
-var VAT_NUMBER_INDEX = 1;
-var INCOME_TAX_NUMBER_INDEX = 2;
-var CONTACT_NUMBER_INDEX = 3;
-var EMAIL_INDEX = 4;
-
-var requiredFields = [false,false,false,false,false];
-
 function init() {
 
-	initializeValidationOnChangeListeners();
-	setSubmitButtonClickListener();
-	createSelectorBox();
+	setOnSubmitButtonClickListener();
+	setOnAddMemberButtonClickListener();
 }
 
-function createSelectorBox() {
-
-	populateSelectorBox();
-	onAddEntryClickListener();
-	onRemoveEntryClickListener();
+function setOnAddMemberButtonClickListener() {
+	$('#business_unit_register_add_member_button').on('click',function() {
+		onAddMemberButtonClicked();
+	});
 }
 
-function populateSelectorBox() {
+function setOnSubmitButtonClickListener() {
 
-	var brokerageId = brokerAdminController.getBrokerage()['id'];
+	$('#business_unit_register_submit_button').on('click',function() {
+		var data = getAllValues();
+		
+		util.displayUploadFileModal(data,onFilesUploadedCallback);
+	});
+}
 
-	var brokers = brokerAdminController.getBrokersOfBrokerage();
+function onFilesUploadedCallback(files,data) {
+
+	var requestObject = 
+	{
+		'businessUnitData':data,
+		'files':files
+	};
+
+	brokerAdminController.createBusinessUnit(onBusinessUnitRegisterSubmitSuccess,onBusinessUnitRegisterSubmitFailure,requestObject);
+}
+
+function onBusinessUnitRegisterSubmitSuccess(response) {
 	
-	console.log(brokerageId,brokers);
-
-	var availableBrokersUl = $('#available_brokers_ul');
-
-	for(let i = 0; i < brokers.length; i++) {
-
-		var id = brokers[i]['id'];
-		var name = brokers[i]['name'];
-		var surname = brokers[i]['surname'];
-
-		var li = $('<li></li>').prop('id',id).text(name + " " + surname).on('click',function() {
-
-			toggleSelectedListItem($(this));
-		});
-		availableBrokersUl.append(li);
-	}
+	util.createNotification('Successfully created Client');
+	loader.loadPage('html/brokerAdmin/brokerage/brokerage.html');
 }
 
-function toggleSelectedListItem(li) {
-	if(li.hasClass('selected')) {
-		li.removeClass('selected');
-		li.css('background-color','white');
-	} else {
-		li.addClass('selected');
-		li.css('background-color','grey');
-	}
-}
-
-function onAddEntryClickListener() {
-
-	$('#add_button').on('click',function() {
-
-		var listItems = $('#available_brokers_ul .selected');
-
-		for(var i=0;i<listItems.length;i++) {
-
-			var item = listItems.eq(i);
-			item.detach();
-
-			$('#selected_brokers_ul').append(item);
-			toggleSelectedListItem(item);
-		}
-	});
-}
-
-function onRemoveEntryClickListener() {
-	$('#remove_button').on('click',function() {
-
-		var listItems = $('#selected_brokers_ul .selected');
-
-		for(var i=0;i<listItems.length;i++) {
-
-			var item = listItems.eq(i);
-			item.detach();
-
-			$('#available_brokers_ul').append(item);
-			toggleSelectedListItem(item);
-		}
-	});
-}
-
-
-
-function initializeValidationOnChangeListeners() {
-
-	$('#create_business_unit_name_input').on('change',function() {
-		var input = $(this).val();
-
-		requiredFields[BUSINESS_UNIT_NAME_INDEX] = (input != "");
-
-		showSubmitButtonIfAllFieldsAreCompleted();
-	});
-
-	$('#create_business_vat_number_input').on('change',function() {
-		var input = $(this).val();
-
-		requiredFields[VAT_NUMBER_INDEX] = (input != "");
-
-		showSubmitButtonIfAllFieldsAreCompleted();
-	});
-
-	$('#create_business_income_tax_number_input').on('change',function() {
-		var input = $(this).val();
-
-		requiredFields[INCOME_TAX_NUMBER_INDEX] = (input != "");
-
-		showSubmitButtonIfAllFieldsAreCompleted();
-	});
-
-	$('#create_business_unit_contact_number_input').on('change',function() {
-		var input = $(this).val();
-
-		requiredFields[CONTACT_NUMBER_INDEX] = (input != "");
-
-		showSubmitButtonIfAllFieldsAreCompleted();
-	});
-
-	$('#create_business_unit_email_input').on('change',function() {
-		var input = $(this).val();
-
-		requiredFields[EMAIL_INDEX] = (input != "");
-
-		showSubmitButtonIfAllFieldsAreCompleted();
-	});
-}
-
-function showSubmitButtonIfAllFieldsAreCompleted() {
-
-	for(var i = 0; i < requiredFields.length; i++) {
-		if(requiredFields[i] == false) {
-			$('#create_business_unit_submit_div').hide();
-			return;
-		}
-	}
-
-	$('#create_business_unit_submit_div').show();
-}
-
-function setSubmitButtonClickListener() {
-
-	$('#create_business_unit_submit_button').on('click',function() {
-		onCreateBusinessUnitClick();
-	});
-}
-
-function onCreateBusinessUnitClick() {
-
-	// TODO
-	var action = "something/createClient/";
+function onBusinessUnitRegisterSubmitFailure(response) {
 	
-	var name = $('#create_client_name_input').val();
-	var surname = $('#create_client_surname_input').val();
-	var email = $('#create_client_email_input').val();
-	var idNumber = $('#create_client_id_number_input').val();
+	alert('something broke');
+}
 
-	var brokerageId = brokerAdminController.getBrokerage()['id'];
+function getAllValues() {
 
 	var data = 
 	{
-		"name":name,
-		"surname":surname,
-		"email":email,
-		"idNumber":idNumber,
-		"brokerageId":brokerageId
-	};
-
-	util.displayUploadFileModal(action,data,onCreateBusinessUnitDocumentsSubmittedCallback);
-}
-
-function onCreateBusinessUnitDocumentsSubmittedCallback(fileData,data) {
-
-	// TODO
-	if(fileData == "failed - not really a value") {
-
-		util.createNotification("Failed to upload documents","error");
-
-	} else {
-
-		ajaxCreateBusinessUnit(fileData,data);
+		'name':$('#business_unit_register_name_input').val(),
+		'email':$('#business_unit_register_email_input').val(),
+		'vatNumber':$('#business_unit_register_vat_number_input').val(),
+		'incomeTaxNumber':$('#business_unit_register_income_tax_number_input').val(),
+		'members':members
 	}
+
+	return data;
 }
 
-function ajaxCreateBusinessUnit(fileData,data) {
+var members = [];
+function onAddMemberButtonClicked() {
 
-	var requestData = 
+	var details = getDetailsOfMemberBeingAdded();
+	
+	addMemberToMemberTable(details);
+	members.push(details);
+
+	resetMemberDetails();
+}
+
+function addMemberToMemberTable(details) {
+
+	var body = $('#business_unit_register_member_table_body').append($('<tr></tr>')
+		.append($('<td></td>').append(details['memberInitials'] +" " + details['memberSurname'] + " ("+details['memberPreferredName']+")"))
+		.append($('<td></td>').append(details['memberIdNumber']))
+		.append($('<td></td>').append(details['memberContactNumber']))
+		.append($('<td></td>').append(details['memberEmail']))
+		.append($('<td></td>').append(details['memberIsMain'])));
+}
+
+function getDetailsOfMemberBeingAdded() {
+
+	var details = 
 	{
-		'fileData':fileData,
-		'data':data
-	};
+		'memberInitials':$('#business_unit_register_member_name_input').val(),
+		'memberSurname':$('#business_unit_register_member_surname_input').val(),
+		'memberPreferredName':$('#business_unit_register_member_preferred_name_input').val(),
+		'memberIdNumber':$('#business_unit_register_member_id_number_input').val(),
+		'memberContactNumber':$('#business_unit_register_member_contact_number_input').val(),
+		'memberEmail':$('#business_unit_register_member_email_input').val(),
+		'memberIsMain':$('#business_unit_register_member_is_main_checkbox').is(':checked'),
+	}
 
-	brokerAdminController.createBusinessUnit(onBusinessUnitCreatedSuccess,onBusinessUnitCreatedFailure,requestData);
+	return details;
 }
-function onBusinessUnitCreatedSuccess(response) {
 
-	util.createNotification("Client details submitted. . .awaiting approval.");
-	loader.loadPage('html/brokerAdmin/brokerage/brokerage.html');
-}
-function onBusinessUnitCreatedFailure(result) {
+function resetMemberDetails() {
 
-	util.createNotification("Failed to create Client - Please contact support if the problem persists.","error")
-	loader.reload();
+	$('#business_unit_register_member_name_input').val(''),
+	$('#business_unit_register_member_surname_input').val(''),
+	$('#business_unit_register_member_preferred_name_input').val(''),
+	$('#business_unit_register_member_id_number_input').val(''),
+	$('#business_unit_register_member_contact_number_input').val(''),
+	$('#business_unit_register_member_email_input').val(''),
+	$('#business_unit_register_member_is_main_checkbox').prop('checked', false);
 }
