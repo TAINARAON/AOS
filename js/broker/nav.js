@@ -24,7 +24,7 @@
  	[
  		{
  			'text':'Reports',
- 			'pageUrl':'html/common/logout.html'
+ 			'pageUrl':'html/common/fakeReporting.html'
  		},
  		{
  			'text':'Documents',

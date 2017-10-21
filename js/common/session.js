@@ -51,6 +51,7 @@ var session = new function() {
 		};
 
 		var mockResponse;
+		var attemptLogin = true;
 
 		if(username=="B") {
 			mockResponse = 
@@ -88,11 +89,15 @@ var session = new function() {
 				'roleName':INSURER_NAME
 			};
 		} else {
-			alert('nope');
+			util.createNotification('Invalid Username and Password.','error');
+			attemptLogin = false;
 		}
 
-		ajaxPost(LOGIN_URL,onLoginSuccess,onLoginFailure,requestObject,mockResponse);
+		if(attemptLogin) {
+			ajaxPost(LOGIN_URL,onLoginSuccess,onLoginFailure,requestObject,mockResponse);
+		}
 
+		attemptLogin = true;
 	};
 
 	this.logout = function() {
@@ -179,7 +184,6 @@ function onLoginSuccess(response) {
 	         insurerAdminController.init(userId);
 	        break;
 	    default:
-	        alert("role log in error");
 	        this.logout();
 	}
 }
