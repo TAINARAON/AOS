@@ -1,0 +1,35 @@
+<div class="row">
+  <div id="register_client_form" class="col-md-4 col-md-offset-4">
+    <h3 class="text-center">Create Farm</h3>
+    <hr>
+    <div class="form-group">
+      <label>Farm Name</label>
+      <input id="client_create_farm_farm_name_input" class="required form-control" placeholder="Farm Name">
+    </div>
+    <div>
+    	<label>District</label>
+		<select id="client_create_farm_select_district" class="form-control">
+          <option  selected value='1'></option>
+        </select>
+    </div>
+    <div class="row">
+    	<div class="col-md-6">
+    		<div class="form-group">
+    			<label>Latitude</label>
+    			<input id="client_create_farm_latitude_input" class="required form-control" placeholder="Latitude">
+    		</div>
+    	</div>
+    	<div class="col-md-6">
+    		<div class="form-group">
+    			<label>Longitude</label>
+    			<input id="client_create_farm_longitude_input" class="required form-control" placeholder="Longitude">
+    		</div>
+    	</div>
+    </div>
+
+    <div id="client_create_farm_create_button" class="btn btn-success form-control">Create Farm</div>
+    
+  </div>
+</div>
+
+<script type="text/javascript" src="js/client/businessUnit/createFarm.js"></script>

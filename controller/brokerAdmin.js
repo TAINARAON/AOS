@@ -5,6 +5,7 @@ var brokerAdminController = new function() {
 	var brokerAdmin = null;
 	var brokersOfBrokerage = null;
 	var user = null;
+	
 	this.getBrokerAdmin = function() {
 		return brokerAdmin;
 	}

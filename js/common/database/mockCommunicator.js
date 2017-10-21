@@ -788,19 +788,22 @@ var mockCommunicator = new function()
 			'id':'0',
 			'userId':'4',
 			'brokerageId':'0',
-			'creationRights':true
+			'creationRights':true,
+			'branch':'Tyger Manor'
 		},
 		{
 			'id':'1',
 			'userId':'7',
 			'brokerageId':'0',
-			'creationRights':true
+			'creationRights':true,
+			'branch':'Masula'
 		},
 		{
 			'id':'2',
 			'userId':'8',
 			'brokerageId':'1',
-			'creationRights':true
+			'creationRights':true,
+			'branch':'Spenstoring'
 		},
 	];
 

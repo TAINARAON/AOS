@@ -12,6 +12,14 @@ function init() {
 
 	getBusinessUnitsAndTheirFarms();
 	setOnCreateBusinessUnitListener();
+	setOnCreateFarmListener();
+}
+
+function setOnCreateFarmListener() {
+
+	$('#business_unit_create_farm_button').on('click',function() {
+		loader.loadPage('html/client/businessUnit/createFarm.html');
+	});
 }
 
 function setOnCreateBusinessUnitListener() {
