@@ -17,7 +17,7 @@ function init() {
 function setOnCreateBusinessUnitListener() {
 
 	$('#business_unit_create_business_unit_button').on('click',function() {
-		loader.loadPage('html/client/businessUnit/createBusinessUnit.html');
+		loader.loadPage('html/client/businessUnit/register.html');
 	});
 }
 
