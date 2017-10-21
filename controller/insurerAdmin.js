@@ -453,7 +453,7 @@ var insurerAdminController = new function() {
 		}
 
 		responseObject:{
-			brokers:[{whole broker}]
+			brokers:[{whole broker with name etc}]
 		}
 	*/
 	this.getBrokersOfBrokerage = function(successCallback,failureCallback,brokerageId) {

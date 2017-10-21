@@ -15,7 +15,12 @@ var insurerController = new function() {
 		return user;
 	}
 
+	var CREATE_BROKER_URL = 'CREATE_BROKER_URL';
+	var GET_BROKERS_OF_BROKERAGES_URL = 'GET_BROKERS_OF_BROKERAGES_URL';
+	var GET_BROKERAGES_URL = 'GET_BROKERAGES_URL';
+	var GET_BROKERAGES_AND_THEIR_BROKERS = 'GET_BROKERAGES_AND_THEIR_BROKERS';
 	var GET_DEFAULT_INSURER_DATA_URL = 'GET_DEFAULT_INSURER_DATA_URL';
+	var GET_BUSINESS_UNITS_AND_THEIR_FARMS = 'GET_BUSINESS_UNITS_AND_THEIR_FARMS';
 
 	this.init = function(userId) {
 		
@@ -81,4 +86,271 @@ var insurerController = new function() {
 
 		alert('something messed up');
 	}
+
+	/*
+		insurer/createBrokerage
+
+		requestObject:{
+			data:{
+				username,
+				password,
+				email,
+				brokerageName,
+				brokerageEmail,
+				brokerageContactPerson,
+				brokerageContactNumber,
+				fspNumber
+			},
+			fileData:
+			[
+			]
+		}
+
+		responseObject:{
+			message
+		}
+	*/
+	this.createBrokerage = function (successCallback,failCallback,requestObject) {
+
+	    var mockResponse = 
+	    {
+			"id":'aaaa'
+		};
+
+	   ajaxPost(CREATE_BROKERAGE_URL,successCallback,failCallback,requestObject,mockResponse);
+	};
+
+	/*
+		insurer/createBroker
+
+		requestObject:{
+			data:{
+				brokerageId,
+				creationRights,
+				email,
+				name,
+				surname,
+				initials,
+				contactNumber
+			},
+			fileData:[{file object}],
+
+		}
+
+		responseObject:{
+			message
+		}
+	*/
+	this.createBroker = function (successCallback,failCallback,requestObject) {
+
+	    var mockResponse = {
+			'message':'fake response'
+		};
+
+		console.log("requestObject");
+		console.log(requestObject);
+
+	   ajaxPost(CREATE_BROKER_URL,successCallback,failCallback,requestObject,mockResponse);
+	};
+
+	/*	20171017
+		insurer/getBusinessUnitsAndTheirFarms
+
+		requestObject:{
+			insuranceAgencyId
+		}
+
+		responseObject: {
+			businessUnitsAndFarms:
+			[
+				{
+					id,  (businessUnitId)
+					name,
+					farms:
+					[
+						{
+							id, (farmId)
+							name
+						}
+					]
+				}
+			]
+		}
+	*/
+	this.getBusinessUnitsAndTheirFarms = function(successCallback,failCallback) {
+
+		var requestObject = 
+		{
+			"insuranceAgencyId":insuranceAgency['id']
+		};
+
+		var mockResponse = {
+			businessUnitsAndFarms:
+			[
+				{
+					id:0, 
+					name:'Business Unit 0',
+					farms:
+					[
+						{
+							id:0, 
+							name:'Farm 0'
+						},
+						{
+							id:1, 
+							name:'Farm 1'
+						}
+					]
+				},
+				{
+					id:1, 
+					name:'Business Unit 1',
+					farms:
+					[
+						{
+							id:2, 
+							name:'Farm 2'
+						},
+						{
+							id:3, 
+							name:'Farm 3'
+						}
+					]
+				}
+			]
+		}
+
+		ajaxPost(GET_BUSINESS_UNITS_AND_THEIR_FARMS,successCallback,failCallback,requestObject,mockResponse);
+	};
+
+
+	/*  
+		insurer/getBrokersOfBrokerage
+
+		requestObject:{
+			brokerageId
+		}
+
+		responseObject:{
+			brokers:[{whole broker with name }]
+		}
+	*/
+	this.getBrokersOfBrokerage = function(successCallback,failureCallback,brokerageId) {
+
+		var requestObject = {
+			'brokerageId':brokerageId
+		};
+
+		var mockResponse = {
+			'brokers':[
+				{'name':'Tiaan','id':0,'surname':'Gerber','initials':'T J'},
+				{'name':'Anro','id':1,'surname':'Swart','initials':'A'}
+			]
+		};
+
+		ajaxPost(GET_BROKERS_OF_BROKERAGES_URL,successCallback,failureCallback,requestObject,mockResponse);
+	}
+
+	/*	20171017
+		insurer/getBrokeragesAndTheirBrokers
+
+		requestObject:{
+			insuranceAgencyId
+		}
+
+		responseObject: {
+			brokeragesAndBrokers:
+			[
+				{
+					id,  (brokerageId)
+					name,
+					brokers:
+					[
+						{
+							id, (brokerId)
+							initials,
+							surname,
+							name
+						}
+					]
+				}
+			]
+		}
+	*/
+	this.getBrokeragesAndTheirBrokers = function(successCallback,failCallback) {
+
+		var requestObject = 
+		{
+			"insuranceAgencyId":insuranceAgency['id']
+		};
+
+		var mockResponse = {
+			'brokeragesAndBrokers':[]
+		};
+
+		var brokerages = mockCommunicator.brokerageTable;
+
+		for(var i = 0; i < brokerages.length; i++) {
+
+			var brokerage = brokerages[i];
+			var brokers = mockCommunicator.getBrokersOfBrokerage(brokerage['id']);
+
+			var brokerageWithBrokers = {
+				'id':brokerage['id'],
+				'name':brokerage['name'],
+				'brokers':[]
+			}
+
+			for(var j = 0; j < brokers.length; j++) {
+
+				var broker = brokers[j];
+				var userDetails = mockCommunicator.getDetailsOfUser(broker['userId']);
+
+				var neededDetailsOfBroker = {
+					'id':broker['id'],
+					'initials':userDetails['initials'],
+					'surname':userDetails['surname'],
+					'name':userDetails['name'],
+				}
+
+				brokerageWithBrokers['brokers'].push(neededDetailsOfBroker);
+			}
+
+			mockResponse['brokeragesAndBrokers'].push(brokerageWithBrokers);
+		}
+
+		ajaxPost(GET_BROKERAGES_AND_THEIR_BROKERS,successCallback,failCallback,requestObject,mockResponse);
+	};
+
+	/*
+		insurer/getBrokerages
+
+		requestObject:{
+			insuranceAgencyId
+		}
+
+		responseObject:{
+			brokerages:
+			[
+				{
+					id,
+					name,
+				}
+			]
+		}
+	*/
+	this.getBrokerages = function(successCallback,failCallback) {
+
+		var requestObject = 
+		{
+			"insuranceAgencyId":insuranceAgency["id"]
+		};
+
+		var mockResponse = {
+			"brokerages":mockCommunicator.getBrokerages()
+		};
+
+		ajaxPost(GET_BROKERAGES_URL,successCallback,failCallback,requestObject,mockResponse);
+	}	// USED
+
 }
