@@ -253,8 +253,9 @@ function saveTariff() {
 				// reload tariff table in tariff view
 				$('#systemkey_tariff_view_district_dropdown').trigger('change');
 
-				displaySuccessNotification();
-				resetModal();
+				//displaySuccessNotification();
+				util.createNotification(response.message);
+				resetTariffModal();
 			},
 			function(response){
 				util.createNotification(response.message,'error');
@@ -282,7 +283,7 @@ function saveTariff() {
 	}
 }
 
-function resetModal() {
+function resetTariffModal() {
 	// clear coverage
 	$('#systemkey_tariff_coverage_input').val('');
 
