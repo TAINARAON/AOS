@@ -67,9 +67,17 @@ var brokerAdminController = new function() {
 			},
 			'brokerage':
 			{
-				'name':'Versekerings Ltd.',
-				'email':'versekerings.ltd@gmail.com',
-				'contactNumber':'062 352 1341',
+				'id':'0',
+				'name':'Breeker Brokerage',
+				'bank':'ABSA',
+				'branch':'Tyger Manor',
+				'accountNumber':'50454',
+				'active':'1',
+				'dateCreated':'1990-08-25',
+				'email':'breeker.brokerage@gmail.com',
+				'contactNumber':'0623521574',
+				'fspNumber':'FSP000',
+				'verified':'1'
 			},
 			'brokersOfBrokerage':
 			[

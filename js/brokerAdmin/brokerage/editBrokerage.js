@@ -19,6 +19,10 @@ function initText() {
 	$('#edit_brokerage_email_input').val(brokerage['email']);
 	$('#edit_brokerage_contact_number_input').val(brokerage['contactNumber']);
 	$('#edit_brokerage_fsp_number_input').val(brokerage['fspNumber']);
+
+	$('#edit_brokerage_bank_input').val(brokerage['bank']);
+	$('#edit_brokerage_branch_input').val(brokerage['branch']);
+	$('#edit_brokerage_account_number_input').val(brokerage['accountNumber']);
 }
 
 function initOnClickListeners() {
@@ -46,40 +50,68 @@ function resetText() {
 
 function onChangeBrokerageDetails() {
 
-	var action = "I dont think this is needed";
+	var needsSupportingDocuments = dataRequiringSupportingDocumentChanged();
 
-	var data = {
+	var data = 
+	{
 		"id":brokerage["id"],
 		"name":$('#edit_brokerage_brokerage_name_input').val(),
+		"fspNumber":$('#edit_brokerage_fsp_number_input').val(),
+		"bank":$('#edit_brokerage_bank_input').val(),
+		"branch":$('#edit_brokerage_branch_input').val(),
+		"accountNumber":$('#edit_brokerage_account_number_input').val(),
 		"email":$('#edit_brokerage_email_input').val(),
 		"contactNumber":$('#edit_brokerage_contact_number_input').val()
-	}
+	};
 
 	if(detailsChanged(data)) {
 
-		util.displayUploadFileModal(action,data,onFilesSubmittedCallback);
-	
+		if(needsSupportingDocuments) {
+			util.displayUploadFileModal(data,onFilesSubmittedCallback);
+		} else {
+			submitRequestToChangeBrokerageDetails(data,null);
+		}
 	} else {
 
 		notifyUserThatNoChangesWereMade();
 	}
 }
 
-function onFilesSubmittedCallback(fileData,data) {
+function dataRequiringSupportingDocumentChanged() {
 
-	if(fileData == null) {
-
-		util.createNotification("Failed to upload files","warn");
-
-	} else {
-
-		submitRequestToChangeBrokerageDetails(fileData,data);
+	if($('#edit_brokerage_brokerage_name_input').val() != brokerage['name']) {
+	
+		return true;
 	}
+	if($('#edit_brokerage_fsp_number_input').val() != brokerage['fspNumber']) {
+
+		return true;
+	}
+	if($('#edit_brokerage_bank_input').val() != brokerage['bank']) {
+		
+		return true;
+	}
+	if($('#edit_brokerage_branch_input').val() != brokerage['branch']) {
+	
+		return true;
+	}
+	if($('#edit_brokerage_account_number_input').val() != brokerage['accountNumber']) {
+
+		return true;
+	}
+
+	return false;
 }
 
-function submitRequestToChangeBrokerageDetails(fileData,data) {
+function onFilesSubmittedCallback(fileData,data) {
+
+	submitRequestToChangeBrokerageDetails(fileData,data);
+}
+
+function submitRequestToChangeBrokerageDetails(fileData=null,data) {
 	
-	var requestObject = {
+	var requestObject = 
+	{
 		"data":data,
 		"fileData":fileData
 	};
@@ -105,18 +137,31 @@ function notifyUserThatNoChangesWereMade() {
 
 function detailsChanged(details) {
 
-	// Test name
 	if(brokerage["name"] != details["name"]) {
 		return true;
 	}
 
-	// Test email
 	if(brokerage["email"] != details["email"]) {
 		return true;
 	}
 
-	// Test contact number
 	if(brokerage["contactNumber"] != details["contactNumber"]) {
+		return true;
+	}
+
+	if(brokerage["fspNumber"] != details["fspNumber"]) {
+		return true;
+	}
+
+	if(brokerage["bank"] != details["bank"]) {
+		return true;
+	}
+
+	if(brokerage["branch"] != details["branch"]) {
+		return true;
+	}
+
+	if(brokerage["accountNumber"] != details["accountNumber"]) {
 		return true;
 	}
 
