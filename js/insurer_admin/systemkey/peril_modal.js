@@ -2,7 +2,7 @@
 	initiateOnClicks();
 })();
 
-function repopulatePerilTable() {
+/*function repopulatePerilTable() {
 
 	var perils = insurerInvoker.getPerils();
 
@@ -16,7 +16,7 @@ function repopulatePerilTable() {
 
 		tableBody.append(tr);
 	}
-}
+}*/
 
 function initiateOnClicks() {
 	// save button
@@ -29,17 +29,17 @@ function initiateOnClicks() {
 
 		console.log(perilObject);
 
-		var newPerilId = insurerInvoker.createPeril(perilObject);
-
-		if(newPerilId != null) {
+		insurerAdminController.createPeril(
+			function(response){
+				util.createNotification(response.message);
 			
-			util.createNotification('Created Peril!');
-			
-			repopulatePerilTable();
-		
-		} else {
-			util.createNotification('Error creating Peril.','error');
-		}	
+				repopulatePerilTable();
+			},
+			function(response){
+				util.createNotification(response.message,'error');
+			},
+			perilObject
+		);	
 
 	});
 }
