@@ -243,7 +243,26 @@ function saveTariff() {
 
 	if(validateValues(coverage,tariffOptionDamageTypeArray)) {
 
-		var newTariffOptionId = insurerInvoker.createTariffOption(tariffOptionObject,tariffOptionDamageTypeArray);
+		var requestObj = {
+			'tariffOption':tariffOptionObject,
+			'tariffOptionDamageType':tariffOptionDamageTypeArray
+		};
+
+		insurerAdminController.createTariffOption(
+			function(response){
+				// reload tariff table in tariff view
+				$('#systemkey_tariff_view_district_dropdown').trigger('change');
+
+				displaySuccessNotification();
+				resetModal();
+			},
+			function(response){
+				util.createNotification(response.message,'error');
+			},
+			requestObj
+		);
+
+		/*var newTariffOptionId = insurerInvoker.createTariffOption(tariffOptionObject,tariffOptionDamageTypeArray);
 
 		if(newTariffOptionId != null) {
 
@@ -256,7 +275,7 @@ function saveTariff() {
 		} else {
 
 			displayFailureNotification("Error with creating tariff");
-		}
+		}*/
 	} else {
 
 		displayFailureNotification("fill stuff in please");
