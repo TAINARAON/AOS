@@ -15,12 +15,11 @@ function initiateInceptionDateModalValues() {
 function setOnClickListener() {
 
 	$('#systemkey_inception_date_save_button').on('click',function() {
-		onSaveClick();
+		onSaveInceptionDelayClick();
 	});	
 }
 
-function onSaveClick() {
-
+function onSaveInceptionDelayClick() {
 	var newDelay = $('#inception_date_input').val();
 
 	var newDelayInMilliseconds = util.convertToMilliseconds(newDelay,'days');
