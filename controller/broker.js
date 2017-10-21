@@ -649,7 +649,7 @@ var brokerController = new function() {
 					'dateCreated':'2017-05-18 19:01:05',
 					'linkedToQuoteId':null,
 					'acceptable':'1',
-					'totalInsuredValue':'R200 000',
+					'totalInsuredValue':'200 000',
 					'premium':20000,
 					'quoteLandEntries':[
 						{
@@ -771,7 +771,7 @@ var brokerController = new function() {
 					'dateCreated':'2017-05-18 19:02:05',
 					'linkedToQuoteId':'0',
 					'acceptable':'1',
-					'totalInsuredValue':'R200 000',
+					'totalInsuredValue':'200 000',
 					'premium':18000,
 					'quoteLandEntries':[
 						{
@@ -892,7 +892,7 @@ var brokerController = new function() {
 					'acceptedOn':'1508541611830',
 					'active':'1',
 					'linkedToPolicyId':null,
-					'totalInsuredValue':'R200 000',
+					'totalInsuredValue':'200 000',
 					'premium':19000,
 					'policyLandEntries':[
 						{
@@ -1045,7 +1045,7 @@ var brokerController = new function() {
 					'acceptedOn':'1508541611830',
 					'active':'1',
 					'linkedToPolicyId':null,
-					'totalInsuredValue':'R200 000',
+					'totalInsuredValue':'200 000',
 					'premium':18500,
 					'policyLandEntries':[
 						{

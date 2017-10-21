@@ -201,8 +201,8 @@ var quoteViewer = new function ()
 		createAccordionItemDetailDiv("Quote Number: " + quote.quoteNumber, parentTitle).className = "col-md-2";
 		createAccordionItemDetailDiv("Business Unit: " + quote.businessUnit.name, parentTitle).className = "col-md-2";
 		createAccordionItemDetailDiv("Date Created: " + quote.dateCreated, parentTitle).className = "col-md-3";
-		createAccordionItemDetailDiv("Total Insured Value: " + quote.totalInsuredValue, parentTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Premium: " + quote.premium, parentTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Total Insured Value: " + sessionStorage.CURRENCY + " " + quote.totalInsuredValue, parentTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Premium: " + sessionStorage.CURRENCY + " " + quote.premium, parentTitle).className = "col-md-2";
 
 		var childContainer = document.createElement("UL");
 		childContainer.className = "inner";
