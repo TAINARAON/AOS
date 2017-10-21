@@ -33,6 +33,9 @@ var insurerAdminController = new function() {
 	// System key urls
 	var GET_AREA_UOMS = '/Insurer/Admin/getAreaUoms';
 	var CREATE_AREA_UOM = '/Insurer/Admin/createAreaUom';
+	var GET_PRODUCTS = '/Insurer/Admin/getProducts';
+	var GET_CROPS = '/Insurer/Admin/getCrops';
+	var GET_CROP_OF_PRODUCT = '/Insurer/Admin/getCropsOfProduct';
 	// ^ System key urls ^
 
 	this.init = function(userId) {
@@ -1059,5 +1062,82 @@ var insurerAdminController = new function() {
 			'message':'Saved'
 		};
 		ajaxPost(CREATE_AREA_UOM,successCallback,failCallback,requestObject,mockResponse);
+	}
+	this.getProducts = function(successCallback,failCallback)
+	{
+		var mockResponse = [
+			{
+				'id':'0',
+				'name':'Winter',
+			},
+			{
+				'id':'1',
+				'name':'Summer',
+			},
+			{
+				'id':'2',
+				'name':'Fruit',
+			}
+		];
+
+		ajaxGet(GET_PRODUCTS,successCallback,failCallback,mockResponse);
+	}
+	this.getCrops = function(successCallback,failCallback)
+	{
+		var mockResponse = [
+			{
+				'id':'0',
+				'name':'Apple',
+				'productId':'0',
+				'active':'1',
+				'priceUomId':'0',
+				'areaUomId':'0',
+				'productName':'Winter',
+				'priceUomName':'R',
+				'areaUomName':'Hectare'
+			},
+			{
+				'id':'1',
+				'name':'Banana',
+				'productId':'0',
+				'active':'1',
+				'priceUomId':'0',
+				'areaUomId':'0',
+				'productName':'Winter',
+				'priceUomName':'R',
+				'areaUomName':'Hectare'
+			},
+			{
+				'id':'2',
+				'name':'Zebra Fruit',
+				'productId':'1',
+				'active':'1',
+				'priceUomId':'1',
+				'areaUomId':'0',
+				'productName':'Winter',
+				'priceUomName':'R',
+				'areaUomName':'Hectare'
+			}
+		];
+
+		ajaxGet(GET_CROPS,successCallback,failCallback,mockResponse);
+	}
+	this.getCropsOfProduct = function(successCallback,failCallback,requestObject)
+	{
+		var mockResponse = [
+			{
+				'id':'0',
+				'name':'Apple',
+				'productId':'0',
+				'active':'1',
+				'priceUomId':'0',
+				'areaUomId':'0',
+				'productName':'Winter',
+				'priceUomName':'R',
+				'areaUomName':'Hectare'
+			}
+		];
+
+		ajaxPost(GET_CROP_OF_PRODUCT,successCallback,failCallback,requestObject,mockResponse);
 	}
 }
