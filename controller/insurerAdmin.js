@@ -36,6 +36,8 @@ var insurerAdminController = new function() {
 	var GET_PRODUCTS = '/Insurer/Admin/getProducts';
 	var GET_CROPS = '/Insurer/Admin/getCrops';
 	var GET_CROP_OF_PRODUCT = '/Insurer/Admin/getCropsOfProduct';
+	var GET_PRICE_UOMS = '/Insurer/Admin/getPriceUoms';
+	var CREATE_CROP = '/Insurer/Admin/createCrop';
 	// ^ System key urls ^
 
 	this.init = function(userId) {
@@ -1139,5 +1141,28 @@ var insurerAdminController = new function() {
 		];
 
 		ajaxPost(GET_CROP_OF_PRODUCT,successCallback,failCallback,requestObject,mockResponse);
+	}
+	this.getPriceUoms = function(successCallback,failCallback)
+	{
+		var mockResponse = [
+			{
+				'id':'0',
+				'name':'R/Ton',
+			},
+			{
+				'id':'1',
+				'name':'R/Kg',
+			}
+		];
+
+		ajaxGet(GET_PRICE_UOMS,successCallback,failCallback,mockResponse);
+	}
+	this.createCrop = function(successCallback,failCallback,requestObject)
+	{
+		var mockResponse = {
+			'message':'Saved'
+		}
+
+		ajaxPost(CREATE_CROP,successCallback,failCallback,requestObject,mockResponse);
 	}
 }

@@ -9,35 +9,50 @@ function populateProductDropdownValues()
 {
 	var selectElement = $('#systemkey_crop_product_dropdown');
 
-	var values = quoteInvoker.getProducts();
-	
-	for(var i = 0; i < values.length; i++)
-	{
-		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']))
-	}
+	insurerAdminController.getProducts(
+		function(response){
+			for(var i = 0; i < response.length; i++)
+			{
+				selectElement.append($('<option></option>').text(response[i]['name']).val(response[i]['id']))
+			}
+		},
+		function(response){
+			util.createNotification(response.message,'error');
+		}
+	);
 }
 
 function populatePriceUomDropdownValues()
 {
 	var selectElement = $('#systemkey_crop_price_uom_dropdown');
 
-	var values = insurerInvoker.getPriceUoms();
-	
-	for(var i = 0; i < values.length; i++)
-	{
-		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']))
-	}
+	insurerAdminController.getPriceUoms(
+		function(response){
+			for(var i = 0; i < response.length; i++)
+			{
+				selectElement.append($('<option></option>').text(response[i]['name']).val(response[i]['id']))
+			}
+		},
+		function(response){
+			util.createNotification(response.message,'error');
+		}
+	);
 }
 function populateAreaUomDropdownValues()
 {
 	var selectElement = $('#systemkey_crop_area_uom_dropdown');
 
-	var values = insurerInvoker.getAreaUoms();
-	
-	for(var i = 0; i < values.length; i++)
-	{
-		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']))
-	}
+	insurerAdminController.getAreaUoms(
+		function(response){
+			for(var i = 0; i < response.length; i++)
+			{
+				selectElement.append($('<option></option>').text(response[i]['name']).val(response[i]['id']))
+			}
+		},
+		function(response){
+			util.createNotification(response.message,'error');
+		}
+	);
 }
 
 function setOnSaveOnClickListener() {
@@ -57,20 +72,19 @@ function setOnSaveOnClickListener() {
 			'active':'1'
 		}
 
-		var newCropId = insurerInvoker.createCrop(cropObject);
+		insurerAdminController.createCrop(
+			function(response){
+				util.createNotification(response.message);
+				clearCreateCropModal();
 
-		if(newCropId != null) {
-
-			util.createNotification('Created Crop!');
-			clearCreateCropModal();
-
-			// reload crop view table
-			$('#systemkey_crop_view_product_dropdown').trigger('change');
-
-		} else {
-			util.createNotification('Failed to create crop.','error');
-		}
-		
+				// reload crop view table
+				$('#systemkey_crop_view_product_dropdown').trigger('change');
+			},
+			function(response){
+				util.createNotification(response.message,'error');
+			},
+			cropObject
+		);
 	})
 }
 
