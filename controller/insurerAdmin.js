@@ -46,6 +46,7 @@ var insurerAdminController = new function() {
 	var CREATE_PERIL = '/Insurer/Admin/createPeril';
 	var GET_TAX = '/Insurer/Admin/getTax';
 	var CREATE_TAX = '/Insurer/Admin/createTax';
+	var CREATE_TARIFF_OPTION = '/Insurer/Admin/createTariffOption';
 	// ^ System key urls ^
 
 	this.init = function(userId) {
@@ -1275,5 +1276,12 @@ var insurerAdminController = new function() {
 			}
 		];
 		ajaxGet(GET_TAX,successCallback,failCallback,mockResponse);
+	}
+	this.createTariffOption = function(successCallback,failCallback,requestObject)
+	{
+		var mockResponse = {
+			'message':'Saved'
+		};
+		ajaxPost(CREATE_TARIFF_OPTION,successCallback,failCallback,requestObject,mockResponse);
 	}
 }

@@ -25,47 +25,52 @@ function populatePerilCheckboxes() {
 
 	var perilContainer = $('#systemkey_tariff_peril_container');
 	var checkboxRow;
-	var perils = insurerInvoker.getPerils();
+	insurerAdminController.getPerils(
+		function(response){
+			for(let i = 0; i < response.length; i++)
+			{
+				// Container where you fill in tariff
+				addPerilRowEntry(response[i]['id'],response[i]['name']);
 
-	for(let i = 0; i < perils.length; i++)
-	{
-		// Container where you fill in tariff
-		addPerilRowEntry(perils[i]['id'],perils[i]['name']);
-
-		// Place peril checkbox
-		if(i % 4 == 0)
-		{
-			checkboxRow = $('<div></div>').addClass('row');
-			perilContainer.append(checkboxRow);
-		}
-
-		var innerContainer = $('<div></div>').addClass('col-md-3');
-
-		var label = $('<label></label>').text(perils[i]['name']);
-		var inputElement = $('<input id="'+perils[i]['id']+'" type="checkbox"></input>')
-			.change(function() {
-
-				if(this.checked) {
-					perilEntryElements[i].show();
-					if(++checkedCounter > 0) {
-						// show peril tarif container
-						$('#peril_tariff_entries_main_container').show();
-					}
-				} else {
-					perilEntryElements[i].hide();
-					if(--checkedCounter == 0) {
-						// hide peril tarif container
-						$('#peril_tariff_entries_main_container').hide();
-					}
+				// Place peril checkbox
+				if(i % 4 == 0)
+				{
+					checkboxRow = $('<div></div>').addClass('row');
+					perilContainer.append(checkboxRow);
 				}
-			});
 
-		
-		innerContainer.append(inputElement);
-		innerContainer.append(label);
+				var innerContainer = $('<div></div>').addClass('col-md-3');
 
-		checkboxRow.append(innerContainer);
-	}
+				var label = $('<label></label>').text(response[i]['name']);
+				var inputElement = $('<input id="'+response[i]['id']+'" type="checkbox"></input>')
+					.change(function() {
+
+						if(this.checked) {
+							perilEntryElements[i].show();
+							if(++checkedCounter > 0) {
+								// show peril tarif container
+								$('#peril_tariff_entries_main_container').show();
+							}
+						} else {
+							perilEntryElements[i].hide();
+							if(--checkedCounter == 0) {
+								// hide peril tarif container
+								$('#peril_tariff_entries_main_container').hide();
+							}
+						}
+					});
+
+				
+				innerContainer.append(inputElement);
+				innerContainer.append(label);
+
+				checkboxRow.append(innerContainer);
+			}
+		},
+		function(response){
+			util.createNotification(response.message,'error');
+		}
+	);
 };
 
 var tariffsOfPerils = [];
@@ -101,6 +106,7 @@ function addPerilRowEntry(perilId, perilName) {
 
 	perilEntryElements.push(entryContainer);
 }
+
 function notifyTotalOfChange() {
 	var total = 0;
 
@@ -118,28 +124,38 @@ function populateOptionTypeDropdownValues()
 {
 	var selectElement = $('#systemkey_tariff_option_type_dropdown');
 
-	var values = insurerInvoker.getOptionTypes();
-	
-	for(var i = 0; i < values.length; i++)
-	{
-		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']));
-	}
+	insurerAdminController.getOptionTypes(
+		function(response){
+			for(var i = 0; i < response.length; i++)
+			{
+				selectElement.append($('<option></option>').text(response[i]['name']).val(response[i]['id']));
+			}
+		},
+		function(response){
+			util.createNotification(response.message,'error');
+		}
+	);
 }
 
 function populateProductDropdownValues() {
 	var selectElement = $('#systemkey_tariff_product_dropdown');
 
-	var values = insurerInvoker.getProducts();
-	
-	for(var i = 0; i < values.length; i++)
-	{
-		selectElement
-			.append($('<option></option>').text(values[i]['name']).val(values[i]['id']))
-			.on('change',function() {
-				$('#systemkey_tariff_crop_dropdown_container').show();
-				repopulateCropDropdownValues($(this).find(":selected").val());
-			});
-	}
+	insurerAdminController.getProducts(
+		function(response){
+			for(var i = 0; i < response.length; i++)
+			{
+				selectElement
+					.append($('<option></option>').text(response[i]['name']).val(response[i]['id']))
+					.on('change',function() {
+						$('#systemkey_tariff_crop_dropdown_container').show();
+						repopulateCropDropdownValues($(this).find(":selected").val());
+					});
+			}
+		},
+		function(response){
+			util.createNotification(response.message,'error');
+		}
+	);
 }
 
 function repopulateCropDropdownValues(productId)
@@ -147,23 +163,36 @@ function repopulateCropDropdownValues(productId)
 	var selectElement = $('#systemkey_tariff_crop_dropdown');
 	selectElement.empty();
 
-	var values = insurerInvoker.getCropsOfProduct(productId);
-	
-	for(var i = 0; i < values.length; i++)
-	{
-		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']));
-	}
+	var requestObj = {'productId':productId};
+
+	insurerAdminController.getCropsOfProduct(
+		function(response){
+			for(var i = 0; i < response.length; i++)
+			{
+				selectElement.append($('<option></option>').text(response[i]['name']).val(response[i]['id']));
+			}
+		},
+		function(response){
+			util.createNotification(response.message,'error');
+		},
+		requestObj
+	);
 }
 function populateDistrictDropdownValues()
 {
 	var selectElement = $('#systemkey_tariff_district_dropdown');
 
-	var values = insurerInvoker.getDistricts();
-	
-	for(var i = 0; i < values.length; i++)
-	{
-		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']));
-	}
+	insurerAdminController.getDistricts(
+		function(response){
+			for(var i = 0; i < response.length; i++)
+			{
+				selectElement.append($('<option></option>').text(response[i]['name']).val(response[i]['id']));
+			}
+		},
+		function(response){
+
+		}
+	);
 }
 
 $('#systemkey_tariff_save_button').on('click',function() {
