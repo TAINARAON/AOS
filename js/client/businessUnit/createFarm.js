@@ -31,7 +31,7 @@ function populateBusinessUnitDropdown(businessUnits) {
 }
 
 function getDistricts() {
-	alert('1');
+
 	clientController.getDistricts(onGetDistrictsSuccess,onGetDistrictsFailure);
 }
 
@@ -79,10 +79,23 @@ function setOnSaveButtonClickListener() {
 	});
 }
 
-function createFarm() {
+function createFarm(data) {
 
-	clientController.createFarm();
+	var requestObject = {
+		'farm':data
+	};
 
+	clientController.createFarm(onFarmCreateSuccess,onFarmCreateFailure,requestObject);
+}
+
+function onFarmCreateSuccess(response) {
+
+	util.createNotification('Farm successfully created');
+	loader.loadPage('html/client/businessUnit/businessUnit.html');
+}
+
+function onFarmCreateFailure(response) {
+	util.createNotification('Oops, something went wrong with creating the farm!','error');
 }
 
 
