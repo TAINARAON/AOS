@@ -15,6 +15,7 @@ function initiateOnClicks() {
 			function(response){
 				util.createNotification(response.message);
 				repopulatePriceUomTable();
+				$('#systemkey_price_uom_name').val("");
 			},
 			function(response){
 				util.createNotification(response.message,'error');

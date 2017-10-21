@@ -7,34 +7,38 @@
 
 function initiateTaxModalValues() {
 
-	var percentage = insurerInvoker.getTax();
-
-	$('#systemkey_tax_modal_percentage_input').val(percentage);
+	insurerAdminController.getTax(
+		function(response){
+			$('#systemkey_tax_modal_percentage_input').val(response.percentage);
+		},
+		function(response){
+			util.createNotification(response.message,'error');
+		}
+	);
 }
 
 function setOnClickListener() {
 
 	$('#systemkey_tax_save_button').on('click',function() {
-		onSaveClick();
+		onTaxSaveClick();
 	});	
 }
 
-function onSaveClick() {
+function onTaxSaveClick() {
 
 	var newValue = $('#systemkey_tax_modal_percentage_input').val();
+	var requestObj = {'persentage':newValue};
 
-	//add to DB
-	var newValueId = insurerInvoker.updateTax(newValue);
+	insurerAdminController.updateTax(
+		function(response){
+			util.createNotification(response.message);
 
-	if(newValueId != null) {
-
-		util.createNotification('Updated Tax Percentage!');
-
-		// update view
-		$('#systemkey_tax_view_display').val(newValue);
-
-	} else {
-
-		util.createNotification('Failure to update Tax Percentage.','error');
-	}
+			// update view
+			$('#systemkey_tax_view_display').val(newValue);
+		},
+		function(response){
+			util.createNotification(response.message,'error');
+		},
+		requestObj
+	);
 }

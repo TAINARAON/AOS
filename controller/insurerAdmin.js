@@ -44,6 +44,8 @@ var insurerAdminController = new function() {
 	var UPDATE_INCEPTION_DELAY = '/Insurer/Admin/updateInceptionDelay';
 	var GET_PERILS = '/Insurer/Admin/getPerils';
 	var CREATE_PERIL = '/Insurer/Admin/createPeril';
+	var GET_TAX = '/Insurer/Admin/getTax';
+	var CREATE_TAX = '/Insurer/Admin/createTax';
 	// ^ System key urls ^
 
 	this.init = function(userId) {
@@ -1243,5 +1245,21 @@ var insurerAdminController = new function() {
 			'message':'Saved'
 		};
 		ajaxPost(CREATE_PERIL,successCallback,failCallback,requestObject,mockResponse);
+	}
+	this.getTax = function(successCallback,failCallback)
+	{
+		var mockResponse = {
+			'id':'0',
+			'percentage': 13.00
+		};
+
+		ajaxGet(GET_TAX,successCallback,failCallback,mockResponse);
+	}
+	this.updateTax = function(successCallback,failCallback,requestObject)
+	{
+		var mockResponse = {
+			'message':'Saved'
+		};
+		ajaxPost(CREATE_TAX,successCallback,failCallback,requestObject,mockResponse);
 	}
 }

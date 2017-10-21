@@ -15,18 +15,23 @@ function populateDistrictDropdownValues() {
 
 	var selectElement = $('#systemkey_tariff_view_district_dropdown');
 
-	var values = insurerInvoker.getDistricts();
-	
-	for(var i = 0; i < values.length; i++)
-	{
-		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']));	
-	}
+	insurerAdminController.getDistricts(
+		function(response){
+			for(var i = 0; i < response.length; i++)
+			{
+				selectElement.append($('<option></option>').text(response[i]['name']).val(response[i]['id']));	
+			}
 
-	selectElement
-		.on('change',function() {
-			selectedValues['districtId'] = $(this).find(":selected").val();
-			repopulateTariffTable();
-		});
+			selectElement
+				.on('change',function() {
+					selectedValues['districtId'] = $(this).find(":selected").val();
+					repopulateTariffTable();
+				});
+		},
+		function(response){
+			util.createNotification(response.message,'error');
+		}
+	);
 }
 
 function populateOptionTypeDropdownValues() {
