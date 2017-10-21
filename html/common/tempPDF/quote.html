@@ -1,0 +1,102 @@
+<div id="quote_pdf_container">
+	<div style="padding: 20px;">
+		<div id="header">
+			<div class="row">
+				<div id="companyImageContainer" class="col-md-4">
+					<a id="nav_link" class="navbar-brand" href="&lt;?php echo base_url(); ?&gt;" style="background-image: url(img/agrihost.svg);background-size: contain; background-repeat: no-repeat; background-position: center center; min-width: 120px;"></a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div id="quoteHeaderData">
+						<div id="product">Poop</div>
+						<div id="damage">Poopie</div>
+						<div id="quoteNumber">Doopie</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="body" style="border:1pt solid black;">
+			<div class="row"><div class="col-md-12">Details of Insured:</div></div>
+			<div id="detailsOfInsuredContainer">
+				<div class="row">
+					<div class="col-md-4">Insured:</div>
+					<div id="insured" class="col-md-4"></div>
+					<div class="col-md-4">Telephone No:</div>
+					<div id="telephoneNumber" class="col-md-4"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">Postal Address:</div>
+					<div id="postalAddress" class="col-md-4"></div>
+					<div class="col-md-4">Fax No:</div>
+					<div id="faxNumber" class="col-md-4"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">Cell No:</div>
+					<div id="cellNumber" class="col-md-4"></div>
+					<div class="col-md-4">Email No:</div>
+					<div id="email" class="col-md-4"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">VAT No:</div>
+					<div id="vatNumber" class="col-md-4"></div>
+					<div class="col-md-4">Account No:</div>
+					<div id="accountNumber" class="col-md-4"></div>
+				</div>
+			</div>
+			<div class="row"><div class="col-md-12">Cover Period:</div></div>
+			<div id="coverPeriodContainer">
+				<div class="row">
+					<div class="col-md-4">Quotation Date:</div>
+					<div id="quotationDate" class="col-md-4"></div>
+				</div>
+				<div class="row"><div class="col-md-12">This quotation remains valid for 14 days from the date of quotation.</div></div>
+			</div>
+			<div class="row"><div class="col-md-12">Premium Details:</div></div>
+			<div id="premiumDetailsContainer">
+				<div class="row">
+					<div class="col-md-6">Total Sum Insured</div>
+					<div id="totalSumEnsured" class="col-md-6"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">Farm Name/s</div>
+					<div class="col-md-4">Premium (R)</div>
+					<div class="col-md-4">VAT (R)</div>
+					<div class="col-md-4">Amount Payable (R)</div>
+				</div>
+				<div class="row">
+					<div id="farmName" class="col-md-4"></div>
+					<div id="premium" class="col-md-4"></div>
+					<div id="vat" class="col-md-4"></div>
+					<div id="amountPayable" class="col-md-4"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">Total amount payable</div>
+					<div class="col-md-4"></div>
+					<div class="col-md-4"></div>
+					<div id="totalAmountPayable" class="col-md-4"></div>
+				</div>
+			</div>
+			<div class="row"><div class="col-md-12">Special Comments:</div></div>
+			<div id="specialCommentsContainer">
+				<div class="row"></div>
+			</div>
+			<div class="row"><div class="col-md-12">Cession Holder:</div></div>
+			<div id="cessionHolderContainer">
+				<div class="row"></div>
+			</div>
+			<div class="row"><div class="col-md-12">Details of Intermediary:</div></div>
+			<div id="detailsOfIntermediaryContainer">
+				<div class="row"></div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var quotePDF = new function()
+		{
+			this.loadValues = function(dataObj) {
+				document.getElementById("product").innerHTML = dataObj.product;
+			}
+		}
+	</script>
+</div>

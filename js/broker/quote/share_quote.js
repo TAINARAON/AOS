@@ -12,6 +12,8 @@ var shareModal = new function()
 		cancelBtn.onclick = function(){hide(); quoteId = -1;};
 		printBtn.onclick = function(){print();};
 		emailBtn.onclick = function(){email();};
+
+		loadQuotePDF(pdfContainer.id);
 	})();
 
 	function print()
@@ -29,9 +31,18 @@ var shareModal = new function()
 		quoteId = id;
 
 		// Request pfd here
+		var quoteData = {
+			'product':'product data'
+		};
+		quotePDF.loadValues(quoteData);
 		
 		modal.style.cssText = "display: block; padding-right: 17px;";
 		modal.className = "modal fade in";
+	}
+
+	function loadQuotePDF(id)
+	{
+		loader.loadPartOfPage("html/common/tempPDF/quote.html", id);
 	}
 
 	function hide()
