@@ -75,12 +75,14 @@ var brokerAdminController = new function() {
 				{	
 					'id':'0',
 					'name':'Pieter',
-					'surname':'Vosloo'
+					'surname':'Vosloo',
+					'branch':'Tyger Manor'
 				},
 				{
 					'id':'1',
 					'name':'Janne',
-					'surname':'Man'
+					'surname':'Man',
+					'branch':'Musaka'
 				}
 			]
 		};
