@@ -55,7 +55,9 @@ function getBrokerDetailsOfBrokerageFailCallback(response) {
 //function onEditBroker(id) {
 function onEditBroker(broker) {
 	//brokerAdminController.getBrokerForEditModal(getBrokerForEditModalSuccessCallback,getBrokerForEditModalFailureCallback,id);
-	debugger;
+	
+	$('#editBrokerModal').modal('toggle')
+
 	populateEditBrokerModalText(broker);
 	setOnClickForEditBrokerSaveButton(broker["id"]);
 	setOnClickForEditBrokerCancelButton();
@@ -277,6 +279,9 @@ function createBrokerAccordionParentItem(broker, container)
 		var editButton = createAccordionItemDetailDiv("Edit", parentTitle);
 		editButton.style.cssText = "float:right;";
 		editButton.className = "btn btn-success col-md-1";
+
+		var betterEditButton = $(editButton);
+
 		editButton.onclick = function(){onEditBroker(broker);};
 
 		createAccordionItemDetailDiv("(" + broker.initials + ") " + broker.name + " " + broker.surname, parentTitle).className = "col-md-2";

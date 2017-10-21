@@ -18,10 +18,13 @@ var brokerController = new function() {
 		return user;
 	}
 
+	var CREATE_FARM_URL = 'CREATE_FARM_URL';
+	var GET_BUSINESS_UNITS_URL = 'GET_BUSINESS_UNITS_URL';
 	var CREATE_BUSINESS_UNIT_URL = 'CREATE_BUSINESS_UNIT_URL';
 	var GET_BUSINESS_UNITS_AND_THEIR_FARMS = 'GET_BUSINESS_UNITS_AND_THEIR_FARMS';
 	var GET_DEFAULT_BROKER_DATA_URL = 'GET_DEFAULT_BROKER_DATA_URL';
 	var TEST_URL = "TEST_URL";
+	var GET_DISTRICTS_URL = 'GET_DISTRICTS_URL';
 	
 	this.init = function(userId) {
 		
@@ -132,25 +135,41 @@ var brokerController = new function() {
 	}
 
 	/*
-		Note: what this call is used for
-
-		broker/editBrokerage
+		broker/getBusinessUnits
 
 		requestObject:{
-			'id':{} (brokerageId)
+			brokerId
 		}
 
 		responseObject:{
-			'someObject':{}
+			brokerages:[{whole brokerage}]
 		}
 	*/
-	this.testMethod = function(successCallback,failCallback,requestObject) {
+	this.getBusinessUnits = function(successCallback,failCallback,requestObject) {
 
 		var mockResponse = {
-			"result":"fake response"
+			'brokerages':mockCommunicator.getBrokerages()
 		};
 
-		ajaxPost(TEST_URL,successCallback,failCallback,requestObject,mockResponse);
+		ajaxPost(GET_BUSINESS_UNITS_URL,successCallback,failCallback,requestObject,mockResponse);
+	}
+
+	/*
+		broker/getDistricts  (GET)
+
+		responseObject: {
+			districts:[{whole district}],
+			message,
+			status
+		}
+	*/
+	this.getDistricts = function(successCallback,failureCallback) {
+
+		var mockResponse = {
+			'districts':mockCommunicator.getDistricts()
+		}
+
+		ajaxGet(GET_DISTRICTS_URL,successCallback,failureCallback,mockResponse);
 	}
 
 	/*	
@@ -258,6 +277,37 @@ var brokerController = new function() {
 
 		ajaxPost(CREATE_BUSINESS_UNIT_URL,successCallback,failCallback,requestObject,mockResponse);
 	};
+
+
+	/*
+		broker/createFarm
+
+		requestObject:{
+			farm:{
+				'name',
+				'businessUnitId',
+				'latitude',
+				'longitude',
+				'districtId'
+			},
+		}
+
+		responseObject: {
+			message,
+			status
+		}
+	*/
+	this.createFarm = function(successCallback,failureCallback,requestObject) {
+
+		var mockResponse = {
+			'status':true,
+			'message':''
+		}
+
+		ajaxPost(CREATE_FARM_URL,successCallback,failureCallback,requestObject,mockResponse);
+	}
+
+
 
 	// Damage Report
 		// Create

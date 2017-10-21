@@ -12,6 +12,16 @@ function init() {
 
 	getBusinessUnitsAndTheirFarms();
 	setOnCreateBusinessUnitButtonOnClick();
+	setOnCreateFarmButtonOnClick();
+}
+
+function setOnCreateFarmButtonOnClick() {
+
+	$('#business_unit_create_farm_button').on('click',function() {
+
+		loader.loadPage('html/broker/client/createFarm.html');
+
+	})
 }
 
 function setOnCreateBusinessUnitButtonOnClick() {
