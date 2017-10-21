@@ -723,7 +723,7 @@ var insurerAdminController = new function() {
 					'acceptedOn':'1508541611830',
 					'active':'1',
 					'linkedToPolicyId':null,
-					'totalInsuredValue':'R200 000',
+					'totalInsuredValue':'200 000',
 					'premium':19000,
 					'policyLandEntries':[
 						{
@@ -876,7 +876,7 @@ var insurerAdminController = new function() {
 					'acceptedOn':'1508541611830',
 					'active':'1',
 					'linkedToPolicyId':null,
-					'totalInsuredValue':'R200 000',
+					'totalInsuredValue':'200 000',
 					'premium':18500,
 					'policyLandEntries':[
 						{
