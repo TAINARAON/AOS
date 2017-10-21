@@ -30,6 +30,11 @@ var insurerAdminController = new function() {
 	var GET_BROKERAGES_AND_THEIR_BROKERS = 'GET_BROKERAGES_AND_THEIR_BROKERS';
 	var GET_BUSINESS_UNITS_AND_THEIR_FARMS = 'GET_BUSINESS_UNITS_AND_THEIR_FARMS';
 
+	// System key urls
+	var GET_AREA_UOMS = '/Insurer/Admin/getAreaUoms';
+	var CREATE_AREA_UOM = '/Insurer/Admin/createAreaUom';
+	// ^ System key urls ^
+
 	this.init = function(userId) {
 		
 		getDefaultInsurerAdminData(userId);
@@ -1030,4 +1035,29 @@ var insurerAdminController = new function() {
 			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
 		}
 	// ^ Damage Report ^
+
+	// ----------------------------- System key methods
+
+	this.getAreaUoms = function(successCallback,failCallback)
+	{
+		var mockResponse = [
+			{
+				'id':'0',
+				'name':'Hectare',
+			},
+			{
+				'id':'1',
+				'name':'Trees/block',
+			}
+		];
+
+		ajaxGet(GET_AREA_UOMS,successCallback,failCallback,mockResponse);
+	}
+	this.createAreaUom = function(successCallback,failCallback,requestObject)
+	{
+		var mockResponse = {
+			'message':'Saved'
+		};
+		ajaxPost(CREATE_AREA_UOM,successCallback,failCallback,requestObject,mockResponse);
+	}
 }

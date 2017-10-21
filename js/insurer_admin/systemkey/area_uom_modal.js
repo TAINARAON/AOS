@@ -2,7 +2,7 @@
 	initiateOnClicks();
 })();
 
-function repopulateAreaUomTable() {
+/*function repopulateAreaUomTable() {
 
 	var areaUoms = insurerInvoker.getAreaUoms();
 
@@ -16,7 +16,7 @@ function repopulateAreaUomTable() {
 
 		tableBody.append(tr);
 	}
-}
+}*/
 
 function initiateOnClicks() {
 	// save button
@@ -29,17 +29,16 @@ function initiateOnClicks() {
 
 		console.log(areaUomObject);
 
-		var newAreaUomId = insurerInvoker.createAreaUom(areaUomObject);
-
-		if(newAreaUomId != null) {
-			
-			util.createNotification('Created Area Measurement Unit!');
-			
-			repopulateAreaUomTable();
-		
-		} else {
-			util.createNotification('Error creating Area Unit of Measurement.','error');
-		}	
+		insurerAdminController.createAreaUom(
+			function(response){
+				util.createNotification(response.message);
+				repopulateAreaUomTable();
+			},
+			function(response){
+				util.createNotification(response.message,'error');
+			},
+			areaUomObject
+		);	
 
 	});
 }
