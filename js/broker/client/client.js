@@ -11,6 +11,16 @@ var businessUnitFarmElements = [];
 function init() {
 
 	getBusinessUnitsAndTheirFarms();
+	setOnCreateBusinessUnitButtonOnClick();
+}
+
+function setOnCreateBusinessUnitButtonOnClick() {
+
+	$('#broker_business_unit_create_business_unit_button').on('click',function() {
+
+		loader.loadPage('html/broker/client/createBusinessUnit.html');
+
+	})
 }
 
 function getBusinessUnitsAndTheirFarms() {
@@ -30,7 +40,7 @@ function onGetBusinessUnitsAndTheirBrokersFailure() {
 
 function populateBusinessUnitsDropdownValues(businessUnitsAndFarms) {
 
-	var selectElement = $('#insurer_admin_clients_business_units_dropdown');
+	var selectElement = $('#broker_business_unit_business_unit_dropdown');
 
 	for(var i = 0; i < businessUnitsAndFarms.length; i++)
 	{

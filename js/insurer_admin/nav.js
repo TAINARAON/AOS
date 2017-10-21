@@ -36,6 +36,10 @@
  			'pageUrl':'html/insurer_admin/systemkeys.html'
  		},
  		{
+ 			'text':'Reporting',
+ 			'pageUrl':'html/common/logout.html'
+ 		},
+ 		{
  			'text':'Logout',
  			'pageUrl':'html/common/logout.html'
  		}

@@ -3,7 +3,7 @@
 	var leftButtons = 
  	[
  		
- 		/*{
+ 		{
  			'text':"",
  			'pageUrl':'html/insurer_admin/insurance_agency.html'
  		},
@@ -13,12 +13,12 @@
  		},
  		{
  			'pageUrl':'html/insurer_admin/quote/quote.html'
- 		}*/
+ 		}
  	];
 
  	var rightButtons = 
  	[
- 		/*{
+ 		{
  			'text':'Create Insurer',
  			'pageUrl':'html/insurer_admin/create_insurer.html'
  		},
@@ -27,9 +27,13 @@
  			'pageUrl':'html/insurer_admin/systemkeys.html'
  		},
  		{
+ 			'text':'Reporting',
+ 			'pageUrl':'html/common/logout.html'
+ 		},
+ 		{
  			'text':'Logout',
  			'pageUrl':'html/common/logout.html'
- 		}*/
+ 		}
  	];
 
  	(function init(){

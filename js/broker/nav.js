@@ -27,7 +27,7 @@
  	var rightButtons = 
  	[
  		{
- 			'text':'Create Client',
+ 			'text':'Reporting',
  			'pageUrl':'html/common/logout.html'
  		},
  		{

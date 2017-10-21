@@ -18,6 +18,7 @@ var brokerController = new function() {
 		return user;
 	}
 
+	var CREATE_BUSINESS_UNIT_URL = 'CREATE_BUSINESS_UNIT_URL';
 	var GET_BUSINESS_UNITS_AND_THEIR_FARMS = 'GET_BUSINESS_UNITS_AND_THEIR_FARMS';
 	var GET_DEFAULT_BROKER_DATA_URL = 'GET_DEFAULT_BROKER_DATA_URL';
 	var TEST_URL = "TEST_URL";
@@ -232,6 +233,30 @@ var brokerController = new function() {
 		}
 
 		ajaxPost(GET_BUSINESS_UNITS_AND_THEIR_FARMS,successCallback,failCallback,requestObject,mockResponse);
+	};
+
+	/*	
+		broker/createBusinessUnit
+
+		requestObject:{
+			businessUnitData,
+			files
+		}
+
+		responseObject: {
+			message,
+			status
+		}
+	*/
+	this.createBusinessUnit = function(successCallback,failCallback,requestObject) {
+
+		var mockResponse = 
+		{
+			'message':'',
+			'status':true
+		};
+
+		ajaxPost(CREATE_BUSINESS_UNIT_URL,successCallback,failCallback,requestObject,mockResponse);
 	};
 
 	// Damage Report
