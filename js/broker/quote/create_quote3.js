@@ -1013,7 +1013,8 @@ var createQuote = new function()
 						var tObj = {
 							"id":response[i].damageType.id,
 							"name":response[i].damageType.name,
-							"state":false
+							"state":false,
+							"isDefault":response[i].isDefault
 						};
 						damageTypeStates.push(tObj);
 					}
@@ -1047,7 +1048,8 @@ var createQuote = new function()
 								checkboxContainer.className = "row";
 								damageTypeRowContainer.appendChild(checkboxContainer);
 							}
-							createDamageTypeCheckbox(damageTypeStates[i].name, checkboxContainer, damageTypeStates[i].state);
+							
+							createDamageTypeCheckbox(damageTypeStates[i].name, checkboxContainer, damageTypeStates[i].state, damageTypeStates[i].isDefault);
 						}
 						damageTypeRowContainer.style.display = "block";
 					}
@@ -1192,7 +1194,7 @@ var createQuote = new function()
 		}*/
 	}
 
-	function createDamageTypeCheckbox(title, container, state = false)
+	function createDamageTypeCheckbox(title, container, state = false, isDefault)
 	{
 		var innerContainer = document.createElement("DIV");
 		innerContainer.className = "col-md-4";
@@ -1208,6 +1210,13 @@ var createQuote = new function()
 		input.id = title + "_checkbox";
 		input.name = title + "_checkbox";
 		input.title = title;
+		
+		if(isDefault == 1)
+		{
+			state = true;
+			trackDamageTypeState(title, state);
+			input.disabled = "disabled";
+		}
 
 		label.appendChild(input);
 		label.innerHTML += title;
@@ -1343,7 +1352,7 @@ var createQuote = new function()
 		}
 		else
 		{
-			alert("Insert all values. \nMake sure the last three fields have numbers.");
+			alert("Insert all values.\nMake sure at least one damage type is selected. \nMake sure the last three fields have numbers.");
 		}
 	}
 
@@ -1386,7 +1395,11 @@ var createQuote = new function()
 			// notify user a diget is needed?
 			return false;
 		}
-
+		if(!$("#damageTypeCheckboxContainer input:checkbox:checked").length > 0)
+		{
+			return false;
+		}
+		
 		return true;
 	}
 
