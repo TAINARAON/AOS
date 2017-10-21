@@ -2,30 +2,30 @@
 
 	var leftButtons = 
  	[
- 		
  		{
- 			'text':"",
- 			'pageUrl':'html/insurer_admin/insurance_agency.html'
+ 			'text':"Brokers",
+ 			'pageUrl':'html/insurer/brokers.html'
+ 		},
+ 		{
+ 			'text':"Clients",
+ 			'pageUrl':'html/insurer/clients.html'
  		},
  		{
  			'text':'Quote',
- 			'pageUrl':'html/insurer_admin/quote/quote.html'
+ 			'pageUrl':'aaaaa/insurer_admin/quote/quote.html'
  		},
  		{
- 			'pageUrl':'html/insurer_admin/quote/quote.html'
+ 			'text':'Policy',
+ 			'pageUrl':'aaaaa/insurer_admin/quote/quote.html'
+ 		},
+ 		{
+ 			'text':'Damage Report',
+ 			'pageUrl':'aaaaa/insurer_admin/quote/quote.html'
  		}
  	];
 
  	var rightButtons = 
  	[
- 		{
- 			'text':'Create Insurer',
- 			'pageUrl':'html/insurer_admin/create_insurer.html'
- 		},
- 		{
- 			'text':'System Keys',
- 			'pageUrl':'html/insurer_admin/systemkeys.html'
- 		},
  		{
  			'text':'Reporting',
  			'pageUrl':'html/common/logout.html'
