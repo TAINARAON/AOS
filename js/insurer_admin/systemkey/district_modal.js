@@ -2,7 +2,7 @@
 	initiateOnClicks();
 })();
 
-function repopulateDistrictTable() {
+/*function repopulateDistrictTable() {
 
 	var districts = insurerInvoker.getDistricts();
 
@@ -16,7 +16,7 @@ function repopulateDistrictTable() {
 
 		tableBody.append(tr);
 	}
-}
+}*/
 
 function initiateOnClicks() {
 	// save button
@@ -29,18 +29,17 @@ function initiateOnClicks() {
 
 		console.log(districtObject);
 
-		var newDistrictId = insurerInvoker.createDistrict(districtObject);
-
-		if(newDistrictId != null) {
+		insurerAdminController.createDistrict(
+			function(response){
+				util.createNotification(response.message);
 			
-			util.createNotification('Created District!');
-			
-			repopulateDistrictTable();
-		
-		} else {
-			util.createNotification('Error creating District.','error');
-		}	
-
+				repopulateDistrictTable();
+			},
+			function(response){
+				util.createNotification(response.message,'error');
+			},
+			districtObject
+		);	
 	});
 }
 

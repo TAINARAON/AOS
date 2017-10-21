@@ -7,8 +7,8 @@
 
 function initiateInceptionDateModalValues() {
 
-	var delayInDays = util.convertMillisecondsTo(insurerInvoker.getInceptionDelay(),'days');
-
+	//var delayInDays = util.convertMillisecondsTo(insurerInvoker.getInceptionDelay(),'days');
+	var delayInDays = util.convertMillisecondsTo(sessionStorage.COMMENCEMENT_DELAY,'days');
 	$('#inception_date_input').val(delayInDays);
 }
 
@@ -24,19 +24,18 @@ function onSaveClick() {
 	var newDelay = $('#inception_date_input').val();
 
 	var newDelayInMilliseconds = util.convertToMilliseconds(newDelay,'days');
+	var requestObj = {'inceptionDelay':newDelayInMilliseconds};
 	
 	//add to DB
-	var newDelayId = insurerInvoker.updateInceptionDelay(newDelayInMilliseconds);
-
-	if(newDelayId != null) {
-
-		util.createNotification('Updated Inception Delay!');
-
-		// update view
-		$('#systemkey_inception_date_view_display').val(newDelay);
-
-	} else {
-
-		util.createNotification('Failure to update Inception Delay.','error');
-	}
+	insurerAdminController.updateInceptionDelay(
+		function(response){
+			util.createNotification(response.message);
+			sessionStorage.COMMENCEMENT_DELAY = newDelayInMilliseconds;
+			$('#systemkey_inception_date_view_display').val(newDelay);
+		},
+		function(response){
+			util.createNotification(response.message,'error');
+		},
+		requestObj
+	);
 }
