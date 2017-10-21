@@ -72,6 +72,7 @@ var createQuote = new function()
 	var temporary_button_container = document.getElementById("tempButtonContainer");
 
 	var landEntryEligibleForEdit;
+	var isEdit = false;
 
 	function getProduct(name)
 	{
@@ -763,7 +764,7 @@ var createQuote = new function()
 	}
 
 	function validateLandEntry(val) {
-		if(val != "" && !isForDuplicateLandEntries(val))
+		if((val != "" && !isForDuplicateLandEntries(val)) || isEdit)
 			return true;
 		else
 			alert("Land entry value incorrect");
@@ -1522,6 +1523,7 @@ var createQuote = new function()
 
 	function editLandEntry(landEntry)
 	{
+		isEdit = true;
 		landEntryEligibleForEdit = landEntry;
 		// Remove the 'Sluit in' button, add save and cancel buttons
 		include_land_entry_button.style.display = "none";
@@ -1550,6 +1552,7 @@ var createQuote = new function()
 
 	function cancelEditOfLandEntry()
 	{
+		isEdit = false;
 		resetModalForFurtherLandEntryEdit();
 		hideFields();
 		landEntryEligibleForEdit = undefined;
@@ -1559,6 +1562,7 @@ var createQuote = new function()
 
 	function saveEditOfLandEntry(landEntry)
 	{
+		isEdit = false;
 		updateLandEntryInQuote(landEntry, getLandEntryFromCriteriaValues());
 		resetModalForFurtherLandEntryEdit();
 		hideFields();
