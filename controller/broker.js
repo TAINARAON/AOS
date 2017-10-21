@@ -193,11 +193,17 @@ var brokerController = new function() {
 					[
 						{
 							id:0, 
-							name:'Farm 0'
+							name:'Farm 0',
+							latitude:'-2.518484',
+							longitude:'1.288142',
+							districtName:'Bellville'
 						},
 						{
 							id:1, 
-							name:'Farm 1'
+							name:'Farm 1',
+							latitude:'2.345245',
+							longitude:'-3.35111',
+							districtName:'Kraaifontein'
 						}
 					]
 				},
@@ -208,11 +214,17 @@ var brokerController = new function() {
 					[
 						{
 							id:2, 
-							name:'Farm 2'
+							name:'Farm 2',
+							latitude:'1.423523',
+							longitude:'-0.454646',
+							districtName:'Mooifontein'
 						},
 						{
 							id:3, 
-							name:'Farm 3'
+							name:'Farm 3',
+							latitude:'-2.345235',
+							longitude:'1.2523523',
+							districtName:'Centurion'
 						}
 					]
 				}

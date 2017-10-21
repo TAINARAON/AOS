@@ -14,6 +14,7 @@ var clientController = new function() {
 		return user;
 	}
 
+	var CREATE_BUSINESS_UNIT_URL = 'CREATE_BUSINESS_UNIT_URL';
 	var GET_BUSINESS_UNITS_AND_THEIR_FARMS = 'GET_BUSINESS_UNITS_AND_THEIR_FARMS';
 	var CREATE_CLIENT_URL = 'CREATE_CLIENT_URL';
 	var GET_DEFAULT_CLIENT_DATA_URL = 'GET_DEFAULT_CLIENT_DATA_URL';
@@ -191,6 +192,44 @@ var clientController = new function() {
 
 		ajaxPost(GET_BUSINESS_UNITS_AND_THEIR_FARMS,successCallback,failCallback,requestObject,mockResponse);
 	};
+
+	/*
+		client/createBusinessUnit
+
+		requestObject:{
+			businessUnitData:{
+				'preferredName',
+				'surname',
+				'initials',
+				'email',
+				'idNumber',
+				'contactNumber',
+				'userame',
+				'password'
+			},
+			files:[
+				{not sure how the objects look like}
+			],
+			clientDetails:{client object}
+		}
+
+		responseObject: {
+			message,
+			status
+		}
+	*/
+	this.createBusinessUnit = function(successCallback,failureCallback,requestObjectWithoutClientDetails) {
+
+		var requestObject = requestObjectWithoutClientDetails;
+		requestObject.clientDetails = client;
+
+		var mockResponse = {
+			'status':true,
+			'message':''
+		}
+
+		ajaxPost(CREATE_BUSINESS_UNIT_URL,successCallback,failureCallback,requestObject,mockResponse);
+	}
 
 
 	/*
