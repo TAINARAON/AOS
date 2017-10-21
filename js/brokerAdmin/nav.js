@@ -15,8 +15,8 @@
  			'pageUrl':'html/brokerAdmin/createBusinessUnit.html'
  		},
  		{
- 			'text':'Reporting',
- 			'pageUrl':'html/common/logout.html'
+ 			'text':'Reports',
+ 			'pageUrl':'html/common/fakeReporting.html'
  		},
  		{
  			'text':'Logout',
