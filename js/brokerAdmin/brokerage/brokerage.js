@@ -31,18 +31,20 @@ function setBrokerageDetails() {
 }
 
 function populateBrokerTable() {
-
-	brokerAdminController.getBrokerDetailsOfBrokerage(getBrokerDetailsOfBrokerageSuccessCallback,getBrokerDetailsOfBrokerageFailCallback);
+	getBrokerDetailsOfBrokerageSuccessCallback(brokerAdminController.getBrokersOfBrokerage());
 }
 
 function getBrokerDetailsOfBrokerageSuccessCallback(response) {
-
 	var container = $('#broker_admin_broker_container');
 
-	var brokers = response['brokers'];
+	var accordionContainer = document.createElement("UL");
+	accordionContainer.className = "accordion";
+	container.append(accordionContainer);
 
-	for(var i = 0;i<brokers.length;i++) {
-		createBrokerEntry(brokers[i],container);
+	createHeaderAccordionItem(accordionContainer);
+	for(var i = 0;i<response.length;i++)
+	{
+		createBrokerAccordionParentItem(response[i], accordionContainer);
 	}
 }
 function getBrokerDetailsOfBrokerageFailCallback(response) {
@@ -50,76 +52,16 @@ function getBrokerDetailsOfBrokerageFailCallback(response) {
 	alert("failed brokerAdmin/brokerage/brokerage.js getBrokerDetailsOfBrokerageFailCallback");
 }
 
-function createBrokerEntry(broker,container) {
-
-	var header = $('<button></button>')
-		.addClass('accordion')
-		.text(broker.name + " " + broker.surname)
-		.on('click',function(e){
-			toggleDataContainer(e);
-		}
-	);
-
-	var detailContainer = $('<div></div>')
-		.addClass('panel');
-
-	var editButton = $('<button></button>')
-		.text('Edit')
-		.attr('data-toggle','modal')
-		.attr('data-target','#editBrokerModal')
-		.on('click',function() {
-			onEditBroker(broker.id);
-		}
-	);
-
-	var revokeButton = $('<button></button>')
-		.text('Revoke')
-		.attr('data-toggle','modal')
-		.attr('data-target','#revokeBrokerModal')
-		.on('click',function() {
-			onRevokeBrokerClick(broker.id);
-		}
-	);
-
-	var details = createDetailsOfBrokerHtml(broker);
-	//$('<p></p>').text("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.");
-	
-	detailContainer.append(editButton);
-	detailContainer.append(revokeButton);
-	detailContainer.append(details);
-
-	container.append(header);
-	container.append(detailContainer);
+//function onEditBroker(id) {
+function onEditBroker(broker) {
+	//brokerAdminController.getBrokerForEditModal(getBrokerForEditModalSuccessCallback,getBrokerForEditModalFailureCallback,id);
+	debugger;
+	populateEditBrokerModalText(broker);
+	setOnClickForEditBrokerSaveButton(broker["id"]);
+	setOnClickForEditBrokerCancelButton();
 }
 
-function createDetailsOfBrokerHtml(brokerDetails) {
-	var container = $('<div></div>')
-		.append($('<p>Name: '+ brokerDetails.name + '</p>'))
-		.append($('<p>Surname: '+ brokerDetails.surname + '</p>'))
-
-	return container;
-}
-
-function toggleDataContainer(e) {
-	var target = e.target || e.srcElement;
-
-    target.classList.toggle("active");
-
-    var panel = target.nextElementSibling;
-    if (panel.style.display === "block") {
-        panel.style.display = "none";
-    } else {
-        panel.style.display = "block";
-    }
-}
-
-function onEditBroker(id) {
-
-	brokerAdminController.getBrokerForEditModal(getBrokerForEditModalSuccessCallback,getBrokerForEditModalFailureCallback,id);
-	
-}
-
-function getBrokerForEditModalSuccessCallback(result) {
+/*function getBrokerForEditModalSuccessCallback(result) {
 
 	var broker = result["broker"];
 	
@@ -132,7 +74,7 @@ function getBrokerForEditModalFailureCallback(result) {
 
 	alert("getBrokerForEditModalFailureCallback brokerAdmin/brokerage/brokerage.js");
 
-}
+}*/
 
 function populateEditBrokerModalText(brokerData) {
 
@@ -322,3 +264,56 @@ function toggleSelectedListItem(li) {
 		li.css('background-color','grey');
 	}
 }
+
+// ------- Anro methods
+function createBrokerAccordionParentItem(broker, container)
+	{
+		var parentLi = document.createElement("LI");
+
+		var parentTitle = document.createElement("A");
+		parentTitle.className = "toggle";
+		parentTitle.style.cssText = "display: flex;";
+
+		var editButton = createAccordionItemDetailDiv("Edit", parentTitle);
+		editButton.style.cssText = "float:right;";
+		editButton.className = "btn btn-success col-md-1";
+		editButton.onclick = function(){onEditBroker(broker);};
+
+		createAccordionItemDetailDiv("(" + broker.initials + ") " + broker.name + " " + broker.surname, parentTitle).className = "col-md-2";
+		createAccordionItemDetailDiv(broker.branch, parentTitle).className = "col-md-2";
+
+		var childContainer = document.createElement("UL");
+		childContainer.className = "inner";
+
+		parentLi.appendChild(parentTitle);
+		parentLi.appendChild(childContainer);
+
+		container.appendChild(parentLi);
+
+		return childContainer;
+	}
+
+	function createAccordionItemDetailDiv(val, container)
+	{
+		var tDiv = document.createElement("DIV");
+		tDiv.innerHTML = val;
+		//tDiv.style.cssText = "margin-right: 80px;";
+		container.appendChild(tDiv);
+		return tDiv;
+	}
+
+	function createHeaderAccordionItem(container)
+	{
+		var childLi = document.createElement("LI");
+
+		var childTitle = document.createElement("A");
+		childTitle.className = "toggle";
+		childTitle.style.cssText = "display: flex; background: #4287b5;";
+
+		createAccordionItemDetailDiv("", childTitle).className = "col-md-1";
+		createAccordionItemDetailDiv("Full Name: ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Branch: ", childTitle).className = "col-md-2";
+
+		childLi.appendChild(childTitle);
+		container.appendChild(childLi);
+	}
