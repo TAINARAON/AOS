@@ -77,14 +77,42 @@ var brokerAdminController = new function() {
 					'name':'Pieter',
 					'initials':'P J',
 					'surname':'Vosloo',
-					'branch':'Tyger Manor'
+					'branch':'Tyger Manor',
+					'creationRights':true,
+					'brokerViewableBrokers':
+					[
+						{
+							'id':2,
+							'name':'Piet',
+							'surname':'Poppe'
+						},
+						{
+							'id':3,
+							'name':'Sannie',
+							'surname':'Sakkie'
+						}
+					]
 				},
 				{
 					'id':'1',
 					'name':'Janne',
 					'initials':'J M',
 					'surname':'Man',
-					'branch':'Musaka'
+					'branch':'Musaka',
+					'creationRights':true,
+					'brokerViewableBrokers':
+					[
+						{
+							'id':2,
+							'name':'Piet',
+							'surname':'Poppe'
+						},
+						{
+							'id':3,
+							'name':'Sannie',
+							'surname':'Sakkie'
+						}
+					]
 				}
 			]
 		};

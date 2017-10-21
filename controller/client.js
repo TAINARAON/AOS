@@ -14,6 +14,7 @@ var clientController = new function() {
 		return user;
 	}
 
+	var GET_DISTRICTS_URL = 'GET_DISTRICTS_URL';
 	var CREATE_FARM_URL = 'CREATE_FARM_URL';
 	var CREATE_BUSINESS_UNIT_URL = 'CREATE_BUSINESS_UNIT_URL';
 	var GET_BUSINESS_UNITS_AND_THEIR_FARMS = 'GET_BUSINESS_UNITS_AND_THEIR_FARMS';
@@ -230,6 +231,24 @@ var clientController = new function() {
 		}
 
 		ajaxPost(CREATE_BUSINESS_UNIT_URL,successCallback,failureCallback,requestObject,mockResponse);
+	}
+
+	/*
+		client/getDistricts  (GET)
+
+		responseObject: {
+			districts:[{whole district}],
+			message,
+			status
+		}
+	*/
+	this.getDistricts = function(successCallback,failureCallback) {
+
+		var mockResponse = {
+			'districts':mockCommunicator.getDistricts()
+		}
+
+		ajaxGet(GET_DISTRICTS_URL,successCallback,failureCallback,mockResponse);
 	}
 
 	/*
