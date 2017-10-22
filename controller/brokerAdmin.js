@@ -138,19 +138,43 @@ var brokerAdminController = new function() {
 		var user = mockCommunicator.getUser(userId);
 		var brokerAdmin = mockCommunicator.getBrokerAdminByUserId(userId);
 		var brokerage = mockCommunicator.getBrokerage(brokerAdmin['brokerageId']);
-		var brokersOfBrokerage = mockCommunicator.getBrokersForBrokerTableInBrokerageTab(brokerAdmin['BrokerageId'])
+
+		var brokers = mockCommunicator.getBrokersOfBrokerage(brokerage['id']);
+		for(var i = 0; i < brokers.length; i++) {
+			var user = mockCommunicator.getUser(brokers[i]['userId']);
+			brokers[i]['name'] = user['name'];
+			brokers[i]['surname'] = user['surname'];
+			brokers[i]['initials'] = user['initials'];
+			brokers[i]['brokerViewableBrokers'] = [];
+
+			for(var j = 0; j < brokers.length; j++) {
+
+				if(brokers[j]['id'] != brokers[i]['id']) {
+					var u = mockCommunicator.getUser(brokers[j]['userId']);
+					var obj = {
+						'id':brokers[j]['id'],
+						'name':u['name'],
+						'surname':u['surname'],
+						'initials':u['initials']
+					}
+					brokers[i]['brokerViewableBrokers'].push(obj);
+				}
+			}
+
+		}
+
+		//var brokersOfBrokerage = mockCommunicator.getBrokersForBrokerTableInBrokerageTab(brokerAdmin['BrokerageId'])
 		
 		var mockResponse = 
 		{	
 			'user':user,
 			'brokerAdmin':brokerAdmin,
 			'brokerage':brokerage,
-			'brokersOfBrokerage':brokersOfBrokerage
+			'brokersOfBrokerage':brokers
 		};
 
 		ajaxPost(GET_DEFAULT_BROKER_ADMIN_DATA_URL,onGetDefaultBrokerAdminSuccess,onGetDefaultBrokerAdminFailure,requestObject,mockResponse);
 	}
-
 
 	function onGetDefaultBrokerAdminSuccess(response) {
 
@@ -168,6 +192,70 @@ var brokerAdminController = new function() {
 
 		alert('something messed up');
 	}
+
+	/*	DONE
+		brokerAdmin/getBrokeragesAndTheirBrokers
+
+		requestObject:{
+			insuranceAgencyId
+		}
+
+		responseObject: {
+			brokeragesAndBrokers:
+			[
+				{
+					id,  (brokerageId)
+					name,
+					brokers:
+					[
+						{
+							id, (brokerId)
+							initials,
+							surname,
+							name
+						}
+					]
+				}
+			]
+		}
+	*/
+	this.getBrokeragesAndTheirBrokers = function(successCallback,failCallback) {
+
+		var requestObject = '';
+		var mockResponse = {
+			'brokeragesAndBrokers':[]
+		};
+
+		var brokers = mockCommunicator.getBrokersOfBrokerage(brokerage['id']);
+
+		var brokerageWithBrokers = {
+			'id':brokerage['id'],
+			'name':brokerage['name'],
+			'brokers':[]
+		}
+
+		for(var j = 0; j < brokers.length; j++) {
+
+			var broker = brokers[j];
+			var userDetails = mockCommunicator.getDetailsOfUser(broker['userId']);
+
+			var neededDetailsOfBroker = {
+				'id':broker['id'],
+				'initials':userDetails['initials'],
+				'surname':userDetails['surname'],
+				'name':userDetails['name'],
+			}
+
+			brokerageWithBrokers['brokers'].push(neededDetailsOfBroker);
+		}
+
+		mockResponse['brokeragesAndBrokers'].push(brokerageWithBrokers);
+
+		console.log('getBrokeragesAndTheirBrokers');
+		console.log(mockResponse);
+
+		ajaxPost('',successCallback,failCallback,requestObject,mockResponse);
+	};
 
 	/*
 		Note: updates a brokerage 
