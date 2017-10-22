@@ -1384,6 +1384,7 @@ var createQuote = new function()
 				$('#myModal').on('hidden.bs.modal', function () {
 				  // Load up a new modal...
 				  shareModal.show(response.id);
+				  $(this).off();
 				});
 				//setTimeout(shareModal.show(response.id),50000);
 			},
