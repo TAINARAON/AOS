@@ -1046,43 +1046,19 @@ var insurerAdminController = new function() {
 	}
 	this.getCrops = function(successCallback,failCallback)
 	{
-		var mockResponse = [
-			{
-				'id':'0',
-				'name':'Apple',
-				'productId':'0',
-				'active':'1',
-				'priceUomId':'0',
-				'areaUomId':'0',
-				'productName':'Winter',
-				'priceUomName':'R',
-				'areaUomName':'Hectare'
-			},
-			{
-				'id':'1',
-				'name':'Banana',
-				'productId':'0',
-				'active':'1',
-				'priceUomId':'0',
-				'areaUomId':'0',
-				'productName':'Winter',
-				'priceUomName':'R',
-				'areaUomName':'Hectare'
-			},
-			{
-				'id':'2',
-				'name':'Zebra Fruit',
-				'productId':'1',
-				'active':'1',
-				'priceUomId':'1',
-				'areaUomId':'0',
-				'productName':'Winter',
-				'priceUomName':'R',
-				'areaUomName':'Hectare'
-			}
-		];
+		var mockResponse = [];
 
-		ajaxGet(GET_CROPS,successCallback,failCallback,mockResponse);
+		var crops = mockCommunicator.getCrops();
+
+		for(var i = 0; i < crops.length; i++) {
+			var areaUom = mockCommunicator.getAreaUom(crops[i]['areaUomId']);
+			var priceUom = mockCommunicator.getPriceUom(crops[i]['priceUomId']);
+
+			crops[i].areaUomName = areaUom['name'];
+			crops[i].priceUomName = priceUom['name'];
+		}
+
+		ajaxGet(GET_CROPS,successCallback,failCallback,crops);
 	}
 	this.getCropsOfProduct = function(successCallback,failCallback,requestObject)
 	{
@@ -1126,6 +1102,7 @@ var insurerAdminController = new function() {
 	}
 	this.createCrop = function(successCallback,failCallback,requestObject)
 	{
+		var newId = mockCommunicator.createCrop(requestObject);
 		var mockResponse = {
 			'message':'Saved'
 		}

@@ -6,8 +6,6 @@
 	loader.loadPartOfPage("html/insurer_admin/systemkey/crop.html",TARGET_CONTAINER);
 })();
 
-
-
 function initOnClickListeners(TARGET_CONTAINER) {
 
 	$('#systemkey_menu_item_crops').on('click',function() {

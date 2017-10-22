@@ -78,7 +78,7 @@ function setOnSaveOnClickListener() {
 				clearCreateCropModal();
 
 				// reload crop view table
-				$('#systemkey_crop_view_product_dropdown').trigger('change');
+				repopulateCropTable('ALL');
 			},
 			function(response){
 				util.createNotification(response.message,'error');
