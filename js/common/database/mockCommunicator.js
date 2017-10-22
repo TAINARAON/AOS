@@ -2113,6 +2113,11 @@ var mockCommunicator = new function()
 	this.createLimit = function(data) {
 
 		data.id = this.limitTable.length;
+
+		// TODO
+		// remove this. should be calculated from policies
+		data.runningValue = 0;
+		// END
 		this.limitTable.push(data);
 
 		return data.id;
