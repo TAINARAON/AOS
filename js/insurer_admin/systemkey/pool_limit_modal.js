@@ -23,6 +23,7 @@ function getCreatePoolLimitDataSuccess(response) {
 	districts = response['districts'];
 
 	populateCropDropdownValues();
+	populateDistrictDropdownValues();
 }
 function getCreatePoolLimitDataFailure(response) {
 
@@ -44,14 +45,30 @@ function populateCropDropdownValues() {
 	for(var i = 0; i < values.length; i++)
 	{
 		selectElement
-			.append($('<option></option>').text(values[i]['name']).val(values[i]['id']))
-			.on('change',function() {
-				filterTable($(this).find(":selected").val());
-			});
+			.append($('<option></option>').text(values[i]['name']).val(values[i]['id']));
 	}
+
+	selectElement.on('change',function() {
+		requiredFields[CROP_INDEX] = true;
+	});
+}
+function populateDistrictDropdownValues() {
+
+	var selectElement = $('#systemkey_pool_limit_district_dropdown');
+
+	var values = districts;
+	
+	for(var i = 0; i < values.length; i++)
+	{
+		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']));
+	}
+
+	selectElement.on('change',function() {
+		requiredFields[DISTRICT_INDEX] = true;
+	});
 }
 
-function repopulateCropDropdownValues(productId)
+/*function repopulateCropDropdownValues(productId)
 {
 	var selectElement = $('#systemkey_tariff_crop_dropdown');
 	selectElement.empty();
@@ -66,22 +83,8 @@ function repopulateCropDropdownValues(productId)
 	selectElement.on('change',function() {
 		requiredFields[CROP_INDEX] = true;
 	})
-}
-function populateDistrictDropdownValues() {
+}*/
 
-	var selectElement = $('#systemkey_tariff_district_dropdown');
-
-	var values = districts;
-	
-	for(var i = 0; i < values.length; i++)
-	{
-		selectElement.append($('<option></option>').text(values[i]['name']).val(values[i]['id']));
-	}
-
-	selectElement.on('change',function() {
-		requiredFields[DISTRICT_INDEX] = true;
-	})
-}
 
 function savePoolLimit() {
 
@@ -112,8 +115,9 @@ function createPoolLimitSuccess() {
 	resetModal();
 	
 	// Reload page - TODO: currently the whole systemkeys page is reloaded. Only the limit pool needs to be refreshed
-	loader.loadPage('html/insurer_admin/systemkeys.html');
-
+	//setTimeout(function() {loader.loadPage('html/insurer_admin/systemkeys.html');}, 1500);
+	populatePoolLimitTable();
+	
 }
 function createPoolLimitFailure() {
 
@@ -140,19 +144,4 @@ function resetModal() {
 	for(var i = 0; i < requiredFields.length; i++) {
 		requiredFields[i] = false;
 	}
-}
-
-function displayFailureNotification(message) {
-
-	util.createNotification(message,'error');
-	
-}
-function displaySuccessNotification() {
-	
-	util.createNotification('Tariff created!');
-}
-
-function validateValues(coveragePercentage,tariffOptionDamageTypesArray) {
-	// TODO
-	return true;
 }

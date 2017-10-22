@@ -28,7 +28,7 @@ function getDataSuccessCallback(response) {
 	populateDistrictDropdownValues();
 	populateCropDropdownValues();
 
-	populateTable();
+	populatePoolLimitTable();
 }
 function getDataFailureCallback(response) {
 
@@ -68,9 +68,10 @@ function populateCropDropdownValues() {
 		});
 }
 
-function populateTable() {
+function populatePoolLimitTable() {
 
 	var tableBody = $('#systemkey_pool_limit_view_pool_limit_table_body');
+	tableBody.empty();
 
 	for(var i = 0; i < limits.length; i++) {
 

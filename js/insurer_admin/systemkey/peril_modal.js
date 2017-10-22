@@ -27,8 +27,6 @@ function initiateOnClicks() {
 			'name':name
 		}
 
-		console.log(perilObject);
-
 		insurerAdminController.createPeril(
 			function(response){
 				util.createNotification(response.message);

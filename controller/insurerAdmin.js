@@ -281,11 +281,7 @@ var insurerAdminController = new function() {
 		ajaxPost(GET_BUSINESS_UNITS_AND_THEIR_FARMS,successCallback,failCallback,requestObject,mockResponse);
 	};
 
-
-	// #######################################################
-
-
-	// NEW STUFF 2017/10/16.
+	// DONE
 	/*  
 		insurerAdmin/getDataForPoolLimitSystemkeyView
 
@@ -322,69 +318,6 @@ var insurerAdminController = new function() {
 			'insuranceAgencyId':insuranceAgencyId
 		};
 
-		/*var mockResponse = {
-			'crops':
-			[
-				{
-					id:0,name:"Apple"
-				},
-				{
-					id:1,name:"Banana"
-				},
-			],
-			'districts':
-			[
-				{
-					id:0,name:"Alberton"
-				},
-				{
-					id:1,name:"Bellville"
-				},
-			],
-			'limits':
-			[
-				{
-					'id':'0',
-					'districtId':0,
-					'cropId':0,
-					'seasonId':0,
-					'maximum':10000,
-					'runningValue':2000,
-					'additionalTariff':5,
-					'insuranceAgencyId':0
-				},
-				{
-					'id':'1',
-					'districtId':0,
-					'cropId':1,
-					'seasonId':0,
-					'maximum':11000,
-					'runningValue':2000,
-					'additionalTariff':6,
-					'insuranceAgencyId':0
-				},
-				{
-					'id':'2',
-					'districtId':1,
-					'cropId':0,
-					'seasonId':0,
-					'maximum':11110,
-					'runningValue':1110,
-					'additionalTariff':10,
-					'insuranceAgencyId':0
-				},
-				{
-					'id':'3',
-					'districtId':1,
-					'cropId':1,
-					'seasonId':0,
-					'maximum':20100,
-					'runningValue':2000,
-					'additionalTariff':4,
-					'insuranceAgencyId':0
-				},
-			]
-		}*/
 		var limits = mockCommunicator.getLimits();
 		var crops = [];
 		var districts = [];
@@ -411,7 +344,8 @@ var insurerAdminController = new function() {
 
 		ajaxPost(GET_DATA_FOR_POOL_LIMIT_SYSTEMKEY_VIEW_URL,successCallback,failureCallback,requestObject,mockResponse);
 	}
-	/*  
+
+	/*  DONE
 		insurerAdmin/createPoolLimit
 
 		requestObject:{
@@ -427,10 +361,18 @@ var insurerAdminController = new function() {
 	*/
 	this.createPoolLimit = function(successCallback,failureCallback,requestObject) {
 
-		ajaxPost(CREATE_POOL_LIMIT_URL,successCallback,failureCallback,requestObject);
+		var newPoolLimitId = mockCommunicator.createLimit(requestObject);
+
+		var mockResponse = {
+			'id':newPoolLimitId,
+			'messsage':'',
+			'status':true
+		}
+
+		ajaxPost('',successCallback,failureCallback,requestObject,mockResponse);
 	}
 
-	/*  
+	/*  DONE
 		insurerAdmin/getCreatePoolLimitData
 
 		requestObject:{
@@ -442,9 +384,24 @@ var insurerAdminController = new function() {
 			'districts':[]
 		}
 	*/
-	this.getCreatePoolLimitData = function() {
+	this.getCreatePoolLimitData = function(successCallback,failureCallback,requestObject) {
 
+		var crops = mockCommunicator.getCrops();
+		var districts = mockCommunicator.getDistricts();
+		console.log(districts);
+		var mockResponse = {
+			'crops':crops,
+			'districts':districts
+		};
+
+		ajaxPost('',successCallback,failureCallback,requestObject,mockResponse);
 	}
+
+	// #######################################################
+
+	
+
+	
 	// END OF NEW STUFF 2017/10/16
 
 	/*  
@@ -578,6 +535,7 @@ var insurerAdminController = new function() {
 
 		alert("ERROR! Could not initiate insuranceAgency");
 	}*/
+
 	/*   NOT SENT YET
 		insurerAdmin/getBrokerDetailsOfBrokerage
 
@@ -596,7 +554,7 @@ var insurerAdminController = new function() {
 			]
 		}
 	*/
-	this.aagetBrokerDetailsOfBrokerage = function(successCallback,failCallback,brokerageId) {
+	/*this.getBrokerDetailsOfBrokerage = function(successCallback,failCallback,brokerageId) {
 
 		var requestObject = 
 		{
@@ -614,7 +572,7 @@ var insurerAdminController = new function() {
 		}
 
 		ajaxPost(GET_BROKER_DETAILS_OF_BROKERAGE_URL,successCallback,failCallback,requestObject,mockResponse);
-	};	// USED ???
+	};*/	// USED ???
 	
 		
 
@@ -1209,32 +1167,12 @@ var insurerAdminController = new function() {
 	}
 	this.getPerils = function(successCallback,failCallback)
 	{
-		var mockResponse = [
-			{
-				'id':'0',
-				'name':'Fire',
-			},
-			{
-				'id':'1',
-				'name':'Flood',
-			},
-			{
-				'id':'2',
-				'name':'Dew',
-			},
-			{
-				'id':'3',
-				'name':'Bugs',
-			},
-			{
-				'id':'4',
-				'name':'Godzilla',
-			}
-		];
+		var mockResponse =mockCommunicator.getPerils();
 		ajaxGet(GET_PERILS,successCallback,failCallback,mockResponse);
 	}
 	this.createPeril = function(successCallback,failCallback,requestObject)
 	{
+		mockCommunicator.createDamageType(requestObject);
 		var mockResponse = {
 			'message':'Saved'
 		};
