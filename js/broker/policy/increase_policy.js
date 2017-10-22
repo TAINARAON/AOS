@@ -40,8 +40,10 @@ var increasePolicy = new function(){
 		mainPolicy.brokerId = brokerController.getBroker().id;
 		mainPolicy.linkedToPolicyId = mainPolicy.id;
 		console.log(mainPolicy);
+
 		brokerController.savePolicy(
 			function(response){
+				//debugger;
 				util.createNotification(response.message);
 				policyViewer.refresh();
 				hide();
@@ -216,13 +218,15 @@ var increasePolicy = new function(){
 		mainPolicy = policy;
 		setLandToEdit(policy);
 
-		modal.style.cssText = "display: block; padding-right: 17px;";
-		modal.className = "modal fade in";
+		/*modal.style.cssText = "display: block; padding-right: 17px;";
+		modal.className = "modal fade in";*/
+		$(modal).modal('show');
 	}
 
 	function hide()
 	{
-		modal.style.cssText = "display: none;";
-		modal.className = "modal fade";
+		/*modal.style.cssText = "display: none;";
+		modal.className = "modal fade";*/
+		$(modal).modal('hide');
 	}
 }

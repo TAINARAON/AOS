@@ -32,8 +32,9 @@ var shareModal = new function()
 			function(response){
 				quotePDF.loadValues(response);
 		
-				modal.style.cssText = "display: block; padding-right: 17px;";
-				modal.className = "modal fade in";
+				/*modal.style.cssText = "display: block; padding-right: 17px;";
+				modal.className = "modal fade in";*/
+				$(modal).modal('show');
 			},
 			function(response){
 				pdfContainer.innerHTML = "No quote data available at this time";
@@ -49,7 +50,8 @@ var shareModal = new function()
 
 	function hide()
 	{
-		modal.style.cssText = "display: none;";
-		modal.className = "modal fade";
+		/*modal.style.cssText = "display: none;";
+		modal.className = "modal fade";*/
+		$(modal).modal('hide');
 	}
 }
