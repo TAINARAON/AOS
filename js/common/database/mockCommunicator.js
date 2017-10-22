@@ -1465,7 +1465,8 @@ var mockCommunicator = new function()
 			'insurerId':null,
 			'acceptedOn':'2017-08-30 19:01:05',
 			'active':'1',
-			'linkedToPolicyId':null,	
+			'linkedToPolicyId':null,
+			'premium':20000		
 		},
 		{
 			'id':'1',
@@ -1475,7 +1476,8 @@ var mockCommunicator = new function()
 			'insurerId':null,
 			'acceptedOn':'2017-08-30 19:03:05',
 			'active':'1',
-			'linkedToPolicyId':null,	
+			'linkedToPolicyId':null,
+			'premium':20000	
 		},
 		{
 			'id':'2',
@@ -1485,7 +1487,8 @@ var mockCommunicator = new function()
 			'insurerId':null,
 			'acceptedOn':'2017-08-30 19:01:05',
 			'active':'1',
-			'linkedToPolicyId':null,	
+			'linkedToPolicyId':null,
+			'premium':20000		
 		},
 		{
 			'id':'3',
@@ -1495,7 +1498,8 @@ var mockCommunicator = new function()
 			'insurerId':null,
 			'acceptedOn':'2017-08-30 19:03:05',
 			'active':'1',
-			'linkedToPolicyId':null,	
+			'linkedToPolicyId':null,
+			'premium':20000	
 		}
 	];
 	this.createPolicy = function(data) {
