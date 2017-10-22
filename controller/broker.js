@@ -30,10 +30,10 @@ var brokerController = new function() {
 		
 		getDefaultBrokerData(userId);
 	}
-
+	// DONE
 	function getDefaultBrokerData(userId) {
 
-	var requestObject = {
+		var requestObject = {
 			'id':userId
 		};
 
@@ -50,11 +50,12 @@ var brokerController = new function() {
 			'viewableBrokers':viewableBrokers
 		};
 
+		console.log('getDefaultBrokerData');
 		console.log(mockResponse);
 
 		ajaxPost(GET_DEFAULT_BROKER_DATA_URL,onGetDefaultBrokerDataSuccess,onGetDefaultBrokerDataFailure,requestObject,mockResponse);
 	}
-
+	// DONE
 	function onGetDefaultBrokerDataSuccess(response) {
 
 		util.createNotification('Logged in as Broker');
@@ -66,13 +67,13 @@ var brokerController = new function() {
 
 		loader.loadRole('broker');
 	}
-
+	// DONE
 	function onGetDefaultBrokerDataFailure(response) {
 
 		alert('something messed up');
 	}
 
-	/*
+	/*	
 		broker/getBusinessUnits
 
 		requestObject:{
@@ -89,11 +90,15 @@ var brokerController = new function() {
 			'brokerages':mockCommunicator.getBrokerages()
 		};
 
+		console.log('getBusinessUnits');
+		console.log(mockResponse);
+
+
 		ajaxPost(GET_BUSINESS_UNITS_URL,successCallback,failCallback,requestObject,mockResponse);
 	}
 
-	/*
-		broker/getDistricts  (GET)
+	/* 	DONE
+		broker/getDistricts
 
 		responseObject: {
 			districts:[{whole district}],
@@ -107,10 +112,13 @@ var brokerController = new function() {
 			'districts':mockCommunicator.getDistricts()
 		}
 
+		console.log('getDistricts');
+		console.log(mockResponse);
+
 		ajaxGet(GET_DISTRICTS_URL,successCallback,failureCallback,mockResponse);
 	}
 
-	/*	
+	/*	DONE
 		broker/getBusinessUnitsAndTheirFarms
 
 		requestObject:{
@@ -141,53 +149,32 @@ var brokerController = new function() {
 			"brokerId":broker['id']
 		};
 
-		var mockResponse = {
-			'businessUnitsAndFarms':
-			[
-				{
-					id:0, 
-					name:'Business Unit 0',
-					farms:
-					[
-						{
-							id:0, 
-							name:'Farm 0',
-							latitude:'-2.518484',
-							longitude:'1.288142',
-							districtName:'Bellville'
-						},
-						{
-							id:1, 
-							name:'Farm 1',
-							latitude:'2.345245',
-							longitude:'-3.35111',
-							districtName:'Kraaifontein'
-						}
-					]
-				},
-				{
-					id:1, 
-					name:'Business Unit 1',
-					farms:
-					[
-						{
-							id:2, 
-							name:'Farm 2',
-							latitude:'1.423523',
-							longitude:'-0.454646',
-							districtName:'Mooifontein'
-						},
-						{
-							id:3, 
-							name:'Farm 3',
-							latitude:'-2.345235',
-							longitude:'1.2523523',
-							districtName:'Centurion'
-						}
-					]
-				}
-			]
+		var businessUnitsAndFarms = [];
+
+		// Getting BusinessUnits that may be viewed by the Broker
+		var myPolicies = mockCommunicator.getPoliciesByBrokerId(broker['id']);
+		var businessUnitsIMaySeeIds = [];
+		var uniqueBusinessUnitsIMaySeeIds = [];
+		for(var p = 0; p < myPolicies.length; p++) {
+			businessUnitsIMaySeeIds.push(myPolicies[p]['businessUnitId']);
 		}
+		// Remove duplicates
+		$.each(businessUnitsIMaySeeIds, function(i, el){
+		    if($.inArray(el, uniqueBusinessUnitsIMaySeeIds) === -1) uniqueBusinessUnitsIMaySeeIds.push(el);
+		});
+		// Getting the businessUnit objects
+		for(var i = 0; i < uniqueBusinessUnitsIMaySeeIds.length; i++) {
+
+			var businessUnitAndItsFarms = mockCommunicator.getBusinessUnitAndItsFarms(uniqueBusinessUnitsIMaySeeIds[i]);
+			businessUnitsAndFarms.push(businessUnitAndItsFarms);
+		}
+
+		var mockResponse = {
+			'businessUnitsAndFarms':businessUnitsAndFarms
+		}
+
+		console.log('getBusinessUnitsAndTheirFarms');
+		console.log(businessUnitsAndFarms);
 
 		ajaxPost(GET_BUSINESS_UNITS_AND_THEIR_FARMS,successCallback,failCallback,requestObject,mockResponse);
 	};

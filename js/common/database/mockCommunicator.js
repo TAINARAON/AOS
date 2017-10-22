@@ -516,6 +516,36 @@ var mockCommunicator = new function()
 		data.id = id;
 		this.businessUnitMemberTable[id] = data;
 	}
+	this.getBusinessUnitsAndTheirFarms = function() {
+
+        var businessUnitsWithFarms = [];
+
+        for(var i=0;i<this.businessUnitTable.length;i++) {
+            
+            var businessUnit = businessUnitTable[i];
+
+            var businessUnitWithFarms = {
+                'businessUnit':businessUnit,
+                'farms':this.getFarmsByBusinessUnitId(businessUnit['id'])
+            };
+            
+            businessUnitsWithFarms.push(businessUnitWithFarms);
+        }
+
+        return businessUnitsWithFarms;
+    }
+
+    this.getBusinessUnitAndItsFarms = function(businessUnitId) {
+        
+        var businessUnit = this.getBusinessUnit(businessUnitId);
+
+        var businessUnitWithFarms = {
+            'businessUnit':businessUnit,
+            'farms':this.getFarmsByBusinessUnitId(businessUnit['id'])
+        };
+
+        return businessUnitWithFarms;
+    }
 
 // FARM - done
 	this.farmTable = [
@@ -579,6 +609,18 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+	this.getFarmsByBusinessUnitId = function(businessUnitId) {
+
+        var farms = [];
+
+        for(var i=0;i<this.farmTable.length;i++) {
+            if(this.farmTable[i]['businessUnitId']==businessUnitId) {
+                farms.push(this.farmTable[i]);
+            }
+        }
+
+        return farms;
+    }
 
 // INSURER ADMIN - done
 	this.insurerAdminTable = [
@@ -1414,7 +1456,7 @@ var mockCommunicator = new function()
 
 		return policies;
 	}
-	this.getPolicyByBrokerId = function(brokerId)
+	this.getPoliciesByBrokerId = function(brokerId)
     {
         var policies = [];
 
