@@ -589,9 +589,41 @@ var brokerController = new function() {
 
 			for(var i = 0; i < quotes.length; i++)
 			{
-				if(quotes[i].brokerId == requestObject.brokerId)
+				var quote = quotes[i];
+				if(quote.brokerId == requestObject.brokerId && quote.active == 1)
 				{
-					quotes[i]["businessUnit"] = mockCommunicator.getBusinessUnit(quotes[i].businessUnitId);
+					quote["businessUnit"] = mockCommunicator.getBusinessUnit(quote.businessUnitId);
+					quote["quoteLandEntries"] = mockCommunicator.getQuoteLandEntriesByQuoteId(quote.id);
+
+					if(requestObject.quoteNumber != "" && requestObject.quoteNumber != quote.quoteNumber)
+					{
+						continue;
+					}
+
+					if(requestObject.businessUnitName != "" && requestObject.businessUnitName != quote.businessUnit.name)
+					{
+						continue;
+					}
+
+					for(var j = 0; j < quote.quoteLandEntries.length; j++)
+					{
+						var landEntry = quote.quoteLandEntries[j];
+
+						landEntry['additionalTariff'] = 0.25;
+						landEntry['tariff'] = 0.66666666666;
+
+						landEntry["farm"] = mockCommunicator.getFarm(landEntry.farmId);
+						landEntry["crop"] = mockCommunicator.getFarm(landEntry.cropId);
+						landEntry["quoteLandEntryDamageTypes"] = mockCommunicator.getQuoteLandEntryDamageTypesByQuoteLandEntryId(landEntry.id);
+						for(var k = 0; k < landEntry.quoteLandEntryDamageTypes.length; k++)
+						{
+							var quoteLandEntryDamageType = landEntry.quoteLandEntryDamageTypes[k];
+							quoteLandEntryDamageType["tariffOptionDamageType"] = mockCommunicator.getTariffOptionDamageType(quoteLandEntryDamageType.tariffOptionDamageTypeId);
+							quoteLandEntryDamageType.tariffOptionDamageType["damageType"] = mockCommunicator.getDamageType(quoteLandEntryDamageType.tariffOptionDamageType.damageTypeId);
+							quoteLandEntryDamageType.tariffOptionDamageType["tariffOption"] = mockCommunicator.getTariffOption(quoteLandEntryDamageType.tariffOptionDamageType.tariffOptionId);
+							quoteLandEntryDamageType.tariffOptionDamageType.tariffOption["tariffOptionType"] = mockCommunicator.getTariffOptionType(quoteLandEntryDamageType.tariffOptionDamageType.tariffOption.tariffOptionTypeId);
+						}
+					}
 
 					mockResponse.push(quotes[i]);
 				}
@@ -823,8 +855,88 @@ var brokerController = new function() {
 				'message':'Accepted'
 			}
 
+			var timeSigned = requestObject.acceptedTime;
+			if(timeSigned == null) {
+
+	            timeSigned = util.getCurrentDateTime();
+	        }
+	        debugger;
+	        // Get quote, create policy object from quote object. 
+	        var quote = mockCommunicator.getQuote(requestObject.quoteId);
+	        mockCommunicator.deactivateQuote(requestObject.quoteId);
+	        var policy = {
+
+	            'policyNumber':generatePolicyNumber(quote),
+	            'businessUnitId':quote['businessUnitId'],
+	            'brokerId':quote['brokerId'],
+	            'insurerId':quote['insurerId'],
+	            'acceptedOn':timeSigned,
+	            'linkedToPolicyId':null,
+	            'active':'1'
+	        };
+
+	        var newPolicyId = savePolicyObject(policy);
+	        if(newPolicyId == null) {
+	            alert('error persisting policy object');
+	            return;
+	        }
+
+	        // Get quoteLandEntries, create policyLandEntries by just replacing quoteId with policyId
+	        var quoteLandEntries = quoteInvoker.getLandEntriesOfQuote(requestObject.quoteId);
+	        
+	        for(var i = 0; i < quoteLandEntries.length; i++) {
+
+	            var quoteLandEntry = quoteLandEntries[i];
+	            var quoteLandEntryDamageTypes = quoteInvoker.getTariffOptionDamageTypesOfQuoteLandEntry(quoteLandEntry['id']);
+
+	            // Create and save policyLandEntry object
+	            var policyLandEntry = quoteLandEntry;
+	            delete policyLandEntry['quoteId'];
+	            policyLandEntry.policyId = newPolicyId;
+	            // Save policyLandEntryObject
+	            var newPolicyLandEntryId = savePolicyLandEntryObject(policyLandEntry);
+	            if(newPolicyLandEntryId == null) {
+	                alert('failed to save policyLandEntry object. Must revert whole policy object that was saved with ID of '+newPolicyId);
+	                return;
+	            }
+
+	            for(var j = 0; j < quoteLandEntryDamageTypes.length; j++) {
+
+	                var quoteLandEntryDamageType = quoteLandEntryDamageTypes[j];
+
+	                var policyLandEntryDamageType = quoteLandEntryDamageType;
+	                delete policyLandEntryDamageType['quoteLandEntryId'];
+	                policyLandEntryDamageType['policyLandEntryId'] = newPolicyLandEntryId;
+	                // save policyLandEntryDamageType
+	                var newPledtId = savePolicyLandEntryDamageTypeObject(policyLandEntryDamageType);
+
+	                if(newPledtId == null) {
+	                    alert('failed to save policyLandEntryDamageType object. Must revert whole policy object that was saved with ID of '+newPolicyId);
+	                    return;
+	                }
+	            }
+	        }
+
 			ajaxPost("",successCallback,failCallback,requestObject,mockResponse);
 		}
+
+		function savePolicyLandEntryDamageTypeObject(o) {
+
+	        return mockCommunicator.createPolicyLandEntryDamageType(o);
+	    }
+
+	    function savePolicyLandEntryObject(policyLandEntry) {
+
+	        return mockCommunicator.createPolicyLandEntry(policyLandEntry);
+	    }
+	    function savePolicyObject(policy) {
+
+	        return mockCommunicator.createPolicy(policy);
+	    }
+
+	    function generatePolicyNumber(quote) {
+	        return Math.floor((Math.random() * 100000) + 1);
+	    }
 		// ^ View ^
 		// Share
 		this.getQuotePDFData = function(successCallback,failCallback,requestObject)
