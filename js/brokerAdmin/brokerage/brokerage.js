@@ -35,6 +35,7 @@ function populateBrokerTable() {
 }
 
 function getBrokerDetailsOfBrokerageSuccessCallback(response) {
+
 	var container = $('#broker_admin_broker_container');
 
 	var accordionContainer = document.createElement("UL");
@@ -44,7 +45,8 @@ function getBrokerDetailsOfBrokerageSuccessCallback(response) {
 	createHeaderAccordionItem(accordionContainer);
 	for(var i = 0;i<response.length;i++)
 	{
-		createBrokerAccordionParentItem(response[i], accordionContainer);
+		var broker = response[i];
+		createBrokerAccordionParentItem(broker, accordionContainer);
 	}
 }
 function getBrokerDetailsOfBrokerageFailCallback(response) {
@@ -166,8 +168,6 @@ function editBroker(brokerId) {
 function editBrokerSuccessCallback(response) {
 
 	util.createNotification('Request to update broker successful.');
-	console.log("editBrokerSuccessCallback");
-	console.log(response);
 }
 
 function editBrokerFailureCallback(response) {
@@ -280,8 +280,12 @@ function createBrokerAccordionParentItem(broker, container)
 		editButton.className = "btn btn-success col-md-1";
 
 		var betterEditButton = $(editButton);
+		betterEditButton.on('click',function() {
 
-		editButton.onclick = function(){onEditBroker(broker);};
+			onEditBroker(broker);
+		})
+
+		//editButton.onclick = function(){onEditBroker(broker);};
 
 		createAccordionItemDetailDiv("(" + broker.initials + ") " + broker.name + " " + broker.surname, parentTitle).className = "col-md-2";
 		createAccordionItemDetailDiv(broker.branch, parentTitle).className = "col-md-2";
