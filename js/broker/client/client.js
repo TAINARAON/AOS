@@ -49,18 +49,19 @@ function onGetBusinessUnitsAndTheirBrokersFailure() {
 }
 
 function populateBusinessUnitsDropdownValues(businessUnitsAndFarms) {
-
+	console.log('populateBusinessUnitsDropdownValues');
+	console.log(businessUnitsAndFarms);
 	var selectElement = $('#broker_business_unit_business_unit_dropdown');
 
 	for(var i = 0; i < businessUnitsAndFarms.length; i++)
 	{
-		var businessUnit = businessUnitsAndFarms[i];
+		var businessUnitsAndFarm = businessUnitsAndFarms[i];
+		var businessUnit = businessUnitsAndFarm['businessUnit'];
+		var farms = businessUnitsAndFarm['farms'];
 
 		selectElement.append($('<option></option>').text(businessUnit['name']).val(businessUnit['id']));	
 
 		// Add Broker entries in table
-		var farms = businessUnit['farms'];
-
 		addFarmEntriesToTable(businessUnit['id'],farms);
 	}
 
