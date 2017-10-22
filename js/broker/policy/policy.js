@@ -273,7 +273,7 @@ var policyViewer = new function ()
 		var childTitle = document.createElement("A");
 		childTitle.className = "toggle";
 		childTitle.style.cssText = "display: flex;";
-
+		
 		createAccordionItemDetailDiv(landEntry.landNumber , childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv(landEntry.crop.name, childTitle).className = "col-md-2";
 		createAccordionItemDetailDiv(landEntry.cultivar, childTitle).className = "col-md-2";

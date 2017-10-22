@@ -1497,27 +1497,6 @@ var mockCommunicator = new function()
 			'active':'1',
 			'linkedToPolicyId':null,	
 		}
-		,
-		{
-			'id':'4',
-			'policyNumber':'00002',
-			'businessUnitId':'0',
-			'brokerId':'1',
-			'insurerId':null,
-			'acceptedOn':'2017-08-30 19:01:05',
-			'active':'1',
-			'linkedToPolicyId':null,	
-		},
-		{
-			'id':'5',
-			'policyNumber':'00003',
-			'businessUnitId':'0',
-			'brokerId':'1',
-			'insurerId':null,
-			'acceptedOn':'2017-08-30 19:03:05',
-			'active':'1',
-			'linkedToPolicyId':null,	
-		}
 	];
 	this.createPolicy = function(data) {
 
@@ -1817,6 +1796,26 @@ var mockCommunicator = new function()
 		{
 			'id':'11',
 			'policyLandEntryId':'5',
+			'tariffOptionDamageTypeId':'1',
+		},
+		{
+			'id':'12',
+			'policyLandEntryId':'6',
+			'tariffOptionDamageTypeId':'0',
+		},
+		{
+			'id':'13',
+			'policyLandEntryId':'6',
+			'tariffOptionDamageTypeId':'1',
+		},
+		{
+			'id':'14',
+			'policyLandEntryId':'7',
+			'tariffOptionDamageTypeId':'0',
+		},
+		{
+			'id':'15',
+			'policyLandEntryId':'7',
 			'tariffOptionDamageTypeId':'1',
 		}
 	];

@@ -613,7 +613,7 @@ var brokerController = new function() {
 						landEntry['tariff'] = 0.66666666666;
 
 						landEntry["farm"] = mockCommunicator.getFarm(landEntry.farmId);
-						landEntry["crop"] = mockCommunicator.getFarm(landEntry.cropId);
+						landEntry["crop"] = mockCommunicator.getCrop(landEntry.cropId);
 						landEntry["quoteLandEntryDamageTypes"] = mockCommunicator.getQuoteLandEntryDamageTypesByQuoteLandEntryId(landEntry.id);
 						for(var k = 0; k < landEntry.quoteLandEntryDamageTypes.length; k++)
 						{
@@ -860,7 +860,7 @@ var brokerController = new function() {
 
 	            timeSigned = util.getCurrentDateTime();
 	        }
-	        debugger;
+	        
 	        // Get quote, create policy object from quote object. 
 	        var quote = mockCommunicator.getQuote(requestObject.quoteId);
 	        mockCommunicator.deactivateQuote(requestObject.quoteId);
@@ -884,7 +884,32 @@ var brokerController = new function() {
 	        // Get quoteLandEntries, create policyLandEntries by just replacing quoteId with policyId
 	        var quoteLandEntries = quoteInvoker.getLandEntriesOfQuote(requestObject.quoteId);
 	        
-	        for(var i = 0; i < quoteLandEntries.length; i++) {
+	        for(var i = 0; i < quoteLandEntries.length; i++)
+	        {
+	        	var landEntry = quoteLandEntries[i];
+	        	delete landEntry['quoteId'];
+	        	landEntry['policyId'] = newPolicyId;
+	        	var newPolicyLandEntryId = savePolicyLandEntryObject(landEntry);
+	        	if(newPolicyLandEntryId == null) {
+	                alert('failed to save policyLandEntry object. Must revert whole policy object that was saved with ID of '+newPolicyId);
+	                return;
+	            }
+
+	        	for(var j = 0; j < landEntry.quoteLandEntryDamageTypes.length; j++)
+	        	{
+	        		var landEntryDamageType = landEntry.quoteLandEntryDamageTypes[j];
+	        		delete landEntryDamageType['quoteLandEntryId'];
+	        		landEntryDamageType['policyLandEntryId'] = newPolicyLandEntryId;
+	        		var newPledtId = savePolicyLandEntryDamageTypeObject(landEntryDamageType);
+
+	        		if(newPledtId == null) {
+	                    alert('failed to save policyLandEntryDamageType object. Must revert whole policy object that was saved with ID of '+newPolicyId);
+	                    return;
+	                }
+	        	}
+	        }
+
+	        /*for(var i = 0; i < quoteLandEntries.length; i++) {
 
 	            var quoteLandEntry = quoteLandEntries[i];
 	            var quoteLandEntryDamageTypes = quoteInvoker.getTariffOptionDamageTypesOfQuoteLandEntry(quoteLandEntry['id']);
@@ -915,7 +940,7 @@ var brokerController = new function() {
 	                    return;
 	                }
 	            }
-	        }
+	        }*/
 
 			ajaxPost("",successCallback,failCallback,requestObject,mockResponse);
 		}
@@ -994,7 +1019,54 @@ var brokerController = new function() {
 		// View
 		this.getPolicies = function(successCallback,failCallback,requestObject)
 		{
-			var mockResponse = [
+			var mockResponse = [];
+
+			var policies = mockCommunicator.getPolicies(requestObject.policyId);
+			
+			for(var i = 0; i < policies.length; i++)
+			{
+				var policy = policies[i];
+				if(policy.brokerId == requestObject.brokerId && policy.active == 1)
+				{
+					policy["businessUnit"] = mockCommunicator.getBusinessUnit(policy.businessUnitId);
+					policy["policyLandEntries"] = mockCommunicator.getPolicyLandEntriesByPolicyId(policy.id);
+					
+					if(requestObject.policyNumber != "" && requestObject.policyNumber != policy.quoteNumber)
+					{
+						continue;
+					}
+
+					if(requestObject.businessUnitName != "" && requestObject.businessUnitName != policy.businessUnit.name)
+					{
+						continue;
+					}
+
+					for(var j = 0; j < policy.policyLandEntries.length; j++)
+					{
+						var landEntry = policy.policyLandEntries[j];
+
+						landEntry['additionalTariff'] = 0.25;
+						landEntry['tariff'] = 0.66666666666;
+
+						landEntry["farm"] = mockCommunicator.getFarm(landEntry.farmId);
+						landEntry["crop"] = mockCommunicator.getCrop(landEntry.cropId);
+						landEntry["policyLandEntryDamageTypes"] = mockCommunicator.getPolicyLandEntryDamageTypesByPolicyLandEntryId(landEntry.id);
+						
+						for(var k = 0; k < landEntry.policyLandEntryDamageTypes.length; k++)
+						{
+							var policyLandEntryDamageType = landEntry.policyLandEntryDamageTypes[k];
+							policyLandEntryDamageType["tariffOptionDamageType"] = mockCommunicator.getTariffOptionDamageType(policyLandEntryDamageType.tariffOptionDamageTypeId);
+							policyLandEntryDamageType.tariffOptionDamageType["damageType"] = mockCommunicator.getDamageType(policyLandEntryDamageType.tariffOptionDamageType.damageTypeId);
+							policyLandEntryDamageType.tariffOptionDamageType["tariffOption"] = mockCommunicator.getTariffOption(policyLandEntryDamageType.tariffOptionDamageType.tariffOptionId);
+							policyLandEntryDamageType.tariffOptionDamageType.tariffOption["tariffOptionType"] = mockCommunicator.getTariffOptionType(policyLandEntryDamageType.tariffOptionDamageType.tariffOption.tariffOptionTypeId);
+						}
+					}
+					
+					mockResponse.push(policies[i]);
+				}
+			}
+
+			/*var mockResponse = [
 				{
 					'id':'2',
 					'policyNumber':'00002',
@@ -1237,7 +1309,7 @@ var brokerController = new function() {
 						}
 					]	
 				}
-			];
+			];*/
 
 			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
 		}
