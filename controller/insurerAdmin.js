@@ -55,12 +55,7 @@ var insurerAdminController = new function() {
 	}
 	// ################################ DONE #################################
 
-
-
-
-	// ################################ NEEDS FIX ############################
-
-	/*  Works. Needs proper data returned
+	/*  DONE
 		insurerAdmin/getDefaultInsurerAdminData
 
 		request {
@@ -78,33 +73,19 @@ var insurerAdminController = new function() {
 		var requestObject = {
 			'userId':userId
 		};
+		var user = mockCommunicator.getUser(userId);
+		var insurerAdmin = mockCommunicator.getInsurerAdminByUserId(userId);
+		var insuranceAgency = mockCommunicator.getInsuranceAgency(insurerAdmin['insuranceAgencyId']);
 
-		/*var mockResponse = 
-		{
-			'user':{
-				'initials':'S',
-				'name':'Samantha',
-				'surname':'Wiggill',
-				'email':'samantha@gmail.com',
-			},
-			'insurerAdmin':
-			{
-				'id':'0',
-				'insuranceAgencyId':0,
-				'userId':'1',
-				'active':'1',
-			},
-			'insuranceAgency':
-			{
-				'name':'Versekerings Ltd.',
-				'email':'versekerings.ltd@gmail.com',
-				'contactNumber':'062 352 1341',
-				'fspNumber':'fsp_0050'
-			}
-		};*/
+		var mockResponse = {
+			'user':user,
+			'insurerAdmin':insurerAdmin,
+			'insuranceAgency':insuranceAgency
+		}
 
-		ajaxPost(GET_DEFAULT_INSURER_ADMIN_DATA_URL,onGetDefaultInsurerAdminSuccess,onGetDefaultInsurerAdminFailure,requestObject);
+		ajaxPost(GET_DEFAULT_INSURER_ADMIN_DATA_URL,onGetDefaultInsurerAdminSuccess,onGetDefaultInsurerAdminFailure,requestObject,mockResponse);
 	}
+	// DONE
 	function onGetDefaultInsurerAdminSuccess(response) {
 
 		util.createNotification('Logged in as Insurer Admin');
@@ -119,17 +100,13 @@ var insurerAdminController = new function() {
 		
 		loader.loadRole('insurerAdmin');
 	}
+	// DONE
 	function onGetDefaultInsurerAdminFailure(response) {
 
 		alert('something messed up');
 	}
 
-
-
-	// #################################  TO BE WRITTEN  ######################
-
-	
-	/*	20171017
+	/*	DONE
 		insurerAdmin/getInsurersOfInsuranceAgencyWithUserData
 
 		request {
@@ -149,25 +126,31 @@ var insurerAdminController = new function() {
 			'insuranceAgencyId':insuranceAgencyId
 		};
 
+		var insurers = mockCommunicator.getInsurers();
+		var detailedInsurers = [];
+
+		for(var i = 0; i < insurers.length; i++) {
+			var insurer = insurers[i];
+			var user = mockCommunicator.getUser(insurer['userId']);
+			insurer['name'] = user['name'];
+			insurer['surname'] = user['surname'];
+			insurer['initials'] = user['initials'];
+
+			detailedInsurers.push(insurer);
+		}
+
 		var mockResponse = 
 		{	
-			'insurers':[
-				{
-					'name':'Tiaan',
-					'surname':'Gerber',
-					'initials':'T J'
-				},
-				{
-					'name':'Sally',
-					'surname':'Williams',
-					'initials':'S'
-				}
-			]
+			'insurers':insurers
 		};
+
+		console.log('getInsurersOfInsuranceAgencyWithUserData');
+		console.log(mockResponse);
 
 		ajaxPost(GET_INSURERS_OF_INSURANCE_AGENCY_WITH_USER_DATA_URL,successCallback,failureCallback,requestObject,mockResponse);
 	}
-	/*	20171017
+
+	/*	DONE
 		insurerAdmin/getBrokeragesAndTheirBrokers
 
 		requestObject:{
@@ -235,9 +218,13 @@ var insurerAdminController = new function() {
 			mockResponse['brokeragesAndBrokers'].push(brokerageWithBrokers);
 		}
 
+		console.log('getBrokeragesAndTheirBrokers');
+		console.log(mockResponse);
+
 		ajaxPost(GET_BROKERAGES_AND_THEIR_BROKERS,successCallback,failCallback,requestObject,mockResponse);
 	};
-	/*	20171017
+
+	/*	DONE
 		insurerAdmin/getBusinessUnitsAndTheirFarms
 
 		requestObject:{
@@ -268,51 +255,34 @@ var insurerAdminController = new function() {
 			"insuranceAgencyId":insuranceAgency['id']
 		};
 
-		var mockResponse = {
-			businessUnitsAndFarms:
-			[
-				{
-					id:0, 
-					name:'Business Unit 0',
-					farms:
-					[
-						{
-							id:0, 
-							name:'Farm 0'
-						},
-						{
-							id:1, 
-							name:'Farm 1'
-						}
-					]
-				},
-				{
-					id:1, 
-					name:'Business Unit 1',
-					farms:
-					[
-						{
-							id:2, 
-							name:'Farm 2'
-						},
-						{
-							id:3, 
-							name:'Farm 3'
-						}
-					]
-				}
-			]
+		var businessUnitsAndFarms = [];
+		var businessUnitsIMaySeeIds = [];
+
+		var businessUnitsIMaySee = mockCommunicator.getBusinessUnits();
+		console.log(businessUnitsIMaySee);
+		for(var i = 0; i < businessUnitsIMaySee.length; i++) {
+			businessUnitsIMaySeeIds.push(businessUnitsIMaySee[i]['id']);
 		}
+
+		// Getting the businessUnit objectse
+		for(var i = 0; i < businessUnitsIMaySee.length; i++) {
+			console.log(businessUnitsIMaySee[i]);
+			var businessUnitAndItsFarms = mockCommunicator.getBusinessUnitAndItsFarms(businessUnitsIMaySee[i]['id']);
+			businessUnitsAndFarms.push(businessUnitAndItsFarms);
+		}
+
+		var mockResponse = {
+			'businessUnitsAndFarms':businessUnitsAndFarms
+		}
+
+		console.log('getBusinessUnitsAndTheirFarms');
+		console.log(businessUnitsAndFarms);
 
 		ajaxPost(GET_BUSINESS_UNITS_AND_THEIR_FARMS,successCallback,failCallback,requestObject,mockResponse);
 	};
 
-	
 
-
-
-
-
+	// #######################################################
 
 
 	// NEW STUFF 2017/10/16.
@@ -352,7 +322,7 @@ var insurerAdminController = new function() {
 			'insuranceAgencyId':insuranceAgencyId
 		};
 
-		var mockResponse = {
+		/*var mockResponse = {
 			'crops':
 			[
 				{
@@ -414,7 +384,30 @@ var insurerAdminController = new function() {
 					'insuranceAgencyId':0
 				},
 			]
+		}*/
+		var limits = mockCommunicator.getLimits();
+		var crops = [];
+		var districts = [];
+
+		var duplicateCrops = [];
+		var duplicateDistricts = [];
+		for(var i = 0;i < limits.length; i++) {
+			var limit = limits[i];
+
+			var crop = mockCommunicator.getCrop(limit['cropId']);
+			var district = mockCommunicator.getDistrict(limit['districtId']);
+			duplicateCrops.push(crop);
+			duplicateDistricts.push(district);
 		}
+
+		crops = util.returnUniqueEntries(duplicateCrops);
+		districts = util.returnUniqueEntries(duplicateDistricts);
+
+		var mockResponse = {
+			'crops':crops,
+			'districts':districts,
+			'limits':limits
+		};
 
 		ajaxPost(GET_DATA_FOR_POOL_LIMIT_SYSTEMKEY_VIEW_URL,successCallback,failureCallback,requestObject,mockResponse);
 	}

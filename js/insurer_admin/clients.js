@@ -32,14 +32,16 @@ function populateBusinessUnitsDropdownValues(businessUnitsAndFarms) {
 
 	var selectElement = $('#insurer_admin_clients_business_units_dropdown');
 
+	console.log(businessUnitsAndFarms);
 	for(var i = 0; i < businessUnitsAndFarms.length; i++)
 	{
-		var businessUnit = businessUnitsAndFarms[i];
+		var businessUnitAndFarms = businessUnitsAndFarms[i];
+		var businessUnit = businessUnitAndFarms['businessUnit'];
+		var farms = businessUnitAndFarms['farms'];
 
+		console.log('businessUnit');
+		console.log(businessUnit);
 		selectElement.append($('<option></option>').text(businessUnit['name']).val(businessUnit['id']));	
-
-		// Add Broker entries in table
-		var farms = businessUnit['farms'];
 
 		addFarmEntriesToTable(businessUnit['id'],farms);
 	}
