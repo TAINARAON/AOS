@@ -1151,6 +1151,7 @@ var insurerAdminController = new function() {
 	}
 	this.createDistrict = function(successCallback,failCallback,requestObject)
 	{
+		var newId = mockCommunicator.createDistrict(requestObject);
 		var mockResponse = {
 			'message':'Saved'
 		}
@@ -1196,16 +1197,7 @@ var insurerAdminController = new function() {
 	}
 	this.getOptionTypes = function(successCallback,failCallback)
 	{
-		var mockResponse = [
-			{
-				'id':'0',
-				'name':'Franchise',
-			},
-			{
-				'id':'1',
-				'name':'Excess',
-			}
-		];
+		var mockResponse = mockCommunicator.getTariffOptionTypes();
 		ajaxGet(GET_TAX,successCallback,failCallback,mockResponse);
 	}
 	this.createTariffOption = function(successCallback,failCallback,requestObject)

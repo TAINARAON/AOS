@@ -44,7 +44,7 @@ var brokerAdminController = new function() {
 		getDefaultBrokerAdminData(userId);
 	}
 
-	function getDefaultBrokerAdminData(userId) {
+	/*function getDefaultBrokerAdminData(userId) {
 
 		var requestObject = {
 			'id':userId
@@ -127,7 +127,30 @@ var brokerAdminController = new function() {
 		};
 
 		ajaxPost(GET_DEFAULT_BROKER_ADMIN_DATA_URL,onGetDefaultBrokerAdminSuccess,onGetDefaultBrokerAdminFailure,requestObject,mockResponse);
+	}*/
+
+	function getDefaultBrokerAdminData(userId) {
+
+		var requestObject = {
+			'id':userId
+		};
+
+		var user = mockCommunicator.getUser(userId);
+		var brokerAdmin = mockCommunicator.getBrokerAdminByUserId(userId);
+		var brokerage = mockCommunicator.getBrokerage(brokerAdmin['brokerageId']);
+		var brokersOfBrokerage = mockCommunicator.getBrokersForBrokerTableInBrokerageTab(brokerAdmin['BrokerageId'])
+		
+		var mockResponse = 
+		{	
+			'user':user,
+			'brokerAdmin':brokerAdmin,
+			'brokerage':brokerage,
+			'brokersOfBrokerage':brokersOfBrokerage
+		};
+
+		ajaxPost(GET_DEFAULT_BROKER_ADMIN_DATA_URL,onGetDefaultBrokerAdminSuccess,onGetDefaultBrokerAdminFailure,requestObject,mockResponse);
 	}
+
 
 	function onGetDefaultBrokerAdminSuccess(response) {
 

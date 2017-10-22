@@ -2144,7 +2144,6 @@ var mockCommunicator = new function()
 		this.limitTable[id] = data;
 	}
 
-
 // PRODUCT - done
 	this.productTable = [
 		{
@@ -2405,6 +2404,9 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+	this.getTariffOptionTypes = function() {
+		return this.tariffOptionTypeTable;
+	}
 	this.deleteTariffOptionType = function(id) {
 		for(var i=0;i<this.tariffOptionTypeTable.length;i++) {
 			if(this.tariffOptionTypeTable[i].id==id) {
@@ -2494,19 +2496,23 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'1',
-			'name':'Flood',
+			'name':'Rain',
 		},
 		{
 			'id':'2',
-			'name':'Dew',
+			'name':'Hail',
 		},
 		{
 			'id':'3',
-			'name':'Bugs',
+			'name':'Transit',
 		},
 		{
 			'id':'4',
 			'name':'Godzilla',
+		},
+		{
+			'id':'4',
+			'name':'Locusts',
 		},
 	];
 	this.createDamageType = function(data) {
