@@ -419,10 +419,10 @@ var mockCommunicator = new function()
 		},
 	];
 	this.createBusinessUnit = function(data) {
-
+		console.log(this.businessUnitTable.length);
 		data.id = this.businessUnitTable.length;
 		this.businessUnitTable.push(data);
-
+		console.log(this.businessUnitTable.length);
 		return data.id;
 	}
 	this.getBusinessUnit = function(id) {
@@ -998,6 +998,93 @@ var mockCommunicator = new function()
 		data.id = id;
 		this.brokerageTable[id] = data;
 	}
+
+// BROKER VIEWABLE BUSINESS UNIT - done
+	this.brokerViewableBusinessUnitTable = [
+		{
+			'id':'0',
+			'brokerId':0,
+			'businessUnitId':0
+		},
+		{
+			'id':'1',
+			'brokerId':0,
+			'businessUnitId':1
+		},
+		{
+			'id':'2',
+			'brokerId':0,
+			'businessUnitId':2
+		},
+		{
+			'id':'3',
+			'brokerId':1,
+			'businessUnitId':0
+		},
+		{
+			'id':'4',
+			'brokerId':1,
+			'businessUnitId':1
+		},
+		{
+			'id':'5',
+			'brokerId':1,
+			'businessUnitId':2
+		},
+	];
+	this.createBrokerViewableBusinessUnit = function(data) {
+
+		// do not create dulicates
+		for(var i = 0; i < this.brokerViewableBusinessUnitTable.length; i++) {
+
+			var b = this.brokerViewableBusinessUnitTable[i];
+			if(data['brokerId'] == b['brokerId'] && data['businessUnitId'] == b['businessUnitId']) {
+				return;
+			}
+		}
+
+		data.id = this.brokerViewableBusinessUnitTable.length;
+		this.brokerViewableBusinessUnitTable.push(data);
+
+		return data.id;
+	}
+	this.getBrokerViewableBusinessUnit = function(id) {
+		for(var i=0;i<this.brokerViewableBusinessUnitTable.length;i++) {
+			if(this.brokerViewableBusinessUnitTable[i].id==id) {
+				return this.brokerViewableBusinessUnitTable[i];
+			}
+		}
+	}
+	this.getBrokerViewableBusinessUnits = function() {
+		return this.brokerViewableBusinessUnitTable;
+	}
+	this.deleteBrokerage = function(id) {
+		for(var i=0;i<this.brokerViewableBusinessUnitTable.length;i++) {
+			if(this.brokerViewableBusinessUnitTable[i].id==id) {
+				this.brokerViewableBusinessUnitTable.splice(i,1);
+			}
+		}
+	}
+	this.updateBrokerViewableBusinessUnit = function(id, data) {
+		data.id = id;
+		this.brokerViewableBusinessUnitTable[id] = data;
+	}
+	this.getBrokerViewableBusinessUnitsByBrokerId = function(brokerId) {
+
+		var businessUnits = [];
+
+		for(var i=0;i<this.brokerViewableBusinessUnitTable.length;i++) {
+
+			var brokerViewableBusinessUnit = this.brokerViewableBusinessUnitTable[i];
+
+			if(brokerViewableBusinessUnit.brokerId==brokerId) {
+				businessUnits.push(this.getBusinessUnit(brokerViewableBusinessUnit['businessUnitId']));
+			}
+		}
+
+		return businessUnits;
+	}
+
 
 // ############################# QUOTES ################################
 // QUOTE - done

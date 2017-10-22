@@ -50,9 +50,6 @@ var brokerController = new function() {
 			'viewableBrokers':viewableBrokers
 		};
 
-		console.log('getDefaultBrokerData');
-		console.log(mockResponse);
-
 		ajaxPost(GET_DEFAULT_BROKER_DATA_URL,onGetDefaultBrokerDataSuccess,onGetDefaultBrokerDataFailure,requestObject,mockResponse);
 	}
 	// DONE
@@ -150,22 +147,18 @@ var brokerController = new function() {
 		};
 
 		var businessUnitsAndFarms = [];
-
-		// Getting BusinessUnits that may be viewed by the Broker
-		var myPolicies = mockCommunicator.getPoliciesByBrokerId(broker['id']);
 		var businessUnitsIMaySeeIds = [];
-		var uniqueBusinessUnitsIMaySeeIds = [];
-		for(var p = 0; p < myPolicies.length; p++) {
-			businessUnitsIMaySeeIds.push(myPolicies[p]['businessUnitId']);
-		}
-		// Remove duplicates
-		$.each(businessUnitsIMaySeeIds, function(i, el){
-		    if($.inArray(el, uniqueBusinessUnitsIMaySeeIds) === -1) uniqueBusinessUnitsIMaySeeIds.push(el);
-		});
-		// Getting the businessUnit objects
-		for(var i = 0; i < uniqueBusinessUnitsIMaySeeIds.length; i++) {
 
-			var businessUnitAndItsFarms = mockCommunicator.getBusinessUnitAndItsFarms(uniqueBusinessUnitsIMaySeeIds[i]);
+		var businessUnitsIMaySee = mockCommunicator.getBrokerViewableBusinessUnitsByBrokerId(broker['id']);
+		console.log(businessUnitsIMaySee);
+		for(var i = 0; i < businessUnitsIMaySee.length; i++) {
+			businessUnitsIMaySeeIds.push(businessUnitsIMaySee[i]['id']);
+		}
+
+		// Getting the businessUnit objects
+		for(var i = 0; i < businessUnitsIMaySeeIds.length; i++) {
+
+			var businessUnitAndItsFarms = mockCommunicator.getBusinessUnitAndItsFarms(businessUnitsIMaySeeIds[i]['id']);
 			businessUnitsAndFarms.push(businessUnitAndItsFarms);
 		}
 
@@ -194,6 +187,8 @@ var brokerController = new function() {
 	*/
 	this.createBusinessUnit = function(successCallback,failCallback,requestObject) {
 
+		mockCommunicator.createBusinessUnit(requestObject['businessUnitData']);
+		
 		var mockResponse = 
 		{
 			'message':'',
