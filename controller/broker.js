@@ -856,6 +856,47 @@ var brokerController = new function() {
 			ajaxPost("",successCallback,failCallback,requestObject,mockResponse);
 		}
 		// ^ View ^
+		// Share
+		this.getQuotePDFData = function(successCallback,failCallback,requestObject)
+		{
+			var mockResponse = {
+				'season':'2017-06 Winter',
+				'quoteType':'Hail Quotation',
+				'quoteNumber':'10515',
+				'insured':'Agrihost Bdy',
+				'postalAddress':'PO Box 15 Centurion 0157',
+				'telephoneNumber':'012 555 5555',
+				'faxNumber':'',
+				'cellNumber':'082 555 5555',
+				'email':'info@agrihost.co.za',
+				'vatNumber':'12349876',
+				'accountNumber':'12345',
+				'quoteDate':'2017-05-18 19:01:05',
+				'totalInsuredValue':'200 000',
+				'quoteLandEntries':[
+					{
+						'farmName':'Plaas 1',
+						'premium':'1000',
+						'vat':'140',
+						'amountPayable':'1140'
+					},
+					{
+						'farmName':'Plaas 2',
+						'premium':'1000',
+						'vat':'140',
+						'amountPayable':'1140'
+					}
+				],
+				'totalAmountPayable':'2280',
+				'minimumPremiumPerLand':'750',
+				'specialComments':'No comments',
+				'cessionHolder':'Afgri',
+				'detailsOfIntermediary':'OVK'
+			}
+
+			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse)
+		}
+		// ^ Share ^
 	// ^ Quote ^
 	// Policy
 		// Create

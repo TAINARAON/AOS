@@ -1,7 +1,5 @@
 var shareModal = new function()
 {
-	var quoteId = -1;
-
 	var modal = document.getElementById("shareModal");
 	var pdfContainer = document.getElementById("pdf_content_container");
 	var cancelBtn = document.getElementById("cancelSharePolicy");
@@ -28,16 +26,20 @@ var shareModal = new function()
 
 	this.show = function(id)
 	{
-		quoteId = id;
+		var requestObj = {'quoteId':id};
 
-		// Request pfd here
-		var quoteData = {
-			'product':'product data'
-		};
-		quotePDF.loadValues(quoteData);
+		brokerController.getQuotePDFData(
+			function(response){
+				quotePDF.loadValues(response);
 		
-		modal.style.cssText = "display: block; padding-right: 17px;";
-		modal.className = "modal fade in";
+				modal.style.cssText = "display: block; padding-right: 17px;";
+				modal.className = "modal fade in";
+			},
+			function(response){
+				pdfContainer.innerHTML = "No quote data available at this time";
+			},
+			requestObj
+		);
 	}
 
 	function loadQuotePDF(id)
