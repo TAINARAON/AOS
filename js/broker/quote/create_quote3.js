@@ -1372,13 +1372,20 @@ var createQuote = new function()
 
 		brokerController.saveQuote(
 			function(response){
+				//document.getElementById("close_modal").click(); // Will close the modal
+				$("#myModal").modal('hide');
+
 				util.createNotification(response.message);
 				accept_quote_button.style.display = "none";
 				resetQuoteModal();
 				resetLandEntryTable();
 				quoteViewer.refresh();
-				document.getElementById("close_modal").click(); // Will close the modal
-				shareModal.show(response.id);
+
+				$('#myModal').on('hidden.bs.modal', function () {
+				  // Load up a new modal...
+				  shareModal.show(response.id);
+				});
+				//setTimeout(shareModal.show(response.id),50000);
 			},
 			function(response){
 				util.createNotification("Quote save failed!");
@@ -1407,7 +1414,7 @@ var createQuote = new function()
 			quote.quoteLandEntries.push(getLandEntryFromCriteriaValues());
 			loadLandEntryTable(quote);
 			resetModalForFurtherLandEntryEdit();
-			hideFields();
+			//hideFields();
 
 			accept_quote_button.style.display = "block";
 		}
