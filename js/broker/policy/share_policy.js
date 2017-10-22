@@ -1,7 +1,5 @@
 var shareModal = new function()
 {
-	var policyId = -1;
-
 	var modal = document.getElementById("shareModal");
 	var pdfContainer = document.getElementById("pdf_content_container");
 	var cancelBtn = document.getElementById("cancelSharePolicy");
@@ -12,6 +10,8 @@ var shareModal = new function()
 		cancelBtn.onclick = function(){hide(); policyId = -1;};
 		printBtn.onclick = function(){print();};
 		emailBtn.onclick = function(){email();};
+
+		loadQuotePDF(pdfContainer.id);
 	})();
 
 	function print()
@@ -26,12 +26,17 @@ var shareModal = new function()
 
 	this.show = function(id)
 	{
-		policyId = id;
+		var requestObj = {'quoteId':id};
 
-		// Request pfd here
+		// TODO policy brokerController
 		
 		modal.style.cssText = "display: block; padding-right: 17px;";
 		modal.className = "modal fade in";
+	}
+
+	function loadQuotePDF(id)
+	{
+		loader.loadPartOfPage("html/common/tempPDF/policy.html", id);
 	}
 
 	function hide()
