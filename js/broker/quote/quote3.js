@@ -52,6 +52,7 @@ var quoteViewer = new function ()
 		viewableBrokers.push(tSelfObj);
 		
 		var viewable = brokerController.getViewableBrokers();
+		debugger;
 		for(var i = 0; i < viewable.length; i++)
 		{
 			var tObj = {

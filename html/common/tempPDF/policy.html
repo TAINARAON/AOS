@@ -1,0 +1,159 @@
+<div id="policy_pdf_container">
+	<div style="padding: 20px;">
+		<div id="header">
+			<div class="row">
+				<div id="companyImageContainer" class="col-md-4">
+					<a id="nav_link" class="navbar-brand" href="&lt;?php echo base_url(); ?&gt;" style="background-image: url(img/agrihost.svg);background-size: contain; background-repeat: no-repeat; background-position: center center; min-width: 120px;"></a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div id="policyHeaderData">
+						<div id="season"></div>
+						<div id="quoteType"></div>
+						<div id="policyNumber"></div>
+						<div id="vatInvoiceNumber"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="body" style="border:1pt solid black;">
+			<div class="row"><div class="col-md-12" style="margin-left: 15px; margin-right: 0px; background-color: lightgray; width: calc(100% - 29px);">Details of Insured:</div></div>
+			<div id="detailsOfInsuredContainer">
+				<div class="row">
+					<div class="col-md-2">Insured:</div>
+					<div id="insured" class="col-md-4"></div>
+					<div class="col-md-2">Telephone No:</div>
+					<div id="telephoneNumber" class="col-md-4"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">Postal Address:</div>
+					<div id="postalAddress" class="col-md-4"></div>
+					<div class="col-md-2">Fax No:</div>
+					<div id="faxNumber" class="col-md-4"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">Cell No:</div>
+					<div id="cellNumber" class="col-md-4"></div>
+					<div class="col-md-2">Email No:</div>
+					<div id="email" class="col-md-4"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">VAT No:</div>
+					<div id="vatNumber" class="col-md-4"></div>
+					<div class="col-md-2">Account No:</div>
+					<div id="accountNumber" class="col-md-4"></div>
+				</div>
+			</div>
+			<div class="row"><div class="col-md-12" style="margin-left: 15px; margin-right: 0px; background-color: lightgray; width: calc(100% - 29px);">Cover Period:</div></div>
+			<div id="coverPeriodContainer">
+				<div class="row">
+					<div class="col-md-4">Acceptance Date:</div>
+					<div id="acceptanceDate" class="col-md-4"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">Cover Inception Date:</div>
+					<div id="inceptionDate" class="col-md-4"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">Cessation of cover:</div>
+					<div id="cessationOfCover" class="col-md-4"></div>
+				</div>
+			</div>
+			<div class="row"><div class="col-md-12" style="margin-left: 15px; margin-right: 0px; background-color: lightgray; width: calc(100% - 29px);">Premium Details:</div></div>
+			<div id="premiumDetailsContainer">
+				<div class="row">
+					<div class="col-md-6">Total Sum Insured</div>
+					<div id="totalSumEnsured" class="col-md-6"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">Farm Name/s</div>
+					<div class="col-md-3">Premium (R)</div>
+					<div class="col-md-3">VAT (R)</div>
+					<div class="col-md-3">Amount Payable (R)</div>
+				</div>
+				<!--<div class="row">
+					<div id="farmName" class="col-md-3"></div>
+					<div id="premium" class="col-md-3"></div>
+					<div id="vat" class="col-md-3"></div>
+					<div id="amountPayable" class="col-md-3"></div>
+				</div>-->
+				<div id="quoteLandEntryContainer">
+					
+				</div>
+				<div class="row">
+					<div class="col-md-4">Total amount payable</div>
+					<div class="col-md-4"></div>
+					<div class="col-md-4"></div>
+					<div id="totalAmountPayable" class="col-md-4"></div>
+				</div>
+				<div class="row">
+					<div id="minimumAmountPayable" class="col-md-12"></div>
+				</div>
+			</div>
+			<div class="row"><div class="col-md-12" style="margin-left: 15px; margin-right: 0px; background-color: lightgray; width: calc(100% - 29px);">Special Comments:</div></div>
+			<div class="row"><div id="specialCommentsContainer" class="col-md-4"></div></div>
+			<div class="row"><div class="col-md-12" style="margin-left: 15px; margin-right: 0px; background-color: lightgray; width: calc(100% - 29px);">Cession Holder:</div></div>
+			<div class="row"><div id="cessionHolderContainer" class="col-md-4"></div></div>
+			<div class="row"><div class="col-md-12" style="margin-left: 15px; margin-right: 0px; background-color: lightgray; width: calc(100% - 29px);">Details of Intermediary:</div></div>
+			<div class="row"><div id="detailsOfIntermediaryContainer" class="col-md-4"></div></div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var policyPDF = new function()
+		{
+			this.loadValues = function(dataObj) {
+				document.getElementById("season").innerHTML = dataObj.season;
+				document.getElementById("quoteType").innerHTML = dataObj.quoteType;
+				document.getElementById("policyNumber").innerHTML = dataObj.policyNumber;
+				document.getElementById("vatInvoiceNumber").innerHTML = dataObj.vatInvoiceNumber;
+				document.getElementById("insured").innerHTML = dataObj.insured;
+				document.getElementById("postalAddress").innerHTML = dataObj.postalAddress;
+				document.getElementById("telephoneNumber").innerHTML = dataObj.telephoneNumber;
+				document.getElementById("faxNumber").innerHTML = dataObj.faxNumber;
+				document.getElementById("cellNumber").innerHTML = dataObj.cellNumber;
+				document.getElementById("email").innerHTML = dataObj.email;
+				document.getElementById("vatNumber").innerHTML = dataObj.vatNumber;
+				document.getElementById("accountNumber").innerHTML = dataObj.accountNumber;
+				document.getElementById("acceptanceDate").innerHTML = dataObj.acceptanceDate;
+				document.getElementById("inceptionDate").innerHTML = dataObj.inceptionDate;
+				document.getElementById("cessationOfCover").innerHTML = dataObj.cessationOfCover;
+				document.getElementById("totalSumEnsured").innerHTML = dataObj.totalInsuredValue;
+				
+				for(var i = 0; i < dataObj.policyLandEntries.length; i++)
+				{
+					var row = document.createElement("DIV");
+					row.className = "row";
+
+					var column1 = document.createElement("DIV");
+					column1.className = "col-md-3"
+					column1.innerHTML = dataObj.quoteLandEntries[i].farmName;
+					row.appendChild(column1);
+
+					var column2 = document.createElement("DIV");
+					column2.className = "col-md-3"
+					column2.innerHTML = dataObj.quoteLandEntries[i].premium;
+					row.appendChild(column2);
+
+					var column3 = document.createElement("DIV");
+					column3.className = "col-md-3"
+					column3.innerHTML = dataObj.quoteLandEntries[i].vat;
+					row.appendChild(column3);
+
+					var column4 = document.createElement("DIV");
+					column4.className = "col-md-3"
+					column4.innerHTML = dataObj.quoteLandEntries[i].amountPayable;
+					row.appendChild(column4);
+
+					quoteLandEntryContainer.appendChild(row);
+				}
+
+				document.getElementById("totalAmountPayable").innerHTML = dataObj.totalAmountPayable;
+				document.getElementById("minimumAmountPayable").innerHTML = "Minimum Premium Payable " + sessionStorage.CURRENCY + dataObj.minimumPremiumPerLand + " per policy";
+				document.getElementById("specialCommentsContainer").innerHTML = dataObj.specialComments;
+				document.getElementById("cessionHolderContainer").innerHTML = dataObj.cessionHolder;
+				document.getElementById("detailsOfIntermediaryContainer").innerHTML = dataObj.detailsOfIntermediary;
+			}
+		}
+	</script>
+</div>
