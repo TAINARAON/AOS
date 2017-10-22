@@ -584,7 +584,20 @@ var brokerController = new function() {
 		// View
 		this.getQuotes = function(successCallback,failCallback,requestObject)
 		{
-			var mockResponse = [
+			var mockResponse = [];
+			var quotes = mockCommunicator.getQuotes();
+
+			for(var i = 0; i < quotes.length; i++)
+			{
+				if(quotes[i].brokerId == requestObject.brokerId)
+				{
+					quotes[i]["businessUnit"] = mockCommunicator.getBusinessUnit(quotes[i].businessUnitId);
+
+					mockResponse.push(quotes[i]);
+				}
+			}
+
+			/*var mockResponse = [
 				{
 					'id':'0',
 					'quoteNumber':'00001',
@@ -800,7 +813,7 @@ var brokerController = new function() {
 						}
 					]
 				}
-			];
+			];*/
 
 			ajaxPost("",successCallback,failCallback,requestObject,mockResponse);
 		}

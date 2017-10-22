@@ -1108,7 +1108,9 @@ var mockCommunicator = new function()
 			'active':'1',
 			'dateCreated':'2017-05-18 19:01:05',
 			'linkedToQuoteId':null,
-			'acceptable':'1'	
+			'acceptable':'1',
+			'totalInsuredValue':'200 000',
+			'premium':20000	
 		},
 		{
 			'id':'1',
@@ -1119,7 +1121,9 @@ var mockCommunicator = new function()
 			'active':'1',
 			'dateCreated':'2017-05-18 19:02:05',
 			'linkedToQuoteId':'0',
-			'acceptable':'1'
+			'acceptable':'1',
+			'totalInsuredValue':'200 000',
+			'premium':20000
 		},
 		{
 			'id':'2',
@@ -1130,7 +1134,9 @@ var mockCommunicator = new function()
 			'active':'1',
 			'dateCreated':'2017-05-18 19:01:05',
 			'linkedToQuoteId':null,
-			'acceptable':'1'	
+			'acceptable':'1',
+			'totalInsuredValue':'200 000',
+			'premium':20000
 		},
 		{
 			'id':'3',
@@ -1141,7 +1147,9 @@ var mockCommunicator = new function()
 			'active':'1',
 			'dateCreated':'2017-05-18 19:02:05',
 			'linkedToQuoteId':'0',
-			'acceptable':'1'
+			'acceptable':'1',
+			'totalInsuredValue':'200 000',
+			'premium':20000
 		}
 	];
 	this.createQuote = function(data) {
