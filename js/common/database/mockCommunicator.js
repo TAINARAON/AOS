@@ -1,48 +1,5 @@
 var mockCommunicator = new function()
 {
-	console.warn("Mock Communicator being used.");
-
-// OPTION TYPE - done
-	this.optionTypeTable = [
-		{
-			'id':'0',
-			'name':'Franchise',
-		},
-		{
-			'id':'1',
-			'name':'Excess',
-		},
-	];
-	this.createOptionType = function(data) {
-
-		data.id = this.optionTypeTable.length;
-		this.optionTypeTable.push(data);
-
-		return data.id;
-	}
-	this.getOptionType = function(id) {
-		for(var i=0;i<this.optionTypeTable.length;i++) {
-			if(this.optionTypeTable[i].id==id) {
-				return this.optionTypeTable[i];
-			}
-		}
-	}
-	this.getOptionTypes = function() {
-
-		return this.optionTypeTable;
-	}
-	this.deleteOptionType = function(id) {
-		for(var i=0;i<this.optionTypeTable.length;i++) {
-			if(this.optionTypeTable[i].id==id) {
-				this.optionTypeTable.splice(i,1);
-			}
-		}
-	}
-	this.updateOptionType = function(id, data) {
-		data.id = id;
-		this.optionTypeTable[id] = data;
-	}
-
 // ############################# USERS #################################
 // ROLE - done
 	this.roleTable = [
@@ -999,6 +956,7 @@ var mockCommunicator = new function()
 		data.id = id;
 		this.brokerageTable[id] = data;
 	}
+
 // ############################# QUOTES ################################
 // QUOTE - done
 	this.quoteTable = [
@@ -1749,6 +1707,187 @@ var mockCommunicator = new function()
 		return damageTypes;
 	}
 
+// DAMAGE REPORT - done
+	this.damageReportTable = [
+		{
+			'id':'0',
+			'damageTypeId':0,
+			'damageReportNumber':'00000',
+			'dateOfDamage':'2017/05/11',
+			'dateOfReporting':'2017/05/11',
+			'requiresTaxation':true
+		},
+		{
+			'id':'1',
+			'damageTypeId':1,
+			'dateOfDamage':'2017/05/11',
+			'dateOfReporting':'2017/05/11',
+			'damageReportNumber':'00001',
+			'requiresTaxation':true
+		},
+		{
+			'id':'2',
+			'damageTypeId':0,
+			'dateOfDamage':'2017/05/11',
+			'dateOfReporting':'2017/05/11',
+			'damageReportNumber':'00002',
+			'requiresTaxation':false
+		},
+		{
+			'id':'3',
+			'damageTypeId':2,
+			'dateOfDamage':'2017/05/11',
+			'dateOfReporting':'2017/05/11',
+			'damageReportNumber':'00003',
+			'requiresTaxation':true
+		},
+	];
+	this.createDamageReport = function(data) {
+
+		data.id = this.damageReportTable.length;
+		this.damageReportTable.push(data);
+
+		return data.id;
+	}
+	this.getDamageReport = function(id) {
+		for(var i=0;i<this.damageReportTable.length;i++) {
+			if(this.damageReportTable[i].id==id) {
+				return this.damageReportTable[i];
+			}
+		}
+	}
+	this.getDamageReports = function() {
+		return this.damageReportTable;
+	}
+	this.deleteDamageReport = function(id) {
+		for(var i=0;i<this.damageReportTable.length;i++) {
+			if(this.damageReportTable[i].id==id) {
+				this.damageReportTable.splice(i,1);
+			}
+		}
+	}
+	this.updateDamageReport = function(id, data) {
+		data.id = id;
+		this.damageReportTable[id] = data;
+	}
+
+// DAMAGE REPORT LAND ENTRY
+	this.damageReportLandEntryTable = [
+		{
+			'id':'0',
+			'damageReportId':0,
+			'policyLandEntryId':0,
+			'inspected':true
+		},
+		{
+			'id':'1',
+			'damageReportId':0,
+			'policyLandEntryId':1,
+			'inspected':true
+
+		},
+		{
+			'id':'2',
+			'damageReportId':0,
+			'policyLandEntryId':2,
+			'inspected':true
+		},
+		{
+			'id':'3',
+			'damageReportId':1,
+			'policyLandEntryId':0,
+			'inspected':true
+		},
+		{
+			'id':'4',
+			'damageReportId':2,
+			'policyLandEntryId':1,
+			'inspected':true
+
+		},
+		{
+			'id':'5',
+			'damageReportId':3,
+			'policyLandEntryId':2,
+			'inspected':true
+		},
+		{
+			'id':'6',
+			'damageReportId':1,
+			'policyLandEntryId':3,
+			'inspected':false
+		},
+		{
+			'id':'7',
+			'damageReportId':2,
+			'policyLandEntryId':2,
+			'inspected':false
+
+		},
+		{
+			'id':'8',
+			'damageReportId':3,
+			'policyLandEntryId':1,
+			'inspected':false
+		}
+		,
+		{
+			'id':'9',
+			'damageReportId':2,
+			'policyLandEntryId':4,
+			'inspected':false
+
+		},
+		{
+			'id':'10',
+			'damageReportId':3,
+			'policyLandEntryId':5,
+			'inspected':false
+		}
+	];
+	this.createDamageReportLandEntry = function(data) {
+
+		data.id = this.damageReportLandEntryTable.length;
+		this.damageReportLandEntryTable.push(data);
+
+		return data.id;
+	}
+	this.getDamageReportLandEntry = function(id) {
+		for(var i=0;i<this.damageReportLandEntryTable.length;i++) {
+			if(this.damageReportLandEntryTable[i].id==id) {
+				return this.damageReportLandEntryTable[i];
+			}
+		}
+	}
+	this.getDamageReportLandEntries = function() {
+		return this.damageReportLandEntryTable;
+	}
+	this.deleteDamageReportLandEntry = function(id) {
+		for(var i=0;i<this.damageReportLandEntryTable.length;i++) {
+			if(this.damageReportLandEntryTable[i].id==id) {
+				this.damageReportLandEntryTable.splice(i,1);
+			}
+		}
+	}
+	this.updateDamageReportLandEntry = function(id, data) {
+		data.id = id;
+		this.damageReportLandEntryTable[id] = data;
+	}
+	this.getDamageReportLandEntriesByDamageReportId = function(damageReportId)
+	{
+		var landEntries = [];
+
+		for(var i = 0; i < this.damageReportLandEntryTable.length; i++)
+		{
+			if(this.damageReportLandEntryTable[i].damageReportId == damageReportId)
+			{
+				landEntries.push(this.damageReportLandEntryTable[i]);
+			}
+		}
+
+		return landEntries;
+	}
+
 // ########################### SYSTEM KEYS ###############################
 
 // SEASON
@@ -2325,185 +2464,6 @@ var mockCommunicator = new function()
 		return 1;
 	}
 
-// DAMAGE REPORT - done
-	this.damageReportTable = [
-		{
-			'id':'0',
-			'damageTypeId':0,
-			'damageReportNumber':'00000',
-			'dateOfDamage':'2017/05/11',
-			'dateOfReporting':'2017/05/11',
-			'requiresTaxation':true
-		},
-		{
-			'id':'1',
-			'damageTypeId':1,
-			'dateOfDamage':'2017/05/11',
-			'dateOfReporting':'2017/05/11',
-			'damageReportNumber':'00001',
-			'requiresTaxation':true
-		},
-		{
-			'id':'2',
-			'damageTypeId':0,
-			'dateOfDamage':'2017/05/11',
-			'dateOfReporting':'2017/05/11',
-			'damageReportNumber':'00002',
-			'requiresTaxation':false
-		},
-		{
-			'id':'3',
-			'damageTypeId':2,
-			'dateOfDamage':'2017/05/11',
-			'dateOfReporting':'2017/05/11',
-			'damageReportNumber':'00003',
-			'requiresTaxation':true
-		},
-	];
-	this.createDamageReport = function(data) {
 
-		data.id = this.damageReportTable.length;
-		this.damageReportTable.push(data);
-
-		return data.id;
-	}
-	this.getDamageReport = function(id) {
-		for(var i=0;i<this.damageReportTable.length;i++) {
-			if(this.damageReportTable[i].id==id) {
-				return this.damageReportTable[i];
-			}
-		}
-	}
-	this.getDamageReports = function() {
-		return this.damageReportTable;
-	}
-	this.deleteDamageReport = function(id) {
-		for(var i=0;i<this.damageReportTable.length;i++) {
-			if(this.damageReportTable[i].id==id) {
-				this.damageReportTable.splice(i,1);
-			}
-		}
-	}
-	this.updateDamageReport = function(id, data) {
-		data.id = id;
-		this.damageReportTable[id] = data;
-	}
-
-// DAMAGE REPORT LAND ENTRY
-	this.damageReportLandEntryTable = [
-		{
-			'id':'0',
-			'damageReportId':0,
-			'policyLandEntryId':0,
-			'inspected':true
-		},
-		{
-			'id':'1',
-			'damageReportId':0,
-			'policyLandEntryId':1,
-			'inspected':true
-
-		},
-		{
-			'id':'2',
-			'damageReportId':0,
-			'policyLandEntryId':2,
-			'inspected':true
-		},
-		{
-			'id':'3',
-			'damageReportId':1,
-			'policyLandEntryId':0,
-			'inspected':true
-		},
-		{
-			'id':'4',
-			'damageReportId':2,
-			'policyLandEntryId':1,
-			'inspected':true
-
-		},
-		{
-			'id':'5',
-			'damageReportId':3,
-			'policyLandEntryId':2,
-			'inspected':true
-		},
-		{
-			'id':'6',
-			'damageReportId':1,
-			'policyLandEntryId':3,
-			'inspected':false
-		},
-		{
-			'id':'7',
-			'damageReportId':2,
-			'policyLandEntryId':2,
-			'inspected':false
-
-		},
-		{
-			'id':'8',
-			'damageReportId':3,
-			'policyLandEntryId':1,
-			'inspected':false
-		}
-		,
-		{
-			'id':'9',
-			'damageReportId':2,
-			'policyLandEntryId':4,
-			'inspected':false
-
-		},
-		{
-			'id':'10',
-			'damageReportId':3,
-			'policyLandEntryId':5,
-			'inspected':false
-		}
-	];
-	this.createDamageReportLandEntry = function(data) {
-
-		data.id = this.damageReportLandEntryTable.length;
-		this.damageReportLandEntryTable.push(data);
-
-		return data.id;
-	}
-	this.getDamageReportLandEntry = function(id) {
-		for(var i=0;i<this.damageReportLandEntryTable.length;i++) {
-			if(this.damageReportLandEntryTable[i].id==id) {
-				return this.damageReportLandEntryTable[i];
-			}
-		}
-	}
-	this.getDamageReportLandEntries = function() {
-		return this.damageReportLandEntryTable;
-	}
-	this.deleteDamageReportLandEntry = function(id) {
-		for(var i=0;i<this.damageReportLandEntryTable.length;i++) {
-			if(this.damageReportLandEntryTable[i].id==id) {
-				this.damageReportLandEntryTable.splice(i,1);
-			}
-		}
-	}
-	this.updateDamageReportLandEntry = function(id, data) {
-		data.id = id;
-		this.damageReportLandEntryTable[id] = data;
-	}
-	this.getDamageReportLandEntriesByDamageReportId = function(damageReportId)
-	{
-		var landEntries = [];
-
-		for(var i = 0; i < this.damageReportLandEntryTable.length; i++)
-		{
-			if(this.damageReportLandEntryTable[i].damageReportId == damageReportId)
-			{
-				landEntries.push(this.damageReportLandEntryTable[i]);
-			}
-		}
-
-		return landEntries;
-	}
 }
 
