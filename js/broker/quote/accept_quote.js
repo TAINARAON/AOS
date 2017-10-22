@@ -103,8 +103,9 @@ var quoteAcceptModal = new function()
 
 		$(input_accept_time).val(util.getDateTimePretty());
 
-		modal.style.cssText = "display: block; padding-right: 17px;";
-		modal.className = "modal fade in";
+		$(modal).modal('show');
+		/*modal.style.cssText = "display: block; padding-right: 17px;";
+		modal.className = "modal fade in";*/
 	}
 	
 	function hide()
@@ -112,8 +113,9 @@ var quoteAcceptModal = new function()
 		console.log("sadasd");
 		reset();
 
-		modal.style.cssText = "display: none;";
-		modal.className = "modal fade";
+		$(modal).modal('hide');
+		/*modal.style.cssText = "display: none;";
+		modal.className = "modal fade";*/
 	}
 
 	function reset()

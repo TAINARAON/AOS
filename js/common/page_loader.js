@@ -8,7 +8,7 @@ var pageLoader = function()
 			"jsFiles":["js/broker/nav.js"],
 			"htmlFiles":{
 				"navbar":"html/common/nav.html",
-				"landing_page":"html/common/home.html"
+				"landing_page":"html/broker/client/client.html"
 			}
 		},
 		{
@@ -17,7 +17,7 @@ var pageLoader = function()
 			"jsFiles":["js/brokerAdmin/nav.js"],
 			"htmlFiles":{
 				"navbar":"html/common/nav.html",
-				"landing_page":"html/common/home.html"
+				"landing_page":"html/brokerAdmin/brokerage/brokerage.html"
 			}
 		},
 		{
@@ -26,7 +26,7 @@ var pageLoader = function()
 			"jsFiles":["js/client/nav.js"],
 			"htmlFiles":{
 				"navbar":"html/common/nav.html",
-				"landing_page":"html/common/home.html"
+				"landing_page":"html/client/businessUnit/businessUnit.html"
 			}
 		},
 		{
@@ -35,7 +35,7 @@ var pageLoader = function()
 			"jsFiles":["js/insurer_admin/nav.js"],
 			"htmlFiles":{
 				"navbar":"html/common/nav.html",
-				"landing_page":"html/common/home.html"
+				"landing_page":"html/insurer_admin/insurance_agency.html"
 			}
 		},
 		{
@@ -44,7 +44,7 @@ var pageLoader = function()
 			"jsFiles":["js/insurer/nav.js"],
 			"htmlFiles":{
 				"navbar":"html/common/nav.html",
-				"landing_page":"html/common/home.html"
+				"landing_page":"html/insurer/brokers.html"
 			}
 		},
 		{
