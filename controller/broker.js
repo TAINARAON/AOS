@@ -368,8 +368,17 @@ var brokerController = new function() {
 		}
 		this.saveDamageReport = function(successCallback,failCallback,requestObject)
 		{
+			var damageReportId = mockCommunicator.createDamageReport(requestObject);
+
+			for(var i = 0; i < requestObject.damageReportLandEntries.length; i++)
+			{
+				var damageReportLandEntry = requestObject.damageReportLandEntries[i];
+				damageReportLandEntry["damageReportId"] = damageReportId;
+				mockCommunicator.createDamageReportLandEntry(damageReportLandEntry);
+			}
+
 			var mockResponse = {
-				"id":0,
+				"id":damageReportId,
 				"message":"Saved"
 			};
 
@@ -379,7 +388,32 @@ var brokerController = new function() {
 		// View
 		this.getDamageReports = function(successCallback,failCallback,requestObject)
 		{
-			var NOTSTARTED = 0;
+			var mockResponse = mockCommunicator.getDamageReports();
+
+			for(var i = 0;i < mockResponse.length; i++)
+			{
+				var damageReport = mockResponse[i];
+				damageReport["damageReportLandEntries"] = mockCommunicator.getDamageReportLandEntriesByDamageReportId(damageReport.id);
+
+				damageReport["damageType"] = mockCommunicator.getDamageType(damageReport.damageTypeId);
+
+				for(var j = 0; j < damageReport.damageReportLandEntries.length; j++)
+				{
+					var damageReportLandEntry = damageReport.damageReportLandEntries[j];
+
+					damageReportLandEntry["policyLandEntry"] = mockCommunicator.getPolicyLandEntry(damageReportLandEntry.policyLandEntryId);
+
+					damageReportLandEntry.policyLandEntry["crop"] = mockCommunicator.getCrop(damageReportLandEntry.policyLandEntry.cropId);
+				
+					damageReport["farm"] = mockCommunicator.getFarm(damageReportLandEntry.policyLandEntry.farmId);
+					
+					damageReport.farm["district"] = mockCommunicator.getDistrict(damageReport.farm.districtId);
+
+					damageReport.farm["businessUnit"] = mockCommunicator.getBusinessUnit(mockCommunicator.getPolicy(damageReportLandEntry.policyLandEntry.policyId).businessUnitId);
+				}
+			}
+
+			/*var NOTSTARTED = 0;
 			var INPROGRESS = 1;
 			var DONE = 2;
 			var mockResponse = [
@@ -451,7 +485,7 @@ var brokerController = new function() {
 						}
 					}
 				}
-			];
+			];*/
 
 			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
 		}

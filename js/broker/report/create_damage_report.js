@@ -513,7 +513,7 @@ var modalDamageReport = new function()
 				//var requiresTaxation = landEntry.find('input[type=checkbox]').prop('checked');
 				var landEntryObject = 
 				{
-					'id':landEntryId,
+					'policyLandEntryId':landEntryId,
 					'inspected':false
 				};
 				//'requiresTaxation':requiresTaxation
@@ -528,7 +528,8 @@ var modalDamageReport = new function()
 				"damageReportNumber":generateReportNumber(),
 				"dateOfDamage":reportDate,
 				"damageReportLandEntries":landEntries,
-				"requiresTaxation":$(":checkbox[name='requires_taxation']:checked").val()
+				"requiresTaxation":$(":checkbox[name='requires_taxation']:checked").val(),
+				"taxationProgress":$(":checkbox[name='requires_taxation']:checked").val() ? 0 : 2
 			};
 
 			brokerController.saveDamageReport(

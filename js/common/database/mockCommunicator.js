@@ -1878,7 +1878,8 @@ var mockCommunicator = new function()
 			'damageReportNumber':'00000',
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
-			'requiresTaxation':true
+			'requiresTaxation':true,
+			'taxationProgress':2
 		},
 		{
 			'id':'1',
@@ -1886,7 +1887,8 @@ var mockCommunicator = new function()
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
 			'damageReportNumber':'00001',
-			'requiresTaxation':true
+			'requiresTaxation':true,
+			'taxationProgress':1
 		},
 		{
 			'id':'2',
@@ -1894,7 +1896,8 @@ var mockCommunicator = new function()
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
 			'damageReportNumber':'00002',
-			'requiresTaxation':false
+			'requiresTaxation':false,
+			'taxationProgress':2
 		},
 		{
 			'id':'3',
@@ -1902,7 +1905,8 @@ var mockCommunicator = new function()
 			'dateOfDamage':'2017/05/11',
 			'dateOfReporting':'2017/05/11',
 			'damageReportNumber':'00003',
-			'requiresTaxation':true
+			'requiresTaxation':true,
+			'taxationProgress':0
 		},
 	];
 	this.createDamageReport = function(data) {
@@ -1965,20 +1969,20 @@ var mockCommunicator = new function()
 			'id':'4',
 			'damageReportId':2,
 			'policyLandEntryId':1,
-			'inspected':true
+			'inspected':false
 
 		},
 		{
 			'id':'5',
 			'damageReportId':3,
 			'policyLandEntryId':2,
-			'inspected':true
+			'inspected':false
 		},
 		{
 			'id':'6',
 			'damageReportId':1,
 			'policyLandEntryId':3,
-			'inspected':false
+			'inspected':true
 		},
 		{
 			'id':'7',
