@@ -44,20 +44,20 @@ var quoteViewer = new function ()
 	function setAvailableBrokers()
 	{	
 		viewableBrokers = [];
-		var currentBroker = brokerController.getBroker();
+		/*var currentBroker = brokerController.getBroker();
 		var tSelfObj = {
 			"brokerId":currentBroker.id,
 			"name":brokerController.getUser().name
 		}
-		viewableBrokers.push(tSelfObj);
+		viewableBrokers.push(tSelfObj);*/
 		
 		var viewable = brokerController.getViewableBrokers();
-		debugger;
+		
 		for(var i = 0; i < viewable.length; i++)
 		{
 			var tObj = {
-				"brokerId":viewable[i].broker.id,
-				"name":viewable[i].broker.user.name
+				"brokerId":viewable[i].id,
+				"name":viewable[i].user.name
 			}
 			viewableBrokers.push(tObj);
 		}

@@ -940,7 +940,9 @@ var mockCommunicator = new function()
 
 		for(var i=0;i<this.brokerViewableBrokerTable.length;i++) {
 			if(this.brokerViewableBrokerTable[i].mainBrokerId==mainBrokerId) {
-				brokers.push(this.getBroker(this.brokerViewableBrokerTable[i]['viewableBrokerId']));
+				var broker = this.getBroker(this.brokerViewableBrokerTable[i]['viewableBrokerId']);
+				broker["user"] = this.getUser(broker.userId);
+				brokers.push(broker);
 			}
 		}
 
