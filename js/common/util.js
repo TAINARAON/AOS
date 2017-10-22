@@ -5,6 +5,18 @@ var util = new function() {
 	var callback;
 	var myExtraData;
 
+	this.returnUniqueEntries = function(array) {
+
+		var uniqueEntries = [];
+
+		// Remove duplicates
+		$.each(array, function(i, el){
+		    if($.inArray(el, uniqueEntries) === -1) uniqueEntries.push(el);
+		});
+
+		return uniqueEntries;
+	}
+
 	this.displayUploadFileModal = function(extraData,onSubmitCallback) {
 
 		// TODO: Is action needed? It should just return the files to the callback

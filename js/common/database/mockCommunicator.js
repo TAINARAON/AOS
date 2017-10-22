@@ -432,6 +432,9 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+	this.getBusinessUnits = function() {
+		return this.businessUnitTable;
+	}
 	this.getBusinessUnitByName = function(name) {
 		for(var i=0;i<this.businessUnitTable.length;i++) {
 			if(this.businessUnitTable[i].name==name) {
@@ -2071,40 +2074,71 @@ var mockCommunicator = new function()
 			'districtId':0,
 			'cropId':0,
 			'seasonId':0,
-			'maximum':0,
-			'runningValue':0,
+			'maximum':10000,
+			'runningValue':500,
+			'additionalTariff':0,
+			'insuranceAgencyId':0
+		},
+		{
+			'id':'1',
+			'districtId':1,
+			'cropId':0,
+			'seasonId':0,
+			'maximum':12000,
+			'runningValue':1500,
+			'additionalTariff':0,
+			'insuranceAgencyId':0
+		},
+		{
+			'id':'2',
+			'districtId':0,
+			'cropId':1,
+			'seasonId':0,
+			'maximum':15000,
+			'runningValue':1800,
+			'additionalTariff':0,
+			'insuranceAgencyId':0
+		},
+		{
+			'id':'3',
+			'districtId':1,
+			'cropId':1,
+			'seasonId':0,
+			'maximum':8000,
+			'runningValue':980,
 			'additionalTariff':0,
 			'insuranceAgencyId':0
 		}
 	];
-	this.createProduct = function(data) {
+	this.createLimit = function(data) {
 
-		data.id = this.productTable.length;
-		this.productTable.push(data);
+		data.id = this.limitTable.length;
+		this.limitTable.push(data);
 
 		return data.id;
 	}
-	this.getProduct = function(id) {
-		for(var i=0;i<this.productTable.length;i++) {
-			if(this.productTable[i].id==id) {
-				return this.productTable[i];
+	this.getLimit = function(id) {
+		for(var i=0;i<this.limitTable.length;i++) {
+			if(this.limitTable[i].id==id) {
+				return this.limitTable[i];
 			}
 		}
 	}
-	this.getProducts = function() {
-		return this.productTable;
+	this.getLimits = function() {
+		return this.limitTable;
 	}
-	this.deleteProduct = function(id) {
-		for(var i=0;i<this.productTable.length;i++) {
-			if(this.productTable[i].id==id) {
-				this.productTable.splice(i,1);
+	this.deleteLimit = function(id) {
+		for(var i=0;i<this.limitTable.length;i++) {
+			if(this.limitTable[i].id==id) {
+				this.limitTable.splice(i,1);
 			}
 		}
 	}
-	this.updateProduct = function(id, data) {
+	this.updateLimit = function(id, data) {
 		data.id = id;
-		this.productTable[id] = data;
+		this.limitTable[id] = data;
 	}
+
 
 // PRODUCT - done
 	this.productTable = [
