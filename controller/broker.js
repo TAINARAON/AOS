@@ -155,10 +155,10 @@ var brokerController = new function() {
 			businessUnitsIMaySeeIds.push(businessUnitsIMaySee[i]['id']);
 		}
 
-		// Getting the businessUnit objects
-		for(var i = 0; i < businessUnitsIMaySeeIds.length; i++) {
-
-			var businessUnitAndItsFarms = mockCommunicator.getBusinessUnitAndItsFarms(businessUnitsIMaySeeIds[i]['id']);
+		// Getting the businessUnit objectse
+		for(var i = 0; i < businessUnitsIMaySee.length; i++) {
+			console.log(businessUnitsIMaySee[i]);
+			var businessUnitAndItsFarms = mockCommunicator.getBusinessUnitAndItsFarms(businessUnitsIMaySee[i]['id']);
 			businessUnitsAndFarms.push(businessUnitAndItsFarms);
 		}
 
@@ -172,7 +172,7 @@ var brokerController = new function() {
 		ajaxPost(GET_BUSINESS_UNITS_AND_THEIR_FARMS,successCallback,failCallback,requestObject,mockResponse);
 	};
 
-	/*	
+	/*	DONE
 		broker/createBusinessUnit
 
 		requestObject:{
@@ -187,8 +187,45 @@ var brokerController = new function() {
 	*/
 	this.createBusinessUnit = function(successCallback,failCallback,requestObject) {
 
-		mockCommunicator.createBusinessUnit(requestObject['businessUnitData']);
-		
+		var buWithMembers = requestObject['businessUnitData'];
+
+		var onlyBusinessUnit = {
+			'name':buWithMembers['name'],
+			'email':buWithMembers['email'],
+			'vatNumber':buWithMembers['vatNumber'],
+			'incomeTaxNumber':buWithMembers['incomeTaxNumber'],
+			'active':'1',
+			'verified':'1'
+		};
+
+		var businessUnitId = mockCommunicator.createBusinessUnit(onlyBusinessUnit);
+
+		var brokerViewableBusinessUnit = {
+			'brokerId':broker['id'],
+			'businessUnitId':businessUnitId
+		};
+
+		mockCommunicator.createBrokerViewableBusinessUnit(brokerViewableBusinessUnit);
+
+		var members = buWithMembers['members'];
+
+		for(var i = 0; i < members.length; i++) {
+			var member = members[i];
+			var savableMember = {
+				'businesUnitId':businessUnitId,
+				'name':member['memberPreferredName'],
+				'surname':member['memberSurname'],
+				'initials':member['memberInitials'],
+				'idNumber':member['memberPreferredName'],
+				'active':'1',
+				'verified':'1',
+				'isAdmin':member['memberIsMain'],
+				'clientId':null,
+			}
+
+			mockCommunicator.createBusinessUnitMember(savableMember);
+		}
+
 		var mockResponse = 
 		{
 			'message':'',

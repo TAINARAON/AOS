@@ -419,10 +419,10 @@ var mockCommunicator = new function()
 		},
 	];
 	this.createBusinessUnit = function(data) {
-		console.log(this.businessUnitTable.length);
+
 		data.id = this.businessUnitTable.length;
 		this.businessUnitTable.push(data);
-		console.log(this.businessUnitTable.length);
+
 		return data.id;
 	}
 	this.getBusinessUnit = function(id) {
@@ -464,7 +464,7 @@ var mockCommunicator = new function()
 			'active':'1',
 			'verified':'1',
 			'isAdmin':'1',
-			'clientId':'1',
+			'clientId':null,
 		},
 		{
 			'id':'1',
@@ -551,7 +551,7 @@ var mockCommunicator = new function()
 	this.farmTable = [
 		{
 			'id':'0',
-			'name':'P0',
+			'name':'P0BU0',
 			'businessUnitId':'0',
 			'latitude':'1.22644',
 			'longitude':'-0.35428',
@@ -560,8 +560,26 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'1',
-			'name':'P1',
+			'name':'P1BU0',
 			'businessUnitId':'0',
+			'latitude':'1.325642',
+			'longitude':'-0.35243',
+			'active':'1',
+			'districtId':'0'
+		},
+		{
+			'id':'2',
+			'name':'P0BU1',
+			'businessUnitId':'1',
+			'latitude':'1.22644',
+			'longitude':'-0.35428',
+			'active':'1',
+			'districtId':'0'
+		},
+		{
+			'id':'3',
+			'name':'P1BU1',
+			'businessUnitId':'1',
 			'latitude':'1.325642',
 			'longitude':'-0.35243',
 			'active':'1',
@@ -1012,11 +1030,6 @@ var mockCommunicator = new function()
 			'businessUnitId':1
 		},
 		{
-			'id':'2',
-			'brokerId':0,
-			'businessUnitId':2
-		},
-		{
 			'id':'3',
 			'brokerId':1,
 			'businessUnitId':0
@@ -1025,11 +1038,6 @@ var mockCommunicator = new function()
 			'id':'4',
 			'brokerId':1,
 			'businessUnitId':1
-		},
-		{
-			'id':'5',
-			'brokerId':1,
-			'businessUnitId':2
 		},
 	];
 	this.createBrokerViewableBusinessUnit = function(data) {
