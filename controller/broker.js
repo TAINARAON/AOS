@@ -491,23 +491,26 @@ var brokerController = new function() {
 		}
 		this.getProducts = function(successCallback,failCallback)
 		{
-			var mockResponse = [
+			/*var mockResponse = [
 				{
 					'id':'0',
 					'name':'Winter',
 				}
-			];
+			];*/
+			var mockResponse = mockCommunicator.getProducts();
 
 			ajaxGet("Some url",successCallback,failCallback,mockResponse);
 		}
 		this.getTariffOptionTypes = function(successCallback,failCallback)
 		{
-			var mockResponse = [
+			/*var mockResponse = [
 				{
 					'id':'0',
 					'name':'Franchise',
 				}
-			];
+			];*/
+
+			var mockResponse = mockCommunicator.getTariffOptionTypes();
 
 			ajaxGet("Some url",successCallback,failCallback,mockResponse);
 		}
@@ -573,9 +576,46 @@ var brokerController = new function() {
 		}
 		this.saveQuote = function(successCallback,failCallback,requestObject)
 		{	
+			var quoteId = mockCommunicator.createQuote(requestObject);
+			debugger;
+	        for(let i = 0; i < requestObject.quoteLandEntries.length; i++) {
+	        	var quoteLandEntry = requestObject.quoteLandEntries[i];
+
+	        	quoteLandEntry['quoteId'] = quoteId;
+	        	var landEntryId = mockCommunicator.createQuoteLandEntry(quoteLandEntry);
+
+	        	if(landEntryId == null) {
+	        		console.error("A land entry failed to be created. Roll back whole quote entry");
+	        		return;
+	        	}
+
+	            var quoteLandEntryDamageTypes = quoteLandEntry.quoteLandEntryDamageTypes;
+
+	            for(var j = 0; j < quoteLandEntryDamageTypes.length; j++)
+	            {
+	                var damageType = quoteLandEntryDamageTypes[j].tariffOptionDamageType.damageType;
+
+	                if(damageType.state)
+	                {
+	                    var tObj = {
+	                        "quoteLandEntryId":landEntryId,
+	                        "tariffOptionDamageTypeId":quoteLandEntryDamageTypes[j].tariffOptionDamageType.id
+	                    }
+
+	                    var id = mockCommunicator.createQuoteLandEntryDamageType(tObj);
+
+	                    if(id == null)
+	                    {
+	                        console.error("A Quote land damage type entry failed to be created. Roll back whole quote entry");
+	                        return;
+	                    }
+	                }
+	            }
+	        }
+
 			// Id of newly created quote
 			var mockResponse = {
-				'id':0,
+				'id':quoteId,
 				"message":"saved"
 			}
 			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
@@ -614,6 +654,7 @@ var brokerController = new function() {
 
 						landEntry["farm"] = mockCommunicator.getFarm(landEntry.farmId);
 						landEntry["crop"] = mockCommunicator.getCrop(landEntry.cropId);
+						landEntry.crop["product"] = mockCommunicator.getProduct(landEntry.crop.productId);
 						landEntry["quoteLandEntryDamageTypes"] = mockCommunicator.getQuoteLandEntryDamageTypesByQuoteLandEntryId(landEntry.id);
 						for(var k = 0; k < landEntry.quoteLandEntryDamageTypes.length; k++)
 						{

@@ -11,7 +11,7 @@ var shareModal = new function()
 		printBtn.onclick = function(){print();};
 		emailBtn.onclick = function(){email();};
 
-		loadQuotePDF(pdfContainer.id);
+		loadPolicyPDF(pdfContainer.id);
 	})();
 
 	function print()
@@ -34,7 +34,7 @@ var shareModal = new function()
 		modal.className = "modal fade in";
 	}
 
-	function loadQuotePDF(id)
+	function loadPolicyPDF(id)
 	{
 		loader.loadPartOfPage("html/common/tempPDF/policy.html", id);
 	}
