@@ -191,20 +191,22 @@ var createQuote = new function()
 	// Change business unit state
 	function disableBusinessUnit()
 	{
-		input_business_unit.disabled = "disabled";
+		$('#create_quote_client_dropdown').prop('disabled',true);
 	}
 
 	function removeDisableStatusFromBusinessUnit()
 	{
-		input_business_unit.removeAttribute("disabled");
+		$('#create_quote_client_dropdown').prop('disabled',false);
 	}
 	// ^ Change business unit state ^
 
 	// Set and reset elements
 	function resetCriteriaValues()
 	{
-		input_business_unit.value = "";
-		input_farm.value = "";
+		//input_business_unit.value = "";
+		$('#create_quote_client_dropdown').eq(0).prop('selected',true);
+		$('#create_quote_farm_dropdown').eq(0).prop('selected',true);
+		//input_farm.value = "";
 		input_land_number.value = "";
 		input_cultivar.value = "";
 		input_area.value = "";
@@ -362,6 +364,8 @@ var createQuote = new function()
 	// ^ Set and reset elements ^
 
 	(function init(){
+
+		populateClientDropdown();
 		brokerId = brokerController.getBroker().id;
 
 		setInitialFieldDisplay();
@@ -371,6 +375,33 @@ var createQuote = new function()
 		// Hide button
 		accept_quote_button.style.display = "none";
 	})();
+
+
+	function populateClientDropdown() {
+
+		var selectElement = $('#create_quote_client_dropdown');
+
+		brokerController.getBusinessUnits(
+			function(response){
+				var brokerages = response['brokerages'];
+				for(var i = 0; i < brokerages.length; i++)
+				{
+					selectElement.append($('<option></option>').text(brokerages[i]['name']).val(brokerages[i]['id']));
+						
+				}
+
+				selectElement
+					.on('change',function() {
+						selectedBusinessUnitName = $(this).find(":selected").text();
+
+						validateBusinessUnit(selectedBusinessUnitName);
+					});
+			},
+			function(response){
+				util.createNotification(response.message,'error');
+			}
+		);
+	}
 
 	function setInitialFieldDisplay()
 	{
@@ -406,9 +437,9 @@ var createQuote = new function()
 	function addOnCriteriaFieldListeners()
 	{
 		//input_business_unit.onblur = function(){loadProducts(); loadOptionTypes(); toggleFarmInputVisibility(validateBusinessUnit());};
-		input_business_unit.onblur = function(){validateBusinessUnit();};
+		//input_business_unit.onblur = function(){validateBusinessUnit();};
 		//input_farm.onblur = function(){loadCoverage(); toggleLandNumberVisible(validateFarm());};
-		input_farm.onblur = function(){validateFarm();};
+		//input_farm.onblur = function(){validateFarm();};
 		//input_land_number.onblur = function(){toggleFieldsVisible(true);};
 		//input_land_number.onblur = function(){toggleFieldsVisible(input_land_number.value.trim() != "" ? true : false);};
 		input_land_number.onblur = function(){toggleFieldsVisible(validateLandEntry(input_land_number.value.trim()));};
@@ -428,9 +459,37 @@ var createQuote = new function()
 			hideFarm();
 	}
 
-	function validateBusinessUnit()
+	function populateFarmDropdown() {
+
+		var selectElement = $('#create_quote_farm_dropdown');
+		selectElement.empty();
+		selectElement.append($('<option></option>').text("").prop('disabled',true).prop('selected',true));
+
+		brokerController.getFarmsForBusinessUnitTheBrokerHasPoliciesOn(
+			function(response){
+				var farms = response;
+				for(var i = 0; i < farms.length; i++)
+				{
+					selectElement.append($('<option></option>').text(farms[i]['name']).val(farms[i]['id']));
+						
+				}
+
+				selectElement
+					.on('change',function() {
+						selectedFarmName = $(this).find(":selected").text();
+
+						validateFarm(selectedFarmName);
+					});
+			},
+			function(response){
+				util.createNotification(response.message,'error');
+			}
+		);
+	}
+
+	function validateBusinessUnit(businessUnitName)
 	{
-		var val = input_business_unit.value;
+		var val = businessUnitName;
 		
 		if(val != undefined && val != "")
 		{
@@ -447,6 +506,7 @@ var createQuote = new function()
 
 					// load the other objects
 					toggleFarmInputVisibility(true);
+					populateFarmDropdown();
 					// The calls that follow can be placed in the init
 					loadProducts();
 					loadOptionTypes();
@@ -690,9 +750,9 @@ var createQuote = new function()
 			hideFields();
 	}
 
-	function validateFarm()
+	function validateFarm(farmName)
 	{
-		var val = input_farm.value;
+		var val = farmName;
 
 		if(val != undefined && val != "")
 		{
@@ -1366,10 +1426,10 @@ var createQuote = new function()
 
 	function inputCriteriaIsValid()
 	{
-		if(input_business_unit.value.trim() == "")
-			return false;
-		if(input_farm.value.trim() == "")
-			return false;
+		/*if(input_business_unit.value.trim() == "")
+			return false;*/
+		/*if(input_farm.value.trim() == "")
+			return false;*/
 		if(input_land_number.value.trim() == "")
 			return false;
 		// Cultivar may be empty
