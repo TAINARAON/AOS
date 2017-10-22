@@ -577,8 +577,8 @@ var brokerController = new function() {
 		this.saveQuote = function(successCallback,failCallback,requestObject)
 		{	
 			var quoteId = mockCommunicator.createQuote(requestObject);
-			debugger;
-	        for(let i = 0; i < requestObject.quoteLandEntries.length; i++) {
+			
+			for(let i = 0; i < requestObject.quoteLandEntries.length; i++) {
 	        	var quoteLandEntry = requestObject.quoteLandEntries[i];
 
 	        	quoteLandEntry['quoteId'] = quoteId;
