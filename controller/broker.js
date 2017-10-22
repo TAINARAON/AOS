@@ -1,10 +1,10 @@
 var brokerController = new function() {
 
-	// PRIVATE VARIABLES
 	var broker = null;
 	var brokerage = null;
 	var viewableBrokers = null;
 	var user = null;
+
 	this.getBroker = function() {
 		return broker;
 	}
@@ -33,86 +33,24 @@ var brokerController = new function() {
 
 	function getDefaultBrokerData(userId) {
 
-		var requestObject = {
+	var requestObject = {
 			'id':userId
 		};
 
+		var user = mockCommunicator.getUser(userId);
+		var broker = mockCommunicator.getBrokerByUserId(userId);
+		var brokerage = mockCommunicator.getBrokerage(broker['brokerageId']);
+		var viewableBrokers = mockCommunicator.getBrokerViewableBrokersOfBroker(broker['id']);
+		
 		var mockResponse = 
 		{
-			'user':{
-				'initials':'S',
-				'name':'Samantha',
-				'surname':'Wiggill',
-				'email':'samantha@gmail.com',
-			},
-			'broker':
-			{
-				'id':'1',
-				'userId':'7',
-				'brokerageId':'0',
-				'creationRights':true
-			},
-			'brokerage':
-			{
-				'id':'0',
-				'name':'Breeker Brokerage',
-				'active':'1',
-				'dateCreated':'1990-08-25',
-				'email':'breeker.brokerage@gmail.com',
-				'contactNumber':'0623521574',
-				'fspNumber':'FSP000',
-				'verified':'1'
-			},
-			'viewableBrokers':
-			[
-				{
-					'id':'2',
-					'mainBrokerId':'1',
-					'viewableBrokerId':'3',
-					'broker':{
-								'id':'3',
-								'userId':'6',
-								'brokerageId':'0',
-								'creationRights':true,
-								'user':{
-											'id':'6',
-											'username':'C',
-											'password':'',
-											'roleId':'5',
-											'name':'Carla',
-											'initials':'C',
-											'surname':'Says',
-											'email':'carla@gmail.com',
-											'active':'1',
-											'validated':'1'
-										}
-							}
-				},
-				{
-					'id':'3',
-					'mainBrokerId':'1',
-					'viewableBrokerId':'2',
-					'broker':{
-							'id':'2',
-							'userId':'8',
-							'brokerageId':'0',
-							'creationRights':true,
-							'user':{
-								'id':'8',
-								'username':'B2',
-								'password':'',
-								'roleId':'4',
-								'name':'Benjamin',
-								'initials':'B T',
-								'surname':'Twosey',
-								'email':'benjamin@gmail.com',
-								'active':'1',
-								'validated':'1'
-							}
-						}
-				}
-			]
+			'user':user,
+			'broker':broker,
+			'brokerage':brokerage,
+			'viewableBrokers':viewableBrokers
 		};
+
+		console.log(mockResponse);
 
 		ajaxPost(GET_DEFAULT_BROKER_DATA_URL,onGetDefaultBrokerDataSuccess,onGetDefaultBrokerDataFailure,requestObject,mockResponse);
 	}
