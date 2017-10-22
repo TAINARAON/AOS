@@ -1466,6 +1466,7 @@ var mockCommunicator = new function()
 			'acceptedOn':'2017-08-30 19:01:05',
 			'active':'1',
 			'linkedToPolicyId':null,
+			'totalInsuredValue':'200 000',
 			'premium':20000		
 		},
 		{
@@ -1477,6 +1478,7 @@ var mockCommunicator = new function()
 			'acceptedOn':'2017-08-30 19:03:05',
 			'active':'1',
 			'linkedToPolicyId':null,
+			'totalInsuredValue':'200 000',
 			'premium':20000	
 		},
 		{
@@ -1488,6 +1490,7 @@ var mockCommunicator = new function()
 			'acceptedOn':'2017-08-30 19:01:05',
 			'active':'1',
 			'linkedToPolicyId':null,
+			'totalInsuredValue':'200 000',
 			'premium':20000		
 		},
 		{
@@ -1499,6 +1502,7 @@ var mockCommunicator = new function()
 			'acceptedOn':'2017-08-30 19:03:05',
 			'active':'1',
 			'linkedToPolicyId':null,
+			'totalInsuredValue':'200 000',
 			'premium':20000	
 		}
 	];
