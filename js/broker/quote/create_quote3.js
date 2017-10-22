@@ -344,7 +344,7 @@ var createQuote = new function()
 
 	function resetBusinessUnitLabel()
 	{
-		label_business_unit.innerHTML = "Boerdery:";
+		label_business_unit.innerHTML = "Client:";
 	}
 
 	function notifyUserOfIncorrectFarm()
@@ -359,7 +359,7 @@ var createQuote = new function()
 
 	function resetFarmLabel()
 	{
-		label_farm.innerHTML = "Plaas:";
+		label_farm.innerHTML = "Farm:";
 	}
 	// ^ Set and reset elements ^
 
