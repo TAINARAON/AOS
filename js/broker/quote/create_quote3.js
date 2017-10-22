@@ -334,12 +334,12 @@ var createQuote = new function()
 
 	function notifyUserOfIncorrectBusinessUnit()
 	{
-		label_business_unit.innerHTML = "Boerdery: &#x2717;";
+		//label_business_unit.innerHTML = "Boerdery: &#x2717;";
 	}
 
 	function notifyUserOfCorrectBusinessUnit()
 	{
-		label_business_unit.innerHTML = "Boerdery: &#x2713;";
+		//label_business_unit.innerHTML = "Boerdery: &#x2713;";
 	}
 
 	function resetBusinessUnitLabel()
@@ -349,12 +349,12 @@ var createQuote = new function()
 
 	function notifyUserOfIncorrectFarm()
 	{
-		label_farm.innerHTML = "Plaas: &#x2717";
+		//label_farm.innerHTML = "Plaas: &#x2717";
 	}
 
 	function notifyUserOfCorrectFarm()
 	{
-		label_farm.innerHTML = "Plaas: &#x2713;";
+		//label_farm.innerHTML = "Plaas: &#x2713;";
 	}
 
 	function resetFarmLabel()
@@ -1638,8 +1638,9 @@ var createQuote = new function()
 
 	function loadLandEntryValuesIntoCriteriaFieldsForEditing(landEntry)
 	{
-		input_farm.value = landEntry.farm.name;
-		$(input_farm).blur();
+		$('#create_quote_farm_dropdown').val(landEntry.farm.id).change();
+		//input_farm.value = landEntry.farm.name;
+		//$(input_farm).blur();
 
 		input_land_number.value = landEntry.landNumber;
 		$(input_land_number).blur();
