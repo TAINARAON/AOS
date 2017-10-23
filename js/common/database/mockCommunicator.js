@@ -67,7 +67,7 @@ var mockCommunicator = new function()
 			'roleId':'0',
 			'name':'Leeroy',
 			'initials':'L',
-			'surname':'Nnnjenkinsss',
+			'surname':'Njenkinsss',
 			'email':'ljenkins@gmail.com',
 			'active':'1',
 			'validated':'1'
@@ -76,10 +76,10 @@ var mockCommunicator = new function()
 			'username':'IA',
 			'password':'',
 			'roleId':'1',
-			'name':'Leeroy',
-			'initials':'L',
-			'surname':'Nnnjenkinsss',
-			'email':'ljenkins@gmail.com',
+			'name':'Adam',
+			'initials':'A',
+			'surname':'Lavigne',
+			'email':'ladam@gmail.com',
 			'active':'1',
 			'validated':'1'
 		},
@@ -112,10 +112,10 @@ var mockCommunicator = new function()
 			'username':'BM',
 			'password':'',
 			'roleId':'4',
-			'name':'Bob Max',
-			'initials':'B',
-			'surname':'Boma',
-			'email':'bobmax@gmail.com',
+			'name':'Alan',
+			'initials':'A',
+			'surname':'Ross',
+			'email':'alaross@gmail.com',
 			'active':'1',
 			'validated':'1'
 		},
@@ -138,7 +138,7 @@ var mockCommunicator = new function()
 			'roleId':'5',
 			'name':'Carla',
 			'initials':'C',
-			'surname':'Says',
+			'surname':'Saysa',
 			'email':'carla@gmail.com',
 			'active':'1',
 			'validated':'1'
@@ -161,8 +161,8 @@ var mockCommunicator = new function()
 			'password':'',
 			'roleId':'4',
 			'name':'Benjamin',
-			'initials':'B T',
-			'surname':'Twosey',
+			'initials':'B B',
+			'surname':'Duoplo',
 			'email':'benjamin@gmail.com',
 			'active':'1',
 			'validated':'1'
@@ -554,7 +554,7 @@ var mockCommunicator = new function()
 	this.farmTable = [
 		{
 			'id':'0',
-			'name':'P0BU0',
+			'name':'Nooit Gedacht',
 			'businessUnitId':'0',
 			'latitude':'1.22644',
 			'longitude':'-0.35428',
@@ -563,7 +563,7 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'1',
-			'name':'P1BU0',
+			'name':'Altyd Gedacht',
 			'businessUnitId':'0',
 			'latitude':'1.325642',
 			'longitude':'-0.35243',
@@ -572,7 +572,7 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'2',
-			'name':'P0BU1',
+			'name':'Soms Gedacht',
 			'businessUnitId':'1',
 			'latitude':'1.22644',
 			'longitude':'-0.35428',
@@ -581,7 +581,7 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'3',
-			'name':'P1BU1',
+			'name':'Japie Farms',
 			'businessUnitId':'1',
 			'latitude':'1.325642',
 			'longitude':'-0.35243',
@@ -754,10 +754,10 @@ var mockCommunicator = new function()
 	this.insuranceAgency = 
 	[
 		{
-			'name':'Versekerings Ltd.',
-			'email':'versekerings.ltd@gmail.com',
+			'name':'Old Federal Inc ',
+			'email':'oldfed.zar@fmail.com',
 			'contactNumber':'062 352 1341',
-			'fspNumber':'fsp_0050'
+			'fspNumber':'F-0050-3'
 		}
 	];
 		
@@ -975,21 +975,21 @@ var mockCommunicator = new function()
 	this.brokerageTable = [
 		{
 			'id':'0',
-			'name':'Breeker Brokerage',
+			'name':'Bro Kherr & Co Brokerage',
 			'active':'1',
 			'dateCreated':'1990-08-25',
-			'email':'breeker.brokerage@gmail.com',
+			'email':'brokherr@fmail.com',
 			'contactPerson':'Sarah Bezuidenhoudt',
-			'contactNumber':'0623521574',
-			'fspNumber':'FSP000',
+			'contactNumber':'062 352 1574',
+			'fspNumber':'F-05081-2',
 			'verified':'1'
 		},
 		{
 			'id':'1',
-			'name':'Maakelaar Brokerage',
+			'name':'Discud Be-yhu',
 			'active':'1',
 			'dateCreated':'1990-09-21',
-			'email':'makelaar.brokerage@gmail.com',
+			'email':'discud.beyhu@gmale.com',
 			'contactPerson':'Pieter Vermeulen',
 			'contactNumber':'0623521348',
 			'fspNumber':'FSP001',
@@ -1000,8 +1000,6 @@ var mockCommunicator = new function()
 
 		data.id = this.brokerageTable.length;
 		this.brokerageTable.push(data);
-
-		console.log(this.brokerageTable[data.id]);
 
 		return data.id;
 	}
