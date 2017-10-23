@@ -581,7 +581,7 @@ var brokerController = new function() {
 					'coverageEnd':'2018-05-01 00:00:00',
 				}
 			];*/
-			var mockResponse = mockCommunicator.getTariffOptions();
+			var mockResponse = mockCommunicator.getOptionsByDistrictCropType(requestObject.districtId,requestObject.cropId,requestObject.typeId);
 
 			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
 		}
