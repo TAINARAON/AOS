@@ -149,9 +149,14 @@ function showValidFarms(businessUnitId) {
 function createFarmEntryElement(farm) {
 
 	var tr = $('<li></li>');
-
+	
 	var aToggle = $('<a></a>').addClass('toggle').prop('href',"javascript:void(0);");
-	aToggle.append($('<td></td>')).text(farm['name']);
+	aToggle.append($('<div class="row"></div>')
+	.append($('<div class="col-md-2"></div>').text(farm['name']))
+	.append($('<div class="col-md-2"></div>').text(farm['districtName']))
+	.append($('<div class="col-md-2"></div>').text(farm['businessUnitName']))
+	.append($('<div class="col-md-2"></div>').text(farm['latitude']))
+	.append($('<div class="col-md-2"></div>').text(farm['longitude'])));
 	tr.append(aToggle);
 
 	var ulInner = $('<ul></ul').addClass('inner');
