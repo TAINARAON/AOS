@@ -4,6 +4,7 @@
 
 
 function repopulatePriceUomTable() {
+
 	var tableBody = $('#systemkey_price_uom_view_price_uom_table_body');
 	tableBody.empty();
 

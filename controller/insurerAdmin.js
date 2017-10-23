@@ -1005,21 +1005,12 @@ var insurerAdminController = new function() {
 
 	this.getAreaUoms = function(successCallback,failCallback)
 	{
-		var mockResponse = [
-			{
-				'id':'0',
-				'name':'Hectare',
-			},
-			{
-				'id':'1',
-				'name':'Trees/block',
-			}
-		];
-
+		var mockResponse = mockCommunicator.getAreaUoms();
 		ajaxGet(GET_AREA_UOMS,successCallback,failCallback,mockResponse);
 	}
 	this.createAreaUom = function(successCallback,failCallback,requestObject)
 	{
+		mockCommunicator.createAreaUom(requestObject);
 		var mockResponse = {
 			'message':'Saved'
 		};
@@ -1080,21 +1071,13 @@ var insurerAdminController = new function() {
 	}
 	this.getPriceUoms = function(successCallback,failCallback)
 	{
-		var mockResponse = [
-			{
-				'id':'0',
-				'name':'R/Ton',
-			},
-			{
-				'id':'1',
-				'name':'R/Kg',
-			}
-		];
+		var mockResponse = mockCommunicator.getPriceUoms();
 
 		ajaxGet(GET_PRICE_UOMS,successCallback,failCallback,mockResponse);
 	}
 	this.createPriceUom = function(successCallback,failCallback,requestObject)
 	{
+		mockCommunicator.createPriceUom(requestObject);
 		var mockResponse = {
 			'message':'Saved'
 		};
@@ -1111,18 +1094,7 @@ var insurerAdminController = new function() {
 	}
 	this.getDistricts = function(successCallback,failCallback)
 	{
-		var mockResponse = [
-			{
-				'id':'0',
-				'name':'Bellville',
-				'active':'1'
-			},
-			{
-				'id':'1',
-				'name':'Kraaifontein',
-				'active':'1'
-			}
-		];
+		var mockResponse = mockCommunicator.getDistricts();
 
 		ajaxGet(GET_DISTRICTS,successCallback,failCallback,mockResponse);
 	}
@@ -1179,6 +1151,7 @@ var insurerAdminController = new function() {
 	}
 	this.createTariffOption = function(successCallback,failCallback,requestObject)
 	{
+		mockCommunicator.createTariffOption(requestObject);
 		var mockResponse = {
 			'message':'Saved'
 		};
@@ -1186,7 +1159,7 @@ var insurerAdminController = new function() {
 	}
 	this.getTariffs = function(successCallback,failCallback)
 	{
-		var mockResponse = [
+		/*var mockResponse = [
 			{
 				'id':'0',
 				'tariffOptionTypeId':'0',
@@ -1211,7 +1184,25 @@ var insurerAdminController = new function() {
 				'coverageEnd':'2018-06-01 00:00:00',
 				'tariffOptionTypeName':'Excess',
 			}
-		];
+		];*/
+		var tariffs = mockCommunicator.getTariffOptions();
+		var detailsTariffs = [];
+
+		for(var i = 0; i < tariffs.length; i++) {
+			var tariff = tariffs[i];
+			var district = mockCommunicator.getDistrict(tariff['districtId']);
+			console.log('ERER');
+			console.log(tariff);
+			var crop = mockCommunicator.getCrop(tariff['cropId']);
+			var tariffOptionType = mockCommunicator.getTariffOptionType(tariff['tariffOptionTypeId']);
+			tariff.cropName = crop['name'];
+			tariff.districtName = district['name'];
+			tariff.tariffOptionTypeName = tariffOptionType['name'];
+			detailsTariffs.push(tariff);
+		}
+
+		var mockResponse = detailsTariffs;
+
 		ajaxGet(CREATE_TARIFF_OPTION,successCallback,failCallback,mockResponse);
 	}
 }

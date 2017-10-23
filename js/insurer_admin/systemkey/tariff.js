@@ -92,11 +92,13 @@ function repopulateTariffTable() {
 
 	insurerAdminController.getTariffs(
 		function(response){
+			console.log('response');
+			console.log(response);
 			var validTariffs = filterTariffOptions(response,cropId,districtId,optionTypeId);
 
 			for ( var i = 0; i < validTariffs.length; i++ ) {
 				var detailedTariff = validTariffs[i];
-
+				console.log(detailedTariff);
 				var tr = $('<tr></tr>')
 					.append($('<td></td>').text(detailedTariff['tariffOptionTypeName']))
 					.append($('<td></td>').text(detailedTariff['districtName']))

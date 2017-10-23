@@ -568,7 +568,7 @@ var brokerController = new function() {
 		}
 		this.getTariffOptions = function(successCallback,failCallback,requestObject)
 		{
-			var mockResponse = [
+			/*var mockResponse = [
 				{
 					'id':'0',
 					'tariffOptionTypeId':'0',
@@ -578,7 +578,8 @@ var brokerController = new function() {
 					'coverageStart':'2017-05-01 00:00:00',
 					'coverageEnd':'2018-05-01 00:00:00',
 				}
-			];
+			];*/
+			var mockResponse = mockCommunicator.getTariffOptions();
 
 			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
 		}
