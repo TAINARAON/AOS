@@ -636,6 +636,11 @@ var mockCommunicator = new function()
 
         for(var i=0;i<this.farmTable.length;i++) {
             if(this.farmTable[i]['businessUnitId']==businessUnitId) {
+            	var farm = this.farmTable[i];
+            	var businessUnit = mockCommunicator.getBusinessUnit(businessUnitId);
+            	var district = mockCommunicator.getDistrict(farm['districtId']);
+            	farm['districtName'] = district['name'];
+            	farm['businessUnitName'] = businessUnit.name;
                 farms.push(this.farmTable[i]);
             }
         }
