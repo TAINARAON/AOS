@@ -592,6 +592,13 @@ var brokerController = new function() {
 				}
 			];*/
 
+			mockResponse =  mockCommunicator.getTariffOptionDamageTypesByTariffOption(requestObject.tariffOptionId);
+			for(var i = 0; i < mockCommunicator.length; i++)
+			{
+				var tariffOptionDamageType = mockResponse[i];
+				tariffOptionDamageType["damageType"] = mockCommunicator.getDamageType(tariffOptionDamageType.damageTypeId);
+			}
+
 			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
 		}
 		this.saveQuote = function(successCallback,failCallback,requestObject)
