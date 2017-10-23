@@ -553,7 +553,9 @@ var brokerController = new function() {
 		}
 		this.getCropsOfProduct = function(successCallback,failCallback,requestObject)
 		{
-			var mockResponse = [
+			var mockResponse = mockCommunicator.getCropsOfProduct(requestObject.productId);
+
+			/*var mockResponse = [
 				{
 					'id':'1',
 					'name':'Banana',
@@ -562,7 +564,7 @@ var brokerController = new function() {
 					'priceUomId':'0',
 					'areaUomId':'0'
 				}
-			];
+			];*/
 
 			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
 		}
