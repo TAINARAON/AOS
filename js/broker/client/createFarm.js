@@ -14,25 +14,24 @@ function init() {
 
 function getBusinessUnits() {
 
-	brokerController.getBusinessUnitsTheBrokerHasPoliciesOn(onGetBusinessUnitsSuccess,onGetBusinessUnitsFailure,brokerController.getBroker()['id']);
+	brokerController.getBusinessUnits(onGetBusinessUnitsSuccess,onGetBusinessUnitsFailure,brokerController.getBroker()['id']);
 }
 function onGetBusinessUnitsSuccess(response) {
 
-	var businessUnits = response;
-	console.log(businessUnits);
+	var businessUnits = response['businessUnits'];
+
 	populateBusinessUnitDropdown(businessUnits);
 }
 function onGetBusinessUnitsFailure(response) {
 	util.createNotification('Failed onGetBusinessUnitsFailure in brokerController','error');
 }
 
-
-
 function populateBusinessUnitDropdown(businessUnits) {
 
 	var selectElement = $('#client_create_farm_business_unit_dropdown');
 
 	var values = businessUnits;
+	console.log(businessUnits);
 	
 	for(var i = 0; i < values.length; i++)
 	{
@@ -66,11 +65,11 @@ function populateDistrictDropdown(response) {
 	}
 }
 
-
 function getAllInputData() {
 
 	var data = 
 	{
+		'businessUnitId':$('#client_create_farm_business_unit_dropdown').find(":selected").val(),
 		'name':$('#client_create_farm_farm_name_input').val(),
 		'districtId':$('#client_create_farm_district_dropdown :selected').val(),
 		'latitude':$('#client_create_farm_latitude_input').val(),

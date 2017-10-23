@@ -84,7 +84,7 @@ var brokerController = new function() {
 	this.getBusinessUnits = function(successCallback,failCallback,requestObject) {
 
 		var mockResponse = {
-			'brokerages':mockCommunicator.getBrokerages()
+			'businessUnits':mockCommunicator.getBusinessUnits()
 		};
 
 		console.log('getBusinessUnits');
@@ -256,11 +256,14 @@ var brokerController = new function() {
 	*/
 	this.createFarm = function(successCallback,failureCallback,requestObject) {
 
+		var newFarmId = mockCommunicator.createFarm(requestObject['farm']);
+		
 		var mockResponse = {
 			'status':true,
 			'message':''
 		}
 
+		
 		ajaxPost(CREATE_FARM_URL,successCallback,failureCallback,requestObject,mockResponse);
 	}
 

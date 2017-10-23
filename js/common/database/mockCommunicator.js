@@ -397,7 +397,7 @@ var mockCommunicator = new function()
 	this.businessUnitTable = [
 		{
 			'id':'0',
-			'name':'BU0',   //'Anro Boerdery Co (ABC)',
+			'name':'Anro Boerdery Co (ABC)',
 			'contactNumber':'063-887-9635',
 			'contactPerson':'Anro Swart',
 			'email':'anro.swart@bing.com',
@@ -408,7 +408,7 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'1',
-			'name':'BU1',			//'Tiaan and Anro Boerdery Amalgamated Co (TABACO)',
+			'name':'Tiaan and Anro Boerdery Amalgamated Co (TABACO)',
 			'contactNumber':'062-352-1342',
 			'contactPerson':'Tiaan Swart',
 			'email':'tiaan.swart@yahoo.com',

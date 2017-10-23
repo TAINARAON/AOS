@@ -49,8 +49,7 @@ function onGetBusinessUnitsAndTheirBrokersFailure() {
 }
 
 function populateBusinessUnitsDropdownValues(businessUnitsAndFarms) {
-	console.log('populateBusinessUnitsDropdownValues');
-	console.log(businessUnitsAndFarms);
+
 	var selectElement = $('#broker_business_unit_business_unit_dropdown');
 
 	for(var i = 0; i < businessUnitsAndFarms.length; i++)
@@ -102,6 +101,27 @@ function onBusinessUnitSelected(businessUnitId) {
 	hideAllFarmEntries();
 
 	showValidFarms(businessUnitId);
+
+	populateDetailsOfBusinessUnit(businessUnitId);
+
+}
+
+function populateDetailsOfBusinessUnit(businessUnitId) {
+
+	if(businessUnitId != null) {
+
+		$('#broker_client_data_container').show();
+		var businessUnit = mockCommunicator.getBusinessUnit(businessUnitId);
+		console.log(businessUnit);
+		$('#broker_admin_client_email').text(businessUnit['email']);
+		$('#broker_admin_client_vat_number').text(businessUnit['vatNumber']);
+		$('#broker_admin_client_tax_number').text(businessUnit['incomeTaxNumber']);
+		$('#broker_admin_client_contact_person').text(businessUnit['contactPerson']);
+		$('#broker_admin_client_contact_number').text(businessUnit['contactNumber']);
+	} else {
+		$('#broker_client_data_container').hide();
+	}
+	
 }
 
 function hideAllFarmEntries() {
