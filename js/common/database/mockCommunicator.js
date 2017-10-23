@@ -67,7 +67,7 @@ var mockCommunicator = new function()
 			'roleId':'0',
 			'name':'Leeroy',
 			'initials':'L',
-			'surname':'Nnnjenkinsss',
+			'surname':'Njenkinsss',
 			'email':'ljenkins@gmail.com',
 			'active':'1',
 			'validated':'1'
@@ -76,10 +76,10 @@ var mockCommunicator = new function()
 			'username':'IA',
 			'password':'',
 			'roleId':'1',
-			'name':'Leeroy',
-			'initials':'L',
-			'surname':'Nnnjenkinsss',
-			'email':'ljenkins@gmail.com',
+			'name':'Adam',
+			'initials':'A',
+			'surname':'Lavigne',
+			'email':'ladam@gmail.com',
 			'active':'1',
 			'validated':'1'
 		},
@@ -112,10 +112,10 @@ var mockCommunicator = new function()
 			'username':'BM',
 			'password':'',
 			'roleId':'4',
-			'name':'Bob Max',
-			'initials':'B',
-			'surname':'Boma',
-			'email':'bobmax@gmail.com',
+			'name':'Alan',
+			'initials':'A',
+			'surname':'Ross',
+			'email':'alaross@gmail.com',
 			'active':'1',
 			'validated':'1'
 		},
@@ -138,7 +138,7 @@ var mockCommunicator = new function()
 			'roleId':'5',
 			'name':'Carla',
 			'initials':'C',
-			'surname':'Says',
+			'surname':'Saysa',
 			'email':'carla@gmail.com',
 			'active':'1',
 			'validated':'1'
@@ -161,8 +161,8 @@ var mockCommunicator = new function()
 			'password':'',
 			'roleId':'4',
 			'name':'Benjamin',
-			'initials':'B T',
-			'surname':'Twosey',
+			'initials':'B B',
+			'surname':'Duoplo',
 			'email':'benjamin@gmail.com',
 			'active':'1',
 			'validated':'1'
@@ -749,10 +749,10 @@ var mockCommunicator = new function()
 	this.insuranceAgency = 
 	[
 		{
-			'name':'Versekerings Ltd.',
-			'email':'versekerings.ltd@gmail.com',
+			'name':'Old Federal Inc ',
+			'email':'oldfed.zar@fmail.com',
 			'contactNumber':'062 352 1341',
-			'fspNumber':'fsp_0050'
+			'fspNumber':'F-0050-3'
 		}
 	];
 		
