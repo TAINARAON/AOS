@@ -383,7 +383,7 @@ var createQuote = new function()
 
 		brokerController.getBusinessUnits(
 			function(response){
-				var brokerages = response['brokerages'];
+				var brokerages = response['businessUnits'];
 				for(var i = 0; i < brokerages.length; i++)
 				{
 					selectElement.append($('<option></option>').text(brokerages[i]['name']).val(brokerages[i]['id']));

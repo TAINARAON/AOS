@@ -1213,7 +1213,7 @@ var quoteCreator = new function()
 	{
 		landEntryId = landEntry.id;
 		//hideIncludeRowButton();
-		debugger;
+		
 		for(let i = 0; i < quote.quoteLandEntries.length; i++)
 		{
 			var existingLandEntry = quote.quoteLandEntries[i];
@@ -1363,7 +1363,7 @@ var quoteCreator = new function()
 
 	function save(landEntry)
 	{
-		debugger;
+		
 		if(validateInputs())
 		{
 			var editedQuote = parseInputDataIntoJSONQuote();

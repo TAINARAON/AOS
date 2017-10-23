@@ -1088,7 +1088,6 @@ var brokerController = new function() {
 		// Create
 		this.savePolicy = function(successCallback,failCallback,requestObject)
 		{
-			debugger;
 			var policyId = mockCommunicator.createPolicy(requestObject);
 			for(var i = 0; i < requestObject.policyLandEntries.length; i++)
 			{

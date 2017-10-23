@@ -216,7 +216,6 @@ var increasePolicy = new function(){
 
 	this.show = function(policy)
 	{
-		debugger;
 		mainPolicy = jQuery.extend(true, {}, policy);
 		setLandToEdit(mainPolicy);
 
