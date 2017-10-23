@@ -953,7 +953,9 @@ var brokerController = new function() {
 	            'insurerId':quote['insurerId'],
 	            'acceptedOn':timeSigned,
 	            'linkedToPolicyId':null,
-	            'active':'1'
+	            'active':'1',
+	            'totalInsuredValue':'200 000',
+	            'premium':'20000'
 	        };
 
 	        var newPolicyId = savePolicyObject(policy);

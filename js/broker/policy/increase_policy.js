@@ -40,6 +40,8 @@ var increasePolicy = new function(){
 		mainPolicy.brokerId = brokerController.getBroker().id;
 		mainPolicy.linkedToPolicyId = mainPolicy.id;
 		mainPolicy.policyNumber =  Math.floor((Math.random() * 100000) + 1);
+		mainPolicy["totalInsuredValue"] = "200 000"
+		mainPolicy["premium"] = "20000"
 		console.log(mainPolicy);
 
 		brokerController.savePolicy(
