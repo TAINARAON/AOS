@@ -238,9 +238,6 @@ function saveTariff() {
 		'coverage':coverage,
 	}
 
-	console.log(tariffOptionObject);
-	console.log(tariffOptionDamageTypeArray);
-
 	if(validateValues(coverage,tariffOptionDamageTypeArray)) {
 
 		var requestObj = {
