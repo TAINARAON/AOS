@@ -39,6 +39,7 @@ var increasePolicy = new function(){
 	{
 		mainPolicy.brokerId = brokerController.getBroker().id;
 		mainPolicy.linkedToPolicyId = mainPolicy.id;
+		mainPolicy.policyNumber =  Math.floor((Math.random() * 100000) + 1);
 		console.log(mainPolicy);
 
 		brokerController.savePolicy(
@@ -215,8 +216,19 @@ var increasePolicy = new function(){
 
 	this.show = function(policy)
 	{
-		mainPolicy = policy;
-		setLandToEdit(policy);
+		debugger;
+		mainPolicy = jQuery.extend(true, {}, policy);;
+		/*mainPolicy["businessUnitId"] = policy.businessUnitId;
+		mainPolicy["brokerId"] = policy.brokerId;
+		mainPolicy["insurerId"] = policy.insurerId;
+		mainPolicy["acceptedOn"] = policy.acceptedOn;
+		mainPolicy["active"] = policy.active;
+		mainPolicy["linkedToPolicyId"] = policy.id;
+		mainPolicy["totalInsuredValue"] = policy.totalInsuredValue;
+		mainPolicy["premium"] = policy.premium;
+		mainPolicy["policyLandEntries"] = [];
+		mainPolicy.policyLandEntries.(policy.policyLandEntries);*/
+		setLandToEdit(mainPolicy);
 
 		/*modal.style.cssText = "display: block; padding-right: 17px;";
 		modal.className = "modal fade in";*/

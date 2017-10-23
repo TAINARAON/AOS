@@ -1087,22 +1087,24 @@ var brokerController = new function() {
 		// Create
 		this.savePolicy = function(successCallback,failCallback,requestObject)
 		{
-			//var policyId = mockCommunicator.createPolicy(requestObject);
-			/*debugger;
-			for(var i = 0; requestObject.policyLandEntries.length; i++)
+			debugger;
+			var policyId = mockCommunicator.createPolicy(requestObject);
+			for(var i = 0; i < requestObject.policyLandEntries.length; i++)
 			{
 				var landEntry = requestObject.policyLandEntries[i];
-
-				console.log("Here");
+				landEntry["policyId"] = policyId;
+				var landEntryId = mockCommunicator.createPolicyLandEntry(landEntry);
 
 				for(var j = 0; j < landEntry.policyLandEntryDamageTypes.length; j++)
 				{
-
+					var landEntryDamageType = landEntry.policyLandEntryDamageTypes[j];
+					landEntryDamageType["policyLandEntryId"] = landEntryId;
+					mockCommunicator.createPolicyLandEntryDamageType(landEntryDamageType);
 				}
-			}*/
+			}
 
 			var mockResponse = {
-				'id':0,
+				'id':policyId,
 				'message':'saved'
 			};
 
