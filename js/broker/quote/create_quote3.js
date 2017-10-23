@@ -1363,6 +1363,8 @@ var createQuote = new function()
 		quote["insurerId"] = null;
 		quote["active"] = "1";
 		quote["dateCreated"] = util.getCurrentDateTime();
+		quote["totalInsuredValue"] = "200 000"
+		quote["premium"] = "20000"
 		if(!quote.hasOwnProperty("linkedToQuoteId"))
 		{
 			// If this isn't a requote, add the property
