@@ -372,22 +372,6 @@ var brokerAdminController = new function() {
 		ajaxPost(GET_BROKER_DETAILS_OF_BROKERAGE,successCallback,failCallback,requestObject,mockResponse);
 	};	
 
-	// NEEDED
-	this.getBrokerage = function() {
-
-		return brokerage;
-	}
-	// NEEDED
-	this.getBrokerAdmin = function() {
-
-		return brokerAdmin;
-	}
-	// NEEDED
-	this.getBrokersOfBrokerage = function() {
-
-		return brokersOfBrokerage;
-	}
-
 	/*
 		brokerAdmin/editBroker
 
