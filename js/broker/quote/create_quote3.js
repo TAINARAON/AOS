@@ -1751,7 +1751,8 @@ var createQuote = new function()
 	this.reQuote = function(otherQuote)
 	{
 		console.log(otherQuote);
-		quote = otherQuote;
+		//quote = otherQuote;
+		quote = jQuery.extend(true, {}, otherQuote);
 		// The new requote will be linked to the original quote through this id
 		quote.linkedToQuoteId = otherQuote.id;
 
