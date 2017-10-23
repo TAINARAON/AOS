@@ -40,94 +40,8 @@ var brokerAdminController = new function() {
 	var GET_DEFAULT_BROKER_ADMIN_DATA_URL = 'GET_DEFAULT_BROKER_ADMIN_DATA_URL';
 
 	this.init = function(userId) {
-		
 		getDefaultBrokerAdminData(userId);
 	}
-
-	/*function getDefaultBrokerAdminData(userId) {
-
-		var requestObject = {
-			'id':userId
-		};
-
-		var mockResponse = 
-		{	
-			'user':{
-				'initials':'B A',
-				'name':'Bernard Andre',
-				'surname':'Bandeer',
-				'email':'bernardandre@gmail.com',
-			},
-			'brokerAdmin':
-			{
-				'id':'0',
-				'brokerageId':0,
-				'userId':'3',
-				'active':'1',
-			},
-			'brokerage':
-			{
-				'id':'0',
-				'name':'Breeker Brokerage',
-				'bank':'ABSA',
-				'branch':'Tyger Manor',
-				'accountNumber':'50454',
-				'active':'1',
-				'dateCreated':'1990-08-25',
-				'email':'breeker.brokerage@gmail.com',
-				'contactNumber':'0623521574',
-				'fspNumber':'FSP000',
-				'verified':'1'
-			},
-			'brokersOfBrokerage':
-			[
-				{	
-					'id':'0',
-					'name':'Pieter',
-					'initials':'P J',
-					'surname':'Vosloo',
-					'branch':'Tyger Manor',
-					'creationRights':true,
-					'brokerViewableBrokers':
-					[
-						{
-							'id':2,
-							'name':'Piet',
-							'surname':'Poppe'
-						},
-						{
-							'id':3,
-							'name':'Sannie',
-							'surname':'Sakkie'
-						}
-					]
-				},
-				{
-					'id':'1',
-					'name':'Janne',
-					'initials':'J M',
-					'surname':'Man',
-					'branch':'Musaka',
-					'creationRights':true,
-					'brokerViewableBrokers':
-					[
-						{
-							'id':2,
-							'name':'Piet',
-							'surname':'Poppe'
-						},
-						{
-							'id':3,
-							'name':'Sannie',
-							'surname':'Sakkie'
-						}
-					]
-				}
-			]
-		};
-
-		ajaxPost(GET_DEFAULT_BROKER_ADMIN_DATA_URL,onGetDefaultBrokerAdminSuccess,onGetDefaultBrokerAdminFailure,requestObject,mockResponse);
-	}*/
 
 	function getDefaultBrokerAdminData(userId) {
 
@@ -136,21 +50,27 @@ var brokerAdminController = new function() {
 		};
 
 		var user = mockCommunicator.getUser(userId);
+
 		var brokerAdmin = mockCommunicator.getBrokerAdminByUserId(userId);
 		var brokerage = mockCommunicator.getBrokerage(brokerAdmin['brokerageId']);
 
 		var brokers = mockCommunicator.getBrokersOfBrokerage(brokerage['id']);
+		console.log(brokers);
 		for(var i = 0; i < brokers.length; i++) {
-			var user = mockCommunicator.getUser(brokers[i]['userId']);
-			brokers[i]['name'] = user['name'];
-			brokers[i]['surname'] = user['surname'];
-			brokers[i]['initials'] = user['initials'];
+
+			var brokerUser = mockCommunicator.getUser(brokers[i]['userId']);
+
+			brokers[i]['name'] = brokerUser['name'];
+			brokers[i]['surname'] = brokerUser['surname'];
+			brokers[i]['initials'] = brokerUser['initials'];
 			brokers[i]['brokerViewableBrokers'] = [];
 
 			for(var j = 0; j < brokers.length; j++) {
 
 				if(brokers[j]['id'] != brokers[i]['id']) {
+
 					var u = mockCommunicator.getUser(brokers[j]['userId']);
+					console.log(brokers[j]['userId']);
 					var obj = {
 						'id':brokers[j]['id'],
 						'name':u['name'],
@@ -160,8 +80,9 @@ var brokerAdminController = new function() {
 					brokers[i]['brokerViewableBrokers'].push(obj);
 				}
 			}
-
 		}
+
+
 
 		//var brokersOfBrokerage = mockCommunicator.getBrokersForBrokerTableInBrokerageTab(brokerAdmin['BrokerageId'])
 		
@@ -172,6 +93,7 @@ var brokerAdminController = new function() {
 			'brokerage':brokerage,
 			'brokersOfBrokerage':brokers
 		};
+
 
 		ajaxPost(GET_DEFAULT_BROKER_ADMIN_DATA_URL,onGetDefaultBrokerAdminSuccess,onGetDefaultBrokerAdminFailure,requestObject,mockResponse);
 	}
@@ -308,12 +230,27 @@ var brokerAdminController = new function() {
 	*/
 	this.createBroker = function (successCallback,failCallback,requestObject) {
 
+		var newUserId = mockCommunicator.createUser(requestObject['user']);
+		var brokerData = requestObject['broker'];
+		brokerData.userId = newUserId;
+		var newBrokerId = mockCommunicator.createBroker(brokerData);
+
+		var brokerViewableBrokers = requestObject['brokerViewableBrokers'];
+		for(var i = 0; i < brokerViewableBrokers.length; i++) {
+
+			var brokerViewableBroker = brokerViewableBrokers[i];
+			var obj = {'mainBrokerId':newBrokerId,'viewableBrokerId':brokerViewableBroker}
+			mockCommunicator.createBrokerViewableBroker(obj);
+		}
+		
 	    var mockResponse = {
 			'message':'',
 			'status':true
 		};
 
-	   ajaxPost(CREATE_BROKER_URL,successCallback,failCallback,requestObject,mockResponse);
+		getDefaultBrokerAdminData(user['id']);
+
+	    ajaxPost(CREATE_BROKER_URL,successCallback,failCallback,requestObject,mockResponse);
 	};
 
 

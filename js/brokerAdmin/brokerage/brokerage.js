@@ -37,6 +37,7 @@ function populateBrokerTable() {
 function getBrokerDetailsOfBrokerageSuccessCallback(response) {
 
 	var container = $('#broker_admin_broker_container');
+	container.empty();
 
 	var accordionContainer = document.createElement("UL");
 	accordionContainer.className = "accordion";

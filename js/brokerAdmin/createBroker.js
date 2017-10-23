@@ -165,32 +165,46 @@ function setSubmitButtonClickListener() {
 // creates broker, by supplying Username and email
 function onCreateBrokerClick() {
 
-	// TODO
-	var action = "something/createBroker/";
 
 	var email = $('#create_broker_email_input').val();
-	var name = $('#create_broker_name_input').val();
+	var name = $('#create_broker_preferred_name_input').val();
 	var initials = $('#create_broker_initials_input').val();
 	var branch = $('#create_broker_branch_input').val();
 	var contactNumber = $('#create_broker_contact_number_input').val();
 	var surname = $('#create_broker_surname_input').val();
 	var creationRights = $('#create_broker_rights_checkbox').is(':checked')
-
 	var brokerageId = brokerAdminController.getBrokerage()['id'];
 
-	var data = 
+	var brokerViewableBrokers = [];
+	var selectedBrokersListItems = $('#selected_brokers_ul li');
+
+	for(var i = 0; i < selectedBrokersListItems.length; i++) {
+
+		var viewableBrokerId = selectedBrokersListItems.eq(i).prop('id');
+		brokerViewableBrokers.push(viewableBrokerId);
+	}
+
+	var brokerData = 
 	{
-		"name":name,
-		"surname":surname,
-		"initials":initials,
 		"branch":branch,
 		"email":email,
 		"contactNumber":contactNumber,
 		"creationRights":creationRights,
 		"brokerageId":brokerageId
 	};
+	var userData = {
+		"name":name,
+		"surname":surname,
+		"initials":initials,
+	}
 
-	brokerAdminController.createBroker(onBrokerCreatedSuccess,onBrokerCreatedFailure,data);
+	var requestObject = {
+		'user':userData,
+		'broker':brokerData,
+		'brokerViewableBrokers':brokerViewableBrokers
+	}
+
+	brokerAdminController.createBroker(onBrokerCreatedSuccess,onBrokerCreatedFailure,requestObject);
 }
 
 
