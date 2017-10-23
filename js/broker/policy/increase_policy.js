@@ -217,17 +217,7 @@ var increasePolicy = new function(){
 	this.show = function(policy)
 	{
 		debugger;
-		mainPolicy = jQuery.extend(true, {}, policy);;
-		/*mainPolicy["businessUnitId"] = policy.businessUnitId;
-		mainPolicy["brokerId"] = policy.brokerId;
-		mainPolicy["insurerId"] = policy.insurerId;
-		mainPolicy["acceptedOn"] = policy.acceptedOn;
-		mainPolicy["active"] = policy.active;
-		mainPolicy["linkedToPolicyId"] = policy.id;
-		mainPolicy["totalInsuredValue"] = policy.totalInsuredValue;
-		mainPolicy["premium"] = policy.premium;
-		mainPolicy["policyLandEntries"] = [];
-		mainPolicy.policyLandEntries.(policy.policyLandEntries);*/
+		mainPolicy = jQuery.extend(true, {}, policy);
 		setLandToEdit(mainPolicy);
 
 		/*modal.style.cssText = "display: block; padding-right: 17px;";
