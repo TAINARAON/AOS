@@ -603,6 +603,9 @@ var mockCommunicator = new function()
 			}
 		}
 	}
+	this.getFarms = function() {
+		return this.farmTable;
+	}
 	this.getFarmByName = function(name) {
 		for(var i=0;i<this.farmTable.length;i++) {
 			if(this.farmTable[i].name==name) {
@@ -2446,6 +2449,96 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'1',
+			'tariffOptionTypeId':'0',
+			'cropId':'1',
+			'districtId':'0',
+			'coverage':'7.5',
+			'coverageStart':'2017-06-01 00:00:00',
+			'coverageEnd':'2018-06-01 00:00:00',
+		},
+		{
+			'id':'2',
+			'tariffOptionTypeId':'0',
+			'cropId':'2',
+			'districtId':'0',
+			'coverage':'5',
+			'coverageStart':'2017-05-01 00:00:00',
+			'coverageEnd':'2018-05-01 00:00:00',
+		},
+		{
+			'id':'3',
+			'tariffOptionTypeId':'0',
+			'cropId':'0',
+			'districtId':'1',
+			'coverage':'7.5',
+			'coverageStart':'2017-06-01 00:00:00',
+			'coverageEnd':'2018-06-01 00:00:00',
+		},
+		{
+			'id':'4',
+			'tariffOptionTypeId':'0',
+			'cropId':'1',
+			'districtId':'0',
+			'coverage':'5',
+			'coverageStart':'2017-05-01 00:00:00',
+			'coverageEnd':'2018-05-01 00:00:00',
+		},
+		{
+			'id':'5',
+			'tariffOptionTypeId':'0',
+			'cropId':'1',
+			'districtId':'1',
+			'coverage':'7.5',
+			'coverageStart':'2017-06-01 00:00:00',
+			'coverageEnd':'2018-06-01 00:00:00',
+		},
+		{
+			'id':'6',
+			'tariffOptionTypeId':'0',
+			'cropId':'2',
+			'districtId':'0',
+			'coverage':'5',
+			'coverageStart':'2017-05-01 00:00:00',
+			'coverageEnd':'2018-05-01 00:00:00',
+		},
+		{
+			'id':'7',
+			'tariffOptionTypeId':'0',
+			'cropId':'2',
+			'districtId':'1',
+			'coverage':'7.5',
+			'coverageStart':'2017-06-01 00:00:00',
+			'coverageEnd':'2018-06-01 00:00:00',
+		},
+		{
+			'id':'8',
+			'tariffOptionTypeId':'1',
+			'cropId':'0',
+			'districtId':'0',
+			'coverage':'7.5',
+			'coverageStart':'2017-06-01 00:00:00',
+			'coverageEnd':'2018-06-01 00:00:00',
+		},
+		{
+			'id':'9',
+			'tariffOptionTypeId':'1',
+			'cropId':'0',
+			'districtId':'1',
+			'coverage':'7.5',
+			'coverageStart':'2017-06-01 00:00:00',
+			'coverageEnd':'2018-06-01 00:00:00',
+		},
+		{
+			'id':'10',
+			'tariffOptionTypeId':'1',
+			'cropId':'1',
+			'districtId':'0',
+			'coverage':'7.5',
+			'coverageStart':'2017-06-01 00:00:00',
+			'coverageEnd':'2018-06-01 00:00:00',
+		},
+		{
+			'id':'11',
 			'tariffOptionTypeId':'1',
 			'cropId':'1',
 			'districtId':'1',
@@ -2453,6 +2546,24 @@ var mockCommunicator = new function()
 			'coverageStart':'2017-06-01 00:00:00',
 			'coverageEnd':'2018-06-01 00:00:00',
 		},
+		{
+			'id':'12',
+			'tariffOptionTypeId':'1',
+			'cropId':'2',
+			'districtId':'0',
+			'coverage':'7.5',
+			'coverageStart':'2017-06-01 00:00:00',
+			'coverageEnd':'2018-06-01 00:00:00',
+		},
+		{
+			'id':'13',
+			'tariffOptionTypeId':'1',
+			'cropId':'2',
+			'districtId':'1',
+			'coverage':'7.5',
+			'coverageStart':'2017-06-01 00:00:00',
+			'coverageEnd':'2018-06-01 00:00:00',
+		}
 	];
 	this.createTariffOption = function(data) {
 
@@ -2472,6 +2583,9 @@ var mockCommunicator = new function()
 		return this.tariffOptionTable;
 	}
 	this.getOptionsByDistrictCropType = function(districtId,cropId,typeId) {
+
+		console.log('combo');
+		console.log(districtId + ' ' + cropId + ' ' + typeId);
 
 		var options = [];
 

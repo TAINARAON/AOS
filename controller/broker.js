@@ -291,44 +291,13 @@ var brokerController = new function() {
 		}
 		this.getFarmsForBusinessUnitTheBrokerHasPoliciesOn = function(successCallback,failCallback,requestObject)
 		{
-			var mockResponse = [
-				{
-					'id':'0',
-					'name':'P0',
-					'businessUnitId':'0',
-					'latitude':'1.22644',
-					'longitude':'-0.35428',
-					'active':'1',
-					'districtId':'0'
-				}
-			];
+			var mockResponse = mockCommunicator.getFarms();
 
 			ajaxPost("Some url", successCallback,failCallback,requestObject,mockResponse);
 		}
 		this.getDamageTypes = function(successCallback,failCallback)
 		{
-			var mockResponse = [
-				{
-					'id':'0',
-					'name':'Fire',
-				},
-				{
-					'id':'1',
-					'name':'Flood',
-				},
-				{
-					'id':'2',
-					'name':'Dew',
-				},
-				{
-					'id':'3',
-					'name':'Bugs',
-				},
-				{
-					'id':'4',
-					'name':'Godzilla',
-				}
-			];
+			var mockResponse = mockCommunicator.getPerils();
 
 			ajaxGet("Some url", successCallback, failCallback, mockResponse);
 		}
@@ -570,6 +539,8 @@ var brokerController = new function() {
 		}
 		this.getTariffOptions = function(successCallback,failCallback,requestObject)
 		{
+			console.log('HERE');
+			console.log(requestObject);
 			/*var mockResponse = [
 				{
 					'id':'0',
@@ -581,13 +552,22 @@ var brokerController = new function() {
 					'coverageEnd':'2018-05-01 00:00:00',
 				}
 			];*/
-			var mockResponse = mockCommunicator.getOptionsByDistrictCropType(requestObject.districtId,requestObject.cropId,requestObject.typeId);
+
+			var farm = mockCommunicator.getFarm(requestObject['farmId']);
+
+			var mockResponse = mockCommunicator.getOptionsByDistrictCropType(farm['districtId'],requestObject.cropId,requestObject.optionTypeId);
 
 			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
 		}
 		this.getTariffOptionDamageTypeOfTariffOption = function(successCallback,failCallback,requestObject)
 		{
-			var mockResponse = [
+			console.log('AHAHAHAHAHAAHAHAHA');
+			console.log(requestObject);
+
+			var mockResponse = [];
+
+			
+			/*var mockResponse = [
 				{
 					'id':'0',
 					'tariffOptionId':'0',
@@ -610,7 +590,7 @@ var brokerController = new function() {
 						'name':'Flood',
 					}
 				}
-			];
+			];*/
 
 			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
 		}
