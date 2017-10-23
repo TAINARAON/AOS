@@ -166,7 +166,7 @@ function createBrokerEntryElement(broker) {
 	var ulInner = $('<ul></ul').addClass('inner');
 	tr.append(ulInner);
 
-	ulInner.append($('<li>Hello Text</li>'));
+	//ulInner.append($('<li>Hello Text</li>'));
 
 	var editButton = $('<button></button>')
 		.text('Edit')

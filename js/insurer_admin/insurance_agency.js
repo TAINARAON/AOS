@@ -47,7 +47,7 @@ function onGetInsurersOfInsuranceAgencyWithUserDataSuccess(response) {
 		var ulInner = $('<ul></ul').addClass('inner');
 		tr.append(ulInner);
 
-		ulInner.append($('<li>Hello Text</li>'));
+		//ulInner.append($('<li>Hello Text</li>'));
 	}
 
 	setOnAccordionClicked();

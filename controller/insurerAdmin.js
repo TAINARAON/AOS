@@ -1151,7 +1151,15 @@ var insurerAdminController = new function() {
 	}
 	this.createTariffOption = function(successCallback,failCallback,requestObject)
 	{
-		mockCommunicator.createTariffOption(requestObject);
+		var newTariffOptionId = mockCommunicator.createTariffOption(requestObject['tariffOption']);
+
+		var tariffOptionDamageTypes = requestObject['tariffOptionDamageType'];
+
+		for(var i = 0; i< tariffOptionDamageTypes.length; i++) {
+
+			mockCommunicator.createTariffOptionDamageType(tariffOptionDamageTypes[i]);
+		}
+		
 		var mockResponse = {
 			'message':'Saved'
 		};
@@ -1191,9 +1199,15 @@ var insurerAdminController = new function() {
 		for(var i = 0; i < tariffs.length; i++) {
 			var tariff = tariffs[i];
 			var district = mockCommunicator.getDistrict(tariff['districtId']);
-			console.log('ERER');
-			console.log(tariff);
+
 			var crop = mockCommunicator.getCrop(tariff['cropId']);
+
+			console.log('cropId');
+			console.log(tariff['cropId']);
+			console.log('crop');
+			console.log(crop);
+
+
 			var tariffOptionType = mockCommunicator.getTariffOptionType(tariff['tariffOptionTypeId']);
 			tariff.cropName = crop['name'];
 			tariff.districtName = district['name'];
