@@ -320,8 +320,8 @@ function createBrokerAccordionParentItem(broker, container)
 		childTitle.style.cssText = "display: flex; background: #4287b5;";
 
 		createAccordionItemDetailDiv("", childTitle).className = "col-md-1";
-		createAccordionItemDetailDiv("Full Name: ", childTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Branch: ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Full Name ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Branch ", childTitle).className = "col-md-2";
 
 		childLi.appendChild(childTitle);
 		container.appendChild(childLi);
