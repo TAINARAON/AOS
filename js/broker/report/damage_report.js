@@ -311,7 +311,7 @@ var damageReport = new function()
 
 		var childTitle = document.createElement("A");
 		childTitle.className = "toggle";
-		childTitle.style.cssText = "display: flex; background: #4287b5;";
+		childTitle.style.cssText = "display: flex; background: #4287b5; font-style: oblique; font-size: large;";
 
 		//createAccordionItemDetailDiv("Business Unit: " + damageReport.businessUnit.name, childTitle);
 		createAccordionItemDetailDiv("Business Unit: " + damageReport.farm.businessUnit.name, childTitle);
