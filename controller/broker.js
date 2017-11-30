@@ -587,8 +587,6 @@ var brokerController = new function() {
 
 			var mockResponse = [];
 
-			debugger;
-			
 			/*var mockResponse = [
 				{
 					'id':'0',
