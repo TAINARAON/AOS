@@ -16,7 +16,6 @@ var debugTool = new function(filterDepth=FILTER_LEVEL_ALL, filterType=FILTER_TYP
 
 			if(headerText != null) {
 				printMessage(headerText, type);
-				alert('not null: ' + headerText);
 			}
 			
 			printMessage(message, type);

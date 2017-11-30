@@ -1202,7 +1202,7 @@ var insurerAdminController = new function() {
 
 			var crop = mockCommunicator.getCrop(tariff['cropId']);
 
-			//debugTool.print("hos",0,0,"title");
+			debugTool.print("hos",1,1,"title");
 
 			var tariffOptionType = mockCommunicator.getTariffOptionType(tariff['tariffOptionTypeId']);
 			tariff.cropName = crop['name'];
