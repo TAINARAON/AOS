@@ -273,7 +273,11 @@ var brokerController = new function() {
 		// Create
 		this.getBusinessUnitsTheBrokerHasPoliciesOn = function(successCallback,failCallback,requestObject)
 		{
-			var mockResponse = [
+			var mockResponse = mockCommunicator.getBusinessUnits();
+			
+			ajaxPost("Some url", successCallback,failCallback,requestObject,mockResponse);
+
+			/*var mockResponse = [
 				{
 					'id':'0',
 					'name':'BU0',   //'Anro Boerdery Co (ABC)',
@@ -287,11 +291,12 @@ var brokerController = new function() {
 				}
 			];
 
-			ajaxPost("Some url", successCallback,failCallback,requestObject,mockResponse);
+			ajaxPost("Some url", successCallback,failCallback,requestObject,mockResponse);*/
 		}
 		this.getFarmsForBusinessUnitTheBrokerHasPoliciesOn = function(successCallback,failCallback,requestObject)
 		{
-			var mockResponse = mockCommunicator.getFarms();
+			//var mockResponse = mockCommunicator.getFarms();
+			var mockResponse = mockCommunicator.getFarmsByBusinessUnitId(requestObject.businessUnitId);
 
 			ajaxPost("Some url", successCallback,failCallback,requestObject,mockResponse);
 		}
@@ -488,7 +493,11 @@ var brokerController = new function() {
 		// Create
 		this.validateBusinessUnit = function(successCallback,failCallback,requestObject)
 		{
-			var mockResponse = {
+			var mockResponse = mockCommunicator.getBusinessUnitByName(requestObject.businessUnitName);
+
+			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
+
+			/*var mockResponse = {
 				'id':'0',
 				'name':'BU0',   //'Anro Boerdery Co (ABC)',
 				'contactNumber':'063-887-9635',
@@ -500,11 +509,15 @@ var brokerController = new function() {
 				'verified':'1'
 			};
 
-			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
+			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);*/
 		}
 		this.validateFarm = function(successCallback,failCallback,requestObject)
 		{
-			var mockResponse = {
+			var mockResponse = mockCommunicator.getFarmByNameAndBusinessId(requestObject.farmName,requestObject.businessUnitId);
+
+			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
+
+			/*var mockResponse = {
 				'id':'0',
 				'name':'P0',
 				'businessUnitId':'0',
@@ -514,7 +527,7 @@ var brokerController = new function() {
 				'districtId':'0'
 			};
 
-			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);
+			ajaxPost("Some url",successCallback,failCallback,requestObject,mockResponse);*/
 		}
 		this.getProducts = function(successCallback,failCallback)
 		{

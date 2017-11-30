@@ -465,6 +465,11 @@ var createQuote = new function()
 		selectElement.empty();
 		selectElement.append($('<option></option>').text("").prop('disabled',true).prop('selected',true));
 
+		var requestObj = {
+			'brokerId':brokerId,
+			'businessUnitId':businessUnit.id
+		};
+		debugger;
 		brokerController.getFarmsForBusinessUnitTheBrokerHasPoliciesOn(
 			function(response){
 				var farms = response;
@@ -483,7 +488,8 @@ var createQuote = new function()
 			},
 			function(response){
 				util.createNotification(response.message,'error');
-			}
+			},
+			requestObj
 		);
 	}
 
@@ -1500,7 +1506,7 @@ var createQuote = new function()
 	function getLandEntryFromCriteriaValues()
 	{
 		var landEntry = getCleanLandEntryFromCriteriaFields();
-
+		
 		//landEntry.crop["product"] = getProduct(dropdown_product.value);
 		landEntry["quoteLandEntryDamageTypes"] = [];
 
@@ -1766,7 +1772,7 @@ var createQuote = new function()
 		quote = jQuery.extend(true, {}, otherQuote);
 		// The new requote will be linked to the original quote through this id
 		quote.linkedToQuoteId = otherQuote.id;
-
+		debugger;
 		showModal();
 		// Reset the table
 		resetLandEntryTable();
