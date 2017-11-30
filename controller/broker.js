@@ -587,6 +587,7 @@ var brokerController = new function() {
 
 			var mockResponse = [];
 
+			debugger;
 			
 			/*var mockResponse = [
 				{
@@ -614,7 +615,7 @@ var brokerController = new function() {
 			];*/
 
 			mockResponse =  mockCommunicator.getTariffOptionDamageTypesByTariffOption(requestObject.tariffOptionId);
-			for(var i = 0; i < mockCommunicator.length; i++)
+			for(var i = 0; i < mockResponse.length; i++)
 			{
 				var tariffOptionDamageType = mockResponse[i];
 				tariffOptionDamageType["damageType"] = mockCommunicator.getDamageType(tariffOptionDamageType.damageTypeId);
