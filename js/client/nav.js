@@ -1,5 +1,7 @@
 (function(){
 
+	var defaultHomeIndex = 0;
+
 	var leftButtons = 
  	[
  		{
@@ -33,9 +35,17 @@
  	];
 
  	(function init(){
+ 		setAgrihostIconLink();
  		setupNavStructure();
-
  	})();
+
+ 	function setAgrihostIconLink()
+ 	{
+ 		$('#nav_link').on('click',function(e)	{
+				e.preventDefault(); 
+				loader.loadPage(leftButtons[defaultHomeIndex].pageUrl);
+		});
+ 	}
 
  	function setupNavStructure() {
  		var navbarButtonContainer = $('#navbar_button_container');
