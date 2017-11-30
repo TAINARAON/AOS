@@ -2161,7 +2161,7 @@ var mockCommunicator = new function()
 		this.limitTable[id] = data;
 	}
 
-// PRODUCT - done
+// PRODUCT - populated3
 	this.productTable = [
 		{
 			'id':'0',
@@ -2205,7 +2205,7 @@ var mockCommunicator = new function()
 		this.productTable[id] = data;
 	}
 
-// CROP - done
+// CROP - populated9
 	this.cropTable = [
 		{
 			'id':'0',
@@ -2221,23 +2221,63 @@ var mockCommunicator = new function()
 			'productId':'0',
 			'active':'1',
 			'priceUomId':'0',
-			'areaUomId':'0'
+			'areaUomId':'1'
 		},
 		{
 			'id':'2',
 			'name':'Cherry',
+			'productId':'0',
+			'active':'1',
+			'priceUomId':'1',
+			'areaUomId':'0'
+		},
+		{
+			'id':'3',
+			'name':'Durian',
+			'productId':'1',
+			'active':'1',
+			'priceUomId':'1',
+			'areaUomId':'1'
+		},
+		{
+			'id':'4',
+			'name':'Eggplant',
 			'productId':'1',
 			'active':'1',
 			'priceUomId':'1',
 			'areaUomId':'0'
 		},
 		{
-			'id':'2',
-			'name':'Cherry',
+			'id':'5',
+			'name':'Fennel',
 			'productId':'1',
+			'active':'1',
+			'priceUomId':'0',
+			'areaUomId':'1'
+		},
+		{
+			'id':'6',
+			'name':'Grapes',
+			'productId':'2',
+			'active':'1',
+			'priceUomId':'0',
+			'areaUomId':'0'
+		},
+		{
+			'id':'7',
+			'name':'Hops',
+			'productId':'2',
 			'active':'1',
 			'priceUomId':'1',
 			'areaUomId':'0'
+		},
+		{
+			'id':'8',
+			'name':"Barley",
+			'productId':'2',
+			'active':'1',
+			'priceUomId':'0',
+			'areaUomId':'1'
 		},
 	];
 	this.createCrop = function(data) {
@@ -2362,7 +2402,7 @@ var mockCommunicator = new function()
 		this.areaUomTable[id] = data;
 	}
 
-// DISTRICT - done
+// DISTRICT - populated3
 	this.districtTable = [
 		{
 			'id':'0',
@@ -2372,6 +2412,11 @@ var mockCommunicator = new function()
 		{
 			'id':'1',
 			'name':'Kraaifontein',
+			'active':'1'
+		},
+		{
+			'id':'2',
+			'name':'Malmesbury',
 			'active':'1'
 		},
 	];
@@ -2404,7 +2449,7 @@ var mockCommunicator = new function()
 		this.districtTable[id] = data;
 	}
 
-// TARIFF OPTION TYPE - done
+// TARIFF OPTION TYPE
 	this.tariffOptionTypeTable = [
 		{
 			'id':'0',
@@ -2445,132 +2490,979 @@ var mockCommunicator = new function()
 	}
 
 // TARIFF OPTION - done
-	this.tariffOptionTable = [
+	this.tariffOptionTable = 
+	[
 		{
-			'id':'0',
-			'tariffOptionTypeId':'0',
-			'cropId':'0',
-			'districtId':'0',
-			'coverage':'5',
-			'coverageStart':'2017-05-01 00:00:00',
-			'coverageEnd':'2018-05-01 00:00:00',
+			"id":"0",
+			"tariffOptionTypeId":0,
+			"cropId":0,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
 		},
 		{
-			'id':'1',
-			'tariffOptionTypeId':'0',
-			'cropId':'1',
-			'districtId':'0',
-			'coverage':'7.5',
-			'coverageStart':'2017-06-01 00:00:00',
-			'coverageEnd':'2018-06-01 00:00:00',
+			"id":"1",
+			"tariffOptionTypeId":0,
+			"cropId":0,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
 		},
 		{
-			'id':'2',
-			'tariffOptionTypeId':'0',
-			'cropId':'2',
-			'districtId':'0',
-			'coverage':'5',
-			'coverageStart':'2017-05-01 00:00:00',
-			'coverageEnd':'2018-05-01 00:00:00',
+			"id":"2",
+			"tariffOptionTypeId":0,
+			"cropId":0,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
 		},
 		{
-			'id':'3',
-			'tariffOptionTypeId':'0',
-			'cropId':'0',
-			'districtId':'1',
-			'coverage':'7.5',
-			'coverageStart':'2017-06-01 00:00:00',
-			'coverageEnd':'2018-06-01 00:00:00',
+			"id":"3",
+			"tariffOptionTypeId":0,
+			"cropId":0,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
 		},
 		{
-			'id':'4',
-			'tariffOptionTypeId':'0',
-			'cropId':'1',
-			'districtId':'0',
-			'coverage':'5',
-			'coverageStart':'2017-05-01 00:00:00',
-			'coverageEnd':'2018-05-01 00:00:00',
+			"id":"4",
+			"tariffOptionTypeId":0,
+			"cropId":0,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
 		},
 		{
-			'id':'5',
-			'tariffOptionTypeId':'0',
-			'cropId':'1',
-			'districtId':'1',
-			'coverage':'7.5',
-			'coverageStart':'2017-06-01 00:00:00',
-			'coverageEnd':'2018-06-01 00:00:00',
+			"id":"5",
+			"tariffOptionTypeId":0,
+			"cropId":0,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
 		},
 		{
-			'id':'6',
-			'tariffOptionTypeId':'0',
-			'cropId':'2',
-			'districtId':'0',
-			'coverage':'5',
-			'coverageStart':'2017-05-01 00:00:00',
-			'coverageEnd':'2018-05-01 00:00:00',
+			"id":"6",
+			"tarif6AfOptionTypeId":0,
+			"cropId":1,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
 		},
 		{
-			'id':'7',
-			'tariffOptionTypeId':'0',
-			'cropId':'2',
-			'districtId':'1',
-			'coverage':'7.5',
-			'coverageStart':'2017-06-01 00:00:00',
-			'coverageEnd':'2018-06-01 00:00:00',
+			"id":"7",
+			"tariffOptionTypeId":0,
+			"cropId":1,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
 		},
 		{
-			'id':'8',
-			'tariffOptionTypeId':'1',
-			'cropId':'0',
-			'districtId':'0',
-			'coverage':'7.5',
-			'coverageStart':'2017-06-01 00:00:00',
-			'coverageEnd':'2018-06-01 00:00:00',
+			"id":"8",
+			"tariffOptionTypeId":0,
+			"cropId":1,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
 		},
 		{
-			'id':'9',
-			'tariffOptionTypeId':'1',
-			'cropId':'0',
-			'districtId':'1',
-			'coverage':'7.5',
-			'coverageStart':'2017-06-01 00:00:00',
-			'coverageEnd':'2018-06-01 00:00:00',
+			"id":"9",
+			"tariffOptionTypeId":0,
+			"cropId":1,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
 		},
 		{
-			'id':'10',
-			'tariffOptionTypeId':'1',
-			'cropId':'1',
-			'districtId':'0',
-			'coverage':'7.5',
-			'coverageStart':'2017-06-01 00:00:00',
-			'coverageEnd':'2018-06-01 00:00:00',
+			"id":"10",
+			"tariffOptionTypeId":0,
+			"cropId":1,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
 		},
 		{
-			'id':'11',
-			'tariffOptionTypeId':'1',
-			'cropId':'1',
-			'districtId':'1',
-			'coverage':'7.5',
-			'coverageStart':'2017-06-01 00:00:00',
-			'coverageEnd':'2018-06-01 00:00:00',
+			"id":"11",
+			"tariffOptionTypeId":0,
+			"cropId":1,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
 		},
 		{
-			'id':'12',
-			'tariffOptionTypeId':'1',
-			'cropId':'2',
-			'districtId':'0',
-			'coverage':'7.5',
-			'coverageStart':'2017-06-01 00:00:00',
-			'coverageEnd':'2018-06-01 00:00:00',
+			"id":"12",
+			"tariffOptionTypeId":0,
+			"cropId":2,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
 		},
 		{
-			'id':'13',
-			'tariffOptionTypeId':'1',
-			'cropId':'2',
-			'districtId':'1',
-			'coverage':'7.5',
-			'coverageStart':'2017-06-01 00:00:00',
-			'coverageEnd':'2018-06-01 00:00:00',
+			"id":"13",
+			"tariffOptionTypeId":0,
+			"cropId":2,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"14",
+			"tariffOptionTypeId":0,
+			"cropId":2,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"15",
+			"tariffOptionTypeId":0,
+			"cropId":2,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"16",
+			"tariffOptionTypeId":0,
+			"cropId":2,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"17",
+			"tariffOptionTypeId":0,
+			"cropId":2,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"18",
+			"tariffOptionTypeId":0,
+			"cropId":3,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"19",
+			"tariffOptionTypeId":0,
+			"cropId":3,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"20",
+			"tariffOptionTypeId":0,
+			"cropId":3,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"21",
+			"tariffOptionTypeId":0,
+			"cropId":3,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"22",
+			"tariffOptionTypeId":0,
+			"cropId":3,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"23",
+			"tariffOptionTypeId":0,
+			"cropId":3,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"24",
+			"tariffOptionTypeId":0,
+			"cropId":4,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"25",
+			"tariffOptionTypeId":0,
+			"cropId":4,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"26",
+			"tariffOptionTypeId":0,
+			"cropId":4,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"27",
+			"tariffOptionTypeId":0,
+			"cropId":4,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"28",
+			"tariffOptionTypeId":0,
+			"cropId":4,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"29",
+			"tariffOptionTypeId":0,
+			"cropId":4,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"30",
+			"tariffOptionTypeId":0,
+			"cropId":5,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"31",
+			"tariffOptionTypeId":0,
+			"cropId":5,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"32",
+			"tariffOptionTypeId":0,
+			"cropId":5,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"33",
+			"tariffOptionTypeId":0,
+			"cropId":5,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"34",
+			"tariffOptionTypeId":0,
+			"cropId":5,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"35",
+			"tariffOptionTypeId":0,
+			"cropId":5,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"36",
+			"tariffOptionTypeId":0,
+			"cropId":6,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"37",
+			"tariffOptionTypeId":0,
+			"cropId":6,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"38",
+			"tariffOptionTypeId":0,
+			"cropId":6,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"39",
+			"tariffOptionTypeId":0,
+			"cropId":6,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"40",
+			"tariffOptionTypeId":0,
+			"cropId":6,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"41",
+			"tariffOptionTypeId":0,
+			"cropId":6,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"42",
+			"tariffOptionTypeId":0,
+			"cropId":7,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"43",
+			"tariffOptionTypeId":0,
+			"cropId":7,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"44",
+			"tariffOptionTypeId":0,
+			"cropId":7,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"45",
+			"tariffOptionTypeId":0,
+			"cropId":7,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"46",
+			"tariffOptionTypeId":0,
+			"cropId":7,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"47",
+			"tariffOptionTypeId":0,
+			"cropId":7,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"48",
+			"tariffOptionTypeId":0,
+			"cropId":8,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"49",
+			"tariffOptionTypeId":0,
+			"cropId":8,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"50",
+			"tariffOptionTypeId":0,
+			"cropId":8,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"51",
+			"tariffOptionTypeId":0,
+			"cropId":8,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"52",
+			"tariffOptionTypeId":0,
+			"cropId":8,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"53",
+			"tariffOptionTypeId":0,
+			"cropId":8,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"54",
+			"tariffOptionTypeId":1,
+			"cropId":0,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"55",
+			"tariffOptionTypeId":1,
+			"cropId":0,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"56",
+			"tariffOptionTypeId":1,
+			"cropId":0,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"57",
+			"tariffOptionTypeId":1,
+			"cropId":0,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"58",
+			"tariffOptionTypeId":1,
+			"cropId":0,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"59",
+			"tariffOptionTypeId":1,
+			"cropId":0,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"60",
+			"tariffOptionTypeId":1,
+			"cropId":1,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"61",
+			"tariffOptionTypeId":1,
+			"cropId":1,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"62",
+			"tariffOptionTypeId":1,
+			"cropId":1,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"63",
+			"tariffOptionTypeId":1,
+			"cropId":1,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"64",
+			"tariffOptionTypeId":1,
+			"cropId":1,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"65",
+			"tariffOptionTypeId":1,
+			"cropId":1,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"66",
+			"tariffOptionTypeId":1,
+			"cropId":2,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"67",
+			"tariffOptionTypeId":1,
+			"cropId":2,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"68",
+			"tariffOptionTypeId":1,
+			"cropId":2,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"69",
+			"tariffOptionTypeId":1,
+			"cropId":2,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"70",
+			"tariffOptionTypeId":1,
+			"cropId":2,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"71",
+			"tariffOptionTypeId":1,
+			"cropId":2,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"72",
+			"tariffOptionTypeId":1,
+			"cropId":3,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"73",
+			"tariffOptionTypeId":1,
+			"cropId":3,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"74",
+			"tariffOptionTypeId":1,
+			"cropId":3,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"75",
+			"tariffOptionTypeId":1,
+			"cropId":3,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"76",
+			"tariffOptionTypeId":1,
+			"cropId":3,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"77",
+			"tariffOptionTypeId":1,
+			"cropId":3,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"78",
+			"tariffOptionTypeId":1,
+			"cropId":4,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"79",
+			"tariffOptionTypeId":1,
+			"cropId":4,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"80",
+			"tariffOptionTypeId":1,
+			"cropId":4,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"81",
+			"tariffOptionTypeId":1,
+			"cropId":4,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"82",
+			"tariffOptionTypeId":1,
+			"cropId":4,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"83",
+			"tariffOptionTypeId":1,
+			"cropId":4,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"84",
+			"tariffOptionTypeId":1,
+			"cropId":5,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"85",
+			"tariffOptionTypeId":1,
+			"cropId":5,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"86",
+			"tariffOptionTypeId":1,
+			"cropId":5,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"87",
+			"tariffOptionTypeId":1,
+			"cropId":5,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"88",
+			"tariffOptionTypeId":1,
+			"cropId":5,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"89",
+			"tariffOptionTypeId":1,
+			"cropId":5,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"90",
+			"tariffOptionTypeId":1,
+			"cropId":6,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"91",
+			"tariffOptionTypeId":1,
+			"cropId":6,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"92",
+			"tariffOptionTypeId":1,
+			"cropId":6,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"93",
+			"tariffOptionTypeId":1,
+			"cropId":6,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"94",
+			"tariffOptionTypeId":1,
+			"cropId":6,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"95",
+			"tariffOptionTypeId":1,
+			"cropId":6,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"96",
+			"tariffOptionTypeId":1,
+			"cropId":7,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"97",
+			"tariffOptionTypeId":1,
+			"cropId":7,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"98",
+			"tariffOptionTypeId":1,
+			"cropId":7,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"99",
+			"tariffOptionTypeId":1,
+			"cropId":7,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"100",
+			"tariffOptionTypeId":1,
+			"cropId":7,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"101",
+			"tariffOptionTypeId":1,
+			"cropId":7,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"102",
+			"tariffOptionTypeId":1,
+			"cropId":8,
+			"districtId":0,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"103",
+			"tariffOptionTypeId":1,
+			"cropId":8,
+			"districtId":0,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"104",
+			"tariffOptionTypeId":1,
+			"cropId":8,
+			"districtId":1,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"105",
+			"tariffOptionTypeId":1,
+			"cropId":8,
+			"districtId":1,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"106",
+			"tariffOptionTypeId":1,
+			"cropId":8,
+			"districtId":2,
+			"coverage":"5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00" 
+		},
+		{
+			"id":"107",
+			"tariffOptionTypeId":1,
+			"cropId":8,
+			"districtId":2,
+			"coverage":"7.5",
+			"coverageEnd":"2018-05-01 00:00:00",
+			"coverageStart":"2017-05-01 00:00:00"
 		}
 	];
 	this.createTariffOption = function(data) {
