@@ -94,9 +94,9 @@ var insurerAdminController = new function() {
 		insuranceAgency = response['insuranceAgency'];
 		user = response['user'];
 
-		console.log(insurerAdmin);
+		/*console.log(insurerAdmin);
 		console.log(insuranceAgency);
-		console.log(user);
+		console.log(user);*/
 		
 		loader.loadRole('insurerAdmin');
 	}
@@ -144,8 +144,8 @@ var insurerAdminController = new function() {
 			'insurers':insurers
 		};
 
-		console.log('getInsurersOfInsuranceAgencyWithUserData');
-		console.log(mockResponse);
+		//console.log('getInsurersOfInsuranceAgencyWithUserData');
+		//console.log(mockResponse);
 
 		ajaxPost(GET_INSURERS_OF_INSURANCE_AGENCY_WITH_USER_DATA_URL,successCallback,failureCallback,requestObject,mockResponse);
 	}
@@ -218,8 +218,8 @@ var insurerAdminController = new function() {
 			mockResponse['brokeragesAndBrokers'].push(brokerageWithBrokers);
 		}
 
-		console.log('getBrokeragesAndTheirBrokers');
-		console.log(mockResponse);
+		//console.log('getBrokeragesAndTheirBrokers');
+		//console.log(mockResponse);
 
 		ajaxPost(GET_BROKERAGES_AND_THEIR_BROKERS,successCallback,failCallback,requestObject,mockResponse);
 	};
@@ -259,14 +259,14 @@ var insurerAdminController = new function() {
 		var businessUnitsIMaySeeIds = [];
 
 		var businessUnitsIMaySee = mockCommunicator.getBusinessUnits();
-		console.log(businessUnitsIMaySee);
+		//console.log(businessUnitsIMaySee);
 		for(var i = 0; i < businessUnitsIMaySee.length; i++) {
 			businessUnitsIMaySeeIds.push(businessUnitsIMaySee[i]['id']);
 		}
 
 		// Getting the businessUnit objectse
 		for(var i = 0; i < businessUnitsIMaySee.length; i++) {
-			console.log(businessUnitsIMaySee[i]);
+			//console.log(businessUnitsIMaySee[i]);
 			var businessUnitAndItsFarms = mockCommunicator.getBusinessUnitAndItsFarms(businessUnitsIMaySee[i]['id']);
 			businessUnitsAndFarms.push(businessUnitAndItsFarms);
 		}
@@ -275,8 +275,8 @@ var insurerAdminController = new function() {
 			'businessUnitsAndFarms':businessUnitsAndFarms
 		}
 
-		console.log('getBusinessUnitsAndTheirFarms');
-		console.log(businessUnitsAndFarms);
+		//console.log('getBusinessUnitsAndTheirFarms');
+		//console.log(businessUnitsAndFarms);
 
 		ajaxPost(GET_BUSINESS_UNITS_AND_THEIR_FARMS,successCallback,failCallback,requestObject,mockResponse);
 	};
@@ -388,7 +388,7 @@ var insurerAdminController = new function() {
 
 		var crops = mockCommunicator.getCrops();
 		var districts = mockCommunicator.getDistricts();
-		console.log(districts);
+		//console.log(districts);
 		var mockResponse = {
 			'crops':crops,
 			'districts':districts
@@ -1202,11 +1202,7 @@ var insurerAdminController = new function() {
 
 			var crop = mockCommunicator.getCrop(tariff['cropId']);
 
-			console.log('cropId');
-			console.log(tariff['cropId']);
-			console.log('crop');
-			console.log(crop);
-
+			//debugTool.print("hos",0,0,"title");
 
 			var tariffOptionType = mockCommunicator.getTariffOptionType(tariff['tariffOptionTypeId']);
 			tariff.cropName = crop['name'];

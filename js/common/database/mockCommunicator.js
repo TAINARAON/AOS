@@ -2548,7 +2548,7 @@ var mockCommunicator = new function()
 		},
 		{
 			"id":"6",
-			"tarif6AfOptionTypeId":0,
+			"tariffOptionTypeId":0,
 			"cropId":1,
 			"districtId":0,
 			"coverage":"5",
