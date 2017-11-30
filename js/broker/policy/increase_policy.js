@@ -116,6 +116,9 @@ var increasePolicy = new function(){
 
 	function populateEditFields(landEntry, landEntryRow)
 	{
+		$('#price_measurement').html('(' + util.getPriceUnitOfCrop(landEntry.crop.id) + ')');
+		$('#yield_measurement').html('(' + util.getAreaUnitOfCrop(landEntry.crop.id) + ')');
+
 		$(fields_for_edit_container).show();
 		$(buttons_for_edit_container).show();
 
