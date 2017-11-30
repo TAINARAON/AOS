@@ -10,9 +10,14 @@ var FILTER_TYPE_LOG = 1;
 var FILTER_TYPE_WARNING = 2;
 
 var debugTool = new function(filterDepth=FILTER_LEVEL_ALL, filterType=FILTER_TYPE_ALL) {
-	this.print = function(message, level, type)
+	this.print = function(message, level, type, headerText=null)
 	{
 		if(checkDepthPermission(filterDepth, level) && checkTypePermission(filterType, type))
+
+			if(headerText != null) {
+				printMessage(headerText, type);
+			}
+			
 			printMessage(message, type);
 	}
 
