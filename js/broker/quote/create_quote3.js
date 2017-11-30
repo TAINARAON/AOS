@@ -889,6 +889,17 @@ var createQuote = new function()
 
 						dropdown_coverage.appendChild(option);
 					}
+
+					// TODO: test - will populate the list with an unclickable item notifying the user that no options are available
+					// This has to be implemented by all the dropdowns
+					/*debugger;
+					if(optionsByFarmCropType.length == 0)
+					{
+						var option = document.createElement("OPTION");
+						$(option).attr("disabled selected value");
+						option.innerHTML = "NA";
+						dropdown_coverage.appendChild(option);
+					}*/
 				},
 				function(response){
 					util.createNotification("Failed to load option types");

@@ -303,7 +303,28 @@ var brokerController = new function() {
 		}
 		this.getLandEntryForFarmAndBusinessUnitTheBrokerHasPoliciesOn = function(successCallback,failCallback,requestObject)
 		{
-			var mockResponse = [
+			var landEntries = [];
+
+			var policiesByBrokerId = mockCommunicator.getPoliciesByBrokerId(requestObject.brokerId);
+
+			for(var i = 0; i < policiesByBrokerId.length; i++)
+			{
+				if(policiesByBrokerId[i].businessUnitId == requestObject.businessUnitId)
+				{
+					var policyLandEntriesByPolicyId = mockCommunicator.getPolicyLandEntriesByPolicyId(policiesByBrokerId[i].id);
+					for(var j = 0; j < policyLandEntriesByPolicyId.length; j++)
+					{
+						if(policyLandEntriesByPolicyId[j].farmId == requestObject.farmId)
+						{
+							landEntries.push(policyLandEntriesByPolicyId[j]);
+						}
+					}
+				}
+			}
+
+			ajaxPost("Some url", successCallback,failCallback,requestObject,landEntries);
+
+			/*var mockResponse = [
 				{
 					'id':'4',
 					'policyId':'2',
@@ -336,7 +357,7 @@ var brokerController = new function() {
 				}
 			];
 
-			ajaxPost("Some url", successCallback,failCallback,requestObject,mockResponse);
+			ajaxPost("Some url", successCallback,failCallback,requestObject,mockResponse);*/
 		}
 		this.saveDamageReport = function(successCallback,failCallback,requestObject)
 		{
