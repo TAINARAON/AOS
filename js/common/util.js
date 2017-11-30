@@ -5,6 +5,24 @@ var util = new function() {
 	var callback;
 	var myExtraData;
 
+	this.getPriceUnitOfCrop = function(cropId) {
+
+		var crop = mockCommunicator.getCrop(cropId);
+
+		var priceUOM = mockCommunicator.getPriceUom(crop.priceUomId);
+
+		return priceUOM["name"];
+	}
+
+	this.getAreaUnitOfCrop = function(cropId) {
+		
+		var crop = mockCommunicator.getCrop(cropId);
+
+		var areaUOM = mockCommunicator.getAreaUom(crop.areaUomId);
+
+		return areaUOM["name"];
+	}
+
 	this.returnUniqueEntries = function(array) {
 
 		var uniqueEntries = [];

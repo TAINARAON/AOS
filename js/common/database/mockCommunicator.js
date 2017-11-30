@@ -1,7 +1,7 @@
 var mockCommunicator = new function()
 {
 // ############################# USERS #################################
-// ROLE - done
+// ROLE
 	this.roleTable = [
 		{
 			'id':'0',
@@ -2225,7 +2225,15 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'2',
-			'name':'Zebra Fruit',
+			'name':'Cherry',
+			'productId':'1',
+			'active':'1',
+			'priceUomId':'1',
+			'areaUomId':'0'
+		},
+		{
+			'id':'2',
+			'name':'Cherry',
 			'productId':'1',
 			'active':'1',
 			'priceUomId':'1',
