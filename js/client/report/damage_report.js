@@ -149,7 +149,7 @@ var damageReport = new function()
 		createAccordionItemDetailDiv("Damage Date: " + damageReport.dateOfDamage, parentTitle);
 		createAccordionItemDetailDiv("Damage Report Number: " + damageReport.damageReportNumber, parentTitle);
 		var requiresTaxation = damageReport.requiresTaxation ? "Yes" : "No";
-		createAccordionItemDetailDiv("Taxation Required: " + requiresTaxation, parentTitle);
+		createAccordionItemDetailDiv("Loss Adjustment Required: " + requiresTaxation, parentTitle);
 		//calculateDamageStatus(damageReport, createAccordionItemDetailDiv("Status: ", parentTitle));
 		calculateDamageStatus(damageReport, createAccordionItemDetailDiv("Status: ", parentTitle));
 
