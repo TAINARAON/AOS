@@ -469,7 +469,7 @@ var createQuote = new function()
 			'brokerId':brokerId,
 			'businessUnitId':businessUnit.id
 		};
-		debugger;
+		//debugger;
 		brokerController.getFarmsForBusinessUnitTheBrokerHasPoliciesOn(
 			function(response){
 				var farms = response;
@@ -1772,7 +1772,7 @@ var createQuote = new function()
 		quote = jQuery.extend(true, {}, otherQuote);
 		// The new requote will be linked to the original quote through this id
 		quote.linkedToQuoteId = otherQuote.id;
-		debugger;
+		//debugger;
 		showModal();
 		// Reset the table
 		resetLandEntryTable();
