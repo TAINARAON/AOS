@@ -3,8 +3,18 @@
 		<div class="col-md-3">
 		    <label class="text-left">Brokerage</label>
 		    <select id="insurer_admin_brokers_brokerage_dropdown" class="form-control">
-		      <option selected value="ALL">All</option>
+		      <!--<option selected disabled value="ALL">All</option>-->
+		      <option selected disabled>-- Select Brokerage --</option>
 		    </select>
+		</div>
+		<div class="col-md-2 pull-right">
+			<div id="insurer_admin_create_brokerage_button" class="btn btn-primary btn-block">
+				Create Brokerage
+			</div> 
+			<br>
+			<div id="insurer_admin_create_broker_button" class="btn btn-primary btn-block">
+				Create Broker
+			</div> 
 		</div>
 	</div>
 	<div hidden id="insurer_admin_broker_brokerage_data_container">
@@ -29,12 +39,6 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<div id="insurer_admin_create_brokerage_button" class="btn btn-primary pull-right">
-				Create Brokerage
-			</div> 
-			<div id="insurer_admin_create_broker_button" class="btn btn-primary pull-right">
-				Create Broker
-			</div> 
 			<div class="row">
 			  	<div class="col-md-12">
 				  	<h3>Brokers</h3>
