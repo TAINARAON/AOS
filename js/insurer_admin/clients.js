@@ -1,11 +1,14 @@
 // [{businessUnitId,jqueryElement}]
 var businessUnitFarmElements = [];
+var businessUnits = [];
 
 (function() {
 
 	init();
 	
 })();
+
+
 
 
 function init() {
@@ -32,15 +35,19 @@ function populateBusinessUnitsDropdownValues(businessUnitsAndFarms) {
 
 	var selectElement = $('#insurer_admin_clients_business_units_dropdown');
 
-	console.log(businessUnitsAndFarms);
+	//console.log(businessUnitsAndFarms);
 	for(var i = 0; i < businessUnitsAndFarms.length; i++)
 	{
 		var businessUnitAndFarms = businessUnitsAndFarms[i];
 		var businessUnit = businessUnitAndFarms['businessUnit'];
+
+		// Add business Unit to global array
+		businessUnits.push(businessUnit);
+
 		var farms = businessUnitAndFarms['farms'];
 
-		console.log('businessUnit');
-		console.log(businessUnit);
+		//console.log('businessUnit');
+		//console.log(businessUnit);
 		selectElement.append($('<option></option>').text(businessUnit['name']).val(businessUnit['id']));	
 
 		addFarmEntriesToTable(businessUnit['id'],farms);
@@ -87,8 +94,23 @@ function onBusinessUnitSelected(businessUnitId) {
 
 	showValidFarms(businessUnitId);
 
+	populateBusinessUnitDataContainer(businessUnitId);
+
 	$("#insurer_admin_client_farms_container").show();
 	$("#insurer_admin_client_data_container").show();
+}
+
+function populateBusinessUnitDataContainer(businessUnitId) {
+
+	var businessUnit = businessUnits[businessUnitId];
+
+	if(typeof businessUnit == 'undefined') {
+		return;
+	}
+
+	$("#insurer_admin_client_email").text(businessUnit["email"]);
+	$("#insurer_admin_client_contact_number").text(businessUnit["contactNumber"]);
+	$("#insurer_admin_client_contact_person").text(businessUnit["contactPerson"]);
 }
 
 function hideAllFarmEntries() {
