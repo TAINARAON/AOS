@@ -64,6 +64,7 @@ function populateBusinessUnitsDropdownValues(businessUnitsAndFarms) {
 
 	// Populate table
 	selectElement.trigger('change');
+	$('#client_business_unit_farm_container').hide();
 
 	// set toggle. ugly but whatever
 	setOnAccordionClicked();
@@ -94,6 +95,9 @@ function onBusinessUnitSelected(businessUnitId) {
 	hideAllFarmEntries();
 
 	showValidFarms(businessUnitId);
+
+	// Show Farm div after a selection has been made. Technically only needs to happen once, but whatever.
+	$('#client_business_unit_farm_container').show();
 }
 
 function hideAllFarmEntries() {

@@ -72,6 +72,8 @@ function populateBusinessUnitsDropdownValues(businessUnitsAndFarms) {
 	// Populate table
 	selectElement.trigger('change');
 
+	$("#broker_client_farm_container").hide();
+
 	// set toggle. ugly but whatever
 	setOnAccordionClicked();
 }
@@ -103,6 +105,8 @@ function onBusinessUnitSelected(businessUnitId) {
 	showValidFarms(businessUnitId);
 
 	populateDetailsOfBusinessUnit(businessUnitId);
+
+	$("#broker_client_farm_container").show();
 
 }
 

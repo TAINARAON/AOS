@@ -3,11 +3,11 @@
 		<div class="col-md-3">
 		    <label class="text-left">Business Unit</label>
 		    <select id="insurer_admin_clients_business_units_dropdown" class="form-control">
-		      <option disabled selected value=""></option>
+		      <option hidden disabled selected>- Select Business Unit -</option>
 		    </select>
 		</div>
 	</div>
-	<div id="insurer_admin_client_data_container">
+	<div hidden id="insurer_admin_client_data_container">
 		<div class="row">
 		  <div class="col-md-10">
 		  	<label>Email</label>
@@ -21,7 +21,7 @@
 		  </div>
 		</div>
 	</div>
-	<div class="row">
+	<div hidden id="insurer_admin_client_farms_container" class="row">
 		<div class="col-md-12">
 			<!--<div id="insurer_admin_create_broker_button" class="btn btn-primary pull-right">
 				Create Farm

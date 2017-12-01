@@ -54,6 +54,9 @@ function populateBusinessUnitsDropdownValues(businessUnitsAndFarms) {
 	// Populate table
 	selectElement.trigger('change');
 
+	$("#insurer_admin_client_farms_container").hide();
+	$("#insurer_admin_client_data_container").hide();
+
 	// set toggle. ugly but whatever
 	setOnAccordionClicked();
 }
@@ -83,6 +86,9 @@ function onBusinessUnitSelected(businessUnitId) {
 	hideAllFarmEntries();
 
 	showValidFarms(businessUnitId);
+
+	$("#insurer_admin_client_farms_container").show();
+	$("#insurer_admin_client_data_container").show();
 }
 
 function hideAllFarmEntries() {

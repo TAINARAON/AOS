@@ -72,6 +72,8 @@ function populateBrokeragesDropdownValues() {
 	// Populate table
 	selectElement.trigger('change');
 
+	$("#insurer_brokers_container").hide();
+
 	// set toggle. ugly but whatever
 	setOnAccordionClicked();
 }
@@ -81,6 +83,8 @@ function onBrokerageSelected(brokerageId) {
 	hideAllBrokerEntries();
 
 	showValidBrokers(brokerageId);
+
+	$("#insurer_brokers_container").show();
 }
 
 function addBrokerEntriesToTable(brokerageId,brokers) {

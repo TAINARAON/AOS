@@ -3,7 +3,7 @@
 		<div class="col-md-3">
 		    <label class="text-left">Client</label>
 		    <select id="business_unit_business_unit_dropdown" class="form-control">
-		      <option selected disabled value=""></option>
+		      <option selected hidden disabled>- Select Client -</option>
 		    </select>
 		</div>
 		<div class="pull-right col-md-2">
@@ -40,9 +40,9 @@
 		</div></div>-->
 	<br>
 
-	<div class="row">
+	<div hidden id="client_business_unit_farm_container" class="row">
 		<div class="pull-right col-md-2">
-			<div id="business_unit_create_farm_button" class="btn btn-primary form-control">
+			<div  id="business_unit_create_farm_button" class="btn btn-primary form-control">
 		      Create Farm
 		    </div> 
 		</div>
