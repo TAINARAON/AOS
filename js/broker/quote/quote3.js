@@ -192,6 +192,9 @@ var quoteViewer = new function ()
 
 	function createQuoteAccordionParentItem(quote, container)
 	{
+		var sectionStart = "<section>";
+		var sectionEnd = "</section>";	
+
 		var parentLi = document.createElement("LI");
 
 		var parentTitle = document.createElement("A");
@@ -199,11 +202,21 @@ var quoteViewer = new function ()
 		parentTitle.style.cssText = "display: flex;";
 		parentTitle.onclick = function(){toggleOtherQuotes(quote, parentLi, container);};
 
-		createAccordionItemDetailDiv("Quote Number: " + quote.quoteNumber, parentTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Business Unit: " + quote.businessUnit.name, parentTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Date Created: " + quote.dateCreated, parentTitle).className = "col-md-3";
-		createAccordionItemDetailDiv("Total Insured Value: " + sessionStorage.CURRENCY + " " + quote.totalInsuredValue, parentTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Premium: " + sessionStorage.CURRENCY + " " + quote.premium, parentTitle).className = "col-md-2";
+		var head1 = createAccordionItemDetailDiv(sectionStart + "Quote Number" + sectionEnd + sectionStart + quote.quoteNumber + sectionEnd, parentTitle);
+		head1.className = "col-md-2";
+		head1.style.cssText = "text-align: center;";
+		var head2 = createAccordionItemDetailDiv(sectionStart + "Business Unit" + sectionEnd + sectionStart + quote.businessUnit.name + sectionEnd, parentTitle);
+		head2.className = "col-md-2";
+		head2.style.cssText = "text-align: center;";
+		var head3 = createAccordionItemDetailDiv(sectionStart + "Date Created" + sectionEnd + sectionStart + quote.dateCreated + sectionEnd, parentTitle);
+		head3.className = "col-md-3";
+		head3.style.cssText = "text-align: center;";
+		var head4 = createAccordionItemDetailDiv(sectionStart + "Total Insured Value" + sectionEnd + sectionStart + sessionStorage.CURRENCY + " " + quote.totalInsuredValue + sectionEnd, parentTitle);
+		head4.className = "col-md-2";
+		head4.style.cssText = "text-align: center;";
+		var head5 = createAccordionItemDetailDiv(sectionStart + "Premium" + sectionEnd + sectionStart + sessionStorage.CURRENCY + " " + quote.premium + sectionEnd, parentTitle);
+		head5.className = "col-md-2";
+		head5.style.cssText = "text-align: center;";
 
 		var childContainer = document.createElement("UL");
 		childContainer.className = "inner";
