@@ -143,6 +143,9 @@ var damageReport = new function()
 
 	function createDamageReportAccordionParentItem(damageReport, container)
 	{
+		var sectionStart = "<section>";
+		var sectionEnd = "</section>";
+
 		var parentLi = document.createElement("LI");
 
 		var parentTitle = document.createElement("A");
@@ -150,13 +153,16 @@ var damageReport = new function()
 		parentTitle.style.cssText = "display: flex; overflow-x: auto;";
 		parentTitle.onclick = function(){toggleOtherPolicy(damageReport, parentLi, container);};
 
-		createAccordionItemDetailDiv("Damage Type: " + damageReport.damageType.name, parentTitle);
-		createAccordionItemDetailDiv("Damage Date: " + damageReport.dateOfDamage, parentTitle);
-		createAccordionItemDetailDiv("Damage Report Number: " + damageReport.damageReportNumber, parentTitle);
+		createAccordionItemDetailDiv(sectionStart + "Damage Report Number" + sectionEnd + sectionStart + damageReport.damageReportNumber + sectionEnd, parentTitle).style.cssText = "text-align: center;";
+		createAccordionItemDetailDiv(sectionStart + "Damage Type" + sectionEnd + sectionStart + damageReport.damageType.name + sectionEnd, parentTitle).style.cssText = "text-align: center;";
+		createAccordionItemDetailDiv(sectionStart + "Damage Date" + sectionEnd + sectionStart + damageReport.dateOfDamage + sectionEnd, parentTitle).style.cssText = "text-align: center;";
 		var requiresTaxation = damageReport.requiresTaxation ? "Yes" : "No";
-		createAccordionItemDetailDiv("Loss Adjustment Required: " + requiresTaxation, parentTitle);
+		createAccordionItemDetailDiv(sectionStart + "Loss Adjustment Required" + sectionEnd + sectionStart + requiresTaxation + sectionEnd, parentTitle).style.cssText = "text-align: center;";
 		//calculateDamageStatus(damageReport, createAccordionItemDetailDiv("Status: ", parentTitle));
-		calculateDamageStatus(damageReport, createAccordionItemDetailDiv("Status: ", parentTitle));
+		
+		var tStatusContainer = createAccordionItemDetailDiv(sectionStart + "Status" + sectionEnd, parentTitle);
+		tStatusContainer.style.cssText = "text-align: center;";
+		calculateDamageStatus(damageReport, tStatusContainer);
 
 		var childContainer = document.createElement("UL");
 		childContainer.className = "inner";
@@ -189,7 +195,7 @@ var damageReport = new function()
 		var DONE = 2;
 
 		var damageDiv = document.createElement("DIV");
-		damageDiv.style.cssText = "height: 20px; width: 20px; float: right; border-radius:20px;";
+		damageDiv.style.cssText = "height: 20px; width: 20px; float: right; border-radius:20px; position: absolute; left: 45%;";
 
 		if(damageReport.taxationProgress == NOTSTARTED)
 		{
@@ -211,13 +217,17 @@ var damageReport = new function()
 	{
 		var tDiv = document.createElement("DIV");
 		tDiv.innerHTML = val;
-		tDiv.style.cssText = "margin-right: 80px;";
+		//tDiv.style.cssText = "margin-right: 80px;";
+		tDiv.className = "col-md-2";
 		container.appendChild(tDiv);
 		return tDiv;
 	}
 
 	function createDamageReportAccordionChildHeaderItem(damageReport, container)
 	{
+		var sectionStart = "<section>";
+		var sectionEnd = "</section>";
+
 		var childLi = document.createElement("LI");
 
 		var childTitle = document.createElement("A");
@@ -225,14 +235,14 @@ var damageReport = new function()
 		childTitle.style.cssText = "display: flex; background: #4287b5; font-style: oblique; font-size: large;";
 
 		//createAccordionItemDetailDiv("Business Unit: " + damageReport.businessUnit.name, childTitle);
-		createAccordionItemDetailDiv("Business Unit: " + damageReport.farm.businessUnit.name, childTitle);
+		createAccordionItemDetailDiv(sectionStart + "Business Unit" + sectionEnd + sectionStart + damageReport.farm.businessUnit.name + sectionEnd, childTitle);
 		//createAccordionItemDetailDiv("Contact Person: " + damageReport.businessUnit.contactPerson, childTitle);
-		createAccordionItemDetailDiv("Contact Person: " + damageReport.farm.businessUnit.contactPerson, childTitle);
+		createAccordionItemDetailDiv(sectionStart + "Contact Person" + sectionEnd + sectionStart + damageReport.farm.businessUnit.contactPerson + sectionEnd, childTitle);
 		//createAccordionItemDetailDiv("Contact Number: " + damageReport.businessUnit.contactNumber, childTitle);
-		createAccordionItemDetailDiv("Contact Number: " + damageReport.farm.businessUnit.contactNumber, childTitle);
+		createAccordionItemDetailDiv(sectionStart + "Contact Number" + sectionEnd + sectionStart + damageReport.farm.businessUnit.contactNumber + sectionEnd, childTitle);
 		//createAccordionItemDetailDiv("District: " + damageReport.district.name, childTitle);
-		createAccordionItemDetailDiv("District: " + damageReport.farm.district.name, childTitle);
-		createAccordionItemDetailDiv("Farm: " + damageReport.farm.name, childTitle);
+		createAccordionItemDetailDiv(sectionStart + "District" + sectionEnd + sectionStart + damageReport.farm.district.name + sectionEnd, childTitle);
+		createAccordionItemDetailDiv(sectionStart + "Farm" + sectionEnd + sectionStart + damageReport.farm.name + sectionEnd, childTitle);
 
 		childLi.appendChild(childTitle);
 		container.appendChild(childLi);
