@@ -14,15 +14,15 @@
  		},
  		{
  			'text':'Quote',
- 			'pageUrl':'aaaaa/insurer_admin/quote/quote.html'
+ 			'pageUrl':'html/insurer/quote/quote2.html'
  		},
  		{
  			'text':'Policy',
- 			'pageUrl':'aaaaa/insurer_admin/quote/quote.html'
+ 			'pageUrl':'html/insurer/policy/policy.html'
  		},
  		{
  			'text':'Damage Report',
- 			'pageUrl':'aaaaa/insurer_admin/quote/quote.html'
+ 			'pageUrl':'html/insurer/report/damage_report.html'
  		}
  	];
 
