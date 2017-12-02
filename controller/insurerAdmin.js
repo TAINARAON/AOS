@@ -642,6 +642,64 @@ var insurerAdminController = new function() {
 
 	// ------------------------------ Anro methods
 
+	// Quote
+		// View
+		this.getQuotes = function(successCallback,failCallback,requestObject)
+		{
+			var mockResponse = [];
+			var quotes = mockCommunicator.getQuotes();
+			
+			for(var i = 0; i < quotes.length; i++)
+			{
+				var quote = quotes[i];
+				//if(quote.brokerId == requestObject.brokerId && quote.active == 1)
+				//{
+					quote["businessUnit"] = mockCommunicator.getBusinessUnit(quote.businessUnitId);
+					quote["quoteLandEntries"] = mockCommunicator.getQuoteLandEntriesByQuoteId(quote.id);
+
+
+					if(requestObject.quoteNumber != "" && requestObject.quoteNumber != quote.quoteNumber)
+					{
+						continue;
+					}
+
+					if(requestObject.businessUnitName != "" && requestObject.businessUnitName != quote.businessUnit.name)
+					{
+						continue;
+					}
+
+					// TODO: add some sort of filtering by insurer id
+
+					for(var j = 0; j < quote.quoteLandEntries.length; j++)
+					{
+						var landEntry = quote.quoteLandEntries[j];
+
+						landEntry['additionalTariff'] = 0.25;
+						landEntry['tariff'] = 0.66666666666;
+
+						landEntry["farm"] = mockCommunicator.getFarm(landEntry.farmId);
+						landEntry["crop"] = mockCommunicator.getCrop(landEntry.cropId);
+						landEntry.crop["product"] = mockCommunicator.getProduct(landEntry.crop.productId);
+						landEntry["quoteLandEntryDamageTypes"] = mockCommunicator.getQuoteLandEntryDamageTypesByQuoteLandEntryId(landEntry.id);
+						for(var k = 0; k < landEntry.quoteLandEntryDamageTypes.length; k++)
+						{
+							var quoteLandEntryDamageType = landEntry.quoteLandEntryDamageTypes[k];
+							quoteLandEntryDamageType["tariffOptionDamageType"] = mockCommunicator.getTariffOptionDamageType(quoteLandEntryDamageType.tariffOptionDamageTypeId);
+							quoteLandEntryDamageType.tariffOptionDamageType["damageType"] = mockCommunicator.getDamageType(quoteLandEntryDamageType.tariffOptionDamageType.damageTypeId);
+							quoteLandEntryDamageType.tariffOptionDamageType["tariffOption"] = mockCommunicator.getTariffOption(quoteLandEntryDamageType.tariffOptionDamageType.tariffOptionId);
+							quoteLandEntryDamageType.tariffOptionDamageType.tariffOption["tariffOptionType"] = mockCommunicator.getTariffOptionType(quoteLandEntryDamageType.tariffOptionDamageType.tariffOption.tariffOptionTypeId);
+						}
+					}
+
+					mockResponse.push(quotes[i]);
+				//}
+			}
+			
+			ajaxPost("",successCallback,failCallback,requestObject,mockResponse);
+		}
+		// ^ View ^
+	// ^ Quote ^
+
 	//Policy
 	this.getBrokerages = function(successCallback,failCallback,requestObject) {
 		var mockResponse = [

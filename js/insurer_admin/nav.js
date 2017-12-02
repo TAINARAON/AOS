@@ -19,7 +19,7 @@
  		},
  		{
  			'text':"Quotes",
- 			'pageUrl':'html/insurer_admin/insurance_agency.html'
+ 			'pageUrl':'html/insurer_admin/quote/quote2.html'
  		},
  		{
  			'text':"Policies",
