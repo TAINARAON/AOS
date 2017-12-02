@@ -192,6 +192,9 @@ var policyViewer = new function ()
 
 	function createPolicyAccordionParentItem(policy, container)
 	{
+		var sectionStart = "<section>";
+		var sectionEnd = "</section>";
+
 		var parentLi = document.createElement("LI");
 
 		var parentTitle = document.createElement("A");
@@ -199,12 +202,24 @@ var policyViewer = new function ()
 		parentTitle.style.cssText = "display: flex;";
 		parentTitle.onclick = function(){toggleOtherPolicies(policy, parentLi, container);};
 
-		createAccordionItemDetailDiv("Policy Number: " + policy.policyNumber, parentTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Business Unit: " + policy.businessUnit.name, parentTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Accept Date: " + util.getDateTimePretty(policy.acceptedOn*1), parentTitle).className = "col-md-3";
-		createAccordionItemDetailDiv("Commencement Date: " + util.getDateTimePretty(util.addTimeToDateTime(policy.acceptedOn*1,sessionStorage.COMMENCEMENT_DELAY*1,"milliseconds")), parentTitle).className = "col-md-3";
-		createAccordionItemDetailDiv("Total Insured Value: " + sessionStorage.CURRENCY + " " + policy.totalInsuredValue, parentTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Premium: " + sessionStorage.CURRENCY + " " + policy.premium, parentTitle).className = "col-md-2";
+		var head1 = createAccordionItemDetailDiv(sectionStart + "Policy Number" + sectionEnd + sectionStart + policy.policyNumber + sectionEnd, parentTitle);
+		head1.className = "col-md-2";
+		head1.style.cssText = "text-align: center;";
+		var head2 = createAccordionItemDetailDiv(sectionStart + "Business Unit" + sectionEnd + sectionStart + policy.businessUnit.name + sectionEnd, parentTitle);
+		head2.className = "col-md-2";
+		head2.style.cssText = "text-align: center;";
+		var head3 = createAccordionItemDetailDiv(sectionStart + "Accept Date" + sectionEnd + sectionStart + util.getDateTimePretty(policy.acceptedOn*1) + sectionEnd, parentTitle);
+		head3.className = "col-md-3";
+		head3.style.cssText = "text-align: center;";
+		var head4 = createAccordionItemDetailDiv(sectionStart + "Commencement Date" + sectionEnd + sectionStart + util.getDateTimePretty(util.addTimeToDateTime(policy.acceptedOn*1,sessionStorage.COMMENCEMENT_DELAY*1,"milliseconds")) + sectionEnd, parentTitle);
+		head4.className = "col-md-3";
+		head4.style.cssText = "text-align: center;";
+		var head5 = createAccordionItemDetailDiv(sectionStart + "Total Insured Value" + sectionEnd + sectionStart + sessionStorage.CURRENCY + " " + policy.totalInsuredValue + sectionEnd, parentTitle);
+		head5.className = "col-md-2";
+		head5.style.cssText = "text-align: center;";
+		var head6 = createAccordionItemDetailDiv(sectionStart + "Premium" + sectionEnd + sectionStart + sessionStorage.CURRENCY + " " + policy.premium + sectionEnd, parentTitle);
+		head6.className = "col-md-2";
+		head6.style.cssText = "text-align: center;";
 
 		var childContainer = document.createElement("UL");
 		childContainer.className = "inner";
