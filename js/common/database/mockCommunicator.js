@@ -1510,6 +1510,54 @@ var mockCommunicator = new function()
 			'linkedToPolicyId':null,
 			'totalInsuredValue':'200 000',
 			'premium':20000	
+		},
+		{
+			'id':'4',
+			'policyNumber':'00004',
+			'businessUnitId':'1',
+			'brokerId':'0',
+			'insurerId':null,
+			'acceptedOn':'2017-08-30 19:01:05',
+			'active':'1',
+			'linkedToPolicyId':null,
+			'totalInsuredValue':'300 000',
+			'premium':30000		
+		},
+		{
+			'id':'5',
+			'policyNumber':'00005',
+			'businessUnitId':'1',
+			'brokerId':'0',
+			'insurerId':null,
+			'acceptedOn':'2017-08-30 19:03:05',
+			'active':'1',
+			'linkedToPolicyId':null,
+			'totalInsuredValue':'400 000',
+			'premium':40000	
+		},
+		{
+			'id':'6',
+			'policyNumber':'00006',
+			'businessUnitId':'1',
+			'brokerId':'1',
+			'insurerId':null,
+			'acceptedOn':'2017-08-30 19:01:05',
+			'active':'1',
+			'linkedToPolicyId':null,
+			'totalInsuredValue':'500 000',
+			'premium':50000		
+		},
+		{
+			'id':'7',
+			'policyNumber':'00007',
+			'businessUnitId':'1',
+			'brokerId':'1',
+			'insurerId':null,
+			'acceptedOn':'2017-08-30 19:03:05',
+			'active':'1',
+			'linkedToPolicyId':null,
+			'totalInsuredValue':'600 000',
+			'premium':60000	
 		}
 	];
 	this.createPolicy = function(data) {
@@ -1689,6 +1737,126 @@ var mockCommunicator = new function()
 			'id':'7',
 			'policyId':'3',
 			'farmId':'1',
+			'landNumber':'00006',
+			'landLongitude':'131.044',
+			'landLatitude':'-25.363',
+			'cropId':'1',
+			'cultivar':'Something',
+			'area':'8.4',
+			'yield':'16.11',
+			'price':'9.48',
+			'tariffOptionId':'0',
+			'additionalTariff':0
+		},
+		{
+			'id':'8',
+			'policyId':'4',
+			'farmId':'0',
+			'landNumber':'00001',
+			'landLongitude':'131.044',
+			'landLatitude':'-25.363',
+			'cropId':'1',
+			'cultivar':'Red Dwarf',
+			'area':'7.4',
+			'yield':'14.22',
+			'price':'5.48',
+			'tariffOptionId':'0',
+			'additionalTariff':0
+		},
+		{
+			'id':'9',
+			'policyId':'4',
+			'farmId':'2',
+			'landNumber':'00002',
+			'landLongitude':'131.044',
+			'landLatitude':'-25.363',
+			'cropId':'1',
+			'cultivar':'Something',
+			'area':'8.4',
+			'yield':'16.11',
+			'price':'9.48',
+			'tariffOptionId':'0',
+			'additionalTariff':0
+		},
+		{
+			'id':'10',
+			'policyId':'5',
+			'farmId':'3',
+			'landNumber':'00008',
+			'landLongitude':'131.044',
+			'landLatitude':'-25.363',
+			'cropId':'1',
+			'cultivar':'Red Dwarf',
+			'area':'7.4',
+			'yield':'14.22',
+			'price':'5.48',
+			'tariffOptionId':'0',
+			'additionalTariff':0
+		},
+		{
+			'id':'11',
+			'policyId':'5',
+			'farmId':'2',
+			'landNumber':'000074',
+			'landLongitude':'131.044',
+			'landLatitude':'-25.363',
+			'cropId':'1',
+			'cultivar':'Something',
+			'area':'8.4',
+			'yield':'16.11',
+			'price':'9.48',
+			'tariffOptionId':'0',
+			'additionalTariff':0
+		},
+		{
+			'id':'12',
+			'policyId':'6',
+			'farmId':'3',
+			'landNumber':'00003',
+			'landLongitude':'131.044',
+			'landLatitude':'-25.363',
+			'cropId':'1',
+			'cultivar':'Red Dwarf',
+			'area':'7.4',
+			'yield':'14.22',
+			'price':'5.48',
+			'tariffOptionId':'0',
+			'additionalTariff':0
+		},
+		{
+			'id':'13',
+			'policyId':'6',
+			'farmId':'2',
+			'landNumber':'00004',
+			'landLongitude':'131.044',
+			'landLatitude':'-25.363',
+			'cropId':'1',
+			'cultivar':'Something',
+			'area':'8.4',
+			'yield':'16.11',
+			'price':'9.48',
+			'tariffOptionId':'0',
+			'additionalTariff':0
+		},
+		{
+			'id':'14',
+			'policyId':'7',
+			'farmId':'3',
+			'landNumber':'00005',
+			'landLongitude':'131.044',
+			'landLatitude':'-25.363',
+			'cropId':'1',
+			'cultivar':'Red Dwarf',
+			'area':'7.4',
+			'yield':'14.22',
+			'price':'5.48',
+			'tariffOptionId':'0',
+			'additionalTariff':0
+		},
+		{
+			'id':'15',
+			'policyId':'7',
+			'farmId':'2',
 			'landNumber':'00006',
 			'landLongitude':'131.044',
 			'landLatitude':'-25.363',
@@ -3520,15 +3688,15 @@ var mockCommunicator = new function()
 	this.damageTypeTable = [
 		{
 			'id':'0',
-			'name':'Fire',
+			'name':'Hail',
 		},
 		{
 			'id':'1',
-			'name':'Rain',
+			'name':'Frost',
 		},
 		{
 			'id':'2',
-			'name':'Hail',
+			'name':'Fire',
 		},
 		{
 			'id':'3',
@@ -3536,7 +3704,15 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'4',
-			'name':'Godzilla',
+			'name':'Wind',
+		},
+		{
+			'id':'5',
+			'name':'Excessive Rain',
+		},
+		{
+			'id':'6',
+			'name':'Flood',
 		}
 	];
 	this.createDamageType = function(data) {
