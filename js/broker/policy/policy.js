@@ -358,7 +358,7 @@ var policyViewer = new function ()
 
 	function createIncreaseBtn(container, policy)
 	{
-		var button = createSuccessButton("Increase Quote", container);
+		var button = createSuccessButton("Increase Policy", container);
 		button.onclick = function(e) {increaseQuote(e, policy);};
 		button.style.cssText = "margin-right: 10px;";
 	}
