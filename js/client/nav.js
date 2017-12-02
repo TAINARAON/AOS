@@ -31,6 +31,10 @@
  		{
  			'text':'Logout',
  			'pageUrl':'html/common/logout.html'
+ 		},
+ 		{
+ 			'text':'C',
+ 			'pageUrl':'html/client/businessUnit/businessUnit.html'
  		}
  	];
 

@@ -35,6 +35,10 @@
  		{
  			'text':'Logout',
  			'pageUrl':'html/common/logout.html'
+ 		},
+ 		{
+ 			'text':'B',
+ 			'pageUrl':'html/broker/client/client.html'
  		}
  	];
 

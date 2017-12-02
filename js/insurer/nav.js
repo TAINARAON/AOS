@@ -35,7 +35,12 @@
  		{
  			'text':'Logout',
  			'pageUrl':'html/common/logout.html'
+ 		},
+ 		{
+ 			'text':'I',
+ 			'pageUrl':'html/insurer/brokers.html'
  		}
+
  	];
 
  	(function init(){
