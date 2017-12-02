@@ -21,6 +21,10 @@
  		{
  			'text':'Logout',
  			'pageUrl':'html/common/logout.html'
+ 		},
+ 		{
+ 			'text':'BA',
+ 			'pageUrl':'html/brokerAdmin/brokerage/brokerage.html'
  		}
  	];
 

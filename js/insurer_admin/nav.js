@@ -44,6 +44,10 @@
  		{
  			'text':'Logout',
  			'pageUrl':'html/common/logout.html'
+ 		},
+ 		{
+ 			'text':'IA',
+ 			'pageUrl':'html/insurer_admin/insurance_agency.html'
  		}
  	];
 
