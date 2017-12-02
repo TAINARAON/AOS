@@ -40,7 +40,7 @@ var damageReport = new function()
 	function createReportModalButton()
 	{
 		var button = document.createElement("BUTTON");
-		button.className = "btn btn-info btn-lg";
+		button.className = "btn btn-primary btn-lg";
 		button.type = "button";
 		button.setAttribute("data-toggle", "modal");
 		button.setAttribute("data-target", "#myModal");
