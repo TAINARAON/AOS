@@ -26,6 +26,22 @@ var clientController = new function() {
 		
 		getDefaultClientData(userId);
 	}
+
+	// Random hacky thing vir Anro
+	this.getClientIdByUserId = function(userId) {
+		
+		var clients = mockCommunicator.getClients();
+
+		for(var i = 0; i < clients.length; i++) {
+			if(clients[i]['userId'] == userId) {
+				return clients[i]['id'];
+			}
+		}
+
+		return null;
+	}
+
+
 	/*  ADDED TO NOTEPAD
 		client/getDefaultClientData
 
