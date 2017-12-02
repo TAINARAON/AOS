@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-md-3">
 		    <label class="text-left">Business Unit</label>
-		    <select id="insurer_admin_clients_business_units_dropdown" class="form-control">
+		    <select id="insurer_clients_business_units_dropdown" class="form-control">
 		      <option hidden disabled selected>- Select Business Unit -</option>
 		    </select>
 		</div>
@@ -25,16 +25,23 @@
 	
 	<div hidden id="insurer_admin_client_farms_container" class="row">
 		<div class="col-md-12">
-			<!--<div id="insurer_admin_create_broker_button" class="btn btn-primary pull-right">
-				Create Farm
-			</div>-->
 			<div class="row">
+				<div class="col-md-4">
+					<h4>Farms</h4>
+				</div>
+
+				<div class="col-md-12">
+					<div class="col-md-2"><label>Farm Name</label></div>
+					<div class="col-md-2"><label>District</label></div>
+					<div class="col-md-2"><label>Client</label></div>
+					<div class="col-md-2"><label>Latitude</label></div>
+					<div class="col-md-2"><label>Longitude</label></div>
+				</div>
+				
 			  	<div class="col-md-12">
-				  	<h3>Farms</h3>
-				  	<ul class="accordion" id="insurance_admin_client_farms_table_body">
-			  		</ul>
-			  	</div>
-			</div>                     
+				  	<ul class="accordion" id="insurance_admin_client_farms_table_body"></ul>
+			  	</div>  
+			</div>                   
 		</div>
 	</div>
 </div>

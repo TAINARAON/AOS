@@ -8,9 +8,6 @@ var businessUnits = [];
 	
 })();
 
-
-
-
 function init() {
 
 	getBusinessUnitsAndTheirFarms();
@@ -33,9 +30,10 @@ function onGetBusinessUnitsAndTheirBrokersFailure() {
 
 function populateBusinessUnitsDropdownValues(businessUnitsAndFarms) {
 
+	//console.log("businessUnitsAndFarms");
+	//console.log(businessUnitsAndFarms);
 	var selectElement = $('#insurer_admin_clients_business_units_dropdown');
 
-	//console.log(businessUnitsAndFarms);
 	for(var i = 0; i < businessUnitsAndFarms.length; i++)
 	{
 		var businessUnitAndFarms = businessUnitsAndFarms[i];
@@ -138,9 +136,14 @@ function showValidFarms(businessUnitId) {
 function createFarmEntryElement(farm) {
 
 	var tr = $('<li></li>');
-
+	
 	var aToggle = $('<a></a>').addClass('toggle').prop('href',"javascript:void(0);");
-	aToggle.append($('<td></td>')).text(farm['name']);
+	aToggle.append($('<div class="row"></div>')
+	.append($('<div class="col-md-2"></div>').text(farm['name']))
+	.append($('<div class="col-md-2"></div>').text(farm['districtName']))
+	.append($('<div class="col-md-2"></div>').text(farm['businessUnitName']))
+	.append($('<div class="col-md-2"></div>').text(farm['latitude']))
+	.append($('<div class="col-md-2"></div>').text(farm['longitude'])));
 	tr.append(aToggle);
 
 	var ulInner = $('<ul></ul').addClass('inner');

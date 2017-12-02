@@ -1,5 +1,6 @@
 // [{businessUnitId,jqueryElement}]
 var businessUnitFarmElements = [];
+var businessUnits = [];
 
 (function() {
 
@@ -30,16 +31,23 @@ function onGetBusinessUnitsAndTheirBrokersFailure() {
 
 function populateBusinessUnitsDropdownValues(businessUnitsAndFarms) {
 
-	var selectElement = $('#insurer_admin_clients_business_units_dropdown');
+	//console.log("businessUnitsAndFarms");
+	//console.log(businessUnitsAndFarms);
+	var selectElement = $('#insurer_clients_business_units_dropdown');
 
 	for(var i = 0; i < businessUnitsAndFarms.length; i++)
 	{
-		var businessUnit = businessUnitsAndFarms[i];
+		var businessUnitAndFarms = businessUnitsAndFarms[i];
+		var businessUnit = businessUnitAndFarms['businessUnit'];
 
+		// Add business Unit to global array
+		businessUnits.push(businessUnit);
+
+		var farms = businessUnitAndFarms['farms'];
+
+		//console.log('businessUnit');
+		//console.log(businessUnit);
 		selectElement.append($('<option></option>').text(businessUnit['name']).val(businessUnit['id']));	
-
-		// Add Broker entries in table
-		var farms = businessUnit['farms'];
 
 		addFarmEntriesToTable(businessUnit['id'],farms);
 	}
@@ -85,8 +93,23 @@ function onBusinessUnitSelected(businessUnitId) {
 
 	showValidFarms(businessUnitId);
 
+	populateBusinessUnitDataContainer(businessUnitId);
+
 	$("#insurer_admin_client_farms_container").show();
 	$("#insurer_admin_client_data_container").show();
+}
+
+function populateBusinessUnitDataContainer(businessUnitId) {
+
+	var businessUnit = businessUnits[businessUnitId];
+
+	if(typeof businessUnit == 'undefined') {
+		return;
+	}
+
+	$("#insurer_admin_client_email").text(businessUnit["email"]);
+	$("#insurer_admin_client_contact_number").text(businessUnit["contactNumber"]);
+	$("#insurer_admin_client_contact_person").text(businessUnit["contactPerson"]);
 }
 
 function hideAllFarmEntries() {
@@ -113,10 +136,16 @@ function showValidFarms(businessUnitId) {
 
 function createFarmEntryElement(farm) {
 
+	console.log(farm);
 	var tr = $('<li></li>');
-
+	
 	var aToggle = $('<a></a>').addClass('toggle').prop('href',"javascript:void(0);");
-	aToggle.append($('<td></td>')).text(farm['name']);
+	aToggle.append($('<div class="row"></div>')
+	.append($('<div class="col-md-2"></div>').text(farm['name']))
+	.append($('<div class="col-md-2"></div>').text(farm['districtName']))
+	.append($('<div class="col-md-2"></div>').text(farm['businessUnitName']))
+	.append($('<div class="col-md-2"></div>').text(farm['latitude']))
+	.append($('<div class="col-md-2"></div>').text(farm['longitude'])));
 	tr.append(aToggle);
 
 	var ulInner = $('<ul></ul').addClass('inner');

@@ -179,7 +179,44 @@ var insurerController = new function() {
 	*/
 	this.getBusinessUnitsAndTheirFarms = function(successCallback,failCallback) {
 
+
 		var requestObject = 
+		{
+			
+		};
+
+		var businessUnitsAndFarms = [];
+		var businessUnitsIMaySeeIds = [];
+
+		var businessUnitsIMaySee = mockCommunicator.getBusinessUnits();
+		
+		for(var i = 0; i < businessUnitsIMaySee.length; i++) {
+			businessUnitsIMaySeeIds.push(businessUnitsIMaySee[i]['id']);
+		}
+
+		// Getting the businessUnit objects
+		for(var i = 0; i < businessUnitsIMaySee.length; i++) {
+			
+			var businessUnitAndItsFarms = mockCommunicator.getBusinessUnitAndItsFarms(businessUnitsIMaySee[i]['id']);
+			businessUnitsAndFarms.push(businessUnitAndItsFarms);
+		}
+
+		var mockResponse = {
+			'businessUnitsAndFarms':businessUnitsAndFarms
+		}
+
+		//console.log('getBusinessUnitsAndTheirFarms');
+		//console.log(businessUnitsAndFarms);
+
+		ajaxPost(GET_BUSINESS_UNITS_AND_THEIR_FARMS,successCallback,failCallback,requestObject,mockResponse);
+
+
+
+
+
+		// ################################
+
+		/*var requestObject = 
 		{
 			"insuranceAgencyId":insuranceAgency['id']
 		};
@@ -220,7 +257,7 @@ var insurerController = new function() {
 			]
 		}
 
-		ajaxPost(GET_BUSINESS_UNITS_AND_THEIR_FARMS,successCallback,failCallback,requestObject,mockResponse);
+		ajaxPost(GET_BUSINESS_UNITS_AND_THEIR_FARMS,successCallback,failCallback,requestObject,mockResponse);*/
 	};
 
 
