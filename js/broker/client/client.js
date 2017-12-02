@@ -4,7 +4,7 @@ var businessUnitFarmElements = [];
 (function() {
 
 	init();
-	
+	util.setDefaultUserData(2);
 })();
 
 

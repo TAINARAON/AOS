@@ -5,6 +5,15 @@ var util = new function() {
 	var callback;
 	var myExtraData;
 
+	this.setDefaultUserData = function(userId) {
+
+		var user = mockCommunicator.getUser(userId);
+		
+		$("#default_name_info").text(user["name"]);
+		$("#default_surname_info").text(user["surname"]);
+		$("#default_email_info").text(user["email"]);
+	}
+
 	this.getUserDataByUserId = function(userId) {
 
 		return mockCommunicator.getUser(userId);

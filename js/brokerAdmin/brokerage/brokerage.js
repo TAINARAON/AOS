@@ -1,5 +1,6 @@
 $(function() {
     init();
+    util.setDefaultUserData(3);
   });
 
 var brokerage = {};

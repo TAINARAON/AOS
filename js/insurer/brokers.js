@@ -6,6 +6,7 @@ var brokerElementsInBrokerTableByBrokerage = [];
 	var brokeragesAndBrokers = [];
 	
 	init();
+	util.setDefaultUserData(4);
 	
 })();
 
