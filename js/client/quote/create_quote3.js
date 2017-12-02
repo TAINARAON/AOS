@@ -1,6 +1,6 @@
 var createQuote = new function()
 {
-	var brokerId;
+	//var brokerId;
 
 	var allValuesEntered = false;
 	var allValuesSeleted = false;
@@ -366,7 +366,7 @@ var createQuote = new function()
 	(function init(){
 
 		populateClientDropdown();
-		brokerId = brokerController.getBroker().id;
+		//brokerId = brokerController.getBroker().id;
 
 		setInitialFieldDisplay();
 		addSelectValueListeners();
@@ -466,7 +466,7 @@ var createQuote = new function()
 		selectElement.append($('<option></option>').text("").prop('disabled',true).prop('selected',true));
 
 		var requestObj = {
-			'brokerId':brokerId,
+			//'brokerId':brokerId,
 			'businessUnitId':businessUnit.id
 		};
 		//debugger;
@@ -500,7 +500,7 @@ var createQuote = new function()
 		if(val != undefined && val != "")
 		{
 			var requestObj = {
-				'brokerId':brokerId,
+				//'brokerId':brokerId,
 				'businessUnitName':val
 			};
 
@@ -763,7 +763,7 @@ var createQuote = new function()
 		if(val != undefined && val != "")
 		{
 			var requestObj = {
-				'brokerId':brokerId,
+				//'brokerId':brokerId,
 				'businessUnitId':businessUnit.id,
 				'farmName':val
 			}
@@ -1375,7 +1375,7 @@ var createQuote = new function()
 	{
 		quote["businessUnit"] = businessUnit;
 		quote["businessUnitId"] = businessUnit.id;
-		quote["brokerId"] = brokerId;
+		//quote["brokerId"] = brokerId;
 		quote["quoteNumber"] = generateQuoteNumber();
 		quote["insurerId"] = null;
 		quote["active"] = "1";

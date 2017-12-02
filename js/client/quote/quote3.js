@@ -14,12 +14,12 @@ var quoteViewer = new function ()
 	var quoteAccordionButtonsContainer = document.getElementById("quote_button_container");
 
 	(function init(){
-		createModal("modal_container");
-		createAcceptQuoteModal("modal_confirm_accept_quote");
+		//createModal("modal_container");
+		//createAcceptQuoteModal("modal_confirm_accept_quote");
 		createShareQuoteModal("modal_share_quote");
 
 		//setAvailableBrokers();
-		getClientID();
+		hideAvailableBrokerDropdown();
 		setSearchButtonClickListener();
 		addOnEnterKeyPressedListenerForSearchInput(quoteNumberInput);
 		addOnEnterKeyPressedListenerForSearchInput(businessUnitInput);
@@ -74,9 +74,10 @@ var quoteViewer = new function ()
 		}
 	}*/
 
-	function getClientID()
+	function hideAvailableBrokerDropdown()
 	{
-		
+		document.getElementById("available_broker_container").style.display = "none";
+		document.getElementById("quote_number_container").className+=" col-md-offset-2";
 	}
 
 	function setupAccordionClickHandler()
@@ -115,19 +116,19 @@ var quoteViewer = new function ()
 		landEntryMaps = [];
 		$(quoteAccordionButtonsContainer).hide();
 
-		var tBrokerName = $(brokerSelect).val().trim();
-		var brokerId = getIdOfSelectedBroker(tBrokerName);
+		//var tBrokerName = $(brokerSelect).val().trim();
+		//var brokerId = getIdOfSelectedBroker(tBrokerName);
 		var quoteNumber = $(quoteNumberInput).val().trim();
 		var businessUnitName = $(businessUnitInput).val().trim();
 
-		if(brokerId != -1)
-		{
+		/*if(brokerId != -1)
+		{*/
 			var tObj = {
-				"brokerId":brokerId,
+				//"brokerId":brokerId,
 				"quoteNumber":quoteNumber,
 				"businessUnitName":businessUnitName
 			};
-			brokerController.getQuotes(
+			clientController.getQuotes(
 				setupQuotes,
 				function(response){
 					util.createNotification("Failed to load quotes");
@@ -139,7 +140,7 @@ var quoteViewer = new function ()
 			
 
 			//setupQuotes(quoteInvoker.searchForQuote(brokerId, quoteNumber, businessUnitName));
-		}
+		//}
 	}
 
 	function getIdOfSelectedBroker(name)
@@ -348,12 +349,12 @@ var quoteViewer = new function ()
 		//var childLi = document.createElement("LI");
 
 		// TODO: do acceptable check here
-		if(quote.acceptable == 1)
+		/*if(quote.acceptable == 1)
 		{
 			createAcceptButton(container, quote);
 		}
 
-		createReQuoteBtn(container, quote);
+		createReQuoteBtn(container, quote);*/
 
 		// TODO: make this a share button
 		createShareQuoteBtn(container, quote);
