@@ -153,14 +153,14 @@ var damageReport = new function()
 		parentTitle.style.cssText = "display: flex; overflow-x: auto;";
 		parentTitle.onclick = function(){toggleOtherPolicy(damageReport, parentLi, container);};
 
-		createAccordionItemDetailDiv(sectionStart + "Damage Report Number" + sectionEnd + sectionStart + damageReport.damageReportNumber + sectionEnd, parentTitle).style.cssText = "text-align: center;";
-		createAccordionItemDetailDiv(sectionStart + "Damage Type" + sectionEnd + sectionStart + damageReport.damageType.name + sectionEnd, parentTitle).style.cssText = "text-align: center;";
-		createAccordionItemDetailDiv(sectionStart + "Damage Date" + sectionEnd + sectionStart + damageReport.dateOfDamage + sectionEnd, parentTitle).style.cssText = "text-align: center;";
+		createAccordionItemDetailDiv(sectionStart /*+ "Damage Report Number"*/ + sectionEnd + sectionStart + damageReport.damageReportNumber + sectionEnd, parentTitle).style.cssText = "text-align: center;";
+		createAccordionItemDetailDiv(sectionStart /*+ "Damage Type"*/ + sectionEnd + sectionStart + damageReport.damageType.name + sectionEnd, parentTitle).style.cssText = "text-align: center;";
+		createAccordionItemDetailDiv(sectionStart /*+ "Damage Date"*/ + sectionEnd + sectionStart + damageReport.dateOfDamage + sectionEnd, parentTitle).style.cssText = "text-align: center;";
 		var requiresTaxation = damageReport.requiresTaxation ? "Yes" : "No";
-		createAccordionItemDetailDiv(sectionStart + "Loss Adjustment Required" + sectionEnd + sectionStart + requiresTaxation + sectionEnd, parentTitle).style.cssText = "text-align: center;";
+		createAccordionItemDetailDiv(sectionStart /*+ "Loss Adjustment Required"*/ + sectionEnd + sectionStart + requiresTaxation + sectionEnd, parentTitle).style.cssText = "text-align: center;";
 		//calculateDamageStatus(damageReport, createAccordionItemDetailDiv("Status: ", parentTitle));
 		
-		var tStatusContainer = createAccordionItemDetailDiv(sectionStart + "Status" + sectionEnd, parentTitle);
+		var tStatusContainer = createAccordionItemDetailDiv(sectionStart /*+ "Status"*/ + sectionEnd, parentTitle);
 		tStatusContainer.style.cssText = "text-align: center;";
 		calculateDamageStatus(damageReport, tStatusContainer);
 
