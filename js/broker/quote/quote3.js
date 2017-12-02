@@ -265,14 +265,14 @@ var quoteViewer = new function ()
 		childTitle.className = "toggle";
 		childTitle.style.cssText = "display: flex; background: #4287b5;";
 
-		createAccordionItemDetailDiv("Land Number: ", childTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Crop: ", childTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Cultivar: ", childTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Area: ", childTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Yield ", childTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Price: ", childTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Tariff Option: ", childTitle).className = "col-md-2";
-		createAccordionItemDetailDiv("Covered Perils: ", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Land Number", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Crop", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Cultivar", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Area", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Yield", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Price", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Tariff Option", childTitle).className = "col-md-2";
+		createAccordionItemDetailDiv("Covered Perils", childTitle).className = "col-md-2";
 
 		childLi.appendChild(childTitle);
 		container.appendChild(childLi);
