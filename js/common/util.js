@@ -5,6 +5,11 @@ var util = new function() {
 	var callback;
 	var myExtraData;
 
+	this.getUserDataByUserId = function(userId) {
+
+		return mockCommunicator.getUser(userId);
+	}
+
 	this.getPriceUnitOfCrop = function(cropId) {
 
 		var crop = mockCommunicator.getCrop(cropId);
