@@ -10,7 +10,7 @@
  		},
  		{
  			'text':"Quote",
- 			'pageUrl':'html/client/quote/quote.html'
+ 			'pageUrl':'html/client/quote/quote2.html'
  		},
  		{
  			'text':"Policy",
