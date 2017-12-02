@@ -36,13 +36,7 @@ var policyViewer = new function ()
 
 	function setAvailableBrokers()
 	{	
-		viewableBrokers = [];
-		/*var currentBroker = brokerController.getBroker();
-		var tSelfObj = {
-			"brokerId":currentBroker.id,
-			"name":brokerController.getUser().name
-		}
-		viewableBrokers.push(tSelfObj);*/
+		/*viewableBrokers = [];
 		
 		var viewable = brokerController.getViewableBrokers();
 		for(var i = 0; i < viewable.length; i++)
@@ -68,23 +62,10 @@ var policyViewer = new function ()
 		{
 			document.getElementById("available_broker_container").style.display = "none";
 			document.getElementById("policy_number_container").className+=" col-md-offset-2";
-		}
-
-		/*var currentUserBrokerId = sessionStorage.brokerId;
-
-		viewableBrokers = brokerInvoker.getViewableBrokers(currentUserBrokerId);
-		
-		var tSelfObj = brokerInvoker.getBrokerDisplayable(currentUserBrokerId);
-		tSelfObj["brokerId"] = currentUserBrokerId;
-		viewableBrokers.push(tSelfObj);
-
-		for(var i = 0; i < viewableBrokers.length; i++)
-		{
-			var option = document.createElement("OPTION");
-			option.innerHTML = viewableBrokers[i].name;
-
-			brokerSelect.appendChild(option);
 		}*/
+
+		document.getElementById("available_broker_container").style.display = "none";
+		document.getElementById("policy_number_container").className+=" col-md-offset-2";
 	}
 
 	function setupAccordionClickHandler()
@@ -123,19 +104,19 @@ var policyViewer = new function ()
 		landEntryMaps = [];
 		$(policyAccordionButtonsContainer).hide();
 
-		var tBrokerName = $(brokerSelect).val().trim();
-		var brokerId = getIdOfSelectedBroker(tBrokerName);
+		//var tBrokerName = $(brokerSelect).val().trim();
+		//var brokerId = getIdOfSelectedBroker(tBrokerName);
 		var policyNumber = $(policyNumberInput).val().trim();
 		var businessUnitName = $(businessUnitInput).val().trim();
 
-		if(brokerId != -1)
-		{
+		//if(brokerId != -1)
+		//{
 			var tObj = {
-				"brokerId":brokerId,
+				//"brokerId":brokerId,
 				"policyNumber":policyNumber,
 				"businessUnitName":businessUnitName
 			};
-			brokerController.getPolicies(
+			insurerController.getPolicies(
 				setPolicies, 
 				function(){
 					util.createNotification("Failed to load policies");
@@ -146,7 +127,7 @@ var policyViewer = new function ()
 			//ajaxPost("Something", setPolicies, function(){alert("Issue getting policy data");}, tObj, policyInvoker.searchForPolicy(brokerId, policyNumber, businessUnitName));
 			
 			//setPolicies(policyInvoker.searchForPolicy(brokerId, policyNumber, businessUnitName));
-		}
+		//}
 	}
 
 	function getIdOfSelectedBroker(name)
@@ -352,7 +333,7 @@ var policyViewer = new function ()
 
 	function createPolicyButtons(policy, container)
 	{
-		createIncreaseBtn(container, policy);
+		//createIncreaseBtn(container, policy);
 		createShareBtn(container, policy);
 	}
 

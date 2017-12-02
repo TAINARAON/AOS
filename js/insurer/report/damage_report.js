@@ -53,13 +53,7 @@ var damageReport = new function()
 
 	function setAvailableBrokers()
 	{	
-		viewableBrokers = [];
-		/*var currentBroker = brokerController.getBroker();
-		var tSelfObj = {
-			"brokerId":currentBroker.id,
-			"name":brokerController.getUser().name
-		}
-		viewableBrokers.push(tSelfObj);*/
+		/*viewableBrokers = [];
 		
 		var viewable = brokerController.getViewableBrokers();
 		for(var i = 0; i < viewable.length; i++)
@@ -85,23 +79,10 @@ var damageReport = new function()
 		{
 			document.getElementById("available_broker_container").style.display = "none";
 			document.getElementById("damage_report_number_container").className+=" col-md-offset-2";
-		}
-
-		/*var currentUserBrokerId = sessionStorage.brokerId;
-
-		viewableBrokers = brokerInvoker.getViewableBrokers(currentUserBrokerId);
-		debugger;
-		var tSelfObj = brokerInvoker.getBrokerDisplayable(currentUserBrokerId);
-		tSelfObj["brokerId"] = currentUserBrokerId;
-		viewableBrokers.push(tSelfObj);
-
-		for(var i = 0; i < viewableBrokers.length; i++)
-		{
-			var option = document.createElement("OPTION");
-			option.innerHTML = viewableBrokers[i].name;
-
-			brokerSelect.appendChild(option);
 		}*/
+
+		document.getElementById("available_broker_container").style.display = "none";
+		document.getElementById("damage_report_number_container").className+=" col-md-offset-2";
 	}
 
 	function setupAccordionClickHandler()
@@ -129,21 +110,21 @@ var damageReport = new function()
 
 	function search()
 	{
-		var tBrokerName = $(brokerSelect).val().trim();
-		var brokerId = getIdOfSelectedBroker(tBrokerName);
+		//var tBrokerName = $(brokerSelect).val().trim();
+		//var brokerId = getIdOfSelectedBroker(tBrokerName);
 		var businessUnitName = $(businessUnitInput).val().trim();
 		var farmName = $(farmInput).val().trim();
 
-		if(brokerId != -1)
-		{
+		//if(brokerId != -1)
+		//{
 			var tObj = {
-				"brokerId":brokerId,
+				//"brokerId":brokerId,
 				"farmName":farmName,
 				"businessUnitName":businessUnitName
 			};
 			// Perhaps get a range later on
 
-			brokerController.getDamageReports(
+			insurerController.getDamageReports(
 				setDamageReports, 
 				function(response){
 					util.createNotification("Issue getting damage report data");
@@ -152,7 +133,7 @@ var damageReport = new function()
 			);
 			
 			//ajaxPost("Some url", setDamageReports, function(){alert("Issue getting damage report data");}, tObj, damageReportInvoker.getDamageReport(brokerId, businessUnitName, farmName));
-		}
+		//}
 	}
 
 	function getIdOfSelectedBroker(name)
