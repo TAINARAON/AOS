@@ -37,10 +37,10 @@
  			'text':'System Keys',
  			'pageUrl':'html/insurer_admin/systemkeys.html'
  		},
- 		{
+ 		/*{
  			'text':'Reports',
  			'pageUrl':'html/common/fakeReporting.html'
- 		},
+ 		},*/
  		{
  			'text':'Logout',
  			'pageUrl':'html/common/logout.html'

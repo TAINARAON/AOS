@@ -24,10 +24,10 @@
 
  	var rightButtons = 
  	[	
- 		{
+ 		/*{
  			'text':'Reports',
  			'pageUrl':'html/common/fakeReporting.html'
- 		},
+ 		},*/
  		{
  			'text':'Logout',
  			'pageUrl':'html/common/logout.html'

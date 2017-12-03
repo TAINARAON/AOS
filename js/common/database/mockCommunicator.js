@@ -3520,15 +3520,15 @@ var mockCommunicator = new function()
 	this.damageTypeTable = [
 		{
 			'id':'0',
-			'name':'Fire',
+			'name':'Hail',
 		},
 		{
 			'id':'1',
-			'name':'Rain',
+			'name':'Frost',
 		},
 		{
 			'id':'2',
-			'name':'Hail',
+			'name':'Fire',
 		},
 		{
 			'id':'3',
@@ -3536,7 +3536,15 @@ var mockCommunicator = new function()
 		},
 		{
 			'id':'4',
-			'name':'Godzilla',
+			'name':'Wind',
+		},
+		{
+			'id':'5',
+			'name':'Excessive Rain',
+		},
+		{
+			'id':'6',
+			'name':'Flood',
 		}
 	];
 	this.createDamageType = function(data) {

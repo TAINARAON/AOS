@@ -5,6 +5,16 @@ var util = new function() {
 	var callback;
 	var myExtraData;
 
+	this.formatCurrency = function(amount) {
+
+		//amount.toFixed(2);
+		amount = amount + "";
+		amount.replace(/ /g,'')
+
+		var num = amount.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");
+		return num;
+	}
+
 	this.setDefaultUserData = function(userId) {
 
 		var user = mockCommunicator.getUser(userId);
